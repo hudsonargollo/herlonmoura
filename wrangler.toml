@@ -2,36 +2,16 @@ name = "herlon-moura-website"
 type = "javascript"
 account_id = ""
 workers_dev = true
-route = ""
-zone_id = ""
+
+[build]
+command = "npm run build"
+cwd = "./"
+
+[build.upload]
+format = "modules"
+main = "./node_modules/.bin/wrangler"
 
 [env.production]
 name = "herlon-moura-website-prod"
 route = "herlonmoura.com.br/*"
 zone_id = ""
-
-[build]
-command = "npm run build"
-cwd = "./"
-watch_paths = ["src/**/*.ts"]
-
-[build.upload]
-format = "service-worker"
-
-[env.production.build]
-command = "npm run build"
-cwd = "./"
-
-[[build.upload.rules]]
-type = "CompiledContentType"
-globs = ["**/*.wasm"]
-fallthrough = true
-
-[[build.upload.rules]]
-type = "Text"
-globs = ["**/*.txt", "**/*.html"]
-fallthrough = true
-
-[[build.upload.rules]]
-type = "Bytes"
-globs = ["**/*"]
