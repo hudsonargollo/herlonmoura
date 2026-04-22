@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Pause, Play } from 'lucide-react';
-import Card from './Card';
+import { Card } from './Card';
 
 interface Testimonial {
   id: string;
@@ -67,7 +67,7 @@ const DEFAULT_CREDENTIALS: Credentials = {
   specializations: ['Deep Vein Thrombosis', 'Varicose Veins', 'Arterial Disease', 'Venous Insufficiency'],
 };
 
-export default function SocialProofTicker({
+export function SocialProofTicker({
   testimonials = DEFAULT_TESTIMONIALS,
   credentials = DEFAULT_CREDENTIALS,
 }: SocialProofTickerProps) {
@@ -114,7 +114,7 @@ export default function SocialProofTicker({
           <div className="min-h-[280px] flex flex-col justify-between">
             {/* Quote */}
             <div className="mb-6">
-              <p className="text-lg text-slate-100 italic mb-4">"{currentTestimonial.quote}"</p>
+              <p className="text-lg text-slate-100 italic mb-4">&quot;{currentTestimonial.quote}&quot;</p>
             </div>
 
             {/* Patient Info */}

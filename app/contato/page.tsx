@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
-export default function ContactPage(): JSX.Element {
+export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

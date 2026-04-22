@@ -2,7 +2,7 @@
 
 import { HeroSection, Logo, Header, Footer } from '@/components';
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const navItems = [
     { label: 'Sobre', href: '/sobre' },
     { label: 'Condições', href: '/condicoes' },

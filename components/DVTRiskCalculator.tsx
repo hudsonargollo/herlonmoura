@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { ChevronRight, ChevronLeft, AlertCircle, CheckCircle } from 'lucide-react';
-import Button from './Button';
-import Card from './Card';
+import { Button } from './Button';
+import { Card } from './Card';
 
 interface DVTCalculatorState {
   currentStep: number;
@@ -43,7 +43,7 @@ const RISK_FACTOR_WEIGHTS = {
   },
 };
 
-export default function DVTRiskCalculator() {
+export function DVTRiskCalculator() {
   const [state, setState] = useState<DVTCalculatorState>({
     currentStep: 0,
     responses: {

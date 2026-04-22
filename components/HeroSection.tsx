@@ -46,7 +46,7 @@ export function HeroSection({
   const parallaxOffset = scrollY * 0.5;
 
   // Calculate logo rotation based on mouse position
-  const logoRotation = (mousePosition.x - window.innerWidth / 2) * 0.01;
+  const logoRotation = (mousePosition.x - (typeof window !== 'undefined' ? window.innerWidth : 0) / 2) * 0.01;
 
   const containerVariants = {
     hidden: { opacity: 0 },

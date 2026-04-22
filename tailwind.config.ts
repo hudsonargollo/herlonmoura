@@ -1,6 +1,4 @@
 import type { Config } from "tailwindcss";
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const forms = require("@tailwindcss/forms");
 
 const config: Config = {
   content: [
@@ -184,7 +182,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [forms],
+  plugins: [],
 };
 
 export default config;

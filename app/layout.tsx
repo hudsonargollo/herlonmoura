@@ -24,7 +24,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): React.ReactNode {
   return (
     <html lang="pt-BR">
       <head>

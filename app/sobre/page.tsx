@@ -5,7 +5,7 @@ import { Logo } from '@/components';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-export default function AboutPage(): JSX.Element {
+export default function AboutPage() {
   const navItems = [
     { label: 'Sobre', href: '/sobre' },
     { label: 'Condições', href: '/condicoes' },

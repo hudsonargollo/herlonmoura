@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { ChevronRight, ChevronLeft, Heart, AlertCircle } from 'lucide-react';
-import Button from './Button';
-import Card from './Card';
+import { Button } from './Button';
+import { Card } from './Card';
 
 interface Symptom {
   id: string;
@@ -84,7 +84,7 @@ interface NavigatorState {
   scrollPosition: number;
 }
 
-export default function SymptomNavigator() {
+export function SymptomNavigator() {
   const [state, setState] = useState<NavigatorState>({
     step: 'symptoms',
     selectedSymptom: null,
