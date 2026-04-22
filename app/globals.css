@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS for glassmorphism effects */
+.glass-effect {
+  @apply rounded-xl border border-glass bg-glass backdrop-blur-[10px];
+}
+
+.glass-effect-hover {
+  @apply transition-all duration-300 hover:border-glass-hover hover:bg-glass-hover;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-surgical-teal;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Typography defaults */
+body {
+  @apply font-sans;
+}
+
+h1 {
+  @apply text-display-lg;
+}
+
+h2 {
+  @apply text-display-md;
+}
+
+h3 {
+  @apply text-heading-1;
+}
+
+h4 {
+  @apply text-heading-2;
+}
+
+h5 {
+  @apply text-heading-3;
+}
+
+p {
+  @apply text-body-regular;
+}
+
+small {
+  @apply text-body-small;
+}
+
+/* Button base styles */
+button {
+  @apply transition-all duration-300;
+}
+
+/* Form input base styles */
+input,
+textarea,
+select {
+  @apply rounded-lg border border-neutral-dark bg-neutral-dark px-4 py-3 text-neutral-light placeholder-neutral-medium transition-all duration-300 focus:border-surgical-teal focus:outline-none;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+/* Link styles */
+a {
+  @apply text-surgical-teal transition-colors duration-300 hover:text-surgical-teal-dark;
+}
+
+/* Image optimization */
+img {
+  @apply max-w-full;
+}
