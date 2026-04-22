@@ -1,19 +1,69 @@
+'use client';
+
+import { HeroSection, Logo, Header, Footer } from '@/components';
+
 export default function Home(): JSX.Element {
+  const navItems = [
+    { label: 'Sobre', href: '/sobre' },
+    { label: 'Condições', href: '/condicoes' },
+    { label: 'Serviços', href: '/servicos' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contato', href: '/contato' },
+  ];
+
+  const footerSections = [
+    {
+      title: 'Sobre',
+      links: [
+        { label: 'Dr. Herlon Moura', href: '/sobre' },
+        { label: 'Credenciais', href: '/sobre#credenciais' },
+        { label: 'Experiência', href: '/sobre#experiencia' },
+      ],
+    },
+    {
+      title: 'Condições',
+      links: [
+        { label: 'Trombose Venosa Profunda', href: '/condicoes/dvt' },
+        { label: 'Varizes', href: '/condicoes/varizes' },
+        { label: 'Insuficiência Venosa', href: '/condicoes/insuficiencia-venosa' },
+      ],
+    },
+    {
+      title: 'Recursos',
+      links: [
+        { label: 'Blog', href: '/blog' },
+        { label: 'Calculadora de Risco DVT', href: '/calculadora-dvt' },
+        { label: 'Navegador de Sintomas', href: '/sintomas' },
+      ],
+    },
+    {
+      title: 'Legal',
+      links: [
+        { label: 'Privacidade', href: '/privacidade' },
+        { label: 'Termos de Serviço', href: '/termos' },
+        { label: 'Contato', href: '/contato' },
+      ],
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-dark-elevated">
-      <div className="flex items-center justify-center py-20">
-        <div className="text-center">
-          <h1 className="mb-4 text-display-lg text-neutral-light">
-            Dr. Herlon Moura
-          </h1>
-          <p className="mb-8 text-body-lg text-neutral-medium">
-            Especialista em Angiologia e Cirurgia Vascular
-          </p>
-          <button className="rounded-lg bg-surgical-teal px-8 py-3 font-semibold text-dark-elevated transition-all duration-300 hover:bg-surgical-teal-dark">
-            Agendar Consulta
-          </button>
-        </div>
-      </div>
+      <Header
+        logo={<Logo size="md" animated={false} />}
+        navItems={navItems}
+        ctaButton={{ label: 'Agendar Consulta', href: '/agendamento' }}
+      />
+      <HeroSection
+        headline="Dr. Herlon Moura"
+        subheadline="Especialista em Angiologia e Cirurgia Vascular em Salvador"
+        logoSvg={<Logo size="lg" animated={true} />}
+        primaryCTA={{ label: 'Agendar Consulta', href: '/agendamento' }}
+        secondaryCTA={{ label: 'Saiba Mais', href: '/sobre' }}
+      />
+      <Footer
+        sections={footerSections}
+        copyright={`© ${new Date().getFullYear()} Dr. Herlon Moura. Todos os direitos reservados.`}
+      />
     </main>
   );
 }

@@ -2,7 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS for glassmorphism effects */
+/* ============================================
+   DESIGN SYSTEM: CSS CUSTOM PROPERTIES
+   ============================================ */
+
+:root {
+  /* Primary Colors */
+  --color-dark-elevated: #0f172a;
+  --color-surgical-teal: #14b8a6;
+  --color-surgical-teal-dark: #0d9488;
+
+  /* Supporting Colors */
+  --color-neutral-light: #f8fafc;
+  --color-neutral-medium: #94a3b8;
+  --color-neutral-dark: #1e293b;
+  --color-success-green: #10b981;
+  --color-warning-amber: #f59e0b;
+  --color-error-red: #ef4444;
+
+  /* Glassmorphism Colors */
+  --color-glass-surface: rgba(15, 23, 42, 0.7);
+  --color-glass-surface-hover: rgba(15, 23, 42, 0.8);
+  --color-glass-border: rgba(20, 184, 166, 0.2);
+  --color-glass-border-hover: rgba(20, 184, 166, 0.4);
+  --color-glass-overlay: rgba(15, 23, 42, 0.4);
+
+  /* Typography Scale */
+  --font-display-lg: 48px;
+  --font-display-md: 36px;
+  --font-heading-1: 32px;
+  --font-heading-2: 24px;
+  --font-heading-3: 20px;
+  --font-body-lg: 18px;
+  --font-body-regular: 16px;
+  --font-body-small: 14px;
+  --font-caption: 12px;
+
+  /* Line Heights */
+  --line-height-display-lg: 56px;
+  --line-height-display-md: 44px;
+  --line-height-heading-1: 40px;
+  --line-height-heading-2: 32px;
+  --line-height-heading-3: 28px;
+  --line-height-body-lg: 28px;
+  --line-height-body-regular: 24px;
+  --line-height-body-small: 20px;
+  --line-height-caption: 16px;
+
+  /* Spacing Scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+  --spacing-5xl: 80px;
+
+  /* Responsive Breakpoints */
+  --breakpoint-mobile: 320px;
+  --breakpoint-tablet: 641px;
+  --breakpoint-desktop: 1025px;
+  --breakpoint-ultra-wide: 1441px;
+
+  /* Shadows */
+  --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* Z-Index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* ============================================
+   GLASSMORPHISM EFFECTS
+   ============================================ */
+
 .glass-effect {
   @apply rounded-xl border border-glass bg-glass backdrop-blur-[10px];
 }
@@ -11,17 +105,26 @@
   @apply transition-all duration-300 hover:border-glass-hover hover:bg-glass-hover;
 }
 
-/* Smooth scrolling */
+/* ============================================
+   SMOOTH SCROLLING
+   ============================================ */
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Focus visible styles for accessibility */
+/* ============================================
+   ACCESSIBILITY: FOCUS STATES
+   ============================================ */
+
 :focus-visible {
   @apply outline-2 outline-offset-2 outline-surgical-teal;
 }
 
-/* Reduced motion support */
+/* ============================================
+   ACCESSIBILITY: REDUCED MOTION
+   ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -33,7 +136,10 @@ html {
   }
 }
 
-/* Typography defaults */
+/* ============================================
+   TYPOGRAPHY DEFAULTS
+   ============================================ */
+
 body {
   @apply font-sans;
 }
@@ -66,12 +172,14 @@ small {
   @apply text-body-small;
 }
 
-/* Button base styles */
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
 button {
   @apply transition-all duration-300;
 }
 
-/* Form input base styles */
 input,
 textarea,
 select {
@@ -84,12 +192,229 @@ select:disabled {
   @apply cursor-not-allowed opacity-50;
 }
 
-/* Link styles */
+/* ============================================
+   LINKS
+   ============================================ */
+
 a {
   @apply text-surgical-teal transition-colors duration-300 hover:text-surgical-teal-dark;
 }
 
-/* Image optimization */
+/* ============================================
+   IMAGES
+   ============================================ */
+
 img {
   @apply max-w-full;
 }
+
+/* ============================================
+   UTILITY CLASSES: GLASSMORPHISM VARIANTS
+   ============================================ */
+
+.glass-card {
+  @apply rounded-xl border border-glass bg-glass backdrop-blur-[10px] shadow-glass;
+}
+
+.glass-card-hover {
+  @apply transition-all duration-300 hover:border-glass-hover hover:bg-glass-hover;
+}
+
+.glass-input {
+  @apply rounded-lg border border-glass bg-glass/50 px-4 py-3 text-neutral-light placeholder-neutral-medium backdrop-blur-[10px] transition-all duration-300 focus:border-glass-hover focus:bg-glass focus:outline-none;
+}
+
+.glass-button {
+  @apply rounded-lg border border-glass bg-glass px-6 py-3 text-neutral-light backdrop-blur-[10px] transition-all duration-300 hover:border-glass-hover hover:bg-glass-hover focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surgical-teal;
+}
+
+/* ============================================
+   UTILITY CLASSES: RESPONSIVE CONTAINERS
+   ============================================ */
+
+.container-mobile {
+  @apply px-4;
+}
+
+.container-tablet {
+  @apply px-6;
+}
+
+.container-desktop {
+  @apply mx-auto max-w-container px-8;
+}
+
+/* ============================================
+   UTILITY CLASSES: TYPOGRAPHY HELPERS
+   ============================================ */
+
+.text-truncate {
+  @apply overflow-hidden text-ellipsis whitespace-nowrap;
+}
+
+.text-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================
+   UTILITY CLASSES: FLEX HELPERS
+   ============================================ */
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-between {
+  @apply flex items-center justify-between;
+}
+
+.flex-col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
+/* ============================================
+   UTILITY CLASSES: GRID HELPERS
+   ============================================ */
+
+.grid-auto-fit {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-auto-fill {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* ============================================
+   UTILITY CLASSES: VISIBILITY
+   ============================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================
+   UTILITY CLASSES: ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 1s ease-out;
+}
+
+.animate-slide-left {
+  animation: slideLeft 1s ease-out;
+}
+
+.animate-slide-right {
+  animation: slideRight 1s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out;
+}
+
+.animate-pulse-custom {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
