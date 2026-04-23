@@ -1,15 +1,12 @@
 name = "herlon-moura-website"
 type = "javascript"
-account_id = ""
+account_id = "cb27e1a67198789eb42d11ab90737652"
 workers_dev = true
+pages_build_output_dir = ".next/standalone"
 
 [build]
 command = "npm run build"
 cwd = "./"
-
-[build.upload]
-format = "modules"
-main = "./node_modules/.bin/wrangler"
 
 [env.production]
 name = "herlon-moura-website-prod"
