@@ -12,5 +12,6 @@ export { PageLayout, HeroPageLayout, ContentPageLayout, GridPageLayout } from '.
 export { HeroSection } from './HeroSection';
 export { Logo } from './Logo';
 export { DVTRiskCalculator } from './DVTRiskCalculator';
+export { DVTModal } from './DVTModal';
 export { SocialProofTicker } from './SocialProofTicker';
 export { SymptomNavigator } from './SymptomNavigator';

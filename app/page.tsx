@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -9,6 +9,7 @@ import {
   HeroSection,
   Footer,
   DVTRiskCalculator,
+  DVTModal,
 } from '@/components';
 import {
   Activity,
@@ -29,6 +30,8 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
+  const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
+
   const PROCEDURES = [
     {
       title: 'Doppler Vascular Colorido',
@@ -100,10 +103,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-dark-elevated text-slate-100">
-      <Header />
+      <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
       {/* Hero Section with Doctor Photo & Real Branding */}
-      <HeroSection />
+      <HeroSection onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
       {/* Trust & Credibility Ticker Bar */}
       <section className="border-y border-surgical-teal/20 bg-slate-950/80 py-6 backdrop-blur-md">
@@ -358,17 +361,27 @@ export default function Home() {
       <section id="calculadora-tvp" className="py-20 sm:py-28 bg-gradient-to-b from-slate-950 via-dark-elevated to-slate-950 relative overflow-hidden">
         <div className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-500/10 blur-[130px]" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center mb-12">
+          <div className="mx-auto max-w-3xl text-center mb-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-surgical-teal/40 bg-surgical-teal/10 px-3.5 py-1.5 text-xs font-semibold text-surgical-teal mb-3">
               <Activity className="h-4 w-4" />
-              <span>Ferramenta Interativa Animada</span>
+              <span>Triagem Vascular Rápida</span>
             </div>
             <h2 className="text-3xl font-extrabold sm:text-5xl text-white">
               Calculadora de Risco de Trombose (TVP)
             </h2>
             <p className="mt-4 text-base text-slate-300">
-              Responda às etapas abaixo e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas e canal direto de triagem.
+              Responda às 4 etapas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
             </p>
+            <div className="mt-4">
+              <button
+                type="button"
+                onClick={() => setIsCalculatorModalOpen(true)}
+                className="inline-flex items-center gap-2 rounded-xl bg-surgical-teal/15 border border-surgical-teal/40 px-4 py-2 text-xs font-bold text-surgical-teal hover:bg-surgical-teal hover:text-slate-950 transition-all shadow-sm"
+              >
+                <HeartPulse className="h-4 w-4" />
+                <span>Abrir em Modo Janela Flutuante</span>
+              </button>
+            </div>
           </div>
 
           {/* Animated DVT Calculator Component */}
@@ -499,6 +512,27 @@ export default function Home() {
       </section>
 
       <Footer />
+
+      {/* Quick Floating Test Trigger Button */}
+      <aside className="fixed bottom-5 right-5 z-30 hidden sm:block" aria-label="Acesso rápido ao teste de risco">
+        <button
+          type="button"
+          onClick={() => setIsCalculatorModalOpen(true)}
+          className="group flex items-center gap-2.5 rounded-full bg-slate-900/90 border border-surgical-teal/50 px-4 py-2.5 text-xs font-bold text-white shadow-2xl backdrop-blur-xl transition-all hover:bg-surgical-teal hover:text-slate-950 hover:shadow-surgical-teal/30 hover:scale-105 active:scale-95"
+          aria-label="Abrir teste rápido de TVP"
+        >
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal group-hover:bg-slate-950 group-hover:text-surgical-teal">
+            <HeartPulse className="h-3.5 w-3.5" />
+          </span>
+          <span>Teste de Risco TVP</span>
+        </button>
+      </aside>
+
+      {/* DVT Modal with zero scroll */}
+      <DVTModal
+        isOpen={isCalculatorModalOpen}
+        onClose={() => setIsCalculatorModalOpen(false)}
+      />
     </main>
   );
 }

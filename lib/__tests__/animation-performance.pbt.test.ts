@@ -63,7 +63,7 @@ describe('Animation Performance - Property-Based Tests', () => {
     it('should not exceed CLS threshold of 0.1 for any animation', () => {
       fc.assert(
         fc.property(
-          fc.array(fc.float({ min: 0, max: 0.01 }), { minLength: 1, maxLength: 10 }),
+          fc.array(fc.float({ min: 0, max: Math.fround(0.01), noNaN: true }), { minLength: 1, maxLength: 10 }),
           (shifts) => {
             const totalCLS = shifts.reduce((sum, shift) => sum + shift, 0);
             // Total CLS should not exceed 0.1
@@ -77,7 +77,7 @@ describe('Animation Performance - Property-Based Tests', () => {
       fc.assert(
         fc.property(
           fc.array(
-            fc.array(fc.float({ min: 0, max: 0.005 }), { minLength: 1, maxLength: 5 }),
+            fc.array(fc.float({ min: 0, max: Math.fround(0.005), noNaN: true }), { minLength: 1, maxLength: 5 }),
             { minLength: 1, maxLength: 5 }
           ),
           (animationShifts) => {

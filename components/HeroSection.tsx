@@ -10,11 +10,13 @@ interface HeroSectionProps {
   headline?: string;
   subheadline?: string;
   primaryCTA?: { label: string; href: string };
-  secondaryCTA?: { label: string; href: string };
+  secondaryCTA?: { label: string; href?: string };
+  onOpenCalculator?: () => void;
+  logoSvg?: React.ReactNode;
 }
 
 export function HeroSection({
-  headline = 'Dr. Herlon Moura',
+  headline,
   subheadline = 'Cirurgião Vascular e Endovascular em Salvador. Especialista em saúde circulatória, tratamento moderno de varizes a laser e prevenção de trombose.',
   primaryCTA = {
     label: 'Agendar Consulta',
@@ -24,6 +26,8 @@ export function HeroSection({
     label: 'Calculadora de Risco de TVP',
     href: '#calculadora-tvp',
   },
+  onOpenCalculator,
+  logoSvg,
 }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-dark-elevated to-slate-900 py-12 lg:py-20">
@@ -48,11 +52,19 @@ export function HeroSection({
 
             {/* Headline */}
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Cuidado Vascular de Excelência com{' '}
-              <span className="bg-gradient-to-r from-surgical-teal via-teal-300 to-emerald-400 bg-clip-text text-transparent">
-                Dr. Herlon Moura
-              </span>
+              {headline ? (
+                <span>{headline}</span>
+              ) : (
+                <>
+                  Cuidado Vascular de Excelência com{' '}
+                  <span className="bg-gradient-to-r from-surgical-teal via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                    Dr. Herlon Moura
+                  </span>
+                </>
+              )}
             </h1>
+
+            {logoSvg && <div className="mt-4 flex">{logoSvg}</div>}
 
             {/* Subtitle */}
             <p className="mt-5 text-lg text-slate-300 sm:text-xl leading-relaxed max-w-2xl">
@@ -99,14 +111,26 @@ export function HeroSection({
                 <span>{primaryCTA.label}</span>
               </a>
 
-              <a
-                href={secondaryCTA.href}
-                className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-surgical-teal/40 bg-surgical-teal/10 px-6 py-4 text-base font-semibold text-surgical-teal backdrop-blur-md transition-all hover:bg-surgical-teal hover:text-slate-950 hover:-translate-y-0.5"
-              >
-                <Activity className="h-5 w-5" />
-                <span>{secondaryCTA.label}</span>
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              {onOpenCalculator ? (
+                <button
+                  type="button"
+                  onClick={onOpenCalculator}
+                  className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-surgical-teal/40 bg-surgical-teal/10 px-6 py-4 text-base font-semibold text-surgical-teal backdrop-blur-md transition-all hover:bg-surgical-teal hover:text-slate-950 hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <Activity className="h-5 w-5" />
+                  <span>{secondaryCTA.label}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              ) : (
+                <a
+                  href={secondaryCTA.href || '#calculadora-tvp'}
+                  className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-surgical-teal/40 bg-surgical-teal/10 px-6 py-4 text-base font-semibold text-surgical-teal backdrop-blur-md transition-all hover:bg-surgical-teal hover:text-slate-950 hover:-translate-y-0.5"
+                >
+                  <Activity className="h-5 w-5" />
+                  <span>{secondaryCTA.label}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              )}
             </div>
 
             {/* Quick Contact Micro-Proof */}

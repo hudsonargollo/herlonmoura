@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, MessageCircle, Phone } from 'lucide-react';
+import { Menu, X, MessageCircle, Phone, HeartPulse } from 'lucide-react';
 import { Logo } from './Logo';
 
 interface HeaderProps {
   logo?: React.ReactNode;
-  navItems?: Array<{ label: string; href: string }>;
+  navItems?: Array<{ label: string; href: string; isCalculator?: boolean }>;
   ctaButton?: { label: string; href: string };
+  onOpenCalculator?: () => void;
 }
 
 export function Header({
@@ -17,13 +18,14 @@ export function Header({
     { label: 'Sobre', href: '/sobre' },
     { label: 'Procedimentos', href: '/#procedimentos' },
     { label: 'Sintomas', href: '/#sintomas' },
-    { label: 'Calculadora TVP', href: '/calculadora-dvt' },
+    { label: 'Calculadora TVP', href: '/calculadora-dvt', isCalculator: true },
     { label: 'Contato', href: '/contato' },
   ],
   ctaButton = {
     label: 'Agendar no WhatsApp',
     href: 'https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta.',
   },
+  onOpenCalculator,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -67,15 +69,29 @@ export function Header({
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-slate-200 transition-colors hover:text-surgical-teal"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            if (item.isCalculator && onOpenCalculator) {
+              return (
+                <button
+                  key={item.href}
+                  onClick={onOpenCalculator}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-surgical-teal/10 px-3 py-1 text-sm font-semibold text-surgical-teal border border-surgical-teal/30 transition-all hover:bg-surgical-teal hover:text-slate-950"
+                >
+                  <HeartPulse className="h-3.5 w-3.5" />
+                  <span>{item.label}</span>
+                </button>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-slate-200 transition-colors hover:text-surgical-teal"
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* CTA Button */}
@@ -105,16 +121,38 @@ export function Header({
       {isMenuOpen && (
         <div className="border-t border-white/10 bg-slate-900/98 px-6 py-6 backdrop-blur-xl lg:hidden">
           <nav className="flex flex-col space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-base font-medium text-slate-200 transition-colors hover:text-surgical-teal"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              if (item.isCalculator && onOpenCalculator) {
+                return (
+                  <button
+                    key={item.href}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      onOpenCalculator();
+                    }}
+                    className="flex items-center justify-between rounded-xl bg-surgical-teal/15 p-3 text-left text-base font-bold text-surgical-teal border border-surgical-teal/30"
+                  >
+                    <span className="flex items-center gap-2">
+                      <HeartPulse className="h-4 w-4" />
+                      {item.label}
+                    </span>
+                    <span className="text-xs font-semibold uppercase tracking-wider bg-surgical-teal text-slate-950 px-2 py-0.5 rounded">
+                      Abrir Teste
+                    </span>
+                  </button>
+                );
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-base font-medium text-slate-200 transition-colors hover:text-surgical-teal"
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <div className="pt-4 border-t border-white/10">
               <a
                 href={ctaButton.href}

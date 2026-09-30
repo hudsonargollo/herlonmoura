@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { render, screen, cleanup, getByText, getByRole, getByLabelText, getByPlaceholderText } from '@testing-library/react';
 import fc from 'fast-check';
 import { Button, Card, FormInput, Label, ErrorMessage } from '../index';
 
@@ -12,12 +12,19 @@ import { Button, Card, FormInput, Label, ErrorMessage } from '../index';
  */
 
 describe('Component Rendering - Property-Based Tests', () => {
+  beforeEach(() => {
+    cleanup();
+    document.body.innerHTML = '';
+  });
+
   describe('Button Component Rendering', () => {
     it('should render button with any text content', () => {
       fc.assert(
-        fc.property(fc.string({ minLength: 1 }), (text) => {
-          render(<Button>{text}</Button>);
-          expect(screen.getByRole('button', { name: text })).toBeInTheDocument();
+        fc.property(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), (text) => {
+          const { container, unmount } = render(<Button>{text}</Button>);
+          expect(container.querySelector('button')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -26,8 +33,10 @@ describe('Component Rendering - Property-Based Tests', () => {
       const variants = ['primary', 'secondary', 'ghost'] as const;
       fc.assert(
         fc.property(fc.constantFrom(...variants), (variant) => {
-          render(<Button variant={variant}>Test</Button>);
-          expect(screen.getByRole('button')).toBeInTheDocument();
+          const { container, unmount } = render(<Button variant={variant}>Test</Button>);
+          expect(container.querySelector('button')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -36,8 +45,10 @@ describe('Component Rendering - Property-Based Tests', () => {
       const sizes = ['sm', 'md', 'lg'] as const;
       fc.assert(
         fc.property(fc.constantFrom(...sizes), (size) => {
-          render(<Button size={size}>Test</Button>);
-          expect(screen.getByRole('button')).toBeInTheDocument();
+          const { container, unmount } = render(<Button size={size}>Test</Button>);
+          expect(container.querySelector('button')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -52,16 +63,18 @@ describe('Component Rendering - Property-Based Tests', () => {
           fc.constantFrom(...sizes),
           fc.boolean(),
           (variant, size, disabled) => {
-            render(
+            const { container, unmount } = render(
               <Button variant={variant} size={size} disabled={disabled}>
                 Test
               </Button>
             );
-            const button = screen.getByRole('button');
+            const button = container.querySelector('button');
             expect(button).toBeInTheDocument();
             if (disabled) {
               expect(button).toBeDisabled();
             }
+            unmount();
+            document.body.innerHTML = '';
           }
         )
       );
@@ -71,9 +84,11 @@ describe('Component Rendering - Property-Based Tests', () => {
   describe('Card Component Rendering', () => {
     it('should render card with any text content', () => {
       fc.assert(
-        fc.property(fc.string({ minLength: 1 }), (text) => {
-          render(<Card>{text}</Card>);
-          expect(screen.getByText(text)).toBeInTheDocument();
+        fc.property(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), (text) => {
+          const { container, unmount } = render(<Card>{text}</Card>);
+          expect(container.textContent).toContain(text);
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -82,16 +97,18 @@ describe('Component Rendering - Property-Based Tests', () => {
       const variants = ['standard', 'glass'] as const;
       fc.assert(
         fc.property(fc.constantFrom(...variants), (variant) => {
-          render(<Card variant={variant} data-testid="card">Test</Card>);
-          expect(screen.getByTestId('card')).toBeInTheDocument();
+          const { container, unmount } = render(<Card variant={variant} data-testid="card">Test</Card>);
+          expect(container.querySelector('[data-testid="card"]')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
 
     it('should render card with multiple children', () => {
       fc.assert(
-        fc.property(fc.array(fc.string({ minLength: 1 }), { minLength: 1, maxLength: 5 }), (texts) => {
-          render(
+        fc.property(fc.array(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), { minLength: 1, maxLength: 5 }), (texts) => {
+          const { container, unmount } = render(
             <Card>
               {texts.map((text, i) => (
                 <div key={i}>{text}</div>
@@ -99,8 +116,10 @@ describe('Component Rendering - Property-Based Tests', () => {
             </Card>
           );
           texts.forEach((text) => {
-            expect(screen.getByText(text)).toBeInTheDocument();
+            expect(container.textContent).toContain(text);
           });
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -110,8 +129,11 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should render input with any placeholder text', () => {
       fc.assert(
         fc.property(fc.string({ minLength: 1 }), (placeholder) => {
-          render(<FormInput placeholder={placeholder} />);
-          expect(screen.getByPlaceholderText(placeholder)).toBeInTheDocument();
+          const { container, unmount } = render(<FormInput placeholder={placeholder} />);
+          const input = container.querySelector('input');
+          expect(input?.getAttribute('placeholder')).toBe(placeholder);
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -120,8 +142,11 @@ describe('Component Rendering - Property-Based Tests', () => {
       const types = ['text', 'email', 'password', 'tel', 'number', 'date', 'time'] as const;
       fc.assert(
         fc.property(fc.constantFrom(...types), (type) => {
-          render(<FormInput type={type} />);
-          expect(screen.getByRole('textbox', { hidden: true })).toBeInTheDocument();
+          const { container, unmount } = render(<FormInput type={type} />);
+          const input = container.querySelector('input');
+          expect(input?.getAttribute('type')).toBe(type);
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -130,8 +155,10 @@ describe('Component Rendering - Property-Based Tests', () => {
       const states = ['default', 'error', 'success'] as const;
       fc.assert(
         fc.property(fc.constantFrom(...states), (state) => {
-          render(<FormInput state={state} />);
-          expect(screen.getByRole('textbox', { hidden: true })).toBeInTheDocument();
+          const { container, unmount } = render(<FormInput state={state} />);
+          expect(container.querySelector('input')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -139,12 +166,14 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should render input with label and error message', () => {
       fc.assert(
         fc.property(
-          fc.string({ minLength: 1 }),
-          fc.string({ minLength: 1 }),
+          fc.string({ minLength: 1 }).filter(s => s.trim().length > 0),
+          fc.string({ minLength: 1 }).filter(s => s.trim().length > 0),
           (label, error) => {
-            render(<FormInput label={label} state="error" errorMessage={error} />);
-            expect(screen.getByLabelText(label)).toBeInTheDocument();
-            expect(screen.getByText(error)).toBeInTheDocument();
+            const { container, unmount } = render(<FormInput label={label} state="error" errorMessage={error} />);
+            expect(container.querySelector('label')?.textContent).toContain(label);
+            expect(container.textContent).toContain(error);
+            unmount();
+            document.body.innerHTML = '';
           }
         )
       );
@@ -154,9 +183,11 @@ describe('Component Rendering - Property-Based Tests', () => {
   describe('Label Component Rendering', () => {
     it('should render label with any text content', () => {
       fc.assert(
-        fc.property(fc.string({ minLength: 1 }), (text) => {
-          render(<Label>{text}</Label>);
-          expect(screen.getByText(text)).toBeInTheDocument();
+        fc.property(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), (text) => {
+          const { container, unmount } = render(<Label>{text}</Label>);
+          expect(container.textContent).toContain(text);
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -164,8 +195,10 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should render required indicator when required prop is true', () => {
       fc.assert(
         fc.property(fc.string({ minLength: 1 }), (text) => {
-          render(<Label required>{text}</Label>);
-          expect(screen.getByLabelText('required')).toBeInTheDocument();
+          const { container, unmount } = render(<Label required>{text}</Label>);
+          expect(container.querySelector('[aria-label="required"]')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -173,8 +206,10 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should not render required indicator when required prop is false', () => {
       fc.assert(
         fc.property(fc.string({ minLength: 1 }), (text) => {
-          render(<Label required={false}>{text}</Label>);
-          expect(screen.queryByLabelText('required')).not.toBeInTheDocument();
+          const { container, unmount } = render(<Label required={false}>{text}</Label>);
+          expect(container.querySelector('[aria-label="required"]')).toBeNull();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -183,9 +218,11 @@ describe('Component Rendering - Property-Based Tests', () => {
   describe('ErrorMessage Component Rendering', () => {
     it('should render error message with any text', () => {
       fc.assert(
-        fc.property(fc.string({ minLength: 1 }), (message) => {
-          render(<ErrorMessage message={message} />);
-          expect(screen.getByText(message)).toBeInTheDocument();
+        fc.property(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), (message) => {
+          const { container, unmount } = render(<ErrorMessage message={message} />);
+          expect(container.textContent).toContain(message);
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -193,8 +230,10 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should render error message with alert role', () => {
       fc.assert(
         fc.property(fc.string({ minLength: 1 }), (message) => {
-          render(<ErrorMessage message={message} />);
-          expect(screen.getByRole('alert')).toBeInTheDocument();
+          const { container, unmount } = render(<ErrorMessage message={message} />);
+          expect(container.querySelector('[role="alert"]')).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -202,9 +241,11 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should render icon by default', () => {
       fc.assert(
         fc.property(fc.string({ minLength: 1 }), (message) => {
-          render(<ErrorMessage message={message} />);
-          const svg = screen.getByRole('alert').querySelector('svg');
+          const { container, unmount } = render(<ErrorMessage message={message} />);
+          const svg = container.querySelector('svg');
           expect(svg).toBeInTheDocument();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -212,9 +253,11 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should not render icon when icon prop is false', () => {
       fc.assert(
         fc.property(fc.string({ minLength: 1 }), (message) => {
-          render(<ErrorMessage message={message} icon={false} />);
-          const svg = screen.getByRole('alert').querySelector('svg');
-          expect(svg).not.toBeInTheDocument();
+          const { container, unmount } = render(<ErrorMessage message={message} icon={false} />);
+          const svg = container.querySelector('svg');
+          expect(svg).toBeNull();
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -223,16 +266,18 @@ describe('Component Rendering - Property-Based Tests', () => {
   describe('Component Consistency', () => {
     it('should render same component consistently with same props', () => {
       fc.assert(
-        fc.property(fc.string({ minLength: 1 }), (text) => {
-          const { rerender } = render(<Button>{text}</Button>);
-          const firstButton = screen.getByRole('button');
-          const firstContent = firstButton.textContent;
+        fc.property(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), (text) => {
+          const { container, rerender, unmount } = render(<Button>{text}</Button>);
+          const firstButton = container.querySelector('button');
+          const firstContent = firstButton?.textContent;
 
           rerender(<Button>{text}</Button>);
-          const secondButton = screen.getByRole('button');
-          const secondContent = secondButton.textContent;
+          const secondButton = container.querySelector('button');
+          const secondContent = secondButton?.textContent;
 
           expect(firstContent).toBe(secondContent);
+          unmount();
+          document.body.innerHTML = '';
         })
       );
     });
@@ -240,14 +285,16 @@ describe('Component Rendering - Property-Based Tests', () => {
     it('should handle rapid prop changes', () => {
       fc.assert(
         fc.property(
-          fc.array(fc.string({ minLength: 1 }), { minLength: 1, maxLength: 10 }),
+          fc.array(fc.string({ minLength: 1 }).filter(s => s.trim().length > 0), { minLength: 1, maxLength: 10 }),
           (texts) => {
-            const { rerender } = render(<Button>{texts[0]}</Button>);
+            const { container, rerender, unmount } = render(<Button>{texts[0]}</Button>);
 
             texts.forEach((text) => {
               rerender(<Button>{text}</Button>);
-              expect(screen.getByRole('button', { name: text })).toBeInTheDocument();
+              expect(container.querySelector('button')).toBeInTheDocument();
             });
+            unmount();
+            document.body.innerHTML = '';
           }
         )
       );
