@@ -1,12 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft, AlertCircle, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ChevronRight,
+  ChevronLeft,
+  AlertCircle,
+  CheckCircle2,
+  AlertTriangle,
+  RotateCcw,
+  MessageCircle,
+  Activity,
+  Shield,
+  Clock,
+  HeartPulse,
+} from 'lucide-react';
 import { Button } from './Button';
 import { Card } from './Card';
 
-interface DVTCalculatorState {
+export interface DVTCalculatorState {
   currentStep: number;
+  direction: number;
   responses: {
     ageRange: string;
     immobilityDuration: string;
@@ -43,9 +57,19 @@ const RISK_FACTOR_WEIGHTS = {
   },
 };
 
-export function DVTRiskCalculator() {
+const ADDITIONAL_FACTORS = [
+  { id: 'hormonal', label: 'Uso de anticoncepcional oral ou reposição hormonal (TRH)' },
+  { id: 'smoking', label: 'Tabagismo ativo (fumante diário)' },
+  { id: 'obesity', label: 'Obesidade ou sobrepeso significativo (IMC > 30)' },
+  { id: 'cancer', label: 'Histórico oncológico ativo ou tratamento recente de câncer' },
+  { id: 'heart', label: 'Insuficiência cardíaca ou histórico de infarto prévio' },
+  { id: 'varicose', label: 'Varizes volumosas, inchaço crônico ou queimação nas pernas' },
+];
+
+export function DVTRiskCalculator({ className = '' }: { className?: string }) {
   const [state, setState] = useState<DVTCalculatorState>({
     currentStep: 0,
+    direction: 1,
     responses: {
       ageRange: '',
       immobilityDuration: '',
@@ -58,14 +82,22 @@ export function DVTRiskCalculator() {
     riskCategory: null,
   });
 
-  const computeRiskScore = (responses: DVTCalculatorState['responses']): { score: number; category: 'low' | 'moderate' | 'high' | 'critical' } => {
+  const computeRiskScore = (
+    responses: DVTCalculatorState['responses']
+  ): { score: number; category: 'low' | 'moderate' | 'high' | 'critical' } => {
     let score = 0;
 
     if (responses.ageRange) {
-      score += RISK_FACTOR_WEIGHTS.ageRange[responses.ageRange as keyof typeof RISK_FACTOR_WEIGHTS.ageRange] || 0;
+      score +=
+        RISK_FACTOR_WEIGHTS.ageRange[
+          responses.ageRange as keyof typeof RISK_FACTOR_WEIGHTS.ageRange
+        ] || 0;
     }
     if (responses.immobilityDuration) {
-      score += RISK_FACTOR_WEIGHTS.immobilityDuration[responses.immobilityDuration as keyof typeof RISK_FACTOR_WEIGHTS.immobilityDuration] || 0;
+      score +=
+        RISK_FACTOR_WEIGHTS.immobilityDuration[
+          responses.immobilityDuration as keyof typeof RISK_FACTOR_WEIGHTS.immobilityDuration
+        ] || 0;
     }
     if (responses.recentSurgery !== null) {
       score += RISK_FACTOR_WEIGHTS.recentSurgery[responses.recentSurgery ? 'true' : 'false'];
@@ -74,7 +106,10 @@ export function DVTRiskCalculator() {
       score += RISK_FACTOR_WEIGHTS.familyHistory[responses.familyHistory ? 'true' : 'false'];
     }
     if (responses.pregnancyStatus) {
-      score += RISK_FACTOR_WEIGHTS.pregnancyStatus[responses.pregnancyStatus as keyof typeof RISK_FACTOR_WEIGHTS.pregnancyStatus] || 0;
+      score +=
+        RISK_FACTOR_WEIGHTS.pregnancyStatus[
+          responses.pregnancyStatus as keyof typeof RISK_FACTOR_WEIGHTS.pregnancyStatus
+        ] || 0;
     }
     score += responses.additionalFactors.length;
 
@@ -88,11 +123,16 @@ export function DVTRiskCalculator() {
 
   const handleNext = () => {
     if (state.currentStep < 6) {
-      setState((prev) => ({ ...prev, currentStep: prev.currentStep + 1 }));
+      setState((prev) => ({
+        ...prev,
+        direction: 1,
+        currentStep: prev.currentStep + 1,
+      }));
     } else {
       const { score, category } = computeRiskScore(state.responses);
       setState((prev) => ({
         ...prev,
+        direction: 1,
         currentStep: 7,
         riskScore: score,
         riskCategory: category,
@@ -102,7 +142,11 @@ export function DVTRiskCalculator() {
 
   const handleBack = () => {
     if (state.currentStep > 0) {
-      setState((prev) => ({ ...prev, currentStep: prev.currentStep - 1 }));
+      setState((prev) => ({
+        ...prev,
+        direction: -1,
+        currentStep: prev.currentStep - 1,
+      }));
     }
   };
 
@@ -116,14 +160,14 @@ export function DVTRiskCalculator() {
     }));
   };
 
-  const handleAdditionalFactorToggle = (factor: string) => {
+  const handleAdditionalFactorToggle = (factorLabel: string) => {
     setState((prev) => ({
       ...prev,
       responses: {
         ...prev.responses,
-        additionalFactors: prev.responses.additionalFactors.includes(factor)
-          ? prev.responses.additionalFactors.filter((f) => f !== factor)
-          : [...prev.responses.additionalFactors, factor],
+        additionalFactors: prev.responses.additionalFactors.includes(factorLabel)
+          ? prev.responses.additionalFactors.filter((f) => f !== factorLabel)
+          : [...prev.responses.additionalFactors, factorLabel],
       },
     }));
   };
@@ -131,6 +175,7 @@ export function DVTRiskCalculator() {
   const handleReset = () => {
     setState({
       currentStep: 0,
+      direction: -1,
       responses: {
         ageRange: '',
         immobilityDuration: '',
@@ -144,351 +189,658 @@ export function DVTRiskCalculator() {
     });
   };
 
-  const getRiskColor = (category: string) => {
+  const getRiskBadgeDetails = (category: string) => {
     switch (category) {
       case 'low':
-        return 'bg-green-900 text-green-100';
+        return {
+          title: 'Baixo Risco',
+          subtitle: 'Probabilidade reduzida de trombose venosa',
+          color: 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40',
+          textColor: 'text-emerald-400',
+          recommendation:
+            'Seu risco calculado é baixo. Mantenha hábitos de vida saudáveis, hidratação adequada e pausas para caminhada durante viagens longas.',
+        };
       case 'moderate':
-        return 'bg-yellow-900 text-yellow-100';
+        return {
+          title: 'Risco Moderado',
+          subtitle: 'Fatores combinados exigem monitoramento preventivo',
+          color: 'bg-amber-950/70 text-amber-300 border-amber-500/40',
+          textColor: 'text-amber-400',
+          recommendation:
+            'Você apresenta fatores de risco que merecem atenção clínica. Recomendamos uma consulta com o Dr. Herlon Moura para mapeamento com Eco-Doppler e orientações preventivas personalizadas.',
+        };
       case 'high':
-        return 'bg-orange-900 text-orange-100';
+        return {
+          title: 'Alto Risco',
+          subtitle: 'Indicação clara para avaliação vascular especializada',
+          color: 'bg-orange-950/70 text-orange-300 border-orange-500/40',
+          textColor: 'text-orange-400',
+          recommendation:
+            'Atenção: seus fatores indicam probabilidade elevada de trombose venosa profunda. É altamente recomendado agendar uma consulta com o Dr. Herlon Moura para avaliação e profilaxia vascular o quanto antes.',
+        };
       case 'critical':
-        return 'bg-red-900 text-red-100';
+        return {
+          title: 'Risco Crítico / Alerta',
+          subtitle: 'Múltiplos fatores de risco graves associados',
+          color: 'bg-rose-950/80 text-rose-200 border-rose-500/50',
+          textColor: 'text-rose-400',
+          recommendation:
+            'Urgência preventiva: se você apresentar dor súbita na perna, panturrilha empastada, inchaço assimétrico ou falta de ar, procure atendimento de emergência ou contate o consultório imediatamente via WhatsApp.',
+        };
       default:
-        return 'bg-slate-700 text-slate-100';
-    }
-  };
-
-  const getRiskRecommendation = (category: string) => {
-    switch (category) {
-      case 'low':
-        return 'Your risk is low. Continue with healthy lifestyle habits and regular check-ups.';
-      case 'moderate':
-        return 'Your risk is moderate. Consider scheduling a consultation with Dr. Herlon Moura for personalized advice.';
-      case 'high':
-        return 'Your risk is high. We recommend scheduling a consultation with Dr. Herlon Moura as soon as possible.';
-      case 'critical':
-        return 'Your risk is critical. Please contact Dr. Herlon Moura immediately for urgent evaluation.';
-      default:
-        return '';
+        return {
+          title: 'Avaliação Concluída',
+          subtitle: '',
+          color: 'bg-slate-800 text-slate-100 border-slate-700',
+          textColor: 'text-slate-100',
+          recommendation: '',
+        };
     }
   };
 
   const progressPercentage = ((state.currentStep + 1) / 8) * 100;
 
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 30 : -30,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.3, ease: 'easeOut' },
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -30 : 30,
+      opacity: 0,
+      transition: { duration: 0.2, ease: 'easeIn' },
+    }),
+  };
+
+  const whatsappMessage = encodeURIComponent(
+    `Olá Dr. Herlon Moura, realizei a Calculadora de Risco de TVP no seu site. Meu resultado indicou Risco ${
+      state.riskCategory ? state.riskCategory.toUpperCase() : 'CALCULADO'
+    } (Pontuação: ${state.riskScore || 0}). Gostaria de agendar uma consulta para avaliação vascular.`
+  );
+
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 py-8">
-      <Card className="p-8">
-        {/* Progress Bar */}
+    <div className={`w-full max-w-3xl mx-auto ${className}`}>
+      <div className="relative overflow-hidden rounded-3xl border border-surgical-teal/25 bg-slate-900/90 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+        {/* Decorative Top Accent */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-surgical-teal via-emerald-400 to-teal-600" />
+
+        {/* Progress & Header */}
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-xl font-semibold text-slate-100">DVT Risk Assessment</h2>
-            <span className="text-sm text-slate-400">
-              {state.currentStep === 7 ? 'Results' : `Step ${state.currentStep + 1} of 7`}
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surgical-teal/20 text-surgical-teal font-bold text-sm">
+                <HeartPulse className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="text-lg font-bold text-white sm:text-xl">
+                  Calculadora de Risco de TVP
+                </h2>
+                <p className="text-xs text-slate-400">Trombose Venosa Profunda • Protocolo Clínico</p>
+              </div>
+            </div>
+            <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-teal-300 border border-teal-500/20">
+              {state.currentStep === 7 ? 'Resultado' : `Etapa ${state.currentStep + 1} de 7`}
             </span>
           </div>
-          <div className="w-full bg-slate-700 rounded-full h-2">
-            <div
-              className="bg-teal-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progressPercentage}%` }}
+
+          {/* Animated Progress Bar */}
+          <div className="relative h-2 w-full overflow-hidden rounded-full bg-slate-800">
+            <motion.div
+              className="h-full bg-gradient-to-r from-surgical-teal to-emerald-400"
+              initial={{ width: 0 }}
+              animate={{ width: `${progressPercentage}%` }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             />
           </div>
         </div>
 
-        {/* Step 0: Introduction */}
-        {state.currentStep === 0 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold text-slate-100 mb-4">Assess Your DVT Risk</h3>
-              <p className="text-slate-300 mb-4">
-                Deep Vein Thrombosis (DVT) is a serious condition where blood clots form in deep veins. This assessment helps identify your personal risk factors.
-              </p>
-              <div className="bg-slate-800 border border-teal-500/20 rounded-lg p-4 mb-4">
-                <p className="text-sm text-slate-300">
-                  <strong>Privacy Notice:</strong> Your responses are processed locally on your device and are not stored or transmitted to any server. This assessment is for educational purposes only and does not replace professional medical advice.
+        {/* Form Container with Animated Transitions */}
+        <AnimatePresence custom={state.direction} mode="wait">
+          {/* Step 0: Introdução */}
+          {state.currentStep === 0 && (
+            <motion.div
+              key="step-0"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <span className="inline-block rounded-md bg-teal-950/60 px-2.5 py-1 text-xs font-medium text-teal-400 border border-teal-800/40 mb-3">
+                  Autoavaliação Rápida (2 minutos)
+                </span>
+                <h3 className="text-2xl font-bold text-white sm:text-3xl leading-snug">
+                  Descubra seu nível de risco para Trombose Venosa Profunda (TVP)
+                </h3>
+                <p className="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
+                  A TVP ocorre quando um coágulo sanguíneo se forma em veias profundas, frequentemente nas pernas, podendo causar complicações graves como embolia pulmonar. Responda a 6 perguntas breves baseadas em critérios clínicos validados.
                 </p>
               </div>
-            </div>
-            <Button onClick={handleNext} className="w-full">
-              Start Assessment
-            </Button>
-          </div>
-        )}
 
-        {/* Step 1: Age Range */}
-        {state.currentStep === 1 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-4">What is your age range?</h3>
-              <div className="space-y-3">
-                {['18-40', '41-60', '61-80', '80+'].map((range) => (
-                  <label key={range} className="flex items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors">
-                    <input
-                      type="radio"
-                      name="ageRange"
-                      value={range}
-                      checked={state.responses.ageRange === range}
-                      onChange={(e) => handleResponseChange('ageRange', e.target.value)}
-                      className="w-4 h-4 text-teal-500"
-                    />
-                    <span className="ml-3 text-slate-100">{range} years</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleBack} variant="secondary" className="flex-1">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button onClick={handleNext} disabled={!state.responses.ageRange} className="flex-1">
-                Next
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Immobility Duration */}
-        {state.currentStep === 2 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-4">How long have you been immobile recently?</h3>
-              <p className="text-sm text-slate-400 mb-4">Consider bed rest, long flights, or prolonged sitting</p>
-              <div className="space-y-3">
-                {['0-3', '4-7', '8-14', '15+'].map((duration) => (
-                  <label key={duration} className="flex items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors">
-                    <input
-                      type="radio"
-                      name="immobilityDuration"
-                      value={duration}
-                      checked={state.responses.immobilityDuration === duration}
-                      onChange={(e) => handleResponseChange('immobilityDuration', e.target.value)}
-                      className="w-4 h-4 text-teal-500"
-                    />
-                    <span className="ml-3 text-slate-100">{duration} days</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleBack} variant="secondary" className="flex-1">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button onClick={handleNext} disabled={!state.responses.immobilityDuration} className="flex-1">
-                Next
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Recent Surgery */}
-        {state.currentStep === 3 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-4">Have you had surgery in the past 3 months?</h3>
-              <div className="space-y-3">
-                {[
-                  { value: true, label: 'Yes' },
-                  { value: false, label: 'No' },
-                ].map(({ value, label }) => (
-                  <label key={String(value)} className="flex items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors">
-                    <input
-                      type="radio"
-                      name="recentSurgery"
-                      value={String(value)}
-                      checked={state.responses.recentSurgery === value}
-                      onChange={(e) => handleResponseChange('recentSurgery', e.target.value === 'true')}
-                      className="w-4 h-4 text-teal-500"
-                    />
-                    <span className="ml-3 text-slate-100">{label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleBack} variant="secondary" className="flex-1">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button onClick={handleNext} disabled={state.responses.recentSurgery === null} className="flex-1">
-                Next
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 4: Family History */}
-        {state.currentStep === 4 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-4">Do you have a family history of blood clots?</h3>
-              <div className="space-y-3">
-                {[
-                  { value: true, label: 'Yes' },
-                  { value: false, label: 'No' },
-                ].map(({ value, label }) => (
-                  <label key={String(value)} className="flex items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors">
-                    <input
-                      type="radio"
-                      name="familyHistory"
-                      value={String(value)}
-                      checked={state.responses.familyHistory === value}
-                      onChange={(e) => handleResponseChange('familyHistory', e.target.value === 'true')}
-                      className="w-4 h-4 text-teal-500"
-                    />
-                    <span className="ml-3 text-slate-100">{label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleBack} variant="secondary" className="flex-1">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button onClick={handleNext} disabled={state.responses.familyHistory === null} className="flex-1">
-                Next
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 5: Pregnancy Status */}
-        {state.currentStep === 5 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-4">What is your pregnancy status?</h3>
-              <div className="space-y-3">
-                {[
-                  { value: 'not-applicable', label: 'Not applicable' },
-                  { value: 'not-pregnant', label: 'Not pregnant' },
-                  { value: 'pregnant', label: 'Currently pregnant' },
-                  { value: 'postpartum-6weeks', label: 'Postpartum (within 6 weeks)' },
-                  { value: 'postpartum-6months', label: 'Postpartum (6 weeks to 6 months)' },
-                ].map(({ value, label }) => (
-                  <label key={value} className="flex items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors">
-                    <input
-                      type="radio"
-                      name="pregnancyStatus"
-                      value={value}
-                      checked={state.responses.pregnancyStatus === value}
-                      onChange={(e) => handleResponseChange('pregnancyStatus', e.target.value)}
-                      className="w-4 h-4 text-teal-500"
-                    />
-                    <span className="ml-3 text-slate-100">{label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleBack} variant="secondary" className="flex-1">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button onClick={handleNext} disabled={!state.responses.pregnancyStatus} className="flex-1">
-                Next
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 6: Additional Factors */}
-        {state.currentStep === 6 && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-4">Do any of these apply to you?</h3>
-              <div className="space-y-3">
-                {[
-                  'Oral contraceptives or hormone therapy',
-                  'Smoking',
-                  'Obesity',
-                  'Cancer or cancer treatment',
-                  'Heart disease',
-                  'Varicose veins',
-                ].map((factor) => (
-                  <label key={factor} className="flex items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-800 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={state.responses.additionalFactors.includes(factor)}
-                      onChange={() => handleAdditionalFactorToggle(factor)}
-                      className="w-4 h-4 text-teal-500 rounded"
-                    />
-                    <span className="ml-3 text-slate-100">{factor}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button onClick={handleBack} variant="secondary" className="flex-1">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button onClick={handleNext} className="flex-1">
-                View Results
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 7: Results */}
-        {state.currentStep === 7 && state.riskCategory && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold text-slate-100 mb-6">Your DVT Risk Assessment</h3>
-
-              {/* Risk Category Display */}
-              <div className={`${getRiskColor(state.riskCategory)} rounded-lg p-6 mb-6`}>
-                <div className="flex items-center gap-3 mb-2">
-                  {state.riskCategory === 'low' || state.riskCategory === 'moderate' ? (
-                    <CheckCircle className="w-6 h-6" />
-                  ) : (
-                    <AlertCircle className="w-6 h-6" />
-                  )}
-                  <h4 className="text-2xl font-bold capitalize">{state.riskCategory} Risk</h4>
+              <div className="rounded-xl border border-surgical-teal/20 bg-slate-950/50 p-4 text-xs text-slate-300 leading-relaxed">
+                <div className="flex items-start gap-2.5">
+                  <Shield className="h-5 w-5 text-surgical-teal flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block mb-0.5">Privacidade e Sigilo Médico:</strong>
+                    Suas respostas são processadas em tempo real exclusivamente no seu navegador. Nenhum dado de saúde é armazenado ou enviado a servidores terceiros. Esta ferramenta é educativa e não substitui a consulta médica.
+                  </div>
                 </div>
-                <p className="text-sm opacity-90">Risk Score: {state.riskScore}/10</p>
               </div>
 
-              {/* Recommendation */}
-              <div className="bg-slate-800 border border-slate-600 rounded-lg p-4 mb-6">
-                <p className="text-slate-100">{getRiskRecommendation(state.riskCategory)}</p>
+              <button
+                onClick={handleNext}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-surgical-teal to-emerald-500 px-6 py-4 text-base font-bold text-slate-950 shadow-lg shadow-teal-900/30 transition-all hover:opacity-95 hover:shadow-teal-700/40 active:scale-[0.99]"
+              >
+                <span>Iniciar Avaliação de Risco</span>
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </motion.div>
+          )}
+
+          {/* Step 1: Faixa Etária */}
+          {state.currentStep === 1 && (
+            <motion.div
+              key="step-1"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  Qual é a sua faixa etária?
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  O risco de eventos tromboembólicos aumenta progressivamente com a idade.
+                </p>
               </div>
 
-              {/* Educational Content */}
-              <div className="bg-slate-800 rounded-lg p-4 mb-6">
-                <h4 className="font-semibold text-slate-100 mb-3">About Your Risk Factors</h4>
-                <ul className="space-y-2 text-sm text-slate-300">
-                  <li>• Age and immobility are significant risk factors for DVT</li>
-                  <li>• Recent surgery increases clot formation risk</li>
-                  <li>• Family history suggests genetic predisposition</li>
-                  <li>• Pregnancy and postpartum period increase risk</li>
-                  <li>• Additional factors compound your overall risk</li>
-                </ul>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {[
+                  { value: '18-40', label: '18 a 40 anos', desc: 'Risco basal jovem' },
+                  { value: '41-60', label: '41 a 60 anos', desc: 'Início da elevação do risco' },
+                  { value: '61-80', label: '61 a 80 anos', desc: 'Risco moderadamente elevado' },
+                  { value: '80+', label: 'Mais de 80 anos', desc: 'Alta suscetibilidade vascular' },
+                ].map((opt) => {
+                  const isSelected = state.responses.ageRange === opt.value;
+                  return (
+                    <label
+                      key={opt.value}
+                      onClick={() => handleResponseChange('ageRange', opt.value)}
+                      className={`flex cursor-pointer flex-col rounded-xl border p-4 transition-all ${
+                        isSelected
+                          ? 'border-surgical-teal bg-surgical-teal/15 text-white shadow-md shadow-surgical-teal/20 ring-1 ring-surgical-teal'
+                          : 'border-slate-700 bg-slate-800/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-base">{opt.label}</span>
+                        <span
+                          className={`h-4 w-4 rounded-full border flex items-center justify-center ${
+                            isSelected ? 'border-surgical-teal bg-surgical-teal' : 'border-slate-500'
+                          }`}
+                        >
+                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                        </span>
+                      </div>
+                      <span className="mt-1 text-xs text-slate-400">{opt.desc}</span>
+                    </label>
+                  );
+                })}
               </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-3">
-              {(state.riskCategory === 'high' || state.riskCategory === 'critical') && (
-                <Button className="w-full bg-red-600 hover:bg-red-700">
-                  Schedule Urgent Consultation
+              <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <Button onClick={handleBack} variant="secondary" className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Voltar
                 </Button>
-              )}
-              <Button className="w-full">Book Appointment with Dr. Herlon Moura</Button>
-              <Button onClick={handleReset} variant="secondary" className="w-full">
-                Take Assessment Again
-              </Button>
-            </div>
-          </div>
-        )}
-      </Card>
+                <Button onClick={handleNext} disabled={!state.responses.ageRange} className="flex-1">
+                  Avançar
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 2: Tempo de Imobilidade */}
+          {state.currentStep === 2 && (
+            <motion.div
+              key="step-2"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  Esteve em repouso prolongado ou imobilidade recentemente?
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  Considere internação hospitalar, repouso no leito, gesso/tala ou viagens aéreas longas.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {[
+                  { value: '0-3', label: '0 a 3 dias', desc: 'Atividade normal ou repouso breve' },
+                  { value: '4-7', label: '4 a 7 dias', desc: 'Confinamento domiciliar moderado' },
+                  { value: '8-14', label: '8 a 14 dias', desc: 'Imobilidade prolongada' },
+                  { value: '15+', label: 'Mais de 15 dias', desc: 'Repouso contínuo acamado' },
+                ].map((opt) => {
+                  const isSelected = state.responses.immobilityDuration === opt.value;
+                  return (
+                    <label
+                      key={opt.value}
+                      onClick={() => handleResponseChange('immobilityDuration', opt.value)}
+                      className={`flex cursor-pointer flex-col rounded-xl border p-4 transition-all ${
+                        isSelected
+                          ? 'border-surgical-teal bg-surgical-teal/15 text-white shadow-md ring-1 ring-surgical-teal'
+                          : 'border-slate-700 bg-slate-800/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-base">{opt.label}</span>
+                        <span
+                          className={`h-4 w-4 rounded-full border flex items-center justify-center ${
+                            isSelected ? 'border-surgical-teal bg-surgical-teal' : 'border-slate-500'
+                          }`}
+                        >
+                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                        </span>
+                      </div>
+                      <span className="mt-1 text-xs text-slate-400">{opt.desc}</span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <Button onClick={handleBack} variant="secondary" className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Voltar
+                </Button>
+                <Button onClick={handleNext} disabled={!state.responses.immobilityDuration} className="flex-1">
+                  Avançar
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 3: Cirurgia Recente */}
+          {state.currentStep === 3 && (
+            <motion.div
+              key="step-3"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  Realizou cirurgia de médio ou grande porte nos últimos 3 meses?
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  Cirurgias ortopédicas (prótese de joelho/quadril), abdominais, pélvicas ou bariátricas são especialmente relevantes.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {[
+                  { value: true, label: 'Sim, realizei cirurgia recente', desc: 'Intervenção cirúrgica nos últimos 90 dias' },
+                  { value: false, label: 'Não, nenhuma cirurgia', desc: 'Sem procedimentos cirúrgicos no período' },
+                ].map((opt) => {
+                  const isSelected = state.responses.recentSurgery === opt.value;
+                  return (
+                    <label
+                      key={String(opt.value)}
+                      onClick={() => handleResponseChange('recentSurgery', opt.value)}
+                      className={`flex cursor-pointer flex-col rounded-xl border p-4 transition-all ${
+                        isSelected
+                          ? 'border-surgical-teal bg-surgical-teal/15 text-white shadow-md ring-1 ring-surgical-teal'
+                          : 'border-slate-700 bg-slate-800/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-base">{opt.label}</span>
+                        <span
+                          className={`h-4 w-4 rounded-full border flex items-center justify-center ${
+                            isSelected ? 'border-surgical-teal bg-surgical-teal' : 'border-slate-500'
+                          }`}
+                        >
+                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                        </span>
+                      </div>
+                      <span className="mt-1 text-xs text-slate-400">{opt.desc}</span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <Button onClick={handleBack} variant="secondary" className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Voltar
+                </Button>
+                <Button onClick={handleNext} disabled={state.responses.recentSurgery === null} className="flex-1">
+                  Avançar
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 4: Histórico Familiar */}
+          {state.currentStep === 4 && (
+            <motion.div
+              key="step-4"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  Existe histórico familiar direto de Trombose ou Embolia?
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  Pais, irmãos ou filhos diagnosticados com TVP, embolia pulmonar ou trombofilia congênita.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {[
+                  { value: true, label: 'Sim, há histórico familiar', desc: 'Parentes de primeiro grau com histórico' },
+                  { value: false, label: 'Não ou desconheço', desc: 'Sem episódios conhecidos na família direta' },
+                ].map((opt) => {
+                  const isSelected = state.responses.familyHistory === opt.value;
+                  return (
+                    <label
+                      key={String(opt.value)}
+                      onClick={() => handleResponseChange('familyHistory', opt.value)}
+                      className={`flex cursor-pointer flex-col rounded-xl border p-4 transition-all ${
+                        isSelected
+                          ? 'border-surgical-teal bg-surgical-teal/15 text-white shadow-md ring-1 ring-surgical-teal'
+                          : 'border-slate-700 bg-slate-800/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-base">{opt.label}</span>
+                        <span
+                          className={`h-4 w-4 rounded-full border flex items-center justify-center ${
+                            isSelected ? 'border-surgical-teal bg-surgical-teal' : 'border-slate-500'
+                          }`}
+                        >
+                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                        </span>
+                      </div>
+                      <span className="mt-1 text-xs text-slate-400">{opt.desc}</span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <Button onClick={handleBack} variant="secondary" className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Voltar
+                </Button>
+                <Button onClick={handleNext} disabled={state.responses.familyHistory === null} className="flex-1">
+                  Avançar
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 5: Gestação / Puerpério */}
+          {state.currentStep === 5 && (
+            <motion.div
+              key="step-5"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  Condição gestacional ou puerpério
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  Alterações hormonais e compressão vascular elevam naturalmente a hipercoagulabilidade.
+                </p>
+              </div>
+
+              <div className="space-y-2.5">
+                {[
+                  { value: 'not-applicable', label: 'Não se aplica (homens ou sem gestação)' },
+                  { value: 'not-pregnant', label: 'Não gestante no momento' },
+                  { value: 'pregnant', label: 'Gestante (qualquer trimestre)' },
+                  { value: 'postpartum-6weeks', label: 'Pós-parto recente (até 6 semanas)' },
+                  { value: 'postpartum-6months', label: 'Pós-parto (6 semanas a 6 meses)' },
+                ].map((opt) => {
+                  const isSelected = state.responses.pregnancyStatus === opt.value;
+                  return (
+                    <label
+                      key={opt.value}
+                      onClick={() => handleResponseChange('pregnancyStatus', opt.value)}
+                      className={`flex cursor-pointer items-center justify-between rounded-xl border p-3.5 transition-all ${
+                        isSelected
+                          ? 'border-surgical-teal bg-surgical-teal/15 text-white shadow-md ring-1 ring-surgical-teal'
+                          : 'border-slate-700 bg-slate-800/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <span className="font-medium text-sm sm:text-base">{opt.label}</span>
+                      <span
+                        className={`h-4 w-4 rounded-full border flex items-center justify-center ${
+                          isSelected ? 'border-surgical-teal bg-surgical-teal' : 'border-slate-500'
+                        }`}
+                      >
+                        {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <Button onClick={handleBack} variant="secondary" className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Voltar
+                </Button>
+                <Button onClick={handleNext} disabled={!state.responses.pregnancyStatus} className="flex-1">
+                  Avançar
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 6: Fatores Adicionais */}
+          {state.currentStep === 6 && (
+            <motion.div
+              key="step-6"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  Selecione os fatores que se aplicam a você:
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  Marque todas as opções correspondentes (pode selecionar mais de uma ou nenhuma).
+                </p>
+              </div>
+
+              <div className="space-y-2.5">
+                {ADDITIONAL_FACTORS.map((factor) => {
+                  const isChecked = state.responses.additionalFactors.includes(factor.label);
+                  return (
+                    <label
+                      key={factor.id}
+                      onClick={() => handleAdditionalFactorToggle(factor.label)}
+                      className={`flex cursor-pointer items-center gap-3 rounded-xl border p-3.5 transition-all ${
+                        isChecked
+                          ? 'border-surgical-teal bg-surgical-teal/15 text-white shadow-md ring-1 ring-surgical-teal'
+                          : 'border-slate-700 bg-slate-800/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => {}}
+                        className="h-4 w-4 rounded border-slate-600 text-surgical-teal focus:ring-surgical-teal"
+                      />
+                      <span className="text-sm font-medium leading-relaxed">{factor.label}</span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <Button onClick={handleBack} variant="secondary" className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Voltar
+                </Button>
+                <Button onClick={handleNext} className="flex-1 bg-gradient-to-r from-surgical-teal to-emerald-500 text-slate-950 font-bold">
+                  Calcular Meu Risco
+                  <Activity className="w-4 h-4 ml-1.5" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 7: Resultado Final */}
+          {state.currentStep === 7 && state.riskCategory && (
+            <motion.div
+              key="step-7"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
+              {(() => {
+                const details = getRiskBadgeDetails(state.riskCategory);
+                const isUrgent = state.riskCategory === 'high' || state.riskCategory === 'critical';
+
+                return (
+                  <>
+                    {/* Result Header Badge */}
+                    <div className={`rounded-2xl border p-6 sm:p-8 ${details.color}`}>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-black/30 backdrop-blur-md">
+                            {isUrgent ? (
+                              <AlertTriangle className={`h-8 w-8 ${details.textColor} animate-bounce`} />
+                            ) : (
+                              <CheckCircle2 className={`h-8 w-8 ${details.textColor}`} />
+                            )}
+                          </div>
+                          <div>
+                            <span className="text-xs font-semibold uppercase tracking-wider opacity-80">
+                              Resultado Clínico Estimado
+                            </span>
+                            <h3 className={`text-2xl sm:text-3xl font-black ${details.textColor}`}>
+                              {details.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm opacity-90 mt-0.5">{details.subtitle}</p>
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl bg-black/40 px-4 py-3 text-right">
+                          <span className="block text-xs uppercase tracking-wider text-slate-400">
+                            Score Clínico
+                          </span>
+                          <span className="text-2xl font-black text-white">
+                            {state.riskScore} <span className="text-sm font-normal text-slate-400">pts</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Recommendation text */}
+                      <div className="mt-5 rounded-xl bg-black/30 p-4 border border-white/10">
+                        <p className="text-sm sm:text-base leading-relaxed text-slate-100">
+                          {details.recommendation}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Educational Guidance */}
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-5">
+                      <h4 className="font-semibold text-white text-sm mb-3 flex items-center gap-2">
+                        <Shield className="h-4 w-4 text-surgical-teal" />
+                        Sinais de Alerta para Trombose (TVP):
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-300">
+                        <div className="flex items-start gap-2">
+                          <span className="text-rose-400 font-bold">•</span>
+                          <span>Inchaço súbito ou progressivo em apenas uma das pernas</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-rose-400 font-bold">•</span>
+                          <span>Dor ou sensação de queimação na panturrilha ao pisar</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-rose-400 font-bold">•</span>
+                          <span>Pele avermelhada, arroxeada ou com temperatura aumentada</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-rose-400 font-bold">•</span>
+                          <span>Falta de ar súbita ou dor no peito (alerta de embolia)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* WhatsApp Action Buttons */}
+                    <div className="flex flex-col gap-3 pt-2">
+                      <a
+                        href={`https://wa.me/5571999159975?text=${whatsappMessage}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-emerald-600 px-6 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/40 transition-all hover:bg-emerald-500 hover:shadow-emerald-700/50"
+                      >
+                        <MessageCircle className="h-5 w-5" />
+                        <span>Falar com Dr. Herlon Moura sobre este Resultado</span>
+                      </a>
+
+                      <button
+                        onClick={handleReset}
+                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-700 hover:text-white"
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                        <span>Refazer Avaliação</span>
+                      </button>
+                    </div>
+                  </>
+                );
+              })()}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
