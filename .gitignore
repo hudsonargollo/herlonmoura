@@ -31,5 +31,8 @@ yarn-error.log*
 *.swo
 *~
 
+# Raw photo masters at repo root (unoptimized exports; processed copies live in public/images/fotos)
+/fotos/
+
 # OS
 Thumbs.db
