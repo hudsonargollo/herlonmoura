@@ -25,8 +25,8 @@ In the Cloudflare Pages setup:
 - **Project name**: `herlon-moura-website`
 - **Production branch**: `main`
 - **Build command**: `npm run build`
-- **Build output directory**: `.next/standalone`
-- **Root directory**: `herlon-moura-website` (if monorepo)
+- **Build output directory**: `out` (the project uses `output: "export"`, which emits a static bundle to `out/`)
+- **Root directory**: leave blank — the repository root is already the Next.js project
 
 ### 3. Environment Variables
 
@@ -83,7 +83,7 @@ npm install -g wrangler
 wrangler login
 
 # Deploy
-wrangler pages deploy .next/standalone --project-name=herlon-moura-website
+wrangler pages deploy out --project-name=herlon-moura-website
 ```
 
 ## Verification
