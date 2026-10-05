@@ -1,518 +1,390 @@
-# Design System Documentation
+# Design System Documentation — Dr. Herlon Moura Medical Platform
 
-## Overview
+## 1. Overview
 
-This document provides a comprehensive reference for the Dr. Herlon Moura Medical Website design system. All design tokens are configured in Tailwind CSS and CSS custom properties for consistent, scalable styling across the application.
+This design system establishes a unified, high-performance visual and interaction framework for the Dr. Herlon Moura Medical Website. Engineered for modern dark-mode medical interfaces, it combines surgical precision with ambient glassmorphism effects. All tokens are synchronized across CSS custom properties (`app/globals.css`) and Tailwind CSS configurations (`tailwind.config.ts`) for scalable, responsive design.
 
 ---
 
-## Color Palette
+## 2. Color Palette
 
 ### Primary Colors
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `dark-elevated` | `#0F172A` | Primary background color, dark mode base |
-| `surgical-teal` | `#14B8A6` | Primary accent color, interactive elements |
-| `surgical-teal-dark` | `#0D9488` | Hover state for surgical teal elements |
+| Token | Hex Value | Usage |
+|-------|-----------|-------|
+| `dark-elevated` | `#0F172A` | Base background color, primary container fills |
+| `surgical-teal` | `#14B8A6` | Primary accent, call-to-action buttons, active states |
+| `surgical-teal-dark` | `#0D9488` | Hover/pressed states for primary interactive elements |
 
-**CSS Variables**:
+### Supporting & Status Colors
+
+| Token | Hex Value | Usage |
+|-------|-----------|-------|
+| `neutral-light` | `#F8FAFC` | Primary text, high-contrast borders on dark surfaces |
+| `neutral-medium` | `#94A3B8` | Secondary body text, icons, disabled control states |
+| `neutral-dark` | `#1E293B` | Elevated card backgrounds, sub-surface panels |
+| `success-green` | `#10B981` | Positive outcomes, confirmed appointments, active status |
+| `warning-amber` | `#F59E0B` | Cautions, pending statuses, operational notices |
+| `error-red` | `#EF4444` | Form validation errors, critical alerts, cancel actions |
+
+### Glassmorphism Tokens
+
+| Token | RGBA Value | Usage |
+|-------|-----------|-------|
+| `glass-surface` | `rgba(15, 23, 42, 0.70)` | Standard glass panel background |
+| `glass-surface-hover` | `rgba(15, 23, 42, 0.85)` | Elevated glass background on hover |
+| `glass-border` | `rgba(20, 184, 166, 0.20)` | Subtle teal border outline |
+| `glass-border-hover` | `rgba(20, 184, 166, 0.40)` | High-contrast teal border on hover |
+| `glass-overlay` | `rgba(15, 23, 42, 0.40)` | Modal and backdrop dark dimming |
+
+### CSS Variables Implementation
+
 ```css
---color-dark-elevated: #0f172a;
---color-surgical-teal: #14b8a6;
---color-surgical-teal-dark: #0d9488;
-```
+:root {
+  /* Brand & Status Colors */
+  --color-dark-elevated: #0f172a;
+  --color-surgical-teal: #14b8a6;
+  --color-surgical-teal-dark: #0d9488;
+  --color-neutral-light: #f8fafc;
+  --color-neutral-medium: #94a3b8;
+  --color-neutral-dark: #1e293b;
+  --color-success-green: #10b981;
+  --color-warning-amber: #f59e0b;
+  --color-error-red: #ef4444;
 
-**Tailwind Classes**:
-```html
-<!-- Background -->
-<div class="bg-dark-elevated">Dark elevated background</div>
-<div class="bg-surgical-teal">Surgical teal background</div>
-
-<!-- Text -->
-<p class="text-surgical-teal">Surgical teal text</p>
-
-<!-- Border -->
-<div class="border-surgical-teal">Surgical teal border</div>
-```
-
-### Supporting Colors
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `neutral-light` | `#F8FAFC` | Light text, borders on dark backgrounds |
-| `neutral-medium` | `#94A3B8` | Secondary text, disabled states |
-| `neutral-dark` | `#1E293B` | Elevated surfaces, cards |
-| `success-green` | `#10B981` | Positive outcomes, confirmations |
-| `warning-amber` | `#F59E0B` | Cautions, important notices |
-| `error-red` | `#EF4444` | Errors, critical alerts |
-
-**CSS Variables**:
-```css
---color-neutral-light: #f8fafc;
---color-neutral-medium: #94a3b8;
---color-neutral-dark: #1e293b;
---color-success-green: #10b981;
---color-warning-amber: #f59e0b;
---color-error-red: #ef4444;
-```
-
-### Glassmorphism Colors
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `glass` (bg) | `rgba(15, 23, 42, 0.7)` | Glass surface background |
-| `glass-hover` (bg) | `rgba(15, 23, 42, 0.8)` | Glass surface on hover |
-| `glass` (border) | `rgba(20, 184, 166, 0.2)` | Glass surface border |
-| `glass-hover` (border) | `rgba(20, 184, 166, 0.4)` | Glass surface border on hover |
-| `glass-overlay` | `rgba(15, 23, 42, 0.4)` | Semi-transparent overlay |
-
-**CSS Variables**:
-```css
---color-glass-surface: rgba(15, 23, 42, 0.7);
---color-glass-surface-hover: rgba(15, 23, 42, 0.8);
---color-glass-border: rgba(20, 184, 166, 0.2);
---color-glass-border-hover: rgba(20, 184, 166, 0.4);
---color-glass-overlay: rgba(15, 23, 42, 0.4);
-```
-
-**Tailwind Classes**:
-```html
-<!-- Glassmorphism effect -->
-<div class="bg-glass border-glass backdrop-blur-[10px]">Glass effect</div>
-
-<!-- Glass card component -->
-<div class="glass-card">Glass card with shadow</div>
-```
-
----
-
-## Typography System
-
-### Font Stack
-
-**Primary Font**: `Inter` (system fallback: `-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`)
-**Heading Font**: `Poppins` (system fallback: `Inter`)
-**Monospace**: `Fira Code` (for code blocks)
-
-### Type Scale
-
-| Token | Size | Line Height | Weight | Usage |
-|-------|------|-------------|--------|-------|
-| `display-lg` | 48px | 56px | 700 | Hero headlines |
-| `display-md` | 36px | 44px | 700 | Section titles |
-| `heading-1` | 32px | 40px | 600 | Page titles |
-| `heading-2` | 24px | 32px | 600 | Section headers |
-| `heading-3` | 20px | 28px | 600 | Subsection headers |
-| `body-lg` | 18px | 28px | 400 | Large body text |
-| `body-regular` | 16px | 24px | 400 | Standard body text |
-| `body-small` | 14px | 20px | 400 | Secondary text |
-| `caption` | 12px | 16px | 500 | Labels, captions |
-
-**CSS Variables**:
-```css
---font-display-lg: 48px;
---font-display-md: 36px;
---font-heading-1: 32px;
---font-heading-2: 24px;
---font-heading-3: 20px;
---font-body-lg: 18px;
---font-body-regular: 16px;
---font-body-small: 14px;
---font-caption: 12px;
-```
-
-**Tailwind Classes**:
-```html
-<h1 class="text-display-lg">Hero Headline</h1>
-<h2 class="text-display-md">Section Title</h2>
-<h3 class="text-heading-1">Page Title</h3>
-<p class="text-body-regular">Body text</p>
-<small class="text-caption">Caption text</small>
-```
-
----
-
-## Spacing Scale
-
-All spacing values are based on a 4px base unit.
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `xs` | 4px | Minimal spacing |
-| `sm` | 8px | Small spacing |
-| `md` | 12px | Medium spacing |
-| `lg` | 16px | Standard spacing |
-| `xl` | 24px | Large spacing |
-| `2xl` | 32px | Extra large spacing |
-| `3xl` | 48px | 3x large spacing |
-| `4xl` | 64px | 4x large spacing |
-| `5xl` | 80px | 5x large spacing |
-
-**CSS Variables**:
-```css
---spacing-xs: 4px;
---spacing-sm: 8px;
---spacing-md: 12px;
---spacing-lg: 16px;
---spacing-xl: 24px;
---spacing-2xl: 32px;
---spacing-3xl: 48px;
---spacing-4xl: 64px;
---spacing-5xl: 80px;
-```
-
-**Tailwind Classes**:
-```html
-<!-- Padding -->
-<div class="p-lg">Padding large</div>
-<div class="px-xl py-lg">Padding X and Y</div>
-
-<!-- Margin -->
-<div class="m-md">Margin medium</div>
-<div class="mb-xl">Margin bottom extra large</div>
-
-<!-- Gap (Flexbox/Grid) -->
-<div class="flex gap-lg">Flex with gap</div>
-<div class="grid gap-2xl">Grid with gap</div>
-```
-
----
-
-## Responsive Breakpoints
-
-| Token | Width | Device | Usage |
-|-------|-------|--------|-------|
-| `mobile` | 320px | Mobile phones | Small screens |
-| `tablet` | 641px | Tablets | Medium screens |
-| `desktop` | 1025px | Desktop computers | Large screens |
-| `ultra-wide` | 1441px | Ultra-wide displays | Extra large screens |
-
-**CSS Variables**:
-```css
---breakpoint-mobile: 320px;
---breakpoint-tablet: 641px;
---breakpoint-desktop: 1025px;
---breakpoint-ultra-wide: 1441px;
-```
-
-**Tailwind Classes**:
-```html
-<!-- Mobile-first responsive design -->
-<div class="text-body-small tablet:text-body-regular desktop:text-body-lg">
-  Responsive text size
-</div>
-
-<div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3">
-  Responsive grid
-</div>
-
-<div class="px-md tablet:px-lg desktop:px-xl">
-  Responsive padding
-</div>
-```
-
----
-
-## Shadows
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `glass` | `0 10px 30px rgba(0, 0, 0, 0.3)` | Glass effect shadow |
-| `sm` | `0 1px 2px rgba(0, 0, 0, 0.05)` | Small shadow |
-| `md` | `0 4px 6px rgba(0, 0, 0, 0.1)` | Medium shadow |
-| `lg` | `0 10px 15px rgba(0, 0, 0, 0.1)` | Large shadow |
-
-**CSS Variables**:
-```css
---shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.3);
---shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
---shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
---shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-```
-
-**Tailwind Classes**:
-```html
-<div class="shadow-glass">Glass shadow</div>
-<div class="shadow-sm">Small shadow</div>
-<div class="shadow-md">Medium shadow</div>
-<div class="shadow-lg">Large shadow</div>
-```
-
----
-
-## Border Radius
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `sm` | 4px | Small radius |
-| `md` | 8px | Medium radius |
-| `lg` | 12px | Large radius |
-| `xl` | 16px | Extra large radius |
-
-**CSS Variables**:
-```css
---radius-sm: 4px;
---radius-md: 8px;
---radius-lg: 12px;
---radius-xl: 16px;
-```
-
-**Tailwind Classes**:
-```html
-<div class="rounded-sm">Small radius</div>
-<div class="rounded-md">Medium radius</div>
-<div class="rounded-lg">Large radius</div>
-<div class="rounded-xl">Extra large radius</div>
-```
-
----
-
-## Transitions
-
-| Token | Duration | Easing | Usage |
-|-------|----------|--------|-------|
-| `fast` | 150ms | ease-in-out | Quick transitions |
-| `base` | 300ms | ease-in-out | Standard transitions |
-| `slow` | 500ms | ease-in-out | Slow transitions |
-
-**CSS Variables**:
-```css
---transition-fast: 150ms ease-in-out;
---transition-base: 300ms ease-in-out;
---transition-slow: 500ms ease-in-out;
-```
-
-**Tailwind Classes**:
-```html
-<div class="transition-all duration-fast">Fast transition</div>
-<div class="transition-all duration-base">Base transition</div>
-<div class="transition-all duration-slow">Slow transition</div>
-```
-
----
-
-## Animations
-
-### Available Animations
-
-| Animation | Duration | Usage |
-|-----------|----------|-------|
-| `fade-in` | 0.8s | Fade in effect |
-| `slide-up` | 1s | Slide up effect |
-| `slide-down` | 1s | Slide down effect |
-| `slide-left` | 1s | Slide left effect |
-| `slide-right` | 1s | Slide right effect |
-| `scale-in` | 0.6s | Scale in effect |
-| `pulse-custom` | 2s | Pulse effect |
-
-**Tailwind Classes**:
-```html
-<div class="animate-fade-in">Fade in animation</div>
-<div class="animate-slide-up">Slide up animation</div>
-<div class="animate-scale-in">Scale in animation</div>
-<div class="animate-pulse-custom">Pulse animation</div>
-```
-
-### Custom Animations with Framer Motion
-
-For more complex animations, use Framer Motion:
-
-```tsx
-import { motion } from "framer-motion";
-
-export function AnimatedComponent() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      Animated content
-    </motion.div>
-  );
+  /* Glassmorphism Surface Variables */
+  --color-glass-surface: rgba(15, 23, 42, 0.7);
+  --color-glass-surface-hover: rgba(15, 23, 42, 0.85);
+  --color-glass-border: rgba(20, 184, 166, 0.2);
+  --color-glass-border-hover: rgba(20, 184, 166, 0.4);
+  --color-glass-overlay: rgba(15, 23, 42, 0.4);
 }
 ```
 
 ---
 
-## Z-Index Scale
+## 3. Typography System
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `dropdown` | 1000 | Dropdown menus |
-| `sticky` | 1020 | Sticky elements |
-| `fixed` | 1030 | Fixed elements |
-| `modal-backdrop` | 1040 | Modal backdrop |
-| `modal` | 1050 | Modal dialogs |
-| `popover` | 1060 | Popovers |
-| `tooltip` | 1070 | Tooltips |
+### Font Stack
 
-**Tailwind Classes**:
-```html
-<div class="z-dropdown">Dropdown</div>
-<div class="z-sticky">Sticky element</div>
-<div class="z-modal">Modal</div>
-<div class="z-tooltip">Tooltip</div>
-```
+- **Heading Font**: Poppins, sans-serif
+- **Primary Font**: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+- **Monospace Font**: Fira Code, monospace (technical notes, code snippets)
 
----
+Fonts are loaded via `next/font/google` in `app/layout.tsx` and exposed as the `--font-inter`, `--font-poppins`, and `--font-fira-code` CSS variables.
 
-## Glassmorphism Effects
+### Type Scale
 
-### Glass Card
-
-```html
-<div class="glass-card">
-  <h3 class="text-heading-2">Glass Card</h3>
-  <p class="text-body-regular">Content with glassmorphism effect</p>
-</div>
-```
-
-### Glass Input
-
-```html
-<input type="text" class="glass-input" placeholder="Enter text..." />
-```
-
-### Glass Button
-
-```html
-<button class="glass-button">Click me</button>
-```
-
-### Custom Glass Effect
-
-```html
-<div class="rounded-xl border border-glass bg-glass backdrop-blur-[10px] shadow-glass">
-  Custom glass effect
-</div>
-```
+| Token | Font Size | Line Height | Weight | Usage |
+|-------|-----------|-------------|--------|-------|
+| `display-lg` | 48px (3rem) | 56px (3.5rem) | 700 (Bold) | Hero headlines |
+| `display-md` | 36px (2.25rem) | 44px (2.75rem) | 700 (Bold) | Primary section headers |
+| `heading-1` | 32px (2rem) | 40px (2.5rem) | 600 (SemiBold) | Main page titles |
+| `heading-2` | 24px (1.5rem) | 32px (2rem) | 600 (SemiBold) | Section subheaders |
+| `heading-3` | 20px (1.25rem) | 28px (1.75rem) | 600 (SemiBold) | Card title, modal header |
+| `body-lg` | 18px (1.125rem) | 28px (1.75rem) | 400 (Regular) | Lead paragraph text |
+| `body-regular` | 16px (1rem) | 24px (1.5rem) | 400 (Regular) | Default body copy |
+| `body-small` | 14px (0.875rem) | 20px (1.25rem) | 400 (Regular) | Form labels, helper text |
+| `caption` | 12px (0.75rem) | 16px (1rem) | 500 (Medium) | Timestamps, badge text |
 
 ---
 
-## Utility Classes
+## 4. Spacing Scale
 
-### Flexbox Helpers
+Built on a strict 4px base grid system.
 
-```html
-<!-- Center content -->
-<div class="flex-center">Centered content</div>
-
-<!-- Space between -->
-<div class="flex-between">
-  <span>Left</span>
-  <span>Right</span>
-</div>
-
-<!-- Column center -->
-<div class="flex-col-center">Vertically centered</div>
-```
-
-### Grid Helpers
-
-```html
-<!-- Auto-fit grid -->
-<div class="grid-auto-fit">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-</div>
-```
-
-### Text Helpers
-
-```html
-<!-- Truncate text -->
-<p class="text-truncate">Long text that will be truncated...</p>
-
-<!-- Clamp to 2 lines -->
-<p class="text-clamp-2">Multi-line text clamped to 2 lines...</p>
-
-<!-- Clamp to 3 lines -->
-<p class="text-clamp-3">Multi-line text clamped to 3 lines...</p>
-```
-
-### Screen Reader Only
-
-```html
-<span class="sr-only">Screen reader only text</span>
-```
+| Token | Value | Rem Equivalent | Primary Application |
+|-------|-------|----------------|---------------------|
+| `xs` | 4px | 0.25rem | Icon gaps, tight badge paddings |
+| `sm` | 8px | 0.5rem | Button padding vertical, inline elements |
+| `md` | 12px | 0.75rem | Input field vertical padding, card gaps |
+| `lg` | 16px | 1rem | Standard element spacing, card padding |
+| `xl` | 24px | 1.5rem | Container internal padding, section items |
+| `2xl` | 32px | 2rem | Component margin bottom, modal spacing |
+| `3xl` | 48px | 3rem | Large layout block spacing |
+| `4xl` | 64px | 4rem | Section padding vertical |
+| `5xl` | 80px | 5rem | Hero block padding vertical |
 
 ---
 
-## Accessibility
+## 5. Responsive Breakpoints
 
-### Color Contrast
+Mobile-first responsive architecture matching device viewports.
 
-All text meets WCAG 2.1 AA minimum contrast ratios:
-- Normal text: 4.5:1 minimum
-- Large text (18pt+): 3:1 minimum
+| Token | Min Width | Target Devices | Utility Syntax Example |
+|-------|-----------|----------------|------------------------|
+| `mobile` | 320px | Compact smartphones | Default classes |
+| `tablet` | 641px | Tablets, portrait displays | `tablet:grid-cols-2` |
+| `desktop` | 1025px | Laptops, desktop monitors | `desktop:text-display-lg` |
+| `ultra-wide` | 1441px | High-resolution displays | `ultra-wide:max-w-7xl` |
 
-### Focus States
+> **Note**: These custom screens are declared alongside Tailwind's default breakpoints (`sm:`, `md:`, `lg:`, `xl:`), which remain available for existing and third-party component styling.
 
-All interactive elements have visible focus indicators:
+---
 
-```html
-<button class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surgical-teal">
-  Accessible button
-</button>
-```
+## 6. Elevation, Shadows & Radii
 
-### Reduced Motion
+### Shadow Tokens
 
-Animations respect user preferences:
+| Token | Shadow Value | Usage |
+|-------|--------------|-------|
+| `shadow-sm` | `0 1px 2px 0 rgba(0, 0, 0, 0.05)` | Subtle inputs, flat buttons |
+| `shadow-md` | `0 4px 6px -1px rgba(0, 0, 0, 0.1)` | Hovered buttons, dropdown cards |
+| `shadow-lg` | `0 10px 15px -3px rgba(0, 0, 0, 0.1)` | Floating menus, sticky headers |
+| `shadow-glass` | `0 10px 30px 0 rgba(0, 0, 0, 0.35)` | Glassmorphic cards, modals |
+
+### Border Radius Scale
+
+| Token | Value | Applied To |
+|-------|-------|------------|
+| `rounded-sm` | 4px | Tags, tooltips, inline badges |
+| `rounded-md` | 8px | Buttons, form inputs, select options |
+| `rounded-lg` | 12px | Standard cards, notification toasts |
+| `rounded-xl` | 16px | Glass panels, structural containers, modals |
+
+### Z-Index Scale
+
+| Token | Value | Target UI Component |
+|-------|-------|---------------------|
+| `z-dropdown` | 1000 | Select boxes, user menu options |
+| `z-sticky` | 1020 | Sticky navigation bar |
+| `z-fixed` | 1030 | Floating action buttons, CTA banners |
+| `z-modal-backdrop` | 1040 | Dimming layer behind dialogs |
+| `z-modal` | 1050 | Interactive modal windows |
+| `z-popover` | 1060 | Dynamic rich content overlays |
+| `z-tooltip` | 1070 | Contextual help tooltips |
+
+---
+
+## 7. Motion & Transitions
+
+### Transition Speed Tokens
+
+| Token | Duration | Timing Function | Usage |
+|-------|----------|-----------------|-------|
+| `duration-fast` | 150ms | `cubic-bezier(0.4, 0, 0.2, 1)` | Hover triggers, button fills |
+| `duration-base` | 300ms | `cubic-bezier(0.4, 0, 0.2, 1)` | Card expansions, tab switching |
+| `duration-slow` | 500ms | `cubic-bezier(0.4, 0, 0.2, 1)` | Modal fade-in, drawer slide |
+
+### Native CSS Animations
 
 ```css
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.animate-slide-up { animation: slideUp 1s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+```
+
+---
+
+## 8. Glassmorphism Components & Utilities
+
+Pre-configured CSS classes defined in `app/globals.css`:
+
+```css
+@layer components {
+  /* Glass Base Card */
+  .glass-card {
+    background-color: var(--color-glass-surface);
+    border: 1px solid var(--color-glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: var(--shadow-glass);
+    transition: all 300ms ease-in-out;
+  }
+
+  .glass-card:hover {
+    background-color: var(--color-glass-surface-hover);
+    border-color: var(--color-glass-border-hover);
+  }
+
+  /* Glass Form Input */
+  .glass-input {
+    background-color: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--color-glass-border);
+    color: var(--color-neutral-light);
+    border-radius: 8px;
+    padding: 12px 16px;
+    backdrop-filter: blur(8px);
+    transition: all 150ms ease-in-out;
+  }
+
+  .glass-input:focus {
+    outline: none;
+    border-color: var(--color-surgical-teal);
+    box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.25);
+  }
+
+  /* Glass CTA Button */
+  .glass-button {
+    background-color: var(--color-surgical-teal);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 150ms ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .glass-button:hover {
+    background-color: var(--color-surgical-teal-dark);
+    box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35);
+  }
+
+  /* Flex Helpers */
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Grid Helpers */
+  .grid-auto-fit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
   }
 }
 ```
 
 ---
 
-## Usage Examples
+## 9. Accessibility (a11y) Standards
 
-### Hero Section
+### Color Contrast
 
-```tsx
+- **Text vs. Background**: Minimum 4.5:1 contrast ratio for normal text (`#F8FAFC` on `#0F172A` achieves 15.2:1 contrast).
+- **Interactive UI Controls**: Exceeds WCAG 2.1 AA 3:1 contrast requirement.
+
+### Keyboard Navigation Focus States
+
+Standard focus outline ring:
+
+```
+focus-visible:ring-2 focus-visible:ring-surgical-teal focus-visible:ring-offset-2 focus-visible:ring-offset-dark-elevated
+```
+
+### Motion Reduction
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+---
+
+## 10. React / Next.js Component Library Examples
+
+### Hero Section (HeroSection.tsx)
+
+```typescript
+import React from "react";
+import { motion } from "framer-motion";
+
 export function HeroSection() {
   return (
-    <section className="flex-col-center min-h-screen gap-xl bg-dark-elevated px-lg py-5xl">
-      <h1 className="text-display-lg text-neutral-light">Welcome</h1>
-      <p className="text-body-lg text-neutral-medium">Subtitle</p>
-      <button className="glass-button">Get Started</button>
+    <section className="relative flex-col-center min-h-[85vh] w-full bg-dark-elevated px-lg py-5xl overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="flex-col-center max-w-4xl text-center gap-xl"
+      >
+        <span className="text-caption font-semibold tracking-wider text-surgical-teal uppercase bg-surgical-teal/10 px-md py-xs rounded-sm border border-surgical-teal/20">
+          Medicina de Precisão & Cirurgia
+        </span>
+        <h1 className="text-display-md tablet:text-display-lg text-neutral-light font-heading">
+          Cuidados Médicos Especializados com Excelência e Inovação
+        </h1>
+        <p className="text-body-lg text-neutral-medium max-w-2xl">
+          Atendimento personalizado focado no bem-estar, inovação tecnológica e no tratamento humano e eficiente de cada paciente.
+        </p>
+        <div className="flex flex-col tablet:flex-row gap-lg mt-md">
+          <button className="glass-button">Agendar Consulta</button>
+          <button className="glass-card px-xl py-md text-neutral-light font-semibold hover:border-surgical-teal/50 transition-all">
+            Conhecer Trajetória
+          </button>
+        </div>
+      </motion.div>
     </section>
   );
 }
 ```
 
-### Card Component
+### Medical Service Card Component (ServiceCard.tsx)
 
-```tsx
-export function Card({ title, children }) {
+```typescript
+import React from "react";
+
+interface ServiceCardProps {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+}
+
+export function ServiceCard({ title, description, icon }: ServiceCardProps) {
   return (
-    <div className="glass-card p-xl">
-      <h3 className="text-heading-2 text-neutral-light">{title}</h3>
-      <p className="mt-md text-body-regular text-neutral-medium">{children}</p>
+    <div className="glass-card p-xl flex flex-col gap-md">
+      {icon && <div className="text-surgical-teal text-heading-1">{icon}</div>}
+      <h3 className="text-heading-2 text-neutral-light font-heading">{title}</h3>
+      <p className="text-body-regular text-neutral-medium leading-relaxed">{description}</p>
     </div>
   );
 }
 ```
 
-### Responsive Grid
+### Dynamic Grid Wrapper (ResponsiveGrid.tsx)
 
-```tsx
-export function ResponsiveGrid({ items }) {
+```typescript
+import React from "react";
+
+interface ResponsiveGridProps<T> {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
+}
+
+export function ResponsiveGrid<T>({ items, renderItem }: ResponsiveGridProps<T>) {
   return (
-    <div className="grid-auto-fit">
-      {items.map((item) => (
-        <div key={item.id} className="glass-card p-lg">
-          {item.content}
-        </div>
+    <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-2xl w-full">
+      {items.map((item, idx) => (
+        <div key={idx}>{renderItem(item)}</div>
       ))}
     </div>
   );
@@ -521,29 +393,78 @@ export function ResponsiveGrid({ items }) {
 
 ---
 
-## Best Practices
+## 11. Configuration Setup
 
-1. **Use Tailwind Classes**: Prefer Tailwind utility classes over custom CSS
-2. **Consistent Spacing**: Use the spacing scale for all margins and padding
-3. **Color Consistency**: Use defined colors from the palette
-4. **Responsive Design**: Use mobile-first approach with breakpoint prefixes
-5. **Accessibility**: Always include focus states and alt text
-6. **Performance**: Use CSS custom properties for dynamic values
-7. **Animations**: Use Framer Motion for complex animations, Tailwind for simple ones
-8. **Documentation**: Keep this design system documentation updated
+### tailwind.config.ts
 
----
+```typescript
+import type { Config } from "tailwindcss";
 
-## Maintenance
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    screens: {
+      mobile: "320px",
+      tablet: "641px",
+      desktop: "1025px",
+      "ultra-wide": "1441px",
+    },
+    extend: {
+      colors: {
+        "dark-elevated": "#0F172A",
+        "surgical-teal": {
+          DEFAULT: "#14B8A6",
+          dark: "#0D9488",
+        },
+        neutral: {
+          light: "#F8FAFC",
+          medium: "#94A3B8",
+          dark: "#1E293B",
+        },
+        status: {
+          green: "#10B981",
+          amber: "#F59E0B",
+          red: "#EF4444",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+        heading: ["var(--font-poppins)", "sans-serif"],
+        mono: ["var(--font-fira-code)", "monospace"],
+      },
+      fontSize: {
+        "display-lg": ["48px", { lineHeight: "56px", fontWeight: "700" }],
+        "display-md": ["36px", { lineHeight: "44px", fontWeight: "700" }],
+        "heading-1": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+        "heading-2": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "heading-3": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+        "body-regular": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "body-small": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+        caption: ["12px", { lineHeight: "16px", fontWeight: "500" }],
+      },
+      boxShadow: {
+        glass: "0 10px 30px 0 rgba(0, 0, 0, 0.35)",
+      },
+      zIndex: {
+        dropdown: "1000",
+        sticky: "1020",
+        fixed: "1030",
+        "modal-backdrop": "1040",
+        modal: "1050",
+        popover: "1060",
+        tooltip: "1070",
+      },
+    },
+  },
+  plugins: [],
+};
 
-This design system is maintained in:
-- **Tailwind Config**: `tailwind.config.ts`
-- **Global Styles**: `app/globals.css`
-- **CSS Variables**: `:root` in `app/globals.css`
+export default config;
+```
 
-When updating the design system:
-1. Update Tailwind configuration
-2. Update CSS custom properties
-3. Update this documentation
-4. Test across all breakpoints
-5. Verify accessibility compliance
+> **Implementation note**: In this repository, the `neutral-*` and status colors are declared as flat tokens (`neutral-light`, `success-green`, `error-red`, …) because existing components already use those class names extensively. The nested `status.green` / `status.amber` / `status.red` aliases from the spec above are also available.

@@ -1,5 +1,25 @@
 import type { Metadata } from "next";
+import { Inter, Poppins, Fira_Code } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-fira-code",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
@@ -32,7 +52,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
-      <body className="bg-dark-elevated text-neutral-light">{children}</body>
+      <body
+        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} bg-dark-elevated font-sans text-neutral-light`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

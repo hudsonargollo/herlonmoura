@@ -13,8 +13,10 @@ const config: Config = {
       colors: {
         // Primary Colors
         "dark-elevated": "#0F172A",
-        "surgical-teal": "#14B8A6",
-        "surgical-teal-dark": "#0D9488",
+        "surgical-teal": {
+          DEFAULT: "#14B8A6",
+          dark: "#0D9488",
+        },
 
         // Supporting Colors
         "neutral-light": "#F8FAFC",
@@ -23,6 +25,22 @@ const config: Config = {
         "success-green": "#10B981",
         "warning-amber": "#F59E0B",
         "error-red": "#EF4444",
+
+        // Status group (alias)
+        status: {
+          green: "#10B981",
+          amber: "#F59E0B",
+          red: "#EF4444",
+        },
+      },
+
+      // ============================================
+      // FONT STACKS
+      // ============================================
+      fontFamily: {
+        sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
+        heading: ["var(--font-poppins)", "sans-serif"],
+        mono: ["var(--font-fira-code)", "monospace"],
       },
 
       // ============================================
@@ -30,7 +48,7 @@ const config: Config = {
       // ============================================
       backgroundColor: {
         glass: "rgba(15, 23, 42, 0.7)",
-        "glass-hover": "rgba(15, 23, 42, 0.8)",
+        "glass-hover": "rgba(15, 23, 42, 0.85)",
         "glass-overlay": "rgba(15, 23, 42, 0.4)",
       },
 
@@ -46,7 +64,7 @@ const config: Config = {
       // BACKDROP FILTERS
       // ============================================
       backdropFilter: {
-        glass: "blur(10px)",
+        glass: "blur(12px)",
       },
 
       // ============================================
@@ -81,6 +99,8 @@ const config: Config = {
 
       // ============================================
       // RESPONSIVE BREAKPOINTS
+      // Spec tokens added alongside Tailwind defaults
+      // (sm/md/lg) so existing breakpoint usage keeps working.
       // ============================================
       screens: {
         mobile: "320px",
@@ -100,10 +120,10 @@ const config: Config = {
       // SHADOWS
       // ============================================
       boxShadow: {
-        glass: "0 10px 30px rgba(0, 0, 0, 0.3)",
-        sm: "0 1px 2px rgba(0, 0, 0, 0.05)",
-        md: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        lg: "0 10px 15px rgba(0, 0, 0, 0.1)",
+        glass: "0 10px 30px 0 rgba(0, 0, 0, 0.35)",
+        sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        md: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+        lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
       },
 
       // ============================================
@@ -119,6 +139,9 @@ const config: Config = {
       // ============================================
       // TRANSITIONS
       // ============================================
+      transitionTimingFunction: {
+        "in-out-material": "cubic-bezier(0.4, 0, 0.2, 1)",
+      },
       transitionDuration: {
         fast: "150ms",
         base: "300ms",
