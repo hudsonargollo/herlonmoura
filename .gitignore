@@ -10,7 +10,9 @@ coverage
 .next
 out
 build
+# Workers build
 dist
+wrangler/workers/dist
 
 # Production
 .env.local

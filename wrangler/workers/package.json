@@ -1,0 +1,17 @@
+{
+  "name": "herlonmoura-crm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create herlonmoura_crm",
+    "db:migrate": "wrangler d1 execute herlonmoura_crm --file=../d1/schema.sql",
+    "db:shell": "wrangler d1 shell herlonmoura_crm"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0",
+    "@cloudflare/workers-types": "^4.0.0"
+  }
+}

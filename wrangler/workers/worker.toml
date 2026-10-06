@@ -1,0 +1,23 @@
+name = "herlon-moura-crm"
+main = "workers/src/index.ts"
+compatibility_date = "2024-01-01"
+
+[d1_databases]
+binding = "DB"
+database_name = "herlonmoura_crm"
+database_id = ""
+
+[[kv_namespaces]]
+binding = "KV"
+id = ""
+
+[vars]
+JWT_SECRET = ""
+ADMIN_EMAIL = "admin@herlonmoura.com"
+
+[[routes]]
+pattern = "api.herlonmoura.com/*"
+zone_id = ""
+
+# Or use Pages Functions for dashboard routes
+# This worker handles API only; dashboard is Next.js Pages
