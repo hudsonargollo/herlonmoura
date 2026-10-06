@@ -2,17 +2,17 @@ name = "herlon-moura-crm"
 main = "workers/src/index.ts"
 compatibility_date = "2024-01-01"
 
-[d1_databases]
+[[d1_databases]]
 binding = "DB"
 database_name = "herlonmoura_crm"
-database_id = ""
+database_id = "d2852878-3462-47f7-a799-71a07015814b"
 
 [[kv_namespaces]]
 binding = "KV"
-id = ""
+id = "40662a6fbf1249299a71124fbcd647d7"
 
 [vars]
-JWT_SECRET = ""
+JWT_SECRET = "change-me-in-production-use-a-secure-random-value"
 ADMIN_EMAIL = "admin@herlonmoura.com"
 
 [[routes]]

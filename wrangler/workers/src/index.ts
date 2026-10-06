@@ -133,7 +133,7 @@ async function listLeads(req: Request, env: Env): Promise<Response> {
   if (status) { query += ' AND status = ?'; binds.push(status); }
   if (source) { query += ' AND source = ?'; binds.push(source); }
   query += ' ORDER BY created_at DESC LIMIT 100';
-  const rows = await env.DB.prepare(query).bind(...binds).all<*>();
+  const rows = await env.DB.prepare(query).bind(...binds).all<any>();
   return json(200, { leads: rows.results });
 }
 
@@ -150,9 +150,9 @@ async function createLead(req: Request, env: Env): Promise<Response> {
 
 async function getLead(path: string, env: Env): Promise<Response> {
   const id = path.split('/').pop();
-  const lead = await env.DB.prepare('SELECT * FROM leads WHERE id = ?').bind(id).first<*>();
+  const lead = await env.DB.prepare('SELECT * FROM leads WHERE id = ?').bind(id).first<any>();
   if (!lead) return json(404, { error: 'not found' });
-  const interactions = await env.DB.prepare('SELECT * FROM interactions WHERE lead_id = ? ORDER BY created_at DESC').bind(id).all<*>();
+  const interactions = await env.DB.prepare('SELECT * FROM interactions WHERE lead_id = ? ORDER BY created_at DESC').bind(id).all<any>();
   return json(200, { lead, interactions: interactions.results });
 }
 
@@ -183,7 +183,7 @@ async function listInteractions(req: Request, env: Env): Promise<Response> {
   if (lead_id) { query += ' AND lead_id = ?'; binds.push(lead_id); }
   if (type) { query += ' AND type = ?'; binds.push(type); }
   query += ' ORDER BY created_at DESC LIMIT 500';
-  const rows = await env.DB.prepare(query).bind(...binds).all<*>();
+  const rows = await env.DB.prepare(query).bind(...binds).all<any>();
   return json(200, { interactions: rows.results });
 }
 
@@ -204,7 +204,7 @@ async function listPosts(req: Request, env: Env): Promise<Response> {
   const binds: any[] = [status];
   if (category) { query += ' AND category = ?'; binds.push(category); }
   query += ' ORDER BY created_at DESC';
-  const rows = await env.DB.prepare(query).bind(...binds).all<*>();
+  const rows = await env.DB.prepare(query).bind(...binds).all<any>();
   return json(200, { posts: rows.results });
 }
 
@@ -218,7 +218,7 @@ async function createPost(req: Request, env: Env): Promise<Response> {
 
 async function getPost(path: string, env: Env): Promise<Response> {
   const slug = path.split('/').pop();
-  const row = await env.DB.prepare('SELECT * FROM blog_posts WHERE slug = ?').bind(slug).first<*>();
+  const row = await env.DB.prepare('SELECT * FROM blog_posts WHERE slug = ?').bind(slug).first<any>();
   if (!row) return json(404, { error: 'not found' });
   return json(200, { post: row });
 }
@@ -241,7 +241,7 @@ async function deletePost(path: string, env: Env): Promise<Response> {
 }
 
 async function approvalQueue(env: Env): Promise<Response> {
-  const rows = await env.DB.prepare("SELECT * FROM blog_posts WHERE status IN ('draft', 'approval') ORDER BY created_at ASC").all<*>();
+  const rows = await env.DB.prepare("SELECT * FROM blog_posts WHERE status IN ('draft', 'approval') ORDER BY created_at ASC").all<any>();
   return json(200, { posts: rows.results });
 }
 
@@ -260,7 +260,7 @@ async function claimFreebie(req: Request, env: Env): Promise<Response> {
 
 // --- Email sequence handlers ---
 async function listSequences(env: Env): Promise<Response> {
-  const rows = await env.DB.prepare('SELECT * FROM email_sequences WHERE is_active = 1 ORDER BY trigger').all<*>();
+  const rows = await env.DB.prepare('SELECT * FROM email_sequences WHERE is_active = 1 ORDER BY trigger').all<any>();
   return json(200, { sequences: rows.results });
 }
 
