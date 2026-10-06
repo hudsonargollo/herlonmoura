@@ -143,12 +143,12 @@ The development server will start at `http://localhost:3000`.
 
 ## Deployment
 
-The project is optimized for deployment on:
+The project is optimized for deployment on **Cloudflare Pages** (static export):
 
-- **Vercel** (recommended for Next.js)
+- **Cloudflare Pages** (recommended — static export to `out/`)
+- **Vercel** (Next.js serverless)
 - **AWS Amplify**
 - **AWS EC2 with Docker**
-- **Other Node.js hosting platforms**
 
 ## License
 

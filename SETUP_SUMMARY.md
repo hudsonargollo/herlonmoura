@@ -132,13 +132,10 @@ herlon-moura-website/
 - Code splitting ready with Next.js
 - Lazy loading support
 
-### 📋 Next Steps
+## Next Steps
 
-1. **Install Dependencies**: Run `npm install` to install all packages
-2. **Start Development**: Run `npm run dev` to start the development server
-3. **Implement Components**: Create reusable components in `/components` directory
-4. **Add Pages**: Create additional pages in `/app` directory
-5. **Configure Environment**: Copy `.env.example` to `.env.local` and add API keys
+1. **Fix test-bug**: `dvt-calculator.pbt.test.tsx` line 434 — `Object.keys(localStorage)` crash when localStorage is null in jsdom; add null guard or mock
+2. Push remaining 5 commits to `origin/main` and wire GitHub Secrets for Cloudflare CI/CD
 
 ### 📝 Requirements Satisfied
 

@@ -16,6 +16,41 @@ import { Logo } from '../Logo';
  * 3. LCP metric is less than 2.5 seconds on 4G
  */
 
+const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+/**
+ * Strings a test can query by role or text.
+ *
+ * Plain `fc.string()` happily generates whitespace-only runs, and testing-library
+ * normalizes whitespace when matching. A generated `"   "` therefore matches
+ * several nodes at once, so the assertion below it throws -- and because
+ * `unmount()` sits after the assertions rather than in a `finally`, the rendered
+ * tree survives into the next generated case and poisons it.
+ */
+const visibleText = (minLength: number, maxLength: number): fc.Arbitrary<string> =>
+  fc
+    .array(
+      fc.integer({ min: 0, max: ALPHANUMERIC.length - 1 }).map((i) => ALPHANUMERIC[i]),
+      { minLength, maxLength }
+    )
+    .map((chars) => chars.join(''));
+
+/**
+ * Two non-empty, mutually distinct strings, so that a `getByText` assertion for
+ * one can never also match the other.
+ *
+ * Returned as a single tuple-valued arbitrary rather than two separate ones:
+ * `.filter()` hides the tuple from fast-check's argument flattening, so this
+ * must be destructured by the caller instead of spread across parameters.
+ */
+const distinctPair = (
+  minLength: number,
+  maxLength: number
+): fc.Arbitrary<[string, string]> =>
+  fc
+    .tuple(visibleText(minLength, maxLength), visibleText(minLength, maxLength))
+    .filter(([first, second]) => first !== second);
+
 describe('Hero Section - Property-Based Tests', () => {
   describe('Property 1: Logo Animation Responds to User Interaction', () => {
     /**
@@ -342,9 +377,8 @@ describe('Hero Section - Property-Based Tests', () => {
     it('should render CTA buttons within LCP target', () => {
       fc.assert(
         fc.property(
-          fc.string({ minLength: 5, maxLength: 50 }),
-          fc.string({ minLength: 5, maxLength: 50 }),
-          (primaryLabel, secondaryLabel) => {
+          distinctPair(5, 50),
+          ([primaryLabel, secondaryLabel]) => {
             const startTime = performance.now();
 
             const { unmount } = render(
@@ -580,9 +614,8 @@ describe('Hero Section - Property-Based Tests', () => {
       fc.assert(
         fc.property(
           fc.constantFrom(320, 641, 1025, 1441, 2560),
-          fc.string({ minLength: 10, maxLength: 100 }),
-          fc.string({ minLength: 10, maxLength: 100 }),
-          (viewportWidth, headline, subheadline) => {
+          distinctPair(10, 100),
+          (viewportWidth, [headline, subheadline]) => {
             Object.defineProperty(window, 'innerWidth', {
               writable: true,
               configurable: true,
@@ -599,13 +632,17 @@ describe('Hero Section - Property-Based Tests', () => {
               />
             );
 
-            // All content should be rendered
-            expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
-            expect(screen.getByText(subheadline)).toBeInTheDocument();
-            expect(screen.getByRole('link', { name: 'Book Now' })).toBeInTheDocument();
-            expect(screen.getByRole('link', { name: 'Learn More' })).toBeInTheDocument();
-
-            unmount();
+            try {
+              // All content should be rendered
+              expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+              expect(screen.getByText(subheadline)).toBeInTheDocument();
+              expect(screen.getByRole('link', { name: 'Book Now' })).toBeInTheDocument();
+              expect(screen.getByRole('link', { name: 'Learn More' })).toBeInTheDocument();
+            } finally {
+              // Without this, a failing assertion leaves the tree mounted and
+              // every later generated case sees the leftovers too.
+              unmount();
+            }
           }
         ),
         { numRuns: 5 }
