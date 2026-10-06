@@ -431,7 +431,7 @@ describe('DVT Risk Calculator - Property-Based Tests', () => {
           ),
           (ageRange) => {
             // Verify localStorage is not used for health data
-            const localStorageKeys = Object.keys(localStorage);
+            const localStorageKeys = Object.keys(localStorage || {});
             const healthDataKeys = localStorageKeys.filter((key) =>
               key.includes('dvt') || key.includes('health') || key.includes('risk')
             );

@@ -97,17 +97,25 @@ export default function ContactPage() {
       return;
     }
 
-    // Simulate form submission
     try {
-      // In a real application, this would send data to a backend API
-      console.log('Form submitted:', formData);
+      const res = await fetch('/api/crm/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          whatsapp: formData.phone,
+          email: formData.email,
+          source: 'contact',
+          source_detail: formData.subject,
+          tags: ['contact-form'],
+        }),
+      });
+
+      if (!res.ok) throw new Error(`CRM error: ${res.status}`);
+
       setSubmitted(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 5000);
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
     }
