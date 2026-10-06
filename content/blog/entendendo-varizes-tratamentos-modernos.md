@@ -12,6 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Varizes"
 date: "2026-04-10"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/entendendo-varizes-tratamentos-modernos.png"
 word_count: 1200

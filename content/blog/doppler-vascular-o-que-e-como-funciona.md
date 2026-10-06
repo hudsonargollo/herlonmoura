@@ -1,51 +1,67 @@
 ---
-title: "Doppler Vascular: O Que É e Como Funciona"
-meta_title: "Doppler Vascular Colorido: Diagnóstico Não Invasivo | Dr. Herlon Moura"
-meta_description: "O Doppler vascular colorido avalia o fluxo sanguíneo em arterias e veias em tempo real. Indolor, sem contraste, feito no consultório."
+title: "Doppler Vascular: O Que É, Como Funciona e Por Que é Essencial"
+meta_title: "Doppler Vascular: Exame Diagnóstico | Dr. Herlon Moura"
+meta_description: "Entenda como funciona o Doppler vascular colorido, exame indispensável para diagnosticar insuficiência venosa, aneurismas e doenças arteriais."
 slug: "doppler-vascular-o-que-e-como-funciona"
-target_keyword: "doppler vascular colorido Salvador"
+target_keyword: "doppler vascular colorido exame diagnóstico"
 secondary_keywords:
-  - "ecodoppler"
-  - "exame vascular"
+  - "doppler venoso"
+  - "ultrassom vascular"
   - "fluxo sanguíneo"
-  - "diagnóstico vascular não invasivo"
+  - "doppler arterial"
 author: "Dr. Herlon Moura"
-category: "Diagnóstico"
-date: "2026-03-28"
+category: "Doppler Vascular"
+date: "2026-04-15"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/doppler-vascular-o-que-e-como-funciona.png"
-word_count: 900
+word_count: 1050
 ---
 
-O Doppler vascular colorido é um exame de ultrassom que analisa o fluxo sanguíneo em arterias e veias em tempo real. É indolor, não invasivo e não requer hospitalização.
+O Doppler vascular colorido é um exame de imagem não invasivo que combina ultrassom convencional com tecnologia Doppler para mapear o fluxo sanguíneo nas artérias e veias.
 
-## Para Que Serve?
+## Como Funciona?
 
-- Detectar trombose venosa profunda
-- Avaliar varizes e insuficiência venosa
-- Analisar fluxo arterial (carótidas, extremidades)
-- Planejar tratamentos endovasculares
+O aparelho emite ondas ultrassônicas que rebatem nos glóbulos vermelhos em movimento. O desvio de frequência (efeito Doppler) revela velocidade e direção do fluxo, enquanto o modo colorido overlay mostra artérias em vermelho e veias em azul.
 
-## Como É o Exame?
+## Indicações Principais
 
-1. O paciente deita na camilha
-2. Aplica-se gel condutor na região
-3. O transdutor captura imagens e fluxo em tempo real
-4. Sem dor, sem radiação, sem contraste
-5. Resultados na mesma consulta
+- Suspeita de insuficiência venosa crônica e varizes
+- Trombose venosa profunda: diagnóstico e mapeamento
+- Doença arterial periférica: estenose, oclusões, aneurismas
+- Avaliação pré e pós-operatória de cirurgia vascular
+- Transplante renal: estudo de perfusão
 
-## Benefícios
+## Preparação
 
-- **Não invasivo**: sem cortes ou cateteres
-- **Imediato**: resultados instantâneos
-- **Seguro**: sem radiação ionizante
-- **Completo**: arterias e veias num só exame
+- Jejum leve de 2-4 horas (exames abdominais)
+- Vestir roupa que permita acesso a membros
+- Não aplicar cremes nos membros no dia do exame
 
-## Pontos-Chave
+## O Que Esperar?
 
-- O Doppler é o primeiro exame diante de sintomas vasculares
-- Feito pelo angiologista no consultório
-- Indispensável antes de qualquer tratamento
-- Recomendado anualmente se houver fatores de risco
+- Sem dor, sem radiação, sem contraste
+- Duração: 30-60 minutos
+- Resultado imediato para o médico solicitante
 
-👉 **Agende seu Doppler**: WhatsApp (71) 99915-9975
+## Vantagens em Relação a Outros Exames
+
+- Sem invasão, sem cateteres
+- Sem radiação ionizante (diferente de angiotomografia)
+- Custo acessível e ampla disponibilidade
+- Repetível para acompanhamento evolutivo
+
+## Limitações
+
+- Operador-dependente: qualidade varia com experiência do médico
+- Obesidade mórbida pode limitar a visualização
+- Não substitui angiotomografia ou ressonância em casos complexos
+
+## Quando Fazer?
+
+- Pernas cansadas, inchadas ou com veias visíveis
+- Dor ao caminhar que melhora com repouso (claudicação)
+- Histórico familiar de aneurisma ou trombose
+- Diabetes e hipertensão com queixas vasculares
+
+👉 **Agende sua avaliação com Doppler vascular**: WhatsApp (71) 99915-9975

@@ -1,3 +1,10 @@
+declare var D1Database: any;
+declare var KVNamespace: any;
+declare global {
+  interface D1Database {}
+  interface KVNamespace {}
+}
+
 export interface Env {
   DB: D1Database;
   KV: KVNamespace;
@@ -6,16 +13,17 @@ export interface Env {
 }
 
 // --- JWT helpers ---
-function base64url(input: ArrayBuffer): string {
-  return btoa(String.fromCharCode(...new Uint8Array(input)))
+function base64url(input: string | ArrayBuffer): string {
+  const str = typeof input === 'string' ? input : String.fromCharCode(...new Uint8Array(input));
+  return btoa(str)
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=/g, '');
 }
 
 async function signJWT(payload: object, secret: string): Promise<string> {
-  const header = base64url(new TextEncoder().encode(JSON.stringify({ alg: 'HS256', typ: 'JWT' })));
-  const body = base64url(new TextEncoder().encode(JSON.stringify({ ...payload, iat: Math.floor(Date.now() / 1000) })));
+  const header = base64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+  const body = base64url(JSON.stringify({ ...payload, iat: Math.floor(Date.now() / 1000) }));
   const data = `${header}.${body}`;
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
