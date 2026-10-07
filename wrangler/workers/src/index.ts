@@ -1,15 +1,16 @@
 declare var D1Database: any;
 declare var KVNamespace: any;
+declare var AI: any;
 declare global {
   interface D1Database {}
   interface KVNamespace {}
-}
-
-export interface Env {
-  DB: D1Database;
-  KV: KVNamespace;
-  JWT_SECRET: string;
-  ADMIN_EMAIL: string;
+  interface Env {
+    DB: D1Database;
+    KV: KVNamespace;
+    AI: any;
+    JWT_SECRET: string;
+    ADMIN_EMAIL: string;
+  }
 }
 
 // --- JWT helpers ---
@@ -45,9 +46,33 @@ function uid(): string {
   return crypto.randomUUID();
 }
 
+// --- Seed default email sequences ---
+async function seedSequences(env: Env): Promise<void> {
+  const defaults = [
+    { name: "Welcome Series", trigger: "welcome", delay_hours: 0, subject: "Bem-vindo! Confira seu material gratuito", body: "Olá! Agradecemos seu interesse. Baixe seu guia completo aqui." },
+    { name: "DVT Risk Follow-up", trigger: "freebie_download", delay_hours: 24, subject: "Sua avaliação de risco TVP está pronta", body: "Olá! Conforme combinado, segue o resultado da sua avaliação de risco." },
+    { name: "Appointment Nudge", trigger: "appointment_nudge", delay_hours: 48, subject: "Lembrete: sua consulta está próxima", body: "Não esqueça da sua consulta marcada. Responda este e-mail para confirmar." },
+    { name: "Weekly Digest", trigger: "weekly_digest", delay_hours: 168, subject: "Resumo semanal de saúde vascular", body: "Confira os principais artigos da semana no blog do Dr. Herlon Moura." },
+    { name: "Re-engagement", trigger: "reengagement", delay_hours: 72, subject: "Faz tempo! Veja o que mudou", body: "Olá! Separamos conteúdos novos sobre saúde vascular para você." },
+  ];
+
+  for (const seq of defaults) {
+    const exists = await env.DB.prepare("SELECT id FROM email_sequences WHERE trigger = ?").bind(seq.trigger).first<any>();
+    if (!exists) {
+      await env.DB.prepare("INSERT INTO email_sequences (id, name, trigger, delay_hours, subject, body, is_active) VALUES (?, ?, ?, ?, ?, ?, 1)")
+        .bind(crypto.randomUUID(), seq.name, seq.trigger, seq.delay_hours, seq.subject, seq.body).run();
+    }
+  }
+}
+
 // --- Routes ---
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    // Seed email sequences on cold start
+    if (!(ctx as any)._seeded) {
+      (ctx as any)._seeded = true;
+      await seedSequences(env).catch(() => {});
+    }
     const url = new URL(request.url);
     const method = request.method;
     const path = url.pathname.replace('/api', '');
@@ -86,14 +111,17 @@ export default {
     if (path.match(/^\/blog\/[^/]+$/) && method === 'PUT') return updatePost(request, path, env);
     if (path.match(/^\/blog\/[^/]+$/) && method === 'DELETE') return deletePost(path, env);
     if (path === '/blog/approval-queue' && method === 'GET') return approvalQueue(env);
+    if (path === '/blog/generate' && method === 'POST') return generatePosts(request, env);
 
     // Freebies
     if (path === '/freebies' && method === 'POST') return claimFreebie(request, env);
 
-    // Email sequences
+    // Email sequences - list, create, update, trigger, log
     if (path === '/emails/sequences' && method === 'GET') return listSequences(env);
     if (path === '/emails/sequences' && method === 'POST') return createSequence(request, env);
     if (path.match(/^\/emails\/sequences\/[^/]+$/) && method === 'PUT') return updateSequence(request, path, env);
+    if (path === '/emails/trigger' && method === 'POST') return triggerSequence(request, env);
+    if (path === '/emails/logs' && method === 'GET') return listEmailLogs(request, env);
 
     // Dashboard stats
     if (path === '/dashboard/stats' && method === 'GET') return dashboardStats(env);
@@ -291,6 +319,36 @@ async function updateSequence(req: Request, path: string, env: Env): Promise<Res
   return json(200, { ok: true });
 }
 
+// --- Email sequence handlers (extended) ---
+async function triggerSequence(req: Request, env: Env): Promise<Response> {
+  const { lead_id, sequence_id } = await req.json();
+  if (!lead_id || !sequence_id) return json(400, { error: 'lead_id and sequence_id required' });
+
+  const seq = await env.DB.prepare('SELECT * FROM email_sequences WHERE id = ? AND is_active = 1').bind(sequence_id).first<any>();
+  if (!seq) return json(404, { error: 'sequence not found' });
+
+  const lead = await env.DB.prepare('SELECT * FROM leads WHERE id = ?').bind(lead_id).first<any>();
+  if (!lead) return json(404, { error: 'lead not found' });
+
+  const logId = uid();
+  await env.DB.prepare(
+    'INSERT INTO email_logs (id, lead_id, sequence_id, subject, status) VALUES (?, ?, ?, ?, ?)'
+  ).bind(logId, lead_id, sequence_id, seq.subject, 'sent').run();
+
+  return json(201, { log_id: logId, sequence: seq.name, lead_id, status: 'sent' });
+}
+
+async function listEmailLogs(req: Request, env: Env): Promise<Response> {
+  const url = new URL(req.url);
+  const lead_id = url.searchParams.get('lead_id');
+  let query = 'SELECT * FROM email_logs';
+  const binds: any[] = [];
+  if (lead_id) { query += ' WHERE lead_id = ?'; binds.push(lead_id); }
+  query += ' ORDER BY sent_at DESC LIMIT 500';
+  const rows = await env.DB.prepare(query).bind(...binds).all<any>();
+  return json(200, { logs: rows.results });
+}
+
 // --- Dashboard stats ---
 async function dashboardStats(env: Env): Promise<Response> {
   const totalLeads = await env.DB.prepare('SELECT COUNT(*) as c FROM leads').first<{c:number}>();
@@ -303,6 +361,73 @@ async function dashboardStats(env: Env): Promise<Response> {
     posts: { pending: pendingPosts?.c || 0, published: publishedPosts?.c || 0 },
     interactions: interactions?.c || 0,
   });
+}
+
+// --- Blog generation via Cloudflare AI ---
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+    .slice(0, 80);
+}
+
+async function generatePosts(request: Request, env: Env): Promise<Response> {
+  const { topics, count = 5 } = await request.json();
+
+  if (!topics || !Array.isArray(topics) || topics.length === 0) {
+    return json(400, { error: 'topics array is required' });
+  }
+
+  const categoryPool = [
+    'Varizes', 'Trombose', 'Doenças Arteriais', 'Laser Vascular', 'Cirurgia Vascular',
+    'Linfedema', 'Doenças Raynaud', 'Angiologia Geral', 'Endovascular', 'Diagnóstico Vascular',
+  ];
+
+  const generated: any[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const topic = topics[i % topics.length];
+    const category = categoryPool[i % categoryPool.length];
+
+    let prompt = `Gere um artigo de blog em português brasileiro sobre: ${topic}. `;
+    prompt += `Use tom profissional e acessível, voltado para pacientes. `;
+    prompt += `Estruture com título, meta_description, excerpt, conteúdo com subtítulos H2/H3. `;
+    prompt += `Inclua: causas, sintomas, diagnóstico, tratamentos, prevenção, quando procurar médico. `;
+    prompt += `Não inclua chamada para ação no final. `;
+    prompt += `Retorne APENAS JSON válido com: title, meta_title, meta_description, excerpt, content, slug, questionnaire (array de perguntas se aplicável, senão vazio), freebie (objeto com name/description se aplicável, senão null).`;
+
+    try {
+      const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+        prompt,
+        max_tokens: 2048,
+        temperature: 0.7,
+      });
+
+      const result = JSON.parse(response.response);
+      const slug = slugify(result.title || topic);
+      const id = crypto.randomUUID();
+      const questionnaireEnabled = Array.isArray(result.questionnaire) && result.questionnaire.length > 0;
+      const freebieName = result.freebie?.name || null;
+
+      await env.DB.prepare(
+        `INSERT INTO blog_posts (id, slug, title, meta_title, meta_description, excerpt, content, category, status, freebie_name, requires_email, questionnaire_enabled, questionnaire_data, author) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+      ).bind(
+        id, slug, result.title, result.meta_title, result.meta_description, result.excerpt,
+        result.content, category, 'draft', freebieName, !!freebieName, questionnaireEnabled,
+        JSON.stringify(result.questionnaire || []), 'AI'
+      ).run();
+
+      generated.push({ id, slug, title: result.title });
+    } catch (e: any) {
+      generated.push({ topic, error: e.message });
+    }
+  }
+
+  return json(200, { generated });
 }
 
 // --- Utils ---

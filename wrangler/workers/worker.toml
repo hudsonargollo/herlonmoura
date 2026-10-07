@@ -11,9 +11,15 @@ database_id = "d2852878-3462-47f7-a799-71a07015814b"
 binding = "KV"
 id = "40662a6fbf1249299a71124fbcd647d7"
 
+[[ai]]
+binding = "AI"
+
 [vars]
 JWT_SECRET = "change-me-in-production-use-a-secure-random-value"
 ADMIN_EMAIL = "admin@herlonmoura.com"
+
+[triggers]
+cron = "0 6 * * *"
 
 [[routes]]
 pattern = "api.herlonmoura.com/*"

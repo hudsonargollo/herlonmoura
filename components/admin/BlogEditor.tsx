@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Eye, Save, Send, FileText, Tag, Calendar, Clock, Hash } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { FormInput } from '@/components/FormInput';
-import { Card } from '@/components/Card';
+import { api } from '@/lib/admin/api';
 
 interface BlogEditorProps {
   initialPost?: {
@@ -13,7 +13,7 @@ interface BlogEditorProps {
     category: string;
     author: string;
     content: string;
-    status: 'draft' | 'approved' | 'published';
+    status: 'draft' | 'approval';
   };
   onSave?: (post: BlogEditorFormData) => void;
   onPreview?: (post: BlogEditorFormData) => void;
@@ -25,7 +25,7 @@ export interface BlogEditorFormData {
   category: string;
   author: string;
   content: string;
-  status: 'draft' | 'approved' | 'published';
+  status: 'draft' | 'approval';
 }
 
 const CATEGORIES = [
@@ -62,13 +62,30 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
     status: initialPost?.status ?? 'draft',
   });
   const [showPreview, setShowPreview] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
   const update = (field: keyof BlogEditorFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    onSave?.(formData);
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveMsg(null);
+    try {
+      const slug = formData.title.toLowerCase().replace(/\s+/g, '-');
+      if (initialPost?.title) {
+        await api.put(slug, formData);
+      } else {
+        await api.post<any>('/api/blog', formData);
+      }
+      setSaveMsg('Salvo com sucesso!');
+      onSave?.(formData);
+    } catch (e: any) {
+      setSaveMsg(`Erro: ${e.message}`);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handlePreview = () => {
@@ -80,7 +97,6 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
     update('status', status);
   };
 
-  // Simple markdown-to-HTML for preview
   const renderPreview = (md: string) => {
     return md
       .replace(/^### (.+)$/gm, '<h3 class="text-heading-2 font-heading font-semibold text-neutral-light mt-4 mb-2">$1</h3>')
@@ -98,25 +114,21 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
       {/* Toolbar */}
       <div className="flex flex-col gap-3 tablet:flex-row tablet:items-center tablet:justify-between">
         <div className="flex items-center gap-2">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleSave}
-          >
-            <Save className="mr-1.5 h-4 w-4" /> Salvar
+          <Button variant="primary" size="sm" onClick={handleSave} disabled={saving}>
+            <Save className="mr-1.5 h-4 w-4" /> {saving ? 'Salvando...' : 'Salvar'}
           </Button>
           <Button variant="secondary" size="sm" onClick={handlePreview}>
             <Eye className="mr-1.5 h-4 w-4" /> Preview
           </Button>
         </div>
+        {saveMsg && <span className="text-xs text-surgical-teal">{saveMsg}</span>}
         <div className="flex items-center gap-2">
-          {(['draft', 'approved', 'published'] as const).map((s) => {
+          {(['draft', 'approval'] as const).map((s) => {
             const colors = {
               draft: 'border-neutral-medium/30 bg-neutral-medium/10 text-neutral-medium',
-              approved: 'border-warning-amber/30 bg-warning-amber/10 text-warning-amber',
-              published: 'border-success-green/30 bg-success-green/10 text-success-green',
+              approval: 'border-warning-amber/30 bg-warning-amber/10 text-warning-amber',
             };
-            const labels = { draft: 'Rascunho', approved: 'Aprovado', published: 'Publicado' };
+            const labels = { draft: 'Rascunho', approval: 'Aprovação' };
             return (
               <button
                 key={s}
@@ -138,7 +150,7 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
         {/* Editor */}
         <div className="tablet:col-span-2 space-y-4">
           {/* Frontmatter fields */}
-          <Card variant="glass" className="p-5">
+          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-5">
             <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-4 flex items-center gap-2">
               <FileText className="h-4 w-4 text-surgical-teal" />
               Conteúdo
@@ -179,10 +191,10 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
                 />
               </div>
             </div>
-          </Card>
+          </div>
 
           {/* Markdown content */}
-          <Card variant="glass" className="p-5">
+          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-5">
             <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-4 flex items-center gap-2">
               <FileText className="h-4 w-4 text-surgical-teal" />
               Corpo (Markdown)
@@ -196,13 +208,13 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
             <p className="mt-2 text-[11px] text-neutral-medium">
               Use Markdown: # títulos, **negrito**, *itálico*, listas com -, links [text](url)
             </p>
-          </Card>
+          </div>
         </div>
 
         {/* Sidebar */}
         <div className="space-y-4">
           {/* Status card */}
-          <Card variant="glass" className="p-4">
+          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-4">
             <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3 flex items-center gap-2">
               <Tag className="h-4 w-4 text-surgical-teal" />
               Status
@@ -212,17 +224,15 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
                 <span className="text-neutral-medium">Status</span>
                 <span
                   className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${
-                    formData.status === 'published'
-                      ? 'border-success-green/30 bg-success-green/15 text-success-green'
-                      : formData.status === 'approved'
+                    formData.status === 'approval'
                       ? 'border-warning-amber/30 bg-warning-amber/15 text-warning-amber'
                       : 'border-neutral-medium/30 bg-neutral-medium/10 text-neutral-medium'
                   }`}
                 >
                   {formData.status === 'draft'
                     ? 'Rascunho'
-                    : formData.status === 'approved'
-                    ? 'Aprovado'
+                    : formData.status === 'approval'
+                    ? 'Aprovação'
                     : 'Publicado'}
                 </span>
               </div>
@@ -235,10 +245,10 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
                 <span className="text-neutral-light">{formData.author}</span>
               </div>
             </div>
-          </Card>
+          </div>
 
           {/* Content stats */}
-          <Card variant="glass" className="p-4">
+          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-4">
             <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3 flex items-center gap-2">
               <FileText className="h-4 w-4 text-surgical-teal" />
               Estatísticas
@@ -261,10 +271,10 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
                 </span>
               </div>
             </div>
-          </Card>
+          </div>
 
           {/* Quick actions */}
-          <Card variant="glass" className="p-4">
+          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-4">
             <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3">
               Ações Rápidas
             </h4>
@@ -275,13 +285,13 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
               <Button variant="primary" size="sm" className="w-full" onClick={handleSave}>
                 <Save className="mr-1.5 h-4 w-4" /> Salvar
               </Button>
-              {formData.status !== 'published' && (
+              {formData.status !== 'approval' && (
                 <Button variant="secondary" size="sm" className="w-full text-success-green border-success-green/30">
                   <Send className="mr-1.5 h-4 w-4" /> Publicar
                 </Button>
               )}
             </div>
-          </Card>
+          </div>
         </div>
       </div>
 

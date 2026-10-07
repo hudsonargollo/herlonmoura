@@ -1,2 +1,11 @@
 name = "herlon-moura-website"
 pages_build_output_dir = "out"
+
+# Cron trigger: every day at 6am UTC (12pm BRT)
+[triggers]
+crons = ["0 6 * * *"]
+
+[[d1_databases]]
+binding = "CRM_DB"
+database_name = "herlonmoura_crm"
+database_id = "d2852878-3462-47f7-a799-71a07015814b"

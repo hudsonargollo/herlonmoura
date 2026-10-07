@@ -1,59 +1,54 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+import { getDB } from "@/lib/d1";
 
-const CRM_URL = process.env.CRM_API_URL || 'https://herlonmoura-crm.workers.dev';
-const CRM_KEY = process.env.CRM_API_KEY || '';
-
+// GET /api/crm/leads?status=xxx  — list leads
+// POST /api/crm/leads — create lead from contact form / questionnaire
 export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const path = url.pathname.replace('/api/crm', '');
-  const query = url.searchParams.toString();
-  const target = `${CRM_URL}/api${path}${query ? `?${query}` : ''}`;
+  try {
+    const db = await getDB();
+    const url = new URL(req.url);
+    const status = url.searchParams.get("status");
 
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (CRM_KEY) headers['Authorization'] = `Bearer ${CRM_KEY}`;
+    let results: any;
+    if (status && status !== "all") {
+      results = await db.prepare("SELECT * FROM leads WHERE status = ? ORDER BY created_at DESC").bind(status).all();
+    } else {
+      results = await db.prepare("SELECT * FROM leads ORDER BY created_at DESC").all();
+    }
+    const leads = (results as any).results ?? [];
 
-  const res = await fetch(target, { method: 'GET', headers });
-  const body = await res.json();
-  return NextResponse.json(body, { status: res.status });
+    const totalR = await db.prepare("SELECT COUNT(*) as c FROM leads").first() as any;
+    const newR = await db.prepare("SELECT COUNT(*) as c FROM leads WHERE status = 'new'").first() as any;
+
+    return NextResponse.json({ leads, stats: { total: totalR?.c ?? 0, new: newR?.c ?? 0 } });
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const url = new URL(req.url);
-  const path = url.pathname.replace('/api/crm', '');
-  const target = `${CRM_URL}/api${path}`;
+  try {
+    const db = await getDB();
+    const body = await req.json();
+    const id = crypto.randomUUID();
+    const now = new Date().toISOString();
 
-  const body = await req.json();
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (CRM_KEY) headers['Authorization'] = `Bearer ${CRM_KEY}`;
+    await db.prepare(
+      "INSERT INTO leads (id, name, whatsapp, email, source, source_detail, status, score, tags, notes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    ).bind(
+      id, body.name ?? "", body.whatsapp ?? body.phone ?? "", body.email ?? null,
+      body.source ?? "contact", body.source_detail ?? body.subject ?? null,
+      body.status ?? "new", body.score ?? body.riskScore ?? 0,
+      JSON.stringify(body.tags ?? []), body.notes ?? "", now, now
+    ).run();
 
-  const res = await fetch(target, { method: 'POST', headers, body: JSON.stringify(body) });
-  const data = await res.json();
-  return NextResponse.json(data, { status: res.status });
-}
+    const iid = crypto.randomUUID();
+    await db.prepare(
+      "INSERT INTO interactions (id, lead_id, type, metadata, created_at) VALUES (?, ?, ?, ?, ?)"
+    ).bind(iid, id, body.source === "questionnaire" ? "quiz_complete" : "contact_form", JSON.stringify(body), now).run();
 
-export async function PUT(req: NextRequest) {
-  const url = new URL(req.url);
-  const path = url.pathname.replace('/api/crm', '');
-  const target = `${CRM_URL}/api${path}`;
-
-  const body = await req.json();
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (CRM_KEY) headers['Authorization'] = `Bearer ${CRM_KEY}`;
-
-  const res = await fetch(target, { method: 'PUT', headers, body: JSON.stringify(body) });
-  const data = await res.json();
-  return NextResponse.json(data, { status: res.status });
-}
-
-export async function DELETE(req: NextRequest) {
-  const url = new URL(req.url);
-  const path = url.pathname.replace('/api/crm', '');
-  const target = `${CRM_URL}/api${path}`;
-
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (CRM_KEY) headers['Authorization'] = `Bearer ${CRM_KEY}`;
-
-  const res = await fetch(target, { method: 'DELETE', headers });
-  const data = await res.json();
-  return NextResponse.json(data, { status: res.status });
+    return NextResponse.json({ id, created_at: now }, { status: 201 });
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
 }

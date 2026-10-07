@@ -31,13 +31,13 @@ function CRMPage({ activeSection, onNavigate }: CRMPageProps) {
 
   switch (activeSection) {
     case 'crm':
-      return <PatientList onSelectPatient={setSelectedPatient} />;
+      return <PatientList onSelectLead={setSelectedPatient} />;
     case 'appointments':
       return <AppointmentScheduler />;
     case 'leads':
       return <LeadStatusTracker />;
     default:
-      return <PatientList onSelectPatient={setSelectedPatient} />;
+      return <PatientList onSelectLead={setSelectedPatient} />;
   }
 }
 
