@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Arteriais"
 date: "2026-04-07"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/doencas-arteriais-perifericas-sintomas.png"
 word_count: 1000

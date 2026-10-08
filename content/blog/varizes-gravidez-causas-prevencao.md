@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Varizes"
 date: "2026-05-09"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/varizes-gravidez-causas-prevencao.png"
 word_count: 1200

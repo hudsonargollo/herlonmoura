@@ -185,8 +185,14 @@ export default function ContactPage() {
               {
                 icon: Phone,
                 title: 'Telefone',
-                value: '(71) 3333-3333',
-                href: 'tel:+557133333333',
+                value: '(71) 98344-9737',
+                href: 'tel:+5571983449737',
+              },
+              {
+                icon: Phone,
+                title: 'WhatsApp',
+                value: '(71) 99915-9975',
+                href: 'https://api.whatsapp.com/send/?phone=5571999159975',
               },
               {
                 icon: Mail,
@@ -197,7 +203,7 @@ export default function ContactPage() {
               {
                 icon: MapPin,
                 title: 'Localização',
-                value: 'Salvador, Bahia',
+                value: 'R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA',
                 href: '#',
               },
             ].map((contact, index) => {

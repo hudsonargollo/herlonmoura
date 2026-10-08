@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Vasculares"
 date: "2026-07-01"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/livedo-reticular-causas-significado.png"
 word_count: 1200

@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Varizes"
 date: "2026-05-10"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/insuficiencia-venosa-cronica-estagios-tratamento.png"
 word_count: 1300

@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Trombose"
 date: "2026-04-01"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/trombose-venosa-profunda-sintomas-riscos.png"
 word_count: 900

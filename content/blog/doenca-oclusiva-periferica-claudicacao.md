@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Arteriais"
 date: "2026-08-12"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/doenca-oclusiva-periferica-claudicacao.png"
 word_count: 1300

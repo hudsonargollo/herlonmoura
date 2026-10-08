@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Vasculares"
 date: "2026-06-24"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/doenca-carotidea-avc-estenose.png"
 word_count: 1200

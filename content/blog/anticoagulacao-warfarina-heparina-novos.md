@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Trombose"
 date: "2026-08-08"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/anticoagulacao-warfarina-heparina-novos.png"
 word_count: 900

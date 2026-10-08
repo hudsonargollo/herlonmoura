@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Cirurgia Vascular"
 date: "2026-07-28"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/angiografia-mapeamento-vascular.png"
 word_count: 1100

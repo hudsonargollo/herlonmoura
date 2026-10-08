@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Trombose"
 date: "2026-07-04"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/sindrome-pos-trombotica-sequelas-tvp.png"
 word_count: 1000

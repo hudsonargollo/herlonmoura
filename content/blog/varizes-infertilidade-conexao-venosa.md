@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Varizes"
 date: "2026-08-05"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/varizes-infertilidade-conexao-venosa.png"
 word_count: 1100

@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Prevenção"
 date: "2026-06-23"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/edema-membros-inferiores-causas.png"
 word_count: 1100

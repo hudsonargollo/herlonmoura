@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Vasculares"
 date: "2026-07-26"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/vasculite-sistemica-tipos-tratamento.png"
 word_count: 900

@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doppler Vascular"
 date: "2026-06-22"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/doppler-duplo-avaliacao-artrias-veias.png"
 word_count: 1000

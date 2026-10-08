@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doppler Vascular"
 date: "2026-07-27"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/flebografia-quando-doppler-nao-basta.png"
 word_count: 1000

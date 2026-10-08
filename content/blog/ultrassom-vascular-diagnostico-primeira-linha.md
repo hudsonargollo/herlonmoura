@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doppler Vascular"
 date: "2026-08-07"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/ultrassom-vascular-diagnostico-primeira-linha.png"
 word_count: 1300

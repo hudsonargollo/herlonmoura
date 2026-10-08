@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Arteriais"
 date: "2026-07-25"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/isquemia-membro-superior-causas.png"
 word_count: 1300

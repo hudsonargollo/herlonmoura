@@ -134,17 +134,13 @@ export default function AboutPage() {
             >
               <h2 className="text-heading-1 font-bold text-neutral-light">Biografia</h2>
               <p className="text-body-regular text-neutral-medium">
-                Dr. Herlon Moura é um especialista renomado em Angiologia e Cirurgia Vascular, dedicado a
-                fornecer cuidado de excelência para pacientes com condições vasculares em Salvador, Bahia.
+                Com formação pela Universidade Federal da Bahia (UFBA) e especializações em Cirurgia Vascular e Endovascular, ofereço um atendimento acolhedor e personalizado, combinando tecnologia de ponta e experiência clínica para tratar doenças como varizes, tromboses, aneurismas e obstruções arteriais.
               </p>
               <p className="text-body-regular text-neutral-medium">
-                Com mais de 15 anos de experiência clínica, Dr. Moura combina conhecimento médico profundo
-                com uma abordagem humanizada ao cuidado do paciente. Sua prática se concentra em diagnóstico
-                preciso e tratamento eficaz de condições vasculares complexas.
+                Consultório muito bem localizado, em Salvador, Bahia. Atendemos toda a região metropolitana.
               </p>
               <p className="text-body-regular text-neutral-medium">
-                Comprometido com a educação contínua e as melhores práticas médicas, Dr. Moura mantém-se
-                atualizado com os avanços mais recentes em angiologia e cirurgia vascular.
+                Equipamentos de alta tecnologia, o que nos garante resultados precisos, facilitando nos diagnósticos e consequentemente nos tratamentos.
               </p>
             </motion.div>
           </motion.div>

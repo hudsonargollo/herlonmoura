@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Prevenção"
 date: "2026-06-21"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/terapia-compressao-meias-bandagens.png"
 word_count: 900

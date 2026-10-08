@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Vasculares"
 date: "2026-05-14"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/malformacoes-vascuais-tipos-tratamento.png"
 word_count: 1200

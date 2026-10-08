@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Laser Vascular"
 date: "2026-04-05"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/laser-vascular-tratamento-varizes.png"
 word_count: 1300

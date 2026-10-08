@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Cirurgia Vascular"
 date: "2026-05-16"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/flebectomia-ambulatorial-varizes-procedimento.png"
 word_count: 900

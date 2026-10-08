@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Úlcera Venosa"
 date: "2026-04-06"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/ulcera-venosa-causas-tratamento-cicatrizacao.png"
 word_count: 900

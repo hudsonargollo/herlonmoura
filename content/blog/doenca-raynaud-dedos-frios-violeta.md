@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Doenças Vasculares"
 date: "2026-05-12"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/doenca-raynaud-dedos-frios-violeta.png"
 word_count: 1000

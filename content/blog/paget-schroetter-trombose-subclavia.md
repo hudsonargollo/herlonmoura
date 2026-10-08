@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Trombose"
 date: "2026-07-03"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/paget-schroetter-trombose-subclavia.png"
 word_count: 900

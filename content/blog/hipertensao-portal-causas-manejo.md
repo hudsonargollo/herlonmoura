@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Cirurgia Vascular"
 date: "2026-06-20"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/hipertensao-portal-causas-manejo.png"
 word_count: 1300

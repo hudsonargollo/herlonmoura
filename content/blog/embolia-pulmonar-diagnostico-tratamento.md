@@ -12,7 +12,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Trombose"
 date: "2026-08-10"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/embolia-pulmonar-diagnostico-tratamento.png"
 word_count: 1100

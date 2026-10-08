@@ -11,7 +11,7 @@ secondary_keywords:
 author: "Dr. Herlon Moura"
 category: "Prevenção"
 date: "2026-04-18"
-status: "draft"
+status: "published"
 language: "pt-BR"
 image: "/images/blog/prevencao-doencas-vascular-idoso-50.png"
 word_count: 1300
