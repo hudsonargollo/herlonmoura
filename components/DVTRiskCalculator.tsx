@@ -16,6 +16,8 @@ import {
   HeartPulse,
   ArrowRight,
   Scissors,
+  Mail,
+  User,
 } from 'lucide-react';
 
 export interface DVTCalculatorState {
@@ -29,6 +31,9 @@ export interface DVTCalculatorState {
   };
   riskScore: number | null;
   riskCategory: 'low' | 'moderate' | 'high' | 'critical' | null;
+  // Email/name capture (step inserted before result)
+  email: string;
+  name: string;
 }
 
 export function DVTRiskCalculator({
@@ -51,9 +56,12 @@ export function DVTRiskCalculator({
     },
     riskScore: null,
     riskCategory: null,
+    email: '',
+    name: '',
   });
 
-  const TOTAL_STEPS = 4; // Step 0 (Intro), 1 (Age), 2 (Mobility), 3 (Surgery), 4 (Factors), 5 (Result)
+  const TOTAL_STEPS = 5; // Step 0 (Intro), 1 (Age), 2 (Mobility), 3 (Surgery), 4 (Factors), 5 (Contact), 6 (Result)
+  const CONTACT_STEP = 5; // New step for email/name
 
   const computeScore = (responses: DVTCalculatorState['responses']) => {
     let score = 0;
@@ -86,23 +94,23 @@ export function DVTRiskCalculator({
     return { score, category };
   };
 
+  const handleContactSubmit = () => {
+    fetch('/api/crm/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: state.name, whatsapp: '', email: state.email, source: 'dvt-calculator', source_detail: 'TVP calculator', tags: ['dvt-test'], visitor_id: null }),
+    }).catch(() => {});
+    setState(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
+  };
+
   const handleNext = () => {
+    if (state.currentStep === CONTACT_STEP) { handleContactSubmit(); return; }
     if (state.currentStep === TOTAL_STEPS) {
       const { score, category } = computeScore(state.responses);
-      setState((prev) => ({
-        ...prev,
-        currentStep: 5,
-        direction: 1,
-        riskScore: score,
-        riskCategory: category,
-      }));
+      setState((prev) => ({ ...prev, currentStep: 6, direction: 1, riskScore: score, riskCategory: category }));
       if (onComplete) onComplete();
     } else {
-      setState((prev) => ({
-        ...prev,
-        currentStep: prev.currentStep + 1,
-        direction: 1,
-      }));
+      setState((prev) => ({ ...prev, currentStep: prev.currentStep + 1, direction: 1 }));
     }
   };
 
@@ -128,6 +136,8 @@ export function DVTRiskCalculator({
       },
       riskScore: null,
       riskCategory: null,
+      email: '',
+      name: '',
     });
   };
 
@@ -184,6 +194,8 @@ export function DVTRiskCalculator({
         return state.responses.recentSurgery !== null;
       case 4:
         return state.responses.clinicalFactors.length > 0;
+      case CONTACT_STEP:
+        return state.name.trim().length > 0 && state.email.trim().includes('@');
       default:
         return true;
     }
@@ -514,10 +526,65 @@ export function DVTRiskCalculator({
             </motion.div>
           )}
 
-          {/* STEP 5: RESULTADO */}
-          {state.currentStep === 5 && (
+          {/* STEP 5: CONTATO (email + name before result) */}
+          {state.currentStep === CONTACT_STEP && (
             <motion.div
-              key="step-5"
+              key="step-contact"
+              custom={state.direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="py-2 text-center"
+            >
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-surgical-teal/20 text-surgical-teal border border-surgical-teal/30">
+                <Mail className="h-6 w-6" />
+              </div>
+              <h4 className="text-heading-3 font-heading font-bold text-neutral-light mb-1">
+                Quase lá — nos contate
+              </h4>
+              <p className="text-xs text-neutral-medium mb-5">
+                Informe nome e e-mail para receber seu resultado e acompanhar sua saúde vascular.
+              </p>
+              <div className="space-y-3 max-w-sm mx-auto">
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+                  <input
+                    type="text"
+                    value={state.name}
+                    onChange={(e) => setState(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Nome completo"
+                    className="glass-input pl-10 w-full text-sm"
+                  />
+                </div>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+                  <input
+                    type="email"
+                    value={state.email}
+                    onChange={(e) => setState(prev => ({ ...prev, email: e.target.value }))}
+                    placeholder="fulano@email.com"
+                    className="glass-input pl-10 w-full text-sm"
+                  />
+                </div>
+              </div>
+              <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                <button
+                  onClick={handleContactSubmit}
+                  disabled={!isStepValid()}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-surgical-teal px-5 py-2.5 text-xs font-bold text-slate-950 transition-all hover:bg-surgical-teal-dark disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  <ArrowRight className="h-4 w-4" />
+                  <span>Ver Resultado</span>
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 6: RESULTADO */}
+          {state.currentStep === 6 && (
+            <motion.div
+              key="step-result"
               custom={state.direction}
               variants={slideVariants}
               initial="enter"
@@ -603,7 +670,7 @@ export function DVTRiskCalculator({
         </AnimatePresence>
       </div>
 
-      {/* Navigation Footer (Steps 1 to 4) */}
+      {/* Navigation Footer (Steps 1 to 6) */}
       {state.currentStep > 0 && state.currentStep <= TOTAL_STEPS && (
         <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
           <button
@@ -619,7 +686,7 @@ export function DVTRiskCalculator({
             disabled={!isStepValid()}
             className="inline-flex items-center gap-1.5 rounded-xl bg-surgical-teal px-5 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-surgical-teal-dark hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <span>{state.currentStep === TOTAL_STEPS ? 'Ver Resultado' : 'Próxima'}</span>
+            <span>{state.currentStep === TOTAL_STEPS ? 'Ver Resultado' : state.currentStep === CONTACT_STEP ? 'Avançar' : 'Próxima'}</span>
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>

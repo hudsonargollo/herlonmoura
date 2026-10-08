@@ -46,7 +46,29 @@ function uid(): string {
   return crypto.randomUUID();
 }
 
-// --- Seed default email sequences ---
+// --- Visitor helpers ---
+async function getOrCreateVisitor(env: Env, email: string | null, name: string | null, utm: Record<string, string | null>): Promise<string> {
+  if (!email) return uid(); // anonymous — no visitor record
+  const existing = await env.DB.prepare('SELECT id, total_visits FROM visitors WHERE email = ?').bind(email).first<any>();
+  if (existing) {
+    const updates: string[] = ['last_seen = CURRENT_TIMESTAMP', 'total_visits = total_visits + 1'];
+    const binds: any[] = [];
+    if (utm.source) { updates.push('utm_source = CASE WHEN utm_source IS NULL THEN ? ELSE utm_source END'); binds.push(utm.source); }
+    if (utm.medium) { updates.push('utm_medium = CASE WHEN utm_medium IS NULL THEN ? ELSE utm_medium END'); binds.push(utm.medium); }
+    if (utm.campaign) { updates.push('utm_campaign = CASE WHEN utm_campaign IS NULL THEN ? ELSE utm_campaign END'); binds.push(utm.campaign); }
+    if (utm.term) { updates.push('utm_term = CASE WHEN utm_term IS NULL THEN ? ELSE utm_term END'); binds.push(utm.term); }
+    if (utm.content) { updates.push('utm_content = CASE WHEN utm_content IS NULL THEN ? ELSE utm_content END'); binds.push(utm.content); }
+    if (name) { updates.push('name = ?'); binds.push(name); }
+    binds.push(email);
+    await env.DB.prepare(`UPDATE visitors SET ${updates.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE email = ?`).bind(...binds).run();
+    return existing.id;
+  }
+  const id = uid();
+  await env.DB.prepare(
+    `INSERT INTO visitors (id, email, name, utm_source, utm_medium, utm_campaign, utm_term, utm_content, tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?, '[]')`
+  ).bind(id, email, name || null, utm.source || null, utm.medium || null, utm.campaign || null, utm.term || null, utm.content || null).run();
+  return id;
+}
 async function seedSequences(env: Env): Promise<void> {
   const defaults = [
     { name: "Welcome Series", trigger: "welcome", delay_hours: 0, subject: "Bem-vindo! Confira seu material gratuito", body: "Olá! Agradecemos seu interesse. Baixe seu guia completo aqui." },
@@ -126,6 +148,11 @@ export default {
     // Dashboard stats
     if (path === '/dashboard/stats' && method === 'GET') return dashboardStats(env);
 
+    // Visitors (global tracking)
+    if (path === '/visitors' && method === 'GET') return listVisitors(env, request);
+    if (path === '/visitors/me' && method === 'GET') return getVisitor(env, request);
+    if (path === '/visitors/page-view' && method === 'POST') return recordPageView(env, request);
+
     return json(404, { error: 'not found' });
   },
 };
@@ -174,10 +201,11 @@ async function listLeads(req: Request, env: Env): Promise<Response> {
 }
 
 async function createLead(req: Request, env: Env): Promise<Response> {
-  const { name, whatsapp, email, source, source_detail, tags } = await req.json();
+  const body = await req.json();
+  const { name, whatsapp, email, source, source_detail, tags, visitor_id, utm_source, utm_medium, utm_campaign, utm_term, utm_content } = body as Record<string, any>;
   const id = uid();
-  await env.DB.prepare('INSERT INTO leads (id, name, whatsapp, email, source, source_detail, tags) VALUES (?,?,?,?,?,?,?)')
-    .bind(id, name, whatsapp, email || null, source || 'blog', source_detail || null, JSON.stringify(tags || [])).run();
+  await env.DB.prepare('INSERT INTO leads (id, name, whatsapp, email, visitor_id, source, source_detail, tags, utm_source, utm_medium, utm_campaign, utm_term, utm_content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
+    .bind(id, name, whatsapp, email || null, visitor_id || null, source || 'blog', source_detail || null, JSON.stringify(tags || []), utm_source || null, utm_medium || null, utm_campaign || null, utm_term || null, utm_content || null).run();
   // Log interaction
   await env.DB.prepare('INSERT INTO interactions (id, lead_id, type) VALUES (?,?,?)')
     .bind(uid(), id, 'lead_created').run();
@@ -224,11 +252,46 @@ async function listInteractions(req: Request, env: Env): Promise<Response> {
 }
 
 async function createInteraction(req: Request, env: Env): Promise<Response> {
-  const { lead_id, type, metadata } = await req.json();
+  const body = await req.json();
+  const { lead_id, type, metadata } = body as { lead_id?: string; type: string; metadata?: any };
   const id = uid();
   await env.DB.prepare('INSERT INTO interactions (id, lead_id, type, metadata) VALUES (?,?,?,?)')
     .bind(id, lead_id, type, JSON.stringify(metadata || {})).run();
   return json(201, { id });
+}
+
+// --- Visitor handlers ---
+async function getVisitor(env: Env, req: Request): Promise<Response> {
+  const url = new URL(req.url);
+  const email = url.searchParams.get('email');
+  if (!email) return json(400, { error: 'email required' });
+  const row = await env.DB.prepare('SELECT * FROM visitors WHERE email = ?').bind(email).first<any>();
+  if (!row) return json(404, { error: 'visitor not found' });
+  return json(200, { visitor: row });
+}
+
+async function listVisitors(env: Env, req: Request): Promise<Response> {
+  const url = new URL(req.url);
+  const source = url.searchParams.get('utm_source');
+  const limitn = Math.min(parseInt(url.searchParams.get('limit') || '100', 10), 500);
+  let query = 'SELECT * FROM visitors WHERE 1=1';
+  const binds: any[] = [];
+  if (source) { query += ' AND utm_source = ?'; binds.push(source); }
+  query += ' ORDER BY last_seen DESC LIMIT ?';
+  binds.push(limitn);
+  const rows = await env.DB.prepare(query).bind(...binds).all<any>();
+  return json(200, { visitors: rows.results });
+}
+
+async function recordPageView(env: Env, req: Request): Promise<Response> {
+  const body = await req.json().catch(() => ({}));
+  const { email, name, url: pageUrl, referrer, utm_source, utm_medium, utm_campaign, utm_term, utm_content, gclid } = body as Record<string, any>;
+  const visitorId = await getOrCreateVisitor(env, email || null, name || null, { source: utm_source, medium: utm_medium, campaign: utm_campaign, term: utm_term, content: utm_content });
+  const id = uid();
+  await env.DB.prepare(
+    'INSERT INTO interactions (id, visitor_id, type, metadata) VALUES (?, ?, ?, ?)'
+  ).bind(id, visitorId, 'page_view', JSON.stringify({ url: pageUrl, referrer, utm_source, utm_medium, utm_campaign, utm_term, utm_content, gclid })).run();
+  return json(201, { visitor_id: visitorId });
 }
 
 // --- Blog post handlers ---
@@ -356,10 +419,24 @@ async function dashboardStats(env: Env): Promise<Response> {
   const pendingPosts = await env.DB.prepare("SELECT COUNT(*) as c FROM blog_posts WHERE status IN ('draft', 'approval')").first<{c:number}>();
   const publishedPosts = await env.DB.prepare("SELECT COUNT(*) as c FROM blog_posts WHERE status = 'published'").first<{c:number}>();
   const interactions = await env.DB.prepare('SELECT COUNT(*) as c FROM interactions').first<{c:number}>();
+  const totalVisitors = await env.DB.prepare('SELECT COUNT(*) as c FROM visitors').first<{c:number}>();
+  const uniqueEmails = await env.DB.prepare('SELECT COUNT(DISTINCT email) as c FROM visitors WHERE email IS NOT NULL').first<{c:number}>();
+
+  // Top sources from visitors
+  const sourceRows = await env.DB.prepare(`
+    SELECT utm_source, COUNT(*) as c FROM visitors
+    WHERE utm_source IS NOT NULL
+    GROUP BY utm_source ORDER BY c DESC LIMIT 10
+  `).all<any>();
+  const sources: Record<string, number> = {};
+  for (const r of (sourceRows?.results || [])) { sources[r.utm_source] = r.c; }
+
   return json(200, {
     leads: { total: totalLeads?.c || 0, new: newLeads?.c || 0 },
     posts: { pending: pendingPosts?.c || 0, published: publishedPosts?.c || 0 },
     interactions: interactions?.c || 0,
+    visitors: { total: totalVisitors?.c || 0, unique: uniqueEmails?.c || 0 },
+    sources,
   });
 }
 

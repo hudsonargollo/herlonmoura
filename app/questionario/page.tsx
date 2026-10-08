@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Header, Footer, Container, Button } from '@/components';
-import { HeartPulse, ArrowLeft } from 'lucide-react';
+import { Header, Footer, Container, Button, FormInput } from '@/components';
+import { HeartPulse, ArrowLeft, Mail, User } from 'lucide-react';
 import Link from 'next/link';
 
 interface SymptomAnswers {
@@ -45,6 +45,9 @@ export default function QuestionnairePage() {
     riskFactors: [],
   });
   const [submitted, setSubmitted] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactStep, setContactStep] = useState(false);
 
   const toggleRiskFactor = (factor: string) => {
     setAnswers(prev => ({
@@ -64,28 +67,39 @@ export default function QuestionnairePage() {
   };
 
   const handleSubmit = async () => {
-    try {
-      await fetch('/api/crm/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'questionnaire',
-          symptoms: {
-            legSwelling: answers.legSwelling,
-            legPain: answers.legPain,
-            warmth: answers.warmth,
-            redness: answers.redness,
-            duration: answers.duration,
-          },
-          riskFactors: answers.riskFactors,
-          riskScore: answers.riskFactors.length,
-        }),
-      });
-      setSubmitted(true);
-    } catch (e) {
-      console.error('Submit error:', e);
-    }
+    setContactStep(false);
+    setSubmitted(true);
+    const riskScore = answers.riskFactors.length;
+    fetch('/api/crm/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, whatsapp: '', email, source: 'questionnaire', symptoms: { legSwelling: answers.legSwelling, legPain: answers.legPain, warmth: answers.warmth, redness: answers.redness, duration: answers.duration }, riskFactors: answers.riskFactors, riskScore }),
+    }).catch(() => {});
   };
+
+  if (contactStep) {
+    return (
+      <main className="min-h-screen bg-dark-elevated">
+        <Header />
+        <Container className="py-16 text-center">
+          <h2 className="text-heading-2 font-heading font-bold text-neutral-light mb-2">Seus dados</h2>
+          <p className="text-sm text-neutral-medium mb-6">Informe nome e e-mail antes de enviar.</p>
+          <div className="mx-auto max-w-sm space-y-3">
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="glass-input pl-10 w-full text-sm" />
+            </div>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="fulano@email.com" className="glass-input pl-10 w-full text-sm" />
+            </div>
+            <Button variant="primary" size="lg" onClick={handleSubmit} disabled={!name || !email.includes('@')}>Enviar Respostas</Button>
+          </div>
+        </Container>
+        <Footer />
+      </main>
+    );
+  }
 
   if (submitted) {
     return (
@@ -170,7 +184,7 @@ export default function QuestionnairePage() {
             variant="primary"
             size="lg"
             className="mt-8 w-full"
-            onClick={handleSubmit}
+            onClick={() => setContactStep(true)}
           >
             Enviar Respostas
           </Button>

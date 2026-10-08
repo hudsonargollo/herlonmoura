@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Header, Footer, Container, Button, FormInput } from '@/components';
-import { Activity, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Activity, ArrowLeft, AlertTriangle, Mail, User } from 'lucide-react';
 import Link from 'next/link';
 
 interface TromboseAnswers {
@@ -52,6 +52,10 @@ export default function TromboseScreeningPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [riskScore, setRiskScore] = useState(0);
+  // Contact capture (prompt before results)
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactStep, setContactStep] = useState(false);
 
   const toggleRisk = (f: string) => {
     setAnswers(prev => ({
@@ -69,14 +73,46 @@ export default function TromboseScreeningPage() {
     else {
       const score = calculateRisk(answers);
       setRiskScore(score);
-      setSubmitted(true);
-      fetch('/api/crm/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ source: 'trombose-screening', answers, riskScore: score, status: 'new' }),
-      }).catch(() => {});
+      setContactStep(true); // prompt for email/name before results
     }
   };
+
+  const handleContactSubmit = async () => {
+    setContactStep(false);
+    setSubmitted(true);
+    const score = calculateRisk(answers);
+    setRiskScore(score);
+    fetch('/api/crm/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, whatsapp: '', email, source: 'trombose-screening', answers, riskScore: score, status: 'new' }),
+    }).catch(() => {});
+  };
+
+  if (contactStep) {
+    const score = riskScore;
+    return (
+      <main className="min-h-screen bg-dark-elevated">
+        <Header />
+        <Container className="py-16">
+          <div className="mx-auto max-w-sm text-center space-y-4">
+            <h2 className="text-heading-2 font-heading font-bold text-neutral-light">Seus dados</h2>
+            <p className="text-sm text-neutral-medium">Informe nome e e-mail para receber seu resultado.</p>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="glass-input pl-10 w-full text-sm" />
+            </div>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="fulano@email.com" className="glass-input pl-10 w-full text-sm" />
+            </div>
+            <Button variant="primary" size="lg" onClick={handleContactSubmit} disabled={!name || !email.includes('@')}>Ver Resultado</Button>
+          </div>
+        </Container>
+        <Footer />
+      </main>
+    );
+  }
 
   if (submitted) {
     const level = riskScore <= 3 ? 'Baixo' : riskScore <= 8 ? 'Moderado' : 'Alto risco';

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Header, Footer, Container, Button, FormInput } from '@/components';
-import { HeartPulse, ArrowLeft, Shield } from 'lucide-react';
+import { Shield, ArrowLeft, Mail, User } from 'lucide-react';
 import Link from 'next/link';
 
 interface VarizesAnswers {
@@ -53,30 +53,55 @@ export default function VarizesAssessmentPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [riskScore, setRiskScore] = useState(0);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactStep, setContactStep] = useState(false);
 
   const update = (val: string) => {
     setAnswers(prev => ({ ...prev, [QUESTIONS[step].id]: val }));
-  };
-
-  const next = () => {
     if (step < QUESTIONS.length - 1) setStep(step + 1);
     else {
       const score = calculateRisk(answers);
       setRiskScore(score);
-      setSubmitted(true);
-      // Send to CRM
-      fetch('/api/crm/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'varizes-assessment',
-          answers,
-          riskScore: score,
-          status: 'new',
-        }),
-      }).catch(() => {});
+      setContactStep(true);
     }
   };
+
+  const handleContactSubmit = async () => {
+    setContactStep(false);
+    setSubmitted(true);
+    const score = calculateRisk(answers);
+    setRiskScore(score);
+    fetch('/api/crm/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, whatsapp: '', email, source: 'varizes-assessment', answers, riskScore: score, status: 'new' }),
+    }).catch(() => {});
+  };
+
+  if (contactStep) {
+    return (
+      <main className="min-h-screen bg-dark-elevated">
+        <Header />
+        <Container className="py-16">
+          <div className="mx-auto max-w-sm text-center space-y-4">
+            <h2 className="text-heading-2 font-heading font-bold text-neutral-light">Seus dados</h2>
+            <p className="text-sm text-neutral-medium">Informe nome e e-mail para receber seu resultado.</p>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="glass-input pl-10 w-full text-sm" />
+            </div>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="fulano@email.com" className="glass-input pl-10 w-full text-sm" />
+            </div>
+            <Button variant="primary" size="lg" onClick={handleContactSubmit} disabled={!name || !email.includes('@')}>Ver Resultado</Button>
+          </div>
+        </Container>
+        <Footer />
+      </main>
+    );
+  }
 
   if (submitted) {
     const level = riskScore <= 8 ? 'Baixo' : riskScore <= 16 ? 'Moderado' : 'Alto';
@@ -87,16 +112,12 @@ export default function VarizesAssessmentPage() {
         <Container className="py-16">
           <div className="mx-auto max-w-lg text-center">
             <Shield className={`mx-auto mb-6 h-16 w-16 ${color}`} />
-            <h1 className="mb-3 text-display-lg font-heading font-bold text-neutral-light">
-              Resultado do Avaliação
-            </h1>
-            <p className="mb-2 text-4xl font-extrabold {color}">{level} — Score: {riskScore}/24</p>
+            <h1 className="mb-3 text-display-lg font-heading font-bold text-neutral-light">Resultado do Avaliação</h1>
+            <p className={`mb-2 text-4xl font-extrabold {color}`}>{level} — Score: {riskScore}/24</p>
             <p className="mb-8 text-sm text-neutral-medium">
-              {level === 'Baixo'
-                ? 'Seus hábitos estão em boa fase. Continue monitorando.'
-                : level === 'Moderado'
-                ? 'Atenção: considere usar meias de compressão e elevar as pernas.'
-                : 'Recomendamos consulta com angiologista para avaliação detalhada.'}
+              {level === 'Baixo' ? 'Seus hábitos estão em boa fase. Continue monitorando.' :
+               level === 'Moderado' ? 'Atenção: considere usar meias de compressão e elevar as pernas.' :
+               'Recomendamos consulta com angiologista para avaliação detalhada.'}
             </p>
             <Link href="/contato"><Button variant="primary" size="lg">Marcar Consulta</Button></Link>
           </div>
