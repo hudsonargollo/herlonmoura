@@ -9,7 +9,7 @@ export async function d1Fetch(sql: string, params: any[] = []): Promise<any> {
     body: JSON.stringify({ sql, params }),
   });
   if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
+    const body: any = await res.json().catch(() => ({}));
     throw new Error(body.error || `D1 HTTP ${res.status}`);
   }
   return res.json();

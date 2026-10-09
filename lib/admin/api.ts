@@ -11,7 +11,7 @@ async function request<T>(path: string, opts?: RequestInit): Promise<T> {
   const url = `${API_BASE}${path}`;
   const res = await fetch(url, { ...opts, headers });
   if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
+    const body: any = await res.json().catch(() => ({}));
     throw new Error(body.error || `HTTP ${res.status}`);
   }
   return res.json();
@@ -41,10 +41,10 @@ export async function login(email: string, password: string) {
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
+    const body: any = await res.json().catch(() => ({}));
     throw new Error(body.error || 'Login falhou');
   }
-  const data = await res.json();
+  const data: any = await res.json();
   localStorage.setItem('admin_token', data.token);
   localStorage.setItem('admin_user', JSON.stringify(data.user));
   return data;

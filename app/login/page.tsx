@@ -22,7 +22,7 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
+      const data: any = await res.json();
       if (!res.ok) {
         setError(data.error || 'Login falhou');
         return;
