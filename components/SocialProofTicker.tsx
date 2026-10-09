@@ -114,14 +114,14 @@ export function SocialProofTicker({
           <div className="min-h-[280px] flex flex-col justify-between">
             {/* Quote */}
             <div className="mb-6">
-              <p className="text-lg text-slate-100 italic mb-4">&quot;{currentTestimonial.quote}&quot;</p>
+              <p className="text-lg text-foreground italic mb-4">&quot;{currentTestimonial.quote}&quot;</p>
             </div>
 
             {/* Patient Info */}
             <div className="space-y-3">
               <div>
-                <p className="font-semibold text-slate-100">{currentTestimonial.patientName}</p>
-                <p className="text-sm text-slate-400">{currentTestimonial.condition}</p>
+                <p className="font-semibold text-foreground">{currentTestimonial.patientName}</p>
+                <p className="text-sm text-muted-foreground">{currentTestimonial.condition}</p>
               </div>
 
               {/* Rating */}
@@ -131,27 +131,27 @@ export function SocialProofTicker({
                     <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <span className="text-sm text-slate-400">{currentTestimonial.rating}/5</span>
+                <span className="text-sm text-muted-foreground">{currentTestimonial.rating}/5</span>
               </div>
 
               {/* Outcome */}
-              <p className="text-sm text-teal-400">{currentTestimonial.outcome}</p>
+              <p className="text-sm text-primary">{currentTestimonial.outcome}</p>
             </div>
           </div>
 
           {/* Navigation Controls */}
-          <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-700">
+          <div className="flex items-center justify-between mt-8 pt-6 border-t border-border">
             <div className="flex gap-2">
               <button
                 onClick={handlePrevious}
-                className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors"
+                className="p-2 rounded-lg bg-muted hover:bg-muted text-foreground transition-colors"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={handleNext}
-                className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors"
+                className="p-2 rounded-lg bg-muted hover:bg-muted text-foreground transition-colors"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -161,7 +161,7 @@ export function SocialProofTicker({
             {/* Pause/Play Button */}
             <button
               onClick={togglePause}
-              className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors"
+              className="p-2 rounded-lg bg-muted hover:bg-muted text-foreground transition-colors"
               aria-label={isPaused ? 'Play' : 'Pause'}
             >
               {isPaused ? <Play className="w-5 h-5" /> : <Pause className="w-5 h-5" />}
@@ -177,7 +177,7 @@ export function SocialProofTicker({
                     setIsPaused(true);
                   }}
                   className={`h-2 rounded-full transition-all ${
-                    index === currentIndex ? 'bg-teal-500 w-6' : 'bg-slate-600 w-2 hover:bg-slate-500'
+                    index === currentIndex ? 'bg-primary w-6' : 'bg-muted w-2 hover:bg-muted/50'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
@@ -193,17 +193,17 @@ export function SocialProofTicker({
           {/* Left Column: License and Certifications */}
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-2">Medical License</h3>
-              <p className="text-lg font-semibold text-slate-100">{credentials.licenseNumber}</p>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Medical License</h3>
+              <p className="text-lg font-semibold text-foreground">{credentials.licenseNumber}</p>
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-3">Board Certifications</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Board Certifications</h3>
               <ul className="space-y-2">
                 {credentials.certifications.map((cert, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">✓</span>
-                    <span className="text-slate-100">{cert}</span>
+                    <span className="text-primary mt-1">✓</span>
+                    <span className="text-foreground">{cert}</span>
                   </li>
                 ))}
               </ul>
@@ -213,17 +213,17 @@ export function SocialProofTicker({
           {/* Right Column: Experience and Specializations */}
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-2">Years of Experience</h3>
-              <p className="text-lg font-semibold text-slate-100">{credentials.yearsOfExperience}+ years</p>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Years of Experience</h3>
+              <p className="text-lg font-semibold text-foreground">{credentials.yearsOfExperience}+ years</p>
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-3">Specializations</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Specializations</h3>
               <ul className="space-y-2">
                 {credentials.specializations.map((spec, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">•</span>
-                    <span className="text-slate-100">{spec}</span>
+                    <span className="text-primary mt-1">•</span>
+                    <span className="text-foreground">{spec}</span>
                   </li>
                 ))}
               </ul>
@@ -235,16 +235,16 @@ export function SocialProofTicker({
       {/* Social Proof Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="p-6 text-center">
-          <p className="text-3xl font-bold text-teal-500 mb-2">500+</p>
-          <p className="text-slate-300">Patients Treated</p>
+          <p className="text-3xl font-bold text-primary mb-2">500+</p>
+          <p className="text-muted-foreground">Patients Treated</p>
         </Card>
         <Card className="p-6 text-center">
-          <p className="text-3xl font-bold text-teal-500 mb-2">98%</p>
-          <p className="text-slate-300">Patient Satisfaction</p>
+          <p className="text-3xl font-bold text-primary mb-2">98%</p>
+          <p className="text-muted-foreground">Patient Satisfaction</p>
         </Card>
         <Card className="p-6 text-center">
-          <p className="text-3xl font-bold text-teal-500 mb-2">1000+</p>
-          <p className="text-slate-300">Successful Procedures</p>
+          <p className="text-3xl font-bold text-primary mb-2">1000+</p>
+          <p className="text-muted-foreground">Successful Procedures</p>
         </Card>
       </div>
     </div>

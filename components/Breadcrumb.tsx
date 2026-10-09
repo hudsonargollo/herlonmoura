@@ -24,15 +24,15 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
             {item.href ? (
               <Link
                 href={item.href}
-                className="text-body-small text-surgical-teal transition-colors hover:text-surgical-teal-dark"
+                className="text-body-small text-primary transition-colors hover:text-primary-hover"
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-body-small text-neutral-light">{item.label}</span>
+              <span className="text-body-small text-muted-foreground">{item.label}</span>
             )}
             {index < items.length - 1 && (
-              <ChevronRight className="h-4 w-4 text-neutral-medium" aria-hidden="true" />
+              <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             )}
           </li>
         ))}

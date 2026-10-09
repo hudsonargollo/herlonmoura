@@ -15,7 +15,7 @@ describe('Label Component', () => {
       expect(label).toHaveClass('block');
       expect(label).toHaveClass('text-sm');
       expect(label).toHaveClass('font-medium');
-      expect(label).toHaveClass('text-neutral-light');
+      expect(label).toHaveClass('text-foreground');
     });
   });
 
@@ -33,7 +33,7 @@ describe('Label Component', () => {
     it('required indicator has error red color', () => {
       render(<Label required>Required</Label>);
       const indicator = screen.getByLabelText('required');
-      expect(indicator).toHaveClass('text-error-red');
+      expect(indicator).toHaveClass('text-error');
     });
 
     it('required indicator is rendered after label text', () => {

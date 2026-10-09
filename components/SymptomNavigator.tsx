@@ -154,8 +154,8 @@ export function SymptomNavigator() {
       {state.step === 'symptoms' && (
         <div className="space-y-6">
           <div>
-            <h2 className="text-3xl font-bold text-slate-100 mb-2">Symptom Navigator</h2>
-            <p className="text-slate-300">Select a symptom to explore related conditions</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Symptom Navigator</h2>
+            <p className="text-muted-foreground">Select a symptom to explore related conditions</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -163,10 +163,10 @@ export function SymptomNavigator() {
               <button
                 key={symptom.id}
                 onClick={() => handleSymptomSelect(symptom.id)}
-                className="p-6 rounded-lg border border-slate-600 bg-slate-800 hover:bg-slate-700 hover:border-teal-500 transition-all text-left group"
+                className="p-6 rounded-lg border border-border bg-card hover:bg-muted hover:border-primary transition-all text-left group"
               >
                 <div className="text-4xl mb-3">{symptom.icon}</div>
-                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-teal-400 transition-colors">
+                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                   {symptom.name}
                 </h3>
               </button>
@@ -181,14 +181,14 @@ export function SymptomNavigator() {
           <div className="flex items-center gap-4">
             <button
               onClick={handleBack}
-              className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors"
+              className="p-2 rounded-lg bg-muted hover:bg-muted text-foreground transition-colors"
               aria-label="Go back"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
-              <h2 className="text-3xl font-bold text-slate-100">Related Conditions</h2>
-              <p className="text-slate-400">
+              <h2 className="text-3xl font-bold text-foreground">Related Conditions</h2>
+              <p className="text-muted-foreground">
                 Conditions associated with {SYMPTOMS.find((s) => s.id === state.selectedSymptom)?.name}
               </p>
             </div>
@@ -198,14 +198,14 @@ export function SymptomNavigator() {
             {relatedConditions.map((condition) => (
               <Card
                 key={condition.id}
-                className="p-6 cursor-pointer hover:border-teal-500 transition-colors group"
+                className="p-6 cursor-pointer hover:border-primary transition-colors group"
                 onClick={() => handleConditionSelect(condition.id)}
               >
-                <h3 className="text-xl font-semibold text-slate-100 mb-2 group-hover:text-teal-400 transition-colors">
+                <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                   {condition.name}
                 </h3>
-                <p className="text-slate-300 text-sm mb-4">{condition.description}</p>
-                <div className="flex items-center gap-2 text-teal-400 text-sm">
+                <p className="text-muted-foreground text-sm mb-4">{condition.description}</p>
+                <div className="flex items-center gap-2 text-primary text-sm">
                   Learn more
                   <ChevronRight className="w-4 h-4" />
                 </div>
@@ -221,31 +221,31 @@ export function SymptomNavigator() {
           <div className="flex items-center gap-4">
             <button
               onClick={handleBack}
-              className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors"
+              className="p-2 rounded-lg bg-muted hover:bg-muted text-foreground transition-colors"
               aria-label="Go back"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
-              <h2 className="text-3xl font-bold text-slate-100">{selectedConditionData.name}</h2>
+              <h2 className="text-3xl font-bold text-foreground">{selectedConditionData.name}</h2>
             </div>
           </div>
 
           <Card className="p-8 space-y-6">
             {/* Description */}
             <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-3">Overview</h3>
-              <p className="text-slate-300">{selectedConditionData.description}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Overview</h3>
+              <p className="text-muted-foreground">{selectedConditionData.description}</p>
             </div>
 
             {/* Symptoms */}
             <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-3">Common Symptoms</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Common Symptoms</h3>
               <ul className="space-y-2">
                 {selectedConditionData.symptoms.map((symptom, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <span className="text-teal-500 mt-1">•</span>
-                    <span className="text-slate-300">{symptom}</span>
+                    <span className="text-primary mt-1">•</span>
+                    <span className="text-muted-foreground">{symptom}</span>
                   </li>
                 ))}
               </ul>
@@ -253,12 +253,12 @@ export function SymptomNavigator() {
 
             {/* Risk Factors */}
             <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-3">Risk Factors</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Risk Factors</h3>
               <ul className="space-y-2">
                 {selectedConditionData.riskFactors.map((factor, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-slate-300">{factor}</span>
+                    <span className="text-muted-foreground">{factor}</span>
                   </li>
                 ))}
               </ul>
@@ -266,12 +266,12 @@ export function SymptomNavigator() {
 
             {/* Treatment Options */}
             <div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-3">Treatment Options</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Treatment Options</h3>
               <ul className="space-y-2">
                 {selectedConditionData.treatmentOptions.map((option, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <Heart className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-slate-300">{option}</span>
+                    <span className="text-muted-foreground">{option}</span>
                   </li>
                 ))}
               </ul>
@@ -282,7 +282,7 @@ export function SymptomNavigator() {
               <Button onClick={handleLearnMore} className="w-full">
                 Learn More About {selectedConditionData.name}
               </Button>
-              <Button className="w-full bg-teal-600 hover:bg-teal-700">
+              <Button className="w-full bg-primary hover:bg-primary-hover">
                 Book Consultation
               </Button>
             </div>
@@ -296,38 +296,38 @@ export function SymptomNavigator() {
           <div className="flex items-center gap-4">
             <button
               onClick={handleBack}
-              className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors"
+              className="p-2 rounded-lg bg-muted hover:bg-muted text-foreground transition-colors"
               aria-label="Go back"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
-              <h2 className="text-3xl font-bold text-slate-100">Next Steps</h2>
+              <h2 className="text-3xl font-bold text-foreground">Next Steps</h2>
             </div>
           </div>
 
           <Card className="p-8 space-y-6">
             <div>
-              <h3 className="text-2xl font-semibold text-slate-100 mb-4">
+              <h3 className="text-2xl font-semibold text-foreground mb-4">
                 Ready to address your {selectedConditionData.name}?
               </h3>
-              <p className="text-slate-300 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Dr. Herlon Moura specializes in treating {selectedConditionData.name} with proven, evidence-based approaches. Schedule a consultation to discuss your specific situation and treatment options.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="p-6 bg-slate-800 border-teal-500/30">
-                <h4 className="font-semibold text-slate-100 mb-3">Schedule a Consultation</h4>
-                <p className="text-sm text-slate-300 mb-4">
+              <Card className="p-6 bg-card border-primary/30">
+                <h4 className="font-semibold text-foreground mb-3">Schedule a Consultation</h4>
+                <p className="text-sm text-muted-foreground mb-4">
                   Book an appointment with Dr. Herlon Moura to discuss your symptoms and treatment options.
                 </p>
                 <Button className="w-full">Book Now</Button>
               </Card>
 
-              <Card className="p-6 bg-slate-800 border-slate-600">
-                <h4 className="font-semibold text-slate-100 mb-3">Contact Us</h4>
-                <p className="text-sm text-slate-300 mb-4">
+              <Card className="p-6 bg-card border-border">
+                <h4 className="font-semibold text-foreground mb-3">Contact Us</h4>
+                <p className="text-sm text-muted-foreground mb-4">
                   Have questions? Contact our office to speak with a team member about your concerns.
                 </p>
                 <Button variant="secondary" className="w-full">
@@ -336,8 +336,8 @@ export function SymptomNavigator() {
               </Card>
             </div>
 
-            <div className="bg-slate-800 border border-slate-600 rounded-lg p-4">
-              <p className="text-sm text-slate-300">
+            <div className="bg-card border border-border rounded-lg p-4">
+              <p className="text-sm text-muted-foreground">
                 <strong>Important:</strong> This information is for educational purposes only and should not replace professional medical advice. Please consult with Dr. Herlon Moura for personalized diagnosis and treatment recommendations.
               </p>
             </div>

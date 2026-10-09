@@ -43,19 +43,19 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
 
   return (
     <aside
-      className={`flex flex-col bg-slate-950 border-r border-slate-800/60 transition-all duration-300 ${
+      className={`flex flex-col bg-muted/30 border-r border-border/60 transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-60'
       } min-h-screen`}
     >
       {/* Brand */}
-      <div className={`flex items-center gap-3 px-4 py-5 border-b border-slate-800/60 ${collapsed ? 'justify-center px-2' : ''}`}>
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surgical-teal/15 text-surgical-teal flex-shrink-0">
+      <div className={`flex items-center gap-3 px-4 py-5 border-b border-border/60 ${collapsed ? 'justify-center px-2' : ''}`}>
+        <div className={`flex h-9 w-9 items-center justify-center rounded-lg bg-primary/15 text-primary flex-shrink-0`}>
           <HeartPulse className="h-5 w-5" />
         </div>
         {!collapsed && (
           <div className="overflow-hidden">
-            <span className="block text-sm font-bold text-white truncate">Admin</span>
-            <span className="block text-[11px] text-neutral-medium truncate">Herlon Moura</span>
+            <span className="block text-sm font-bold text-foreground truncate">Admin</span>
+            <span className="block text-[11px] text-muted-foreground truncate">Herlon Moura</span>
           </div>
         )}
       </div>
@@ -63,7 +63,7 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
       {/* Collapse toggle */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="mx-2 mt-3 flex items-center justify-center rounded-md p-1.5 text-neutral-medium hover:bg-slate-900 hover:text-neutral-light transition-colors"
+        className="mx-2 mt-3 flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:bg-card hover:text-foreground transition-colors"
         aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
       >
         {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
@@ -80,8 +80,8 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
               onClick={() => onNavigate(item.id as 'crm' | 'appointments' | 'leads' | 'blog')}
               className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-surgical-teal/10 text-surgical-teal'
-                  : 'text-neutral-medium hover:bg-slate-900 hover:text-neutral-light'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-card hover:text-foreground'
               }`}
               title={collapsed ? item.label : undefined}
             >
@@ -93,16 +93,16 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
       </nav>
 
       {/* User + Logout */}
-      <div className={`border-t border-slate-800/60 px-3 py-3 ${collapsed ? 'px-2' : ''}`}>
+      <div className={`border-t border-border/60 px-3 py-3 ${collapsed ? 'px-2' : ''}`}>
         {!collapsed && (
           <div className="mb-2">
-            <p className="text-xs font-medium text-neutral-light truncate">Administrador</p>
-            <p className="text-[11px] text-neutral-medium truncate">admin@herlonmoura.com.br</p>
+            <p className="text-xs font-medium text-foreground truncate">Administrador</p>
+            <p className="text-[11px] text-muted-foreground truncate">admin@herlonmoura.com.br</p>
           </div>
         )}
         <button
           onClick={handleLogout}
-          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-neutral-medium hover:bg-red-500/10 hover:text-red-400 transition-colors ${
+          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-red-500/10 hover:text-red-400 transition-colors ${
             collapsed ? 'justify-center px-2' : ''
           }`}
           title={collapsed ? 'Sair' : undefined}

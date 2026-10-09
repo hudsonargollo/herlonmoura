@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Fira_Code } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/app/context/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,18 +45,20 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): React.ReactNode {
+}) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} bg-dark-elevated font-sans text-neutral-light`}
+        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans antialiased`}
       >
-        {children}
+        <ThemeProvider defaultTheme="light">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

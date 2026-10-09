@@ -46,18 +46,18 @@ export default function AdminPage() {
 
   return (
     <ProtectedRoute>
-      <div className="flex min-h-screen bg-dark-elevated">
+      <div className="flex min-h-screen bg-background">
         <Sidebar activeSection={activeSection} onNavigate={setActiveSection} />
 
         <main className="flex-1 p-6 tablet:p-8 overflow-auto">
           {/* Header */}
           <header className="mb-8">
             <div className="flex items-center gap-3 mb-1">
-              {activeSection === 'crm' && <Users className="h-6 w-6 text-surgical-teal" />}
-              {activeSection === 'appointments' && <Calendar className="h-6 w-6 text-surgical-teal" />}
-              {activeSection === 'leads' && <ClipboardList className="h-6 w-6 text-surgical-teal" />}
-              {activeSection === 'blog' && <FileText className="h-6 w-6 text-surgical-teal" />}
-              <h1 className="text-display-md font-heading font-semibold text-neutral-light">
+              {activeSection === 'crm' && <Users className="h-6 w-6 text-primary" />}
+              {activeSection === 'appointments' && <Calendar className="h-6 w-6 text-primary" />}
+              {activeSection === 'leads' && <ClipboardList className="h-6 w-6 text-primary" />}
+              {activeSection === 'blog' && <FileText className="h-6 w-6 text-primary" />}
+              <h1 className="text-display-md font-heading font-semibold text-foreground">
                 {activeSection === 'crm'
                   ? 'CRM — Pacientes'
                   : activeSection === 'appointments'
@@ -67,7 +67,7 @@ export default function AdminPage() {
                   : 'Blog Editor'}
               </h1>
             </div>
-            <p className="text-sm text-neutral-medium">
+            <p className="text-sm text-muted-foreground">
               {activeSection === 'crm'
                 ? 'Gerencie pacientes, status e histórico clínico.'
                 : activeSection === 'appointments'

@@ -12,7 +12,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const stateStyles: Record<InputState, string> = {
-  default: 'border-neutral-medium focus:border-surgical-teal',
+  default: 'border-neutral-medium focus:border-primary',
   error: 'border-error-red focus:border-error-red',
   success: 'border-success-green focus:border-success-green',
 };
@@ -28,7 +28,7 @@ export function FormInput({
   type = 'text',
   ...props
 }: FormInputProps) {
-  const baseStyles = 'w-full rounded-lg border-2 bg-dark-elevated px-4 py-3 text-neutral-light placeholder-neutral-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-surgical-teal focus-visible:ring-offset-2 focus-visible:ring-offset-dark-elevated disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'w-full rounded-lg border-2 bg-background px-4 py-3 text-foreground placeholder-neutral-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark-elevated disabled:opacity-50 disabled:cursor-not-allowed';
   
   const combinedClassName = `${baseStyles} ${stateStyles[state]} ${className}`;
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
@@ -36,7 +36,7 @@ export function FormInput({
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-neutral-light">
+        <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-foreground">
           {label}
         </label>
       )}
@@ -47,7 +47,7 @@ export function FormInput({
         {...props}
       />
       {helperText && !errorMessage && !successMessage && (
-        <p className="mt-1 text-xs text-neutral-medium">{helperText}</p>
+        <p className="mt-1 text-xs text-muted-foreground">{helperText}</p>
       )}
       {errorMessage && (
         <p className="mt-1 text-xs text-error-red">{errorMessage}</p>

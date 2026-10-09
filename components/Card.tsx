@@ -8,8 +8,8 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-  standard: 'border border-neutral-dark bg-neutral-dark shadow-lg',
-  glass: 'glass-card',
+  standard: 'border border-border bg-card shadow-lg',
+  glass: 'glass-effect',
 };
 
 export function Card({
@@ -18,7 +18,7 @@ export function Card({
   children,
   ...props
 }: CardProps) {
-  const baseStyles = 'rounded-lg p-6 transition-all duration-300';
+  const baseStyles = 'rounded-xl p-6 transition-all duration-300';
   const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${className}`;
 
   return (

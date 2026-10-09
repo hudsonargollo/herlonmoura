@@ -24,8 +24,8 @@ const STATUS_LABELS: Record<string, string> = {
 
 const STATUS_COLORS: Record<string, string> = {
   scheduled: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30',
-  confirmed: 'bg-surgical-teal/15 text-surgical-teal border-surgical-teal/30',
-  completed: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30',
+  confirmed: 'bg-primary/15 text-primaryborder-primary/30',
+  completed: ' bg-muted/50/15 text-muted-foreground border-neutral-medium/30',
   cancelled: 'bg-error-red/15 text-error-red border-error-red/30',
 };
 
@@ -92,7 +92,7 @@ export function AppointmentScheduler() {
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="text-heading-3 font-heading font-semibold text-neutral-light">Agendamentos</h3>
+        <h3 className="text-heading-3 font-heading font-semibold text-foreground">Agendamentos</h3>
         <Button variant="primary" size="sm" onClick={() => setShowForm(!showForm)}><Plus className="mr-1.5 h-4 w-4" /> Novo Agendamento</Button>
       </div>
 
@@ -104,8 +104,8 @@ export function AppointmentScheduler() {
       )}
 
       {showForm && (
-        <div className="rounded-xl border border-surgical-teal/20 bg-surgical-teal/5 p-4 space-y-3">
-          <h4 className="text-sm font-semibold text-surgical-teal">Novo Agendamento</h4>
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-3">
+          <h4 className="text-sm font-semibold text-primary">Novo Agendamento</h4>
           <div className="grid grid-cols-2 gap-3">
             <FormInput label="Data" type="date" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
             <FormInput label="Hora" type="time" value={formData.time} onChange={(e) => setFormData({ ...formData, time: e.target.value })} />
@@ -120,23 +120,23 @@ export function AppointmentScheduler() {
       )}
 
       {loading ? (
-        <div className="text-center text-neutral-medium py-8">Carregando...</div>
+        <div className="text-center text-muted-foreground py-8">Carregando...</div>
       ) : (
         <div className="space-y-4">
           {Object.entries(grouped).map(([date, apps]) => (
             <div key={date}>
-              <h4 className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-medium">
+              <h4 className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 <Calendar className="h-3.5 w-3.5" /> {date}
               </h4>
               <div className="space-y-2">
                 {apps.map((a) => (
-                  <div key={a.id} className="flex items-center justify-between rounded-lg border border-neutral-dark/60 bg-neutral-dark/40 px-4 py-3">
+                  <div key={a.id} className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/40 px-4 py-3">
                     <div className="flex items-center gap-4">
-                      <Clock className="h-4 w-4 text-surgical-teal flex-shrink-0" />
-                      <span className="text-sm font-mono text-neutral-light">{a.time}</span>
+                      <Clock className="h-4 w-4 text-primaryflex-shrink-0" />
+                      <span className="text-sm font-mono text-foreground">{a.time}</span>
                       <div>
-                        <p className="text-sm text-neutral-light">{a.patientName}</p>
-                        <p className="text-xs text-neutral-medium">{a.type}</p>
+                        <p className="text-sm text-foreground">{a.patientName}</p>
+                        <p className="text-xs text-muted-foreground">{a.type}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -147,14 +147,14 @@ export function AppointmentScheduler() {
                           <button onClick={() => updateStatus(a.id, 'cancelled')} className="rounded p-1 text-error-red hover:bg-error-red/10" title="Cancelar"><XCircle className="h-4 w-4" /></button>
                         </>
                       )}
-                      <button onClick={() => removeAppointment(a.id)} className="rounded p-1 text-neutral-medium hover:bg-error-red/10 hover:text-error-red" title="Remover"><Trash2 className="h-4 w-4" /></button>
+                      <button onClick={() => removeAppointment(a.id)} className="rounded p-1 text-muted-foreground hover:bg-error-red/10 hover:text-error-red" title="Remover"><Trash2 className="h-4 w-4" /></button>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-          {appointments.length === 0 && <p className="text-center text-neutral-medium py-8">Nenhum agendamento.</p>}
+          {appointments.length === 0 && <p className="text-center text-muted-foreground py-8">Nenhum agendamento.</p>}
         </div>
       )}
     </div>

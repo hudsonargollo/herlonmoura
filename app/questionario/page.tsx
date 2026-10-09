@@ -79,18 +79,18 @@ export default function QuestionnairePage() {
 
   if (contactStep) {
     return (
-      <main className="min-h-screen bg-dark-elevated">
+      <main className="min-h-screen bg-background">
         <Header />
         <Container className="py-16 text-center">
-          <h2 className="text-heading-2 font-heading font-bold text-neutral-light mb-2">Seus dados</h2>
-          <p className="text-sm text-neutral-medium mb-6">Informe nome e e-mail antes de enviar.</p>
+          <h2 className="text-heading-2 font-heading font-bold text-foreground mb-2">Seus dados</h2>
+          <p className="text-sm text-muted-foreground mb-6">Informe nome e e-mail antes de enviar.</p>
           <div className="mx-auto max-w-sm space-y-3">
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="glass-input pl-10 w-full text-sm" />
             </div>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="fulano@email.com" className="glass-input pl-10 w-full text-sm" />
             </div>
             <Button variant="primary" size="lg" onClick={handleSubmit} disabled={!name || !email.includes('@')}>Enviar Respostas</Button>
@@ -103,14 +103,14 @@ export default function QuestionnairePage() {
 
   if (submitted) {
     return (
-      <main className="min-h-screen bg-dark-elevated">
+      <main className="min-h-screen bg-background">
         <Header />
         <Container className="py-20 text-center">
-          <HeartPulse className="mx-auto mb-6 h-16 w-16 text-surgical-teal" />
-          <h1 className="mb-4 text-display-lg font-heading font-semibold text-neutral-light">
+          <HeartPulse className="mx-auto mb-6 h-16 w-16 text-primary" />
+          <h1 className="mb-4 text-display-lg font-heading font-semibold text-foreground">
             Obrigado por responder
           </h1>
-          <p className="mb-8 text-body-regular text-neutral-medium">
+          <p className="mb-8 text-body-regular text-muted-foreground">
             Nossa equipe vai entrar em contato em breve com os próximos passos.
           </p>
           <Link href="/contato">
@@ -125,17 +125,17 @@ export default function QuestionnairePage() {
   if (step < QUESTIONS.length) {
     const q = QUESTIONS[step];
     return (
-      <main className="min-h-screen bg-dark-elevated">
+      <main className="min-h-screen bg-background">
         <Header />
         <Container className="py-16">
           <div className="mx-auto max-w-xl">
             <div className="mb-8 flex items-center gap-3">
-              <Link href="/contato" className="text-surgical-teal hover:underline text-sm">
+              <Link href="/contato" className="text-primary hover:underline text-sm">
                 ← Voltar
               </Link>
             </div>
-            <p className="mb-2 text-sm text-surgical-teal">Pergunta {step + 1} de {QUESTIONS.length}</p>
-            <h2 className="mb-8 text-heading-2 font-heading font-semibold text-neutral-light">
+            <p className="mb-2 text-sm text-primary">Pergunta {step + 1} de {QUESTIONS.length}</p>
+            <h2 className="mb-8 text-heading-2 font-heading font-semibold text-foreground">
               {q.question}
             </h2>
             <div className="space-y-3">
@@ -143,7 +143,7 @@ export default function QuestionnairePage() {
                 <button
                   key={opt}
                   onClick={() => handleAnswer(opt)}
-                  className="w-full rounded-lg border border-glass bg-glass px-6 py-4 text-left text-body-regular text-neutral-light transition-all hover:border-surgical-teal hover:bg-glass-hover"
+                  className="w-full rounded-lg border border-glass bg-glass px-6 py-4 text-left text-body-regular text-foreground transition-all hover:border-primary hover:bg-glass-hover"
                 >
                   {opt}
                 </button>
@@ -157,12 +157,12 @@ export default function QuestionnairePage() {
 
   // Risk factors step
   return (
-    <main className="min-h-screen bg-dark-elevated">
+    <main className="min-h-screen bg-background">
       <Header />
       <Container className="py-16">
         <div className="mx-auto max-w-xl">
-          <p className="mb-2 text-sm text-surgical-teal">Pergunta {step + 1} de {QUESTIONS.length + 1}</p>
-          <h2 className="mb-8 text-heading-2 font-heading font-semibold text-neutral-light">
+          <p className="mb-2 text-sm text-primary">Pergunta {step + 1} de {QUESTIONS.length + 1}</p>
+          <h2 className="mb-8 text-heading-2 font-heading font-semibold text-foreground">
             Selecione os fatores de risco que se aplicam:
           </h2>
           <div className="space-y-3">
@@ -172,8 +172,8 @@ export default function QuestionnairePage() {
                 onClick={() => toggleRiskFactor(factor)}
                 className={`w-full rounded-lg border px-6 py-4 text-left text-body-regular transition-all ${
                   answers.riskFactors.includes(factor)
-                    ? 'border-surgical-teal bg-surgical-teal bg-opacity-10 text-surgical-teal'
-                    : 'border-glass bg-glass text-neutral-light hover:border-surgical-teal hover:bg-glass-hover'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border bg-muted/30 text-foreground hover:border-primary hover:bg-muted'
                 }`}
               >
                 {factor}

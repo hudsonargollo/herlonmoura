@@ -23,8 +23,8 @@ interface Stats {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
-  new: { label: 'Novo', color: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30' },
-  contacted: { label: 'Contatado', color: 'bg-surgical-teal/15 text-surgical-teal border-surgical-teal/30' },
+  new: { label: 'Novo', color: ' bg-muted/50/15 text-muted-foreground border-neutral-medium/30' },
+  contacted: { label: 'Contatado', color: 'bg-primary/15 text-primaryborder-primary/30' },
   qualified: { label: 'Qualificado', color: 'bg-info/15 text-info border-info/30' },
   converted: { label: 'Convertido', color: 'bg-success-green/15 text-success-green border-success-green/30' },
   lost: { label: 'Perdido', color: 'bg-error-red/15 text-error-red border-error-red/30' },
@@ -34,10 +34,10 @@ function LeadScoreBar({ score }: { score: number }) {
   const color = score >= 70 ? 'bg-success-green' : score >= 40 ? 'bg-warning-amber' : 'bg-error-red';
   return (
     <div className="flex items-center gap-2">
-      <div className="h-1.5 w-12 rounded-full bg-neutral-dark overflow-hidden">
+      <div className="h-1.5 w-12 rounded-full bg-muted overflow-hidden">
         <div className={`h-full rounded-full ${color}`} style={{ width: `${score}%` }} />
       </div>
-      <span className="text-xs text-neutral-medium">{score}</span>
+      <span className="text-xs text-muted-foreground">{score}</span>
     </div>
   );
 }
@@ -86,54 +86,54 @@ export function LeadStatusTracker() {
     <div className="space-y-5">
       <div className="grid grid-cols-2 tablet:grid-cols-4 gap-4">
         <Card variant="glass" className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-neutral-medium">Novos</p>
-          <p className="mt-1 text-2xl font-bold text-neutral-light">{stats?.leads.new ?? newCount}</p>
+          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Novos</p>
+          <p className="mt-1 text-2xl font-bold text-foreground">{stats?.leads.new ?? newCount}</p>
         </Card>
         <Card variant="glass" className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-neutral-medium">Qualificados</p>
-          <p className="mt-1 text-2xl font-bold text-surgical-teal">{qualifiedCount}</p>
+          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Qualificados</p>
+          <p className="mt-1 text-2xl font-bold text-primary">{qualifiedCount}</p>
         </Card>
         <Card variant="glass" className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-neutral-medium">Convertidos</p>
+          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Convertidos</p>
           <p className="mt-1 text-2xl font-bold text-success-green">{convertedCount}</p>
         </Card>
         <Card variant="glass" className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-neutral-medium">Taxa</p>
-          <p className="mt-1 text-2xl font-bold text-neutral-light">{conversionRate}%</p>
+          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Taxa</p>
+          <p className="mt-1 text-2xl font-bold text-foreground">{conversionRate}%</p>
         </Card>
       </div>
 
       <div className="flex items-center justify-between">
-        <h3 className="text-heading-3 font-heading font-semibold text-neutral-light">Pipeline de Leads</h3>
-        <div className="flex items-center gap-1 text-xs text-neutral-medium">
+        <h3 className="text-heading-3 font-heading font-semibold text-foreground">Pipeline de Leads</h3>
+        <div className="flex items-center gap-1 text-xs text-muted-foreground">
           <TrendingUp className="h-4 w-4" />
           <span>Total: {stats?.leads.total ?? leads.length}</span>
         </div>
       </div>
 
       {loading ? (
-        <div className="text-center text-neutral-medium py-8">Carregando...</div>
+        <div className="text-center text-muted-foreground py-8">Carregando...</div>
       ) : (
         <div className="grid grid-cols-1 tablet:grid-cols-5 gap-4">
           {(['new', 'contacted', 'qualified', 'converted', 'lost'] as const).map((status) => {
             const config = STATUS_CONFIG[status];
             const items = leads.filter((l) => l.status === status);
             return (
-              <div key={status} className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/30 p-3">
+              <div key={status} className="rounded-xl border border-border/60 bg-muted/30 p-3">
                 <div className="mb-3 flex items-center justify-between">
                   <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${config.color}`}>{config.label}</span>
-                  <span className="text-xs text-neutral-medium">{items.length}</span>
+                  <span className="text-xs text-muted-foreground">{items.length}</span>
                 </div>
                 <div className="space-y-2">
                   {items.map((lead) => (
-                    <div key={lead.id} className="rounded-lg border border-neutral-dark/60 bg-neutral-dark/60 p-3 transition-colors hover:border-surgical-teal/30">
-                      <p className="text-sm font-medium text-neutral-light">{lead.name}</p>
-                      <p className="text-[11px] text-neutral-medium">{lead.source}</p>
+                    <div key={lead.id} className="rounded-lg border border-border/60 bg-muted/60 p-3 transition-colors hover:border-primary/30">
+                      <p className="text-sm font-medium text-foreground">{lead.name}</p>
+                      <p className="text-[11px] text-muted-foreground">{lead.source}</p>
                       <div className="mt-2 flex items-center justify-between"><LeadScoreBar score={lead.score} /></div>
-                      <p className="mt-2 text-[11px] text-neutral-medium">Criado: {lead.created_at?.slice(0, 10)}</p>
+                      <p className="mt-2 text-[11px] text-muted-foreground">Criado: {lead.created_at?.slice(0, 10)}</p>
                     </div>
                   ))}
-                  {items.length === 0 && <p className="py-4 text-center text-[11px] text-neutral-medium">Vazio</p>}
+                  {items.length === 0 && <p className="py-4 text-center text-[11px] text-muted-foreground">Vazio</p>}
                 </div>
               </div>
             );
@@ -141,25 +141,25 @@ export function LeadStatusTracker() {
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xl border border-neutral-dark bg-neutral-dark/60">
+      <div className="overflow-hidden rounded-xl border border-border bg-muted/60">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-neutral-dark/60 bg-neutral-dark/40">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Lead</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Fonte</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Status</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Score</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Criado</th>
+            <tr className="border-b border-border/60 bg-muted/40">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Lead</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Fonte</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Status</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Score</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Criado</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-dark/40">
+          <tbody className="divide-y divide-border/40">
             {leads.map((lead) => (
-              <tr key={lead.id} className="transition-colors hover:bg-surgical-teal/5">
-                <td className="px-4 py-3 font-medium text-neutral-light">{lead.name}</td>
-                <td className="px-4 py-3 text-neutral-medium">{lead.source}</td>
+              <tr key={lead.id} className="transition-colors hover:bg-primary/5">
+                <td className="px-4 py-3 font-medium text-foreground">{lead.name}</td>
+                <td className="px-4 py-3 text-muted-foreground">{lead.source}</td>
                 <td className="px-4 py-3"><span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${STATUS_CONFIG[lead.status]?.color || ''}`}>{STATUS_CONFIG[lead.status]?.label || lead.status}</span></td>
                 <td className="px-4 py-3"><LeadScoreBar score={lead.score} /></td>
-                <td className="px-4 py-3 text-neutral-medium">{lead.created_at?.slice(0, 10)}</td>
+                <td className="px-4 py-3 text-muted-foreground">{lead.created_at?.slice(0, 10)}</td>
               </tr>
             ))}
           </tbody>

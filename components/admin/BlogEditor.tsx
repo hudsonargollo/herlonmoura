@@ -99,13 +99,13 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
 
   const renderPreview = (md: string) => {
     return md
-      .replace(/^### (.+)$/gm, '<h3 class="text-heading-2 font-heading font-semibold text-neutral-light mt-4 mb-2">$1</h3>')
-      .replace(/^## (.+)$/gm, '<h2 class="text-heading-1 font-heading font-semibold text-neutral-light mt-6 mb-3">$1</h2>')
-      .replace(/^# (.+)$/gm, '<h1 class="text-display-md font-heading font-bold text-neutral-light mt-4 mb-3">$1</h1>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-neutral-light font-semibold">$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em class="text-neutral-light">$1</em>')
-      .replace(/^- (.+)$/gm, '<li class="text-sm text-neutral-light ml-4 list-disc">$1</li>')
-      .replace(/\n\n/g, '</p><p class="text-sm text-neutral-light leading-relaxed mb-3">')
+      .replace(/^### (.+)$/gm, '<h3 class="text-heading-2 font-heading font-semibold text-foreground mt-4 mb-2">$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2 class="text-heading-1 font-heading font-semibold text-foreground mt-6 mb-3">$1</h2>')
+      .replace(/^# (.+)$/gm, '<h1 class="text-display-md font-heading font-bold text-foreground mt-4 mb-3">$1</h1>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-foreground font-semibold">$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em class="text-foreground">$1</em>')
+      .replace(/^- (.+)$/gm, '<li class="text-sm text-foreground ml-4 list-disc">$1</li>')
+      .replace(/\n\n/g, '</p><p class="text-sm text-foreground leading-relaxed mb-3">')
       .replace(/\n/g, '<br/>');
   };
 
@@ -121,11 +121,11 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
             <Eye className="mr-1.5 h-4 w-4" /> Preview
           </Button>
         </div>
-        {saveMsg && <span className="text-xs text-surgical-teal">{saveMsg}</span>}
+        {saveMsg && <span className="text-xs text-primary">{saveMsg}</span>}
         <div className="flex items-center gap-2">
           {(['draft', 'approval'] as const).map((s) => {
             const colors = {
-              draft: 'border-neutral-medium/30 bg-neutral-medium/10 text-neutral-medium',
+              draft: 'border-neutral-medium/30  bg-muted/50/10 text-muted-foreground',
               approval: 'border-warning-amber/30 bg-warning-amber/10 text-warning-amber',
             };
             const labels = { draft: 'Rascunho', approval: 'Aprovação' };
@@ -136,7 +136,7 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
                 className={`rounded-full border px-3 py-1 text-[11px] font-medium transition-colors ${
                   formData.status === s
                     ? colors[s] + ' ring-1 ring-current'
-                    : 'bg-transparent text-neutral-medium hover:bg-neutral-dark'
+                    : 'bg-transparent text-muted-foreground hover:bg-muted'
                 }`}
               >
                 {labels[s]}
@@ -150,9 +150,9 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
         {/* Editor */}
         <div className="tablet:col-span-2 space-y-4">
           {/* Frontmatter fields */}
-          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-5">
-            <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-4 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-surgical-teal" />
+          <div className="rounded-xl border border-border/60 bg-muted/40 p-5">
+            <h4 className="text-heading-3 font-heading font-semibold text-foreground mb-4 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-primary" />
               Conteúdo
             </h4>
 
@@ -194,18 +194,18 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
           </div>
 
           {/* Markdown content */}
-          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-5">
-            <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-4 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-surgical-teal" />
+          <div className="rounded-xl border border-border/60 bg-muted/40 p-5">
+            <h4 className="text-heading-3 font-heading font-semibold text-foreground mb-4 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-primary" />
               Corpo (Markdown)
             </h4>
             <textarea
               value={formData.content}
               onChange={(e) => update('content', e.target.value)}
-              className="w-full min-h-[320px] rounded-lg border border-neutral-dark bg-neutral-dark px-4 py-3 text-sm text-neutral-light font-mono placeholder-neutral-medium transition-all duration-300 focus:outline-none focus:border-surgical-teal focus:ring-2 focus:ring-surgical-teal/25 resize-y"
+              className="w-full min-h-[320px] rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground font-mono placeholder-neutral-medium transition-all duration-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 resize-y"
               spellCheck={false}
             />
-            <p className="mt-2 text-[11px] text-neutral-medium">
+            <p className="mt-2 text-[11px] text-muted-foreground">
               Use Markdown: # títulos, **negrito**, *itálico*, listas com -, links [text](url)
             </p>
           </div>
@@ -214,19 +214,19 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
         {/* Sidebar */}
         <div className="space-y-4">
           {/* Status card */}
-          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-4">
-            <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3 flex items-center gap-2">
-              <Tag className="h-4 w-4 text-surgical-teal" />
+          <div className="rounded-xl border border-border/60 bg-muted/40 p-4">
+            <h4 className="text-heading-3 font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Tag className="h-4 w-4 text-primary" />
               Status
             </h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-medium">Status</span>
+                <span className="text-muted-foreground">Status</span>
                 <span
                   className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${
                     formData.status === 'approval'
                       ? 'border-warning-amber/30 bg-warning-amber/15 text-warning-amber'
-                      : 'border-neutral-medium/30 bg-neutral-medium/10 text-neutral-medium'
+                      : 'border-neutral-medium/30  bg-muted/50/10 text-muted-foreground'
                   }`}
                 >
                   {formData.status === 'draft'
@@ -237,36 +237,36 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
                 </span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-medium">Categoria</span>
-                <span className="text-neutral-light">{formData.category}</span>
+                <span className="text-muted-foreground">Categoria</span>
+                <span className="text-foreground">{formData.category}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-medium">Autor</span>
-                <span className="text-neutral-light">{formData.author}</span>
+                <span className="text-muted-foreground">Autor</span>
+                <span className="text-foreground">{formData.author}</span>
               </div>
             </div>
           </div>
 
           {/* Content stats */}
-          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-4">
-            <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-surgical-teal" />
+          <div className="rounded-xl border border-border/60 bg-muted/40 p-4">
+            <h4 className="text-heading-3 font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-primary" />
               Estatísticas
             </h4>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-neutral-medium">Palavras</span>
-                <span className="text-neutral-light">
+                <span className="text-muted-foreground">Palavras</span>
+                <span className="text-foreground">
                   {formData.content.split(/\s+/).filter(Boolean).length}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-medium">Caracteres</span>
-                <span className="text-neutral-light">{formData.content.length}</span>
+                <span className="text-muted-foreground">Caracteres</span>
+                <span className="text-foreground">{formData.content.length}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-medium">Linhas</span>
-                <span className="text-neutral-light">
+                <span className="text-muted-foreground">Linhas</span>
+                <span className="text-foreground">
                   {formData.content.split('\n').length}
                 </span>
               </div>
@@ -274,8 +274,8 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
           </div>
 
           {/* Quick actions */}
-          <div className="rounded-xl border border-neutral-dark/60 bg-neutral-dark/40 p-4">
-            <h4 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3">
+          <div className="rounded-xl border border-border/60 bg-muted/40 p-4">
+            <h4 className="text-heading-3 font-heading font-semibold text-foreground mb-3">
               Ações Rápidas
             </h4>
             <div className="space-y-2">
@@ -303,7 +303,7 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-heading-2 font-heading font-semibold text-neutral-light">Preview</h2>
+              <h2 className="text-heading-2 font-heading font-semibold text-foreground">Preview</h2>
               <Button variant="ghost" size="sm" onClick={() => setShowPreview(false)}>
                 ✕ Fechar
               </Button>

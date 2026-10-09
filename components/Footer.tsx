@@ -28,19 +28,19 @@ export function Footer({
       ],
     },
     {
-      title: 'Ferramentas & Recursos',
+      title: 'Recursos',
       links: [
         { label: 'Calculadora de Risco de TVP', href: '/calculadora-dvt' },
         { label: 'Mapeamento de Sintomas', href: '/#sintomas' },
         { label: 'Sobre o Especialista', href: '/sobre' },
-        { label: 'Contato & Localização', href: '/contato' },
+        { label: 'Contato', href: '/contato' },
       ],
     },
   ],
   copyright = `© ${new Date().getFullYear()} Dr. Herlon Moura dos Santos. Todos os direitos reservados.`,
 }: FooterProps) {
   return (
-    <footer className="border-t border-surgical-teal/20 bg-slate-950 text-slate-300">
+    <footer className="border-t border-border bg-muted/30 text-muted-foreground">
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:py-16">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Info */}
@@ -48,16 +48,16 @@ export function Footer({
             <Link href="/" className="inline-block">
               <Logo size="md" />
             </Link>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Dr. Herlon Moura dos Santos
               <br />
-              <strong className="text-slate-200">Cirurgião Vascular e Endovascular</strong>
+              <strong className="text-foreground">Cirurgião Vascular e Endovascular</strong>
               <br />
               CRM/BA 23904 • RQE Nº 19791 / RQE Nº 22436
               <br />
               Graduação pela Universidade Federal da Bahia (UFBA)
             </p>
-            <div className="flex items-center gap-1.5 text-xs text-surgical-teal">
+            <div className="flex items-center gap-1.5 text-xs text-primary">
               <ShieldCheck className="h-4 w-4" />
               <span>Atendimento em conformidade com o CFM</span>
             </div>
@@ -66,7 +66,7 @@ export function Footer({
           {/* Links sections */}
           {sections.map((section) => (
             <div key={section.title}>
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-white">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-foreground">
                 {section.title}
               </h3>
               <ul className="space-y-2.5 text-xs">
@@ -74,7 +74,7 @@ export function Footer({
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 transition-colors hover:text-surgical-teal"
+                      className="text-muted-foreground transition-colors hover:text-primary"
                     >
                       {link.label}
                     </Link>
@@ -86,27 +86,27 @@ export function Footer({
 
           {/* Contact Details */}
           <div>
-            <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-white">
+            <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-foreground">
               Consultório Salvador
             </h3>
-            <ul className="space-y-3 text-xs text-slate-400">
+            <ul className="space-y-3 text-xs text-muted-foreground">
               <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-surgical-teal flex-shrink-0 mt-0.5" />
+                <MapPin className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                 <span>R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-surgical-teal flex-shrink-0" />
-                <a href="tel:+5571983449737" className="hover:text-white transition-colors">
+                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+                <a href="tel:+5571983449737" className="hover:text-foreground transition-colors">
                   (71) 98344-9737
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <MessageCircle className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                <MessageCircle className="h-4 w-4 text-secondary flex-shrink-0" />
                 <a
                   href="https://wa.me/5571999159975"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+                  className="font-medium text-secondary hover:text-secondary-hover transition-colors"
                 >
                   WhatsApp: (71) 99915-9975
                 </a>
@@ -114,10 +114,10 @@ export function Footer({
             </ul>
             <div className="mt-5">
               <a
-                href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20gostaria%20de%20agendar%20uma%20consulta."
+                href="https://wa.me/5571999159975?text=Ol%C3%A1%20Dr.%20Herlon,%20gostaria%20de%20agendar%20uma%20consulta."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-semibold text-white shadow hover:bg-emerald-500 transition-colors"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-secondary px-4 py-2.5 text-xs font-semibold text-secondary-foreground shadow hover:bg-secondary-hover/90 transition-colors"
               >
                 <MessageCircle className="h-4 w-4" />
                 Agendar no WhatsApp
@@ -127,11 +127,21 @@ export function Footer({
         </div>
 
         {/* Legal notice & Copyright */}
-        <div className="mt-12 border-t border-slate-800/80 pt-8 text-center text-xs text-slate-400">
-          <p className="max-w-3xl mx-auto leading-relaxed text-slate-400 mb-4">
+        <div className="mt-12 border-t border-border/50 pt-8 text-center text-xs text-muted-foreground">
+          <p className="mb-4 max-w-3xl mx-auto leading-relaxed">
             Aviso Legal: As informações contidas neste website têm caráter puramente informativo e educativo, destinadas à orientação do público e não substituem o diagnóstico ou consulta presencial realizada por médico especialista, em conformidade com as resoluções do Conselho Federal de Medicina (CFM).
           </p>
-          <p>{copyright}</p>
+          <p>
+            {copyright} | Desenvolvido por{' '}
+            <a
+              href="http://www.informaticaps.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              PSI
+            </a>
+          </p>
         </div>
       </div>
     </footer>

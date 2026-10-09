@@ -30,10 +30,10 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  draft: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30',
+  draft: ' bg-muted/50/15 text-muted-foreground border-neutral-medium/30',
   approval: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30',
   published: 'bg-success-green/15 text-success-green border-success-green/30',
-  archived: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30',
+  archived: ' bg-muted/50/15 text-muted-foreground border-neutral-medium/30',
 };
 
 interface BlogEditorListProps {
@@ -124,7 +124,7 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
     <div className="space-y-5">
       <div className="flex flex-col gap-3 tablet:flex-row tablet:items-center tablet:justify-between">
         <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-medium" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input type="text" placeholder="Buscar artigo..." value={search} onChange={(e) => setSearch(e.target.value)} className="glass-input pl-10 w-full text-sm" />
         </div>
         <div className="flex items-center gap-2">
@@ -147,50 +147,50 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
       )}
 
       {loading ? (
-        <div className="px-4 py-8 text-center text-neutral-medium">Carregando...</div>
+        <div className="px-4 py-8 text-center text-muted-foreground">Carregando...</div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-neutral-dark bg-neutral-dark/60">
+        <div className="overflow-hidden rounded-xl border border-border bg-muted/60">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutral-dark/60 bg-neutral-dark/40">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Artigo</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Categoria</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Data</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-neutral-medium uppercase">Ações</th>
+              <tr className="border-b border-border/60 bg-muted/40">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Artigo</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Categoria</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Data</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-muted-foreground uppercase">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-neutral-dark/40">
+            <tbody className="divide-y divide-border/40">
               {filtered.map((post) => (
-                <tr key={post.slug} className="transition-colors hover:bg-surgical-teal/5">
+                <tr key={post.slug} className="transition-colors hover:bg-primary/5">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surgical-teal/15 text-surgical-teal flex-shrink-0"><FileText className="h-4 w-4" /></div>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/15 text-primaryflex-shrink-0"><FileText className="h-4 w-4" /></div>
                       <div>
-                        <p className="font-medium text-neutral-light text-sm">{post.title}</p>
-                        <p className="text-[11px] text-neutral-medium">{post.slug}</p>
+                        <p className="font-medium text-foreground text-sm">{post.title}</p>
+                        <p className="text-[11px] text-muted-foreground">{post.slug}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-neutral-light">{post.category}</td>
+                  <td className="px-4 py-3 text-foreground">{post.category}</td>
                   <td className="px-4 py-3"><span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${STATUS_COLORS[post.status]}`}>{STATUS_LABELS[post.status] || post.status}</span></td>
-                  <td className="px-4 py-3 text-neutral-medium">{post.date?.slice(0, 10)}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{post.date?.slice(0, 10)}</td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <button className="rounded p-1.5 text-neutral-medium hover:bg-surgical-teal/10 hover:text-surgical-teal" title="Preview"><Eye className="h-4 w-4" /></button>
-                      <button onClick={() => setEditingPost(post.slug)} className="rounded p-1.5 text-neutral-medium hover:bg-surgical-teal/10 hover:text-surgical-teal" title="Editar"><Edit3 className="h-4 w-4" /></button>
-                      <button onClick={() => handleDelete(post.slug)} className="rounded p-1.5 text-neutral-medium hover:bg-error-red/10 hover:text-error-red" title="Excluir"><Trash2 className="h-4 w-4" /></button>
+                      <button className="rounded p-1.5 text-muted-foreground hover:bg-primary/10 hover:text-primary" title="Preview"><Eye className="h-4 w-4" /></button>
+                      <button onClick={() => setEditingPost(post.slug)} className="rounded p-1.5 text-muted-foreground hover:bg-primary/10 hover:text-primary" title="Editar"><Edit3 className="h-4 w-4" /></button>
+                      <button onClick={() => handleDelete(post.slug)} className="rounded p-1.5 text-muted-foreground hover:bg-error-red/10 hover:text-error-red" title="Excluir"><Trash2 className="h-4 w-4" /></button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {filtered.length === 0 && <div className="px-4 py-8 text-center text-neutral-medium">Nenhum artigo encontrado.</div>}
+          {filtered.length === 0 && <div className="px-4 py-8 text-center text-muted-foreground">Nenhum artigo encontrado.</div>}
         </div>
       )}
 
-      <p className="text-[11px] text-neutral-medium">{filtered.length} de {posts.length} artigos</p>
+      <p className="text-[11px] text-muted-foreground">{filtered.length} de {posts.length} artigos</p>
     </div>
   );
 }

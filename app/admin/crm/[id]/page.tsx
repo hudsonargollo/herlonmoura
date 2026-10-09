@@ -52,11 +52,11 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
     finally { setSaving(false); }
   };
 
-  if (loading) return <div className="text-center text-neutral-medium py-8">Carregando...</div>;
+  if (loading) return <div className="text-center text-muted-foreground py-8">Carregando...</div>;
   if (error || !lead) return (
     <div className="rounded-xl border border-error-red/30 bg-error-red/5 p-8 text-center">
       <AlertCircle className="mx-auto h-10 w-10 text-warning-amber" />
-      <p className="mt-3 text-neutral-medium">{error || 'Lead não encontrado.'}</p>
+      <p className="mt-3 text-muted-foreground">{error || 'Lead não encontrado.'}</p>
       <Button variant="ghost" size="sm" onClick={() => window.history.back()} className="mt-3">Voltar</Button>
     </div>
   );
@@ -69,10 +69,10 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
       {/* Header */}
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="sm" onClick={() => window.history.back()}><ArrowLeft className="mr-1.5 h-4 w-4" /> Voltar</Button>
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surgical-teal/15 text-surgical-teal text-lg font-bold">{lead.name.charAt(0)}</div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primarytext-lg font-bold">{lead.name.charAt(0)}</div>
         <div>
-          <h2 className="text-heading-3 font-heading font-semibold text-neutral-light">{lead.name}</h2>
-          <p className="text-xs text-neutral-medium">{lead.id}</p>
+          <h2 className="text-heading-3 font-heading font-semibold text-foreground">{lead.name}</h2>
+          <p className="text-xs text-muted-foreground">{lead.id}</p>
         </div>
         <span className={`ml-auto inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${lead.status === 'active' || lead.status === 'converted' ? 'bg-success-green/15 text-success-green border-success-green/30' : 'bg-warning-amber/15 text-warning-amber border-warning-amber/30'}`}>{lead.status}</span>
       </div>
@@ -81,16 +81,16 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
       <div className="grid grid-cols-1 tablet:grid-cols-2 gap-4">
         <Card variant="glass">
           <div className="space-y-3">
-            <div className="flex items-start gap-3"><Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-surgical-teal" /><div><p className="text-[11px] uppercase tracking-wider text-neutral-medium">E-mail</p><p className="text-sm text-neutral-light">{lead.email || '—'}</p></div></div>
-            <div className="flex items-start gap-3"><Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-surgical-teal" /><div><p className="text-[11px] uppercase tracking-wider text-neutral-medium">WhatsApp</p><p className="text-sm text-neutral-light">{lead.whatsapp}</p></div></div>
-            <div className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-surgical-teal" /><div><p className="text-[11px] uppercase tracking-wider text-neutral-medium">Fonte</p><p className="text-sm text-neutral-light">{sourceLabels[lead.source] || lead.source}</p></div></div>
+            <div className="flex items-start gap-3"><Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /><div><p className="text-[11px] uppercase tracking-wider text-muted-foreground">E-mail</p><p className="text-sm text-foreground">{lead.email || '—'}</p></div></div>
+            <div className="flex items-start gap-3"><Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /><div><p className="text-[11px] uppercase tracking-wider text-muted-foreground">WhatsApp</p><p className="text-sm text-foreground">{lead.whatsapp}</p></div></div>
+            <div className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /><div><p className="text-[11px] uppercase tracking-wider text-muted-foreground">Fonte</p><p className="text-sm text-foreground">{sourceLabels[lead.source] || lead.source}</p></div></div>
           </div>
         </Card>
         <Card variant="glass">
           <div className="space-y-3">
-            <div className="flex items-start gap-3"><Activity className="mt-0.5 h-4 w-4 flex-shrink-0 text-surgical-teal" /><div><p className="text-[11px] uppercase tracking-wider text-neutral-medium">Score</p><p className="text-sm text-neutral-light">{lead.score}/100</p></div></div>
-            <div className="flex items-start gap-3"><Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-surgical-teal" /><div><p className="text-[11px] uppercase tracking-wider text-neutral-medium">Última interação</p><p className="text-sm text-neutral-light">{lead.updated_at?.slice(0, 16) || '—'}</p></div></div>
-            <div className="flex items-start gap-3"><Calendar className="mt-0.5 h-4 w-4 flex-shrink-0 text-surgical-teal" /><div><p className="text-[11px] uppercase tracking-wider text-neutral-medium">Criado</p><p className="text-sm text-neutral-light">{lead.created_at?.slice(0, 16) || '—'}</p></div></div>
+            <div className="flex items-start gap-3"><Activity className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /><div><p className="text-[11px] uppercase tracking-wider text-muted-foreground">Score</p><p className="text-sm text-foreground">{lead.score}/100</p></div></div>
+            <div className="flex items-start gap-3"><Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /><div><p className="text-[11px] uppercase tracking-wider text-muted-foreground">Última interação</p><p className="text-sm text-foreground">{lead.updated_at?.slice(0, 16) || '—'}</p></div></div>
+            <div className="flex items-start gap-3"><Calendar className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /><div><p className="text-[11px] uppercase tracking-wider text-muted-foreground">Criado</p><p className="text-sm text-foreground">{lead.created_at?.slice(0, 16) || '—'}</p></div></div>
           </div>
         </Card>
       </div>
@@ -98,44 +98,44 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
       {/* Tags & Notes */}
       {(lead.tags || lead.notes) && (
         <Card variant="glass">
-          <h3 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3">Informações</h3>
-          {lead.tags && <p className="text-sm text-neutral-light mb-2">Tags: {lead.tags}</p>}
-          {lead.notes && <p className="text-sm text-neutral-medium">{lead.notes}</p>}
+          <h3 className="text-heading-3 font-heading font-semibold text-foreground mb-3">Informações</h3>
+          {lead.tags && <p className="text-sm text-foreground mb-2">Tags: {lead.tags}</p>}
+          {lead.notes && <p className="text-sm text-muted-foreground">{lead.notes}</p>}
         </Card>
       )}
 
       {/* Add note */}
       <Card variant="glass">
-        <h3 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3">Adicionar Nota</h3>
+        <h3 className="text-heading-3 font-heading font-semibold text-foreground mb-3">Adicionar Nota</h3>
         <div className="flex gap-3">
-          <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Escreva uma nota..." className="w-full min-h-[80px] rounded-lg border border-neutral-dark bg-neutral-dark px-4 py-3 text-sm text-neutral-light placeholder-neutral-medium transition-all duration-300 focus:outline-none focus:border-surgical-teal focus:ring-2 focus:ring-surgical-teal/25 resize-y" />
+          <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Escreva uma nota..." className="w-full min-h-[80px] rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-neutral-medium transition-all duration-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 resize-y" />
           <Button variant="primary" size="sm" onClick={handleAddNote} disabled={saving || !note.trim()}>{saving ? 'Salvando...' : 'Salvar'}</Button>
         </div>
       </Card>
 
       {/* Interaction Timeline */}
       <Card variant="glass">
-        <h3 className="text-heading-3 font-heading font-semibold text-neutral-light mb-3 flex items-center gap-2"><Clock className="h-4 w-4 text-surgical-teal" /> Timeline de Interações</h3>
+        <h3 className="text-heading-3 font-heading font-semibold text-foreground mb-3 flex items-center gap-2"><Clock className="h-4 w-4 text-primary" /> Timeline de Interações</h3>
         {interactions.length === 0 ? (
-          <p className="text-sm text-neutral-medium py-4">Nenhuma interação registrada.</p>
+          <p className="text-sm text-muted-foreground py-4">Nenhuma interação registrada.</p>
         ) : (
           <div className="space-y-0">
             {interactions.map((i, idx) => {
               let meta: any;
               try { meta = JSON.parse(i.metadata); } catch { meta = {}; }
               return (
-                <div key={i.id} className={`flex gap-4 ${idx < interactions.length - 1 ? 'border-b border-neutral-dark/40 pb-3 mb-3' : ''}`}>
+                <div key={i.id} className={`flex gap-4 ${idx < interactions.length - 1 ? 'border-b border-border/40 pb-3 mb-3' : ''}`}>
                   <div className="flex flex-col items-center">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-surgical-teal/15 text-surgical-teal">{typeIcons[i.type] || <MessageSquare className="h-3.5 w-3.5" />}</div>
-                    {idx < interactions.length - 1 && <div className="w-px flex-1 bg-neutral-dark/60 mt-1" />}
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">{typeIcons[i.type] || <MessageSquare className="h-3.5 w-3.5" />}</div>
+                    {idx < interactions.length - 1 && <div className="w-px flex-1 bg-muted/60 mt-1" />}
                   </div>
                   <div className="flex-1 pb-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-neutral-light capitalize">{i.type.replace('_', ' ')}</span>
-                      <span className="text-[11px] text-neutral-medium">{i.created_at?.slice(0, 16)}</span>
+                      <span className="text-sm font-medium text-foreground capitalize">{i.type.replace('_', ' ')}</span>
+                      <span className="text-[11px] text-muted-foreground">{i.created_at?.slice(0, 16)}</span>
                     </div>
-                    {meta.note && <p className="text-xs text-neutral-medium mt-1">{meta.note}</p>}
-                    {meta.subject && <p className="text-xs text-neutral-medium mt-1">Assunto: {meta.subject}</p>}
+                    {meta.note && <p className="text-xs text-muted-foreground mt-1">{meta.note}</p>}
+                    {meta.subject && <p className="text-xs text-muted-foreground mt-1">Assunto: {meta.subject}</p>}
                   </div>
                 </div>
               );

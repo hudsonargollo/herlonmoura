@@ -21,7 +21,7 @@ export function PageLayout({
   showFooter = true,
 }: PageLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-dark-elevated">
+    <div className="flex min-h-screen flex-col bg-background">
       {/* Header */}
       {showHeader && (header || <Header {...headerProps} />)}
 
@@ -92,8 +92,8 @@ export function ContentPageLayout({
         {/* Page Header */}
         {(title || subtitle) && (
           <div className="mb-3xl">
-            {title && <h1 className="text-display-lg text-neutral-light">{title}</h1>}
-            {subtitle && <p className="mt-md text-body-lg text-neutral-medium">{subtitle}</p>}
+            {title && <h1 className="text-display-lg text-foreground">{title}</h1>}
+            {subtitle && <p className="mt-md text-body-lg text-muted-foreground">{subtitle}</p>}
           </div>
         )}
 

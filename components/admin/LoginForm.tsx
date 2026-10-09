@@ -32,17 +32,17 @@ export function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-dark-elevated px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         {/* Brand */}
         <div className="mb-8 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-surgical-teal/15 text-surgical-teal mb-4">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-primarymb-4">
             <Shield className="h-8 w-8" />
           </div>
-          <h1 className="text-heading-2 font-heading font-semibold text-neutral-light">
+          <h1 className="text-heading-2 font-heading font-semibold text-foreground">
             Painel Admin
           </h1>
-          <p className="mt-2 text-body-small text-neutral-medium">
+          <p className="mt-2 text-body-small text-muted-foreground">
             Dr. Herlon Moura — Sistema de Gestão
           </p>
         </div>
@@ -51,7 +51,7 @@ export function LoginForm() {
         <div className="glass-card p-8">
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div className="flex items-center justify-center mb-4">
-              <Lock className="h-5 w-5 text-neutral-medium" />
+              <Lock className="h-5 w-5 text-muted-foreground" />
             </div>
 
             <FormInput
@@ -83,7 +83,7 @@ export function LoginForm() {
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-[11px] text-neutral-medium">
+          <p className="mt-4 text-center text-[11px] text-muted-foreground">
             Credenciais de demonstração: admin@herlonmoura.com.br / admin2026!
           </p>
         </div>

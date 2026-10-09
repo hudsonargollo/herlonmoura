@@ -16,3 +16,4 @@ export { DVTModal } from './DVTModal';
 export { SocialProofTicker } from './SocialProofTicker';
 export { SymptomNavigator } from './SymptomNavigator';
 export { ArticleCard } from './ArticleCard';
+export { ThemeToggle } from './ThemeToggle';

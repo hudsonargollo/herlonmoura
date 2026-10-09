@@ -11,9 +11,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-surgical-teal text-white hover:bg-surgical-teal-dark',
-  secondary: 'border border-surgical-teal bg-transparent text-surgical-teal hover:bg-surgical-teal hover:text-white',
-  ghost: 'bg-transparent text-surgical-teal underline hover:no-underline',
+  primary: 'bg-primary text-primary-foreground hover:bg-primary-hover',
+  secondary: 'border border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground',
+  ghost: 'bg-transparent text-primary underline hover:no-underline',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -31,8 +31,8 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surgical-teal disabled:opacity-50 disabled:cursor-not-allowed';
-  
+  const baseStyles = 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed';
+
   const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
 
   return (

@@ -11,13 +11,13 @@ export function Label({
   children,
   ...props
 }: LabelProps) {
-  const baseStyles = 'block text-sm font-medium text-neutral-light';
+  const baseStyles = 'block text-sm font-medium text-foreground';
   const combinedClassName = `${baseStyles} ${className}`;
 
   return (
     <label className={combinedClassName} {...props}>
       {children}
-      {required && <span className="ml-1 text-error-red" aria-label="required">*</span>}
+      {required && <span className="ml-1 text-error" aria-label="required">*</span>}
     </label>
   );
 }

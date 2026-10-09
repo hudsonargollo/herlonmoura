@@ -80,7 +80,7 @@ export default function AboutPage() {
   };
 
   return (
-    <main className="min-h-screen bg-dark-elevated">
+    <main className="min-h-screen bg-background">
       <Header
         logo={<Logo size="md" animated={false} />}
         navItems={navItems}
@@ -96,10 +96,10 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="mb-lg text-display-lg font-bold text-neutral-light md:text-display-lg">
+            <h1 className="mb-lg text-display-lg font-bold text-foreground md:text-display-lg">
               Sobre Dr. Herlon Moura
             </h1>
-            <p className="mx-auto max-w-2xl text-body-lg text-neutral-medium">
+            <p className="mx-auto max-w-2xl text-body-lg text-muted-foreground">
               Especialista em Angiologia e Cirurgia Vascular com mais de 15 anos de experiência
             </p>
           </motion.div>
@@ -118,12 +118,12 @@ export default function AboutPage() {
           >
             {/* Image Placeholder */}
             <motion.div
-              className="flex items-center justify-center rounded-xl bg-gradient-to-br from-surgical-teal to-surgical-teal-dark p-3xl"
+              className="flex items-center justify-center rounded-xl bg-gradient-to-br from-primary to-surgical-teal-dark p-3xl"
               variants={itemVariants}
             >
               <div className="text-center">
                 <Logo size="lg" animated={false} />
-                <p className="mt-lg text-neutral-light">Dr. Herlon Moura</p>
+                <p className="mt-lg text-foreground">Dr. Herlon Moura</p>
               </div>
             </motion.div>
 
@@ -132,14 +132,14 @@ export default function AboutPage() {
               className="space-y-lg"
               variants={itemVariants}
             >
-              <h2 className="text-heading-1 font-bold text-neutral-light">Biografia</h2>
-              <p className="text-body-regular text-neutral-medium">
+              <h2 className="text-heading-1 font-bold text-foreground">Biografia</h2>
+              <p className="text-body-regular text-muted-foreground">
                 Com formação pela Universidade Federal da Bahia (UFBA) e especializações em Cirurgia Vascular e Endovascular, ofereço um atendimento acolhedor e personalizado, combinando tecnologia de ponta e experiência clínica para tratar doenças como varizes, tromboses, aneurismas e obstruções arteriais.
               </p>
-              <p className="text-body-regular text-neutral-medium">
+              <p className="text-body-regular text-muted-foreground">
                 Consultório muito bem localizado, em Salvador, Bahia. Atendemos toda a região metropolitana.
               </p>
-              <p className="text-body-regular text-neutral-medium">
+              <p className="text-body-regular text-muted-foreground">
                 Equipamentos de alta tecnologia, o que nos garante resultados precisos, facilitando nos diagnósticos e consequentemente nos tratamentos.
               </p>
             </motion.div>
@@ -148,7 +148,7 @@ export default function AboutPage() {
       </section>
 
       {/* Credentials Section */}
-      <section id="credenciais" className="bg-neutral-dark py-20 md:py-32">
+      <section id="credenciais" className="bg-muted py-20 md:py-32">
         <Container>
           <motion.div
             className="mb-3xl text-center"
@@ -157,8 +157,8 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-heading-1 font-bold text-neutral-light">Credenciais e Certificações</h2>
-            <p className="mt-md text-body-regular text-neutral-medium">
+            <h2 className="text-heading-1 font-bold text-foreground">Credenciais e Certificações</h2>
+            <p className="mt-md text-body-regular text-muted-foreground">
               Qualificações profissionais e certificações médicas
             </p>
           </motion.div>
@@ -177,8 +177,8 @@ export default function AboutPage() {
               >
                 <Card variant="glass" className="h-full">
                   <div className="space-y-md">
-                    <h3 className="text-heading-3 font-semibold text-surgical-teal">{credential.title}</h3>
-                    <p className="text-body-regular text-neutral-light">{credential.value}</p>
+                    <h3 className="text-heading-3 font-semibold text-primary">{credential.title}</h3>
+                    <p className="text-body-regular text-foreground">{credential.value}</p>
                   </div>
                 </Card>
               </motion.div>
@@ -197,8 +197,8 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-heading-1 font-bold text-neutral-light">Experiência Profissional</h2>
-            <p className="mt-md text-body-regular text-neutral-medium">
+            <h2 className="text-heading-1 font-bold text-foreground">Experiência Profissional</h2>
+            <p className="mt-md text-body-regular text-muted-foreground">
               Trajetória de excelência em cuidado vascular
             </p>
           </motion.div>
@@ -229,12 +229,12 @@ export default function AboutPage() {
             ].map((experience, index) => (
               <motion.div
                 key={index}
-                className="border-l-4 border-surgical-teal pl-lg"
+                className="border-l-4 border-primary pl-lg"
                 variants={itemVariants}
               >
-                <p className="text-sm font-semibold text-surgical-teal">{experience.year}</p>
-                <h3 className="mt-md text-heading-3 font-semibold text-neutral-light">{experience.title}</h3>
-                <p className="mt-md text-body-regular text-neutral-medium">{experience.institution}</p>
+                <p className="text-sm font-semibold text-primary">{experience.year}</p>
+                <h3 className="mt-md text-heading-3 font-semibold text-foreground">{experience.title}</h3>
+                <p className="mt-md text-body-regular text-muted-foreground">{experience.institution}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -242,7 +242,7 @@ export default function AboutPage() {
       </section>
 
       {/* Practice Philosophy Section */}
-      <section className="bg-neutral-dark py-20 md:py-32">
+      <section className="bg-muted py-20 md:py-32">
         <Container>
           <motion.div
             className="mb-3xl text-center"
@@ -251,7 +251,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-heading-1 font-bold text-neutral-light">Filosofia de Prática</h2>
+            <h2 className="text-heading-1 font-bold text-foreground">Filosofia de Prática</h2>
           </motion.div>
 
           <motion.div
@@ -280,8 +280,8 @@ export default function AboutPage() {
                 variants={itemVariants}
               >
                 <Card variant="glass">
-                  <h3 className="mb-md text-heading-3 font-semibold text-surgical-teal">{philosophy.title}</h3>
-                  <p className="text-body-regular text-neutral-medium">{philosophy.description}</p>
+                  <h3 className="mb-md text-heading-3 font-semibold text-primary">{philosophy.title}</h3>
+                  <p className="text-body-regular text-muted-foreground">{philosophy.description}</p>
                 </Card>
               </motion.div>
             ))}
@@ -293,7 +293,7 @@ export default function AboutPage() {
       <section className="py-20 md:py-32">
         <Container>
           <motion.div
-            className="rounded-xl bg-gradient-to-r from-surgical-teal to-surgical-teal-dark p-3xl text-center"
+            className="rounded-xl bg-gradient-to-r from-primary to-surgical-teal-dark p-3xl text-center"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -307,7 +307,7 @@ export default function AboutPage() {
             </p>
             <Link
               href="/agendamento"
-              className="inline-flex items-center justify-center rounded-lg bg-dark-elevated px-2xl py-lg font-semibold text-surgical-teal transition-all hover:bg-neutral-light"
+              className="inline-flex items-center justify-center rounded-lg bg-background px-2xl py-lg font-semibold text-primary transition-all hover:bg-muted"
             >
               Agendar Consulta
             </Link>

@@ -92,18 +92,18 @@ export default function TromboseScreeningPage() {
   if (contactStep) {
     const score = riskScore;
     return (
-      <main className="min-h-screen bg-dark-elevated">
+      <main className="min-h-screen bg-background">
         <Header />
         <Container className="py-16">
           <div className="mx-auto max-w-sm text-center space-y-4">
-            <h2 className="text-heading-2 font-heading font-bold text-neutral-light">Seus dados</h2>
-            <p className="text-sm text-neutral-medium">Informe nome e e-mail para receber seu resultado.</p>
+            <h2 className="text-heading-2 font-heading font-bold text-foreground">Seus dados</h2>
+            <p className="text-sm text-muted-foreground">Informe nome e e-mail para receber seu resultado.</p>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="glass-input pl-10 w-full text-sm" />
             </div>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="fulano@email.com" className="glass-input pl-10 w-full text-sm" />
             </div>
             <Button variant="primary" size="lg" onClick={handleContactSubmit} disabled={!name || !email.includes('@')}>Ver Resultado</Button>
@@ -118,14 +118,14 @@ export default function TromboseScreeningPage() {
     const level = riskScore <= 3 ? 'Baixo' : riskScore <= 8 ? 'Moderado' : 'Alto risco';
     const color = riskScore <= 3 ? 'text-success-green' : riskScore <= 8 ? 'text-warning-amber' : 'text-error-red';
     return (
-      <main className="min-h-screen bg-dark-elevated">
+      <main className="min-h-screen bg-background">
         <Header />
         <Container className="py-16">
           <div className="mx-auto max-w-lg text-center">
             <AlertTriangle className={`mx-auto mb-6 h-16 w-16 ${color}`} />
-            <h1 className="mb-3 text-display-lg font-heading font-bold text-neutral-light">Avaliação Trombose</h1>
+            <h1 className="mb-3 text-display-lg font-heading font-bold text-foreground">Avaliação Trombose</h1>
             <p className={`mb-4 text-4xl font-extrabold ${color}`}>{level} — Score: {riskScore}/20</p>
-            <p className="mb-8 text-sm text-neutral-medium">
+            <p className="mb-8 text-sm text-muted-foreground">
               {level === 'Baixo' ? 'Sem sinais alarmantes.' :
                level === 'Moderado' ? 'Monitoramento recomendado.' :
                'Procure atendimento urgente se houver dor intensa ou inchaço unilateral.'}
@@ -140,23 +140,23 @@ export default function TromboseScreeningPage() {
 
   const q = QUESTIONS[step];
   return (
-    <main className="min-h-screen bg-dark-elevated">
+    <main className="min-h-screen bg-background">
       <Header />
       <Container className="py-16">
         <div className="mx-auto max-w-xl">
-          <Link href="/" className="text-surgical-teal hover:underline text-sm">← Voltar</Link>
-          <p className="mt-2 mb-2 text-sm text-surgical-teal">Pergunta {step + 1} de {QUESTIONS.length}</p>
-          <h2 className="mb-8 text-heading-2 font-heading font-semibold text-neutral-light">{q.question}</h2>
+          <Link href="/" className="text-primaryhover:underline text-sm">← Voltar</Link>
+          <p className="mt-2 mb-2 text-sm text-primary">Pergunta {step + 1} de {QUESTIONS.length}</p>
+          <h2 className="mb-8 text-heading-2 font-heading font-semibold text-foreground">{q.question}</h2>
           <div className="space-y-3">
             {q.options.map(opt => (
               <button key={opt} onClick={() => handleAnswer(opt)}
-                className="w-full rounded-lg border border-glass bg-glass px-6 py-4 text-left text-body-regular text-neutral-light transition-all hover:border-surgical-teal hover:bg-glass-hover">
+                className="w-full rounded-lg border border-glass bg-glass px-6 py-4 text-left text-body-regular text-foreground transition-all hover:border-primary hover:bg-glass-hover">
                 {opt}
               </button>
             ))}
           </div>
-          <div className="mt-6 h-2 rounded bg-neutral-dark">
-            <div className="h-2 rounded bg-surgical-teal transition-all" style={{ width: `${((step + 1) / QUESTIONS.length) * 100}%` }} />
+          <div className="mt-6 h-2 rounded bg-muted">
+            <div className="h-2 rounded bg-primary ransition-all" style={{ width: `${((step + 1) / QUESTIONS.length) * 100}%` }} />
           </div>
         </div>
       </Container>

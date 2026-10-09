@@ -53,16 +53,16 @@ export default function BlogPage() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-display-md font-heading font-semibold text-neutral-light">Blog Editor</h1>
-          <p className="text-sm text-neutral-medium">Crie e gerencie artigos do blog.</p>
+          <h1 className="text-display-md font-heading font-semibold text-foreground">Blog Editor</h1>
+          <p className="text-sm text-muted-foreground">Crie e gerencie artigos do blog.</p>
         </div>
         <Button variant="primary" size="sm" onClick={handleNew}><Edit3 className="mr-1.5 h-4 w-4" /> Novo Artigo</Button>
       </div>
 
       {/* Action bar */}
       {selectedSlug && (
-        <div className="flex items-center gap-2 rounded-xl border border-surgical-teal/20 bg-surgical-teal/5 px-4 py-3">
-          <span className="text-sm text-neutral-light">Selecionado: {selectedSlug}</span>
+        <div className="flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+          <span className="text-sm text-foreground">Selecionado: {selectedSlug}</span>
           <Button variant="primary" size="sm" onClick={() => handlePublish(selectedSlug)}><Send className="mr-1.5 h-4 w-4" /> Publicar</Button>
           <Button variant="secondary" size="sm" onClick={() => handleEdit(selectedSlug)}><Edit3 className="mr-1.5 h-4 w-4" /> Editar</Button>
           <Button variant="ghost" size="sm" className="text-error-red border-error-red/30" onClick={() => handleDelete(selectedSlug)}><Trash2 className="mr-1.5 h-4 w-4" /> Excluir</Button>
