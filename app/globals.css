@@ -5,7 +5,7 @@
 /* ============================================
    DESIGN SYSTEM: THREE-LAYER TOKENS
    (primitive → semantic → component)
-   From ui-ux-pro-max design-system skill
+   Brand palette extracted from herlonmoura.com.br
    ============================================ */
 
 /* === PRIMITIVE TOKENS === */
@@ -23,89 +23,84 @@
   --color-gray-900: #111827;
   --color-gray-950: #030712;
 
-  /* Medical Brand Color - Teal (primary) */
-  --color-teal-50:  #F0FDFA;
-  --color-teal-100: #CCFBF1;
-  --color-teal-200: #99F6E4;
-  --color-teal-300: #5EEAD4;
-  --color-teal-400: #2DD4BF;
-  --color-teal-500: #14B8A6;  /* surgical-teal */
-  --color-teal-600: #0D9488;  /* surgical-teal-dark */
-  --color-teal-700: #0F766E;
-  --color-teal-800: #115E59;
-  --color-teal-900: #134E4A;
+  /* Brand Palette - extracted from herlonmoura.com.br */
+  --color-navy-50:  #EFF4FA;
+  --color-navy-100: #D6E4F5;
+  --color-navy-200: #ADC9EB;
+  --color-navy-300: #84ADE1;
+  --color-navy-400: #5B92D7;
+  --color-navy-500: #3A6FB8;
+  --color-navy-600: #1D3C73;  /* Primary - headings, links */
+  --color-navy-700: #152D54;  /* Primary dark */
+  --color-navy-800: #0F1F3A;
+  --color-navy-900: #0A1428;
 
-  /* Medical Accent - Emerald (CTAs, success) */
-  --color-emerald-500: #10B981;
-  --color-emerald-600: #059669;
-  --color-emerald-700: #047857;
+  --color-sky-50:  #F0F7FE;
+  --color-sky-100: #DBEDFC;
+  --color-sky-200: #B7DBF9;
+  --color-sky-300: #93C9F6;
+  --color-sky-400: #68A9F2;  /* Secondary - section backgrounds, CTAs */
+  --color-sky-500: #4A8FE0;
+  --color-sky-600: #3A75C4;
+  --color-sky-700: #2C5BA0;
 
-  /* Status Colors */
-  --color-green-500: #22C55E;
-  --color-yellow-500: #EAB308;
-  --color-red-500: #EF4444;
-  --color-red-600: #DC2626;
+  --color-taupe-50:  #F5F3F1;
+  --color-taupe-100: #E8E4E1;
+  --color-taupe-200: #D1C9C3;
+  --color-taupe-300: #BAAEA5;
+  --color-taupe-400: #A4978E;  /* Tertiary - buttons on dark backgrounds */
+  --color-taupe-500: #8A7D74;
+  --color-taupe-600: #6E635B;
 
   /* Spacing Scale (4px base) */
   --space-0:   0;
-  --space-1:   0.25rem;   /* 4px */
-  --space-2:   0.5rem;    /* 8px */
-  --space-3:   0.75rem;   /* 12px */
-  --space-4:   1rem;      /* 16px */
-  --space-5:   1.25rem;   /* 20px */
-  --space-6:   1.5rem;    /* 24px */
-  --space-7:   1.75rem;   /* 28px */
-  --space-8:   2rem;      /* 32px */
-  --space-9:   2.25rem;   /* 36px */
-  --space-10:  2.5rem;    /* 40px */
-  --space-12:  3rem;      /* 48px */
-  --space-16:  4rem;      /* 64px */
-  --space-20:  5rem;      /* 80px */
-  --space-24:  6rem;      /* 96px */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-5:   1.25rem;
+  --space-6:   1.5rem;
+  --space-8:   2rem;
+  --space-10:  2.5rem;
+  --space-12:  3rem;
+  --space-16:  4rem;
+  --space-20:  5rem;
+  --space-24:  6rem;
 
   /* Typography */
-  --font-size-xs:    0.75rem;   /* 12px */
-  --font-size-sm:    0.875rem;  /* 14px */
-  --font-size-base:  1rem;      /* 16px */
-  --font-size-lg:    1.125rem;  /* 18px */
-  --font-size-xl:    1.25rem;   /* 20px */
-  --font-size-2xl:   1.5rem;    /* 24px */
-  --font-size-3xl:   1.875rem;  /* 30px */
-  --font-size-4xl:   2.25rem;   /* 36px */
-  --font-size-5xl:   3rem;      /* 48px */
-  --font-size-6xl:   3.75rem;   /* 60px */
-  --font-size-7xl:   4.5rem;    /* 72px */
+  --font-size-xs:    0.75rem;
+  --font-size-sm:    0.875rem;
+  --font-size-base:  1rem;
+  --font-size-lg:    1.125rem;
+  --font-size-xl:    1.25rem;
+  --font-size-2xl:   1.5rem;
+  --font-size-3xl:   1.875rem;
+  --font-size-4xl:   2.25rem;
+  --font-size-5xl:   3rem;
 
   --font-weight-normal:   400;
   --font-weight-medium:   500;
   --font-weight-semibold: 600;
   --font-weight-bold:     700;
-  --font-weight-extrabold: 800;
 
   --line-height-tight:  1.25;
   --line-height-snug:   1.375;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
-  --line-height-loose:  2;
 
-  --tracking-tight:  -0.025em;
-  --tracking-normal: 0;
-  --tracking-wide:   0.025em;
-  --tracking-wider:  0.05em;
-
-  /* Border Radius */
-  --radius-sm:     0.125rem;  /* 2px */
-  --radius-default: 0.25rem;   /* 4px */
-  --radius-md:     0.375rem;  /* 6px */
-  --radius-lg:     0.5rem;    /* 8px */
-  --radius-xl:     0.75rem;   /* 12px */
-  --radius-2xl:    1rem;      /* 16px */
-  --radius-3xl:    1.5rem;    /* 24px */
+  /* Border Radius (subtle, matches live site) */
+  --radius-sm:     0.125rem;
+  --radius-DEFAULT: 3px;
+  --radius-md:     0.375rem;
+  --radius-lg:     0.5rem;
+  --radius-xl:     0.75rem;
+  --radius-2xl:    1rem;
+  --radius-3xl:    1.5rem;
   --radius-full:   9999px;
 
   /* Shadows */
   --shadow-sm:      0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-default: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-DEFAULT: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md:      0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg:      0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl:      0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -113,202 +108,144 @@
 
   /* Font Stacks */
   --font-inter:     "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-poppins:   "Poppins", system-ui, sans-serif;
+  --font-lexend:    "Lexend", "Inter", system-ui, sans-serif;
   --font-fira-code: "Fira Code", monospace;
 
   /* Motion */
-  --duration-75:   75ms;
-  --duration-100:  100ms;
   --duration-150:  150ms;
-  --duration-200:  200ms;
   --duration-300:  300ms;
   --duration-500:  500ms;
-  --duration-700:  700ms;
-  --duration-1000: 1000ms;
 
   --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in:     cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Z-Index */
-  --z-0:        0;
-  --z-10:       10;
-  --z-20:       20;
-  --z-30:       30;
-  --z-40:       40;
-  --z-50:       50;
-  --z-dropdown: 1000;
-  --z-sticky:   1100;
-  --z-fixed:    1030;
-  --z-modal:    1050;
-  --z-popover:  1060;
-  --z-tooltip:  1070;
 }
 
 /* === SEMANTIC TOKENS (Light Mode - DEFAULT) === */
 :root {
   /* Background & Foreground */
   --color-background:       #FFFFFF;
-  --color-foreground:       #111827;  /* gray-900 */
+  --color-foreground:       #181818;  /* from live site body text */
 
   /* Card / Surface */
   --color-card:             #FFFFFF;
-  --color-card-foreground:  #111827;
+  --color-card-foreground:  #181818;
 
   /* Popover */
   --color-popover:          #FFFFFF;
-  --color-popover-foreground: #111827;
+  --color-popover-foreground: #181818;
 
-  /* Primary - Medical Teal */
-  --color-primary:          var(--color-teal-600);       /* #0D9488 */
-  --color-primary-hover:    var(--color-teal-700);       /* #0F766E */
-  --color-primary-active:   var(--color-teal-800);       /* #115E59 */
+  /* Primary - Medical Navy Blue */
+  --color-primary:          #1D3C73;       /* Navy 600 */
+  --color-primary-hover:    #152D54;       /* Navy 700 */
+  --color-primary-active:   #0F1F3A;       /* Navy 800 */
   --color-primary-foreground: #FFFFFF;
 
-  /* Secondary - Medical Emerald */
-  --color-secondary:        var(--color-emerald-600);    /* #059669 */
-  --color-secondary-hover:  var(--color-emerald-700);     /* #047857 */
+  /* Secondary - Medical Sky Blue */
+  --color-secondary:        #68A9F2;       /* Sky 400 */
+  --color-secondary-hover:  #4A8FE0;       /* Sky 500 */
   --color-secondary-foreground: #FFFFFF;
 
-  /* Accent */
-  --color-accent:           var(--color-teal-50);        /* #F0FDFA */
-  --color-accent-foreground: var(--color-teal-800);       /* #115E59 */
+  /* Accent - Light Sky tint */
+  --color-accent:           #DBEDFC;       /* Sky 100 */
+  --color-accent-foreground: #152D54;      /* Navy 700 */
 
   /* Muted */
-  --color-muted:            var(--color-gray-100);        /* #F3F4F6 */
-  --color-muted-foreground: var(--color-gray-500);       /* #6B7280 */
+  --color-muted:            #F3F4F6;       /* Gray 100 */
+  --color-muted-foreground: #6B7280;       /* Gray 500 */
 
   /* Destructive */
-  --color-destructive:         var(--color-red-500);     /* #EF4444 */
-  --color-destructive-hover:   var(--color-red-600);     /* #DC2626 */
+  --color-destructive:         #EF4444;
+  --color-destructive-hover:   #DC2626;
   --color-destructive-foreground: #FFFFFF;
 
   /* Borders */
-  --color-border:           var(--color-gray-200);        /* #E5E7EB */
-  --color-input:            var(--color-gray-200);        /* #E5E7EB */
-  --color-ring:             var(--color-teal-600);        /* #0D9488 */
+  --color-border:           #E5E7EB;       /* Gray 200 */
+  --color-input:            #E5E7EB;
+  --color-ring:             #1D3C73;       /* Navy 600 */
+
+  /* Tertiary (taupe - for buttons on dark backgrounds) */
+  --color-tertiary:         #A4978E;
+  --color-tertiary-hover:   #8A7D74;
+  --color-tertiary-foreground: #FFFFFF;
 
   /* Glassmorphism */
-  --color-glass-surface:       rgba(255, 255, 255, 0.7);
-  --color-glass-surface-hover: rgba(255, 255, 255, 0.85);
-  --color-glass-border:        rgba(20, 184, 166, 0.2);
-  --color-glass-border-hover:  rgba(20, 184, 166, 0.4);
+  --color-glass-surface:       rgba(255, 255, 255, 0.8);
+  --color-glass-surface-hover: rgba(255, 255, 255, 0.95);
+  --color-glass-border:        rgba(29, 60, 115, 0.15);
+  --color-glass-border-hover:  rgba(29, 60, 115, 0.3);
 
   /* Background Gradients */
-  --gradient-hero: from-white via-gray-50 to-teal-50;
-  --gradient-section: from-white to-gray-50;
+  --gradient-hero: linear-gradient(to bottom, #FFFFFF, #F9FAFB, #F0F7FE);
+  --gradient-section: linear-gradient(to bottom, #FFFFFF, #F9FAFB);
+
+  /* Neutral (for backward compat) */
+  --color-neutral-light: #F8FAFC;
+  --color-neutral-medium: #94A3B8;
+  --color-neutral-dark: #1E293B;
 }
 
 /* === DARK MODE SEMANTIC OVERRIDES === */
 .dark {
   /* Background & Foreground */
-  --color-background:       #0F172A;  /* dark-elevated */
-  --color-foreground:       #F8FAFC;  /* neutral-light */
+  --color-background:       #0A1428;  /* Navy 900 */
+  --color-foreground:       #F8FAFC;
 
   /* Card / Surface */
-  --color-card:             #1E293B;  /* neutral-dark */
-  --color-card-foreground:  #F8FAFC;  /* neutral-light */
+  --color-card:             #0F1F3A;  /* Navy 800 */
+  --color-card-foreground:  #F8FAFC;
 
   /* Popover */
-  --color-popover:          #1E293B;  /* neutral-dark */
+  --color-popover:          #0F1F3A;
   --color-popover-foreground: #F8FAFC;
 
-  /* Primary - Medical Teal (unchanged) */
-  --color-primary:          var(--color-teal-500);        /* #14B8A6 */
-  --color-primary-hover:    var(--color-teal-600);        /* #0D9488 */
-  --color-primary-active:   var(--color-teal-700);        /* #0F766E */
-  --color-primary-foreground: #0F172A;
+  /* Primary - Sky Blue (lighter for dark mode contrast) */
+  --color-primary:          #68A9F2;  /* Sky 400 */
+  --color-primary-hover:    #84ADE1;  /* Sky 300 */
+  --color-primary-active:   #93C9F6;  /* Sky 200 */
+  --color-primary-foreground: #0A1428;
 
-  /* Secondary */
-  --color-secondary:        var(--color-emerald-500);     /* #10B981 */
-  --color-secondary-hover:  var(--color-emerald-600);     /* #059669 */
-  --color-secondary-foreground: #0F172A;
+  /* Secondary - Navy (darker for dark mode) */
+  --color-secondary:        #3A6FB8;  /* Navy 500 */
+  --color-secondary-hover:  #5B92D7;  /* Navy 400 */
+  --color-secondary-foreground: #FFFFFF;
 
   /* Accent */
-  --color-accent:           rgba(20, 184, 166, 0.15);
-  --color-accent-foreground: #F8FAFC;
+  --color-accent:           rgba(104, 169, 242, 0.15);
+  --color-accent-foreground: #DBEDFC;
 
   /* Muted */
-  --color-muted:            #1E293B;  /* neutral-dark */
-  --color-muted-foreground: #94A3B8;  /* neutral-medium */
+  --color-muted:            #0F1F3A;
+  --color-muted-foreground: #ADC9EB;  /* Navy 200 */
 
   /* Destructive */
-  --color-destructive:         var(--color-red-500);     /* #EF4444 */
-  --color-destructive-hover:   var(--color-red-600);     /* #DC2626 */
-  --color-destructive-foreground: #0F172A;
+  --color-destructive:         #EF4444;
+  --color-destructive-hover:   #F87171;
+  --color-destructive-foreground: #0A1428;
 
   /* Borders */
-  --color-border:           rgba(255, 255, 255, 0.1);
-  --color-input:            rgba(255, 255, 255, 0.1);
-  --color-ring:             var(--color-teal-500);       /* #14B8A6 */
+  --color-border:           rgba(173, 201, 235, 0.15);
+  --color-input:            rgba(173, 201, 235, 0.15);
+  --color-ring:             #68A9F2;
+
+  /* Tertiary */
+  --color-tertiary:         #BAAEA5;
+  --color-tertiary-hover:   #D1C9C3;
+  --color-tertiary-foreground: #0A1428;
 
   /* Glassmorphism */
-  --color-glass-surface:       rgba(15, 23, 42, 0.5);
-  --color-glass-surface-hover: rgba(15, 23, 42, 0.7);
-  --color-glass-border:        rgba(20, 184, 166, 0.2);
-  --color-glass-border-hover:  rgba(20, 184, 166, 0.4);
+  --color-glass-surface:       rgba(10, 20, 40, 0.7);
+  --color-glass-surface-hover: rgba(10, 20, 40, 0.85);
+  --color-glass-border:        rgba(104, 169, 242, 0.2);
+  --color-glass-border-hover:  rgba(104, 169, 242, 0.35);
 
   /* Background Gradients */
-  --gradient-hero: from-gray-950 via-gray-900 to-teal-950;
-  --gradient-section: from-gray-950 to-gray-900;
-}
+  --gradient-hero: linear-gradient(to bottom, #0A1428, #0F1F3A, #152D54);
+  --gradient-section: linear-gradient(to bottom, #0A1428, #0F1F3A);
 
-/* === COMPONENT TOKENS === */
-:root {
-  /* Button */
-  --button-bg:               var(--color-secondary);
-  --button-fg:               var(--color-secondary-foreground);
-  --button-hover-bg:         var(--color-secondary-hover);
-  --button-active-bg:        var(--color-secondary-active);
-  --button-border:           transparent;
-  --button-radius:           var(--radius-lg);
-  --button-font-weight:      var(--font-weight-bold);
-  --button-padding-y:        var(--space-3);
-  --button-padding-x:        var(--space-6);
-
-  /* Button - Primary (Teal) */
-  --button-primary-bg:       var(--color-primary);
-  --button-primary-fg:       var(--color-primary-foreground);
-  --button-primary-hover-bg: var(--color-primary-hover);
-
-  /* Button - Outline */
-  --button-outline-border:   var(--color-border);
-  --button-outline-bg:       transparent;
-  --button-outline-fg:       var(--color-foreground);
-  --button-outline-hover-bg: var(--color-accent);
-
-  /* Input */
-  --input-bg:                var(--color-background);
-  --input-border:            var(--color-border);
-  --input-fg:                var(--color-foreground);
-  --input-placeholder:       var(--color-muted-foreground);
-  --input-focus-ring:        var(--color-ring);
-  --input-radius:            var(--radius-lg);
-  --input-padding-y:         var(--space-3);
-  --input-padding-x:         var(--space-4);
-
-  /* Card */
-  --card-bg:                 var(--color-card);
-  --card-border:             var(--color-border);
-  --card-radius:             var(--radius-xl);
-  --card-shadow:             var(--shadow-default);
-  --card-padding:            var(--space-6);
-
-  /* Badge */
-  --badge-radius:            var(--radius-full);
-  --badge-font-size:         var(--font-size-xs);
-
-  /* Alert */
-  --alert-radius:            var(--radius-lg);
-  --alert-padding:           var(--space-4);
-
-  /* Dialog/Modal */
-  --dialog-bg:               var(--color-card);
-  --dialog-border:           var(--color-border);
-  --dialog-radius:           var(--radius-2xl);
-  --dialog-shadow:           var(--shadow-2xl);
-  --dialog-padding:          var(--space-6);
-  --dialog-overlay-bg:       rgba(0, 0, 0, 0.5);
+  /* Neutral (for backward compat) */
+  --color-neutral-light: #F8FAFC;
+  --color-neutral-medium: #ADC9EB;
+  --color-neutral-dark: #0F1F3A;
 }
 
 /* ============================================
@@ -389,6 +326,10 @@ html {
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
 }
 
 /* ============================================
@@ -411,19 +352,6 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* ============================================
-   TYPOGRAPHY DEFAULTS
-   ============================================ */
-
-@layer base {
-  h1 { @apply text-display-lg font-extrabold tracking-tight; }
-  h2 { @apply text-display-md font-extrabold tracking-tight; }
-  h3 { @apply text-heading-1 font-bold; }
-  h4 { @apply text-heading-2 font-semibold; }
-  p { @apply text-body-regular leading-normal; }
-  small { @apply text-body-small; }
 }
 
 /* ============================================
@@ -458,16 +386,12 @@ img {
 }
 
 /* ============================================
-   UTILITY CLASSES: RESPONSIVE CONTAINERS
+   UTILITY CLASSES
    ============================================ */
 
 .container-mobile { @apply px-4; }
 .container-tablet { @apply px-6; }
 .container-desktop { @apply mx-auto max-w-container px-8; }
-
-/* ============================================
-   UTILITY CLASSES: TYPOGRAPHY HELPERS
-   ============================================ */
 
 .text-truncate {
   @apply overflow-hidden text-ellipsis whitespace-nowrap;
@@ -487,17 +411,9 @@ img {
   overflow: hidden;
 }
 
-/* ============================================
-   UTILITY CLASSES: FLEX HELPERS
-   ============================================ */
-
 .flex-center { @apply flex items-center justify-center; }
 .flex-between { @apply flex items-center justify-between; }
 .flex-col-center { @apply flex flex-col items-center justify-center; }
-
-/* ============================================
-   UTILITY CLASSES: GRID HELPERS
-   ============================================ */
 
 .grid-auto-fit {
   @apply grid gap-6;
@@ -508,10 +424,6 @@ img {
   @apply grid gap-6;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
-
-/* ============================================
-   UTILITY CLASSES: VISIBILITY
-   ============================================ */
 
 .sr-only {
   position: absolute;
@@ -524,50 +436,3 @@ img {
   white-space: nowrap;
   border-width: 0;
 }
-
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideLeft {
-  from { transform: translateX(20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideRight {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.animate-fade-in { animation: fadeIn 0.8s ease-in-out; }
-.animate-slide-up { animation: slideUp 1s ease-out; }
-.animate-slide-down { animation: slideDown 1s ease-out; }
-.animate-slide-left { animation: slideLeft 1s ease-out; }
-.animate-slide-right { animation: slideRight 1s ease-out; }
-.animate-scale-in { animation: scaleIn 0.6s ease-out; }
-.animate-pulse-custom { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }

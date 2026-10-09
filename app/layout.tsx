@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Fira_Code } from "next/font/google";
+import { Inter, Poppins, Lexend, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/context/ThemeProvider";
 
@@ -16,6 +16,13 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const lexend = Lexend({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-lexend",
+  display: "swap",
+});
+
 const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-fira-code",
@@ -23,9 +30,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
+  title: "Dr. Herlon Moura – Angiologista em Salvador",
   description:
-    "Consulte com Dr. Herlon Moura, especialista em angiologia e cirurgia vascular em Salvador, Bahia. Tratamento de varizes, trombose venosa profunda e doenças vasculares.",
+    "Consulte com Dr. Herlon Moura, angiologista e cirurgião vascular em Salvador, Bahia. Tratamento de varizes, trombose venosa profunda e doenças vasculares.",
   keywords: [
     "angiologista Salvador",
     "cirurgia vascular",
@@ -34,9 +41,9 @@ export const metadata: Metadata = {
     "especialista vascular",
   ],
   openGraph: {
-    title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
+    title: "Dr. Herlon Moura – Angiologista em Salvador",
     description:
-      "Consulte com Dr. Herlon Moura, especialista em angiologia e cirurgia vascular em Salvador, Bahia.",
+      "Consulte com Dr. Herlon Moura, angiologista e cirurgião vascular em Salvador, Bahia.",
     type: "website",
   },
 };
@@ -54,7 +61,7 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans antialiased`}
+        className={`${inter.variable} ${poppins.variable} ${lexend.variable} ${firaCode.variable} font-sans antialiased`}
       >
         <ThemeProvider defaultTheme="light">
           {children}
