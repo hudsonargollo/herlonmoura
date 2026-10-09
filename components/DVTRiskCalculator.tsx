@@ -19,6 +19,7 @@ import {
   Mail,
   User,
 } from 'lucide-react';
+import { captureUtm } from '@/lib/leads';
 
 export interface DVTCalculatorState {
   currentStep: number;
@@ -92,7 +93,7 @@ export function DVTRiskCalculator({
     fetch('/api/crm/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: state.name, whatsapp: '', email: state.email, source: 'dvt-calculator', source_detail: 'TVP calculator', tags: ['dvt-test'], visitor_id: null }),
+      body: JSON.stringify({ ...captureUtm(), name: state.name, whatsapp: '', email: state.email, source: 'dvt-calculator', source_detail: 'TVP calculator', tags: ['dvt-test'], visitor_id: null }),
     }).catch(() => {});
     setState(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
   };

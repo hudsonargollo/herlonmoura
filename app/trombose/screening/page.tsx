@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Header, Footer, Container, Button, FormInput } from '@/components';
 import { Activity, ArrowLeft, AlertTriangle, Mail, User } from 'lucide-react';
 import Link from 'next/link';
+import { captureUtm } from '@/lib/leads';
 
 interface TromboseAnswers {
   legSwelling: string;
@@ -85,7 +86,7 @@ export default function TromboseScreeningPage() {
     fetch('/api/crm/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, whatsapp: '', email, source: 'trombose-screening', answers, riskScore: score, status: 'new' }),
+      body: JSON.stringify({ ...captureUtm(), name, whatsapp: '', email, source: 'trombose-screening', answers, riskScore: score, status: 'new' }),
     }).catch(() => {});
   };
 

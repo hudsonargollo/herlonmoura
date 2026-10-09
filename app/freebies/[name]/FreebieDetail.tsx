@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Header, Footer, Container, Button, FormInput } from '@/components';
 import { Download, CheckCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { captureUtm } from '@/lib/leads';
 
 export default function FreebieDetail({ params }: { params: Promise<{ name: string }> }) {
   const [step, setStep] = useState<'form' | 'thanks'>('form');
@@ -16,7 +17,9 @@ export default function FreebieDetail({ params }: { params: Promise<{ name: stri
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          ...captureUtm(),
           source: 'freebie',
+          source_detail: (await params).name,
           freebie: (await params).name,
           name: formData.get('name'),
           whatsapp: formData.get('whatsapp'),

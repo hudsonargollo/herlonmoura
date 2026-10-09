@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Header, Footer, Container, Button, FormInput } from '@/components';
 import { Shield, ArrowLeft, Mail, User } from 'lucide-react';
 import Link from 'next/link';
+import { captureUtm } from '@/lib/leads';
 
 interface VarizesAnswers {
   legPain: string;
@@ -75,7 +76,7 @@ export default function VarizesAssessmentPage() {
     fetch('/api/crm/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, whatsapp: '', email, source: 'varizes-assessment', answers, riskScore: score, status: 'new' }),
+      body: JSON.stringify({ ...captureUtm(), name, whatsapp: '', email, source: 'varizes-assessment', answers, riskScore: score, status: 'new' }),
     }).catch(() => {});
   };
 

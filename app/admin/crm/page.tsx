@@ -6,8 +6,9 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { FormInput } from '@/components/FormInput';
 import { api } from '@/lib/admin/api';
+import { canTransition, LEAD_STATUSES, LEAD_STATUS_LABELS, type LeadStatus } from '@/lib/leads';
 
-type Status = 'new' | 'contacted' | 'qualified' | 'appointment' | 'converted' | 'lost';
+type Status = LeadStatus;
 type SourceFilter = 'all' | 'contact' | 'questionnaire' | 'whatsapp' | 'referral' | 'social';
 
 interface Lead {
@@ -20,12 +21,13 @@ interface Lead {
   score: number;
   tags: string;
   notes: string;
+  next_action?: string;
   created_at: string;
   updated_at: string;
 }
 
-const STATUSES: Status[] = ['new', 'contacted', 'qualified', 'appointment', 'converted', 'lost'];
-const STATUS_LABELS: Record<Status, string> = { new: 'Novo', contacted: 'Contatado', qualified: 'Qualificado', appointment: 'Consulta', converted: 'Convertido', lost: 'Perdido' };
+const STATUSES: Status[] = [...LEAD_STATUSES];
+const STATUS_LABELS: Record<Status, string> = LEAD_STATUS_LABELS;
 const STATUS_COLORS: Record<Status, string> = {
   new: 'bg-muted/50 text-muted-foreground border-border/30',
   contacted: 'bg-primary/15 text-primary border-primary/30',
@@ -80,9 +82,14 @@ export default function CRMPipeline() {
     if (!dragging) return;
     const lead = allLeads.find((l) => l.id === dragging);
     if (!lead || lead.status === to) { setDragging(null); return; }
+    if (!canTransition(lead.status, to)) {
+      alert(`Transição não permitida: ${STATUS_LABELS[lead.status]} → ${STATUS_LABELS[to]}`);
+      setDragging(null);
+      return;
+    }
     setSaving(dragging);
     try {
-      await api.put(`/api/crm/leads/${dragging}`, { status: to });
+      await api.patch(`/api/crm/leads/${dragging}`, { status: to });
       setAllLeads((prev) => prev.map((l) => (l.id === dragging ? { ...l, status: to, updated_at: new Date().toISOString() } : l)));
     } catch (e: any) { alert(`Erro: ${e.message}`); }
     finally { setDragging(null); setSaving(null); }
@@ -90,9 +97,13 @@ export default function CRMPipeline() {
 
   const handleStatusClick = async (lead: Lead, next: Status) => {
     if (lead.status === next) return;
+    if (!canTransition(lead.status, next)) {
+      alert(`Transição não permitida: ${STATUS_LABELS[lead.status]} → ${STATUS_LABELS[next]}`);
+      return;
+    }
     setSaving(lead.id);
     try {
-      await api.put(`/api/crm/leads/${lead.id}`, { status: next });
+      await api.patch(`/api/crm/leads/${lead.id}`, { status: next });
       setAllLeads((prev) => prev.map((l) => (l.id === lead.id ? { ...l, status: next, updated_at: new Date().toISOString() } : l)));
     } catch (e: any) { alert(`Erro: ${e.message}`); }
     finally { setSaving(null); }

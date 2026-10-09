@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Header, Footer, Container, Button, FormInput } from '@/components';
 import { HeartPulse, ArrowLeft, Mail, User } from 'lucide-react';
 import Link from 'next/link';
+import { captureUtm } from '@/lib/leads';
 
 interface SymptomAnswers {
   legSwelling: string;
@@ -73,7 +74,7 @@ export default function QuestionnairePage() {
     fetch('/api/crm/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, whatsapp: '', email, source: 'questionnaire', symptoms: { legSwelling: answers.legSwelling, legPain: answers.legPain, warmth: answers.warmth, redness: answers.redness, duration: answers.duration }, riskFactors: answers.riskFactors, riskScore }),
+      body: JSON.stringify({ ...captureUtm(), name, whatsapp: '', email, source: 'questionnaire', symptoms: { legSwelling: answers.legSwelling, legPain: answers.legPain, warmth: answers.warmth, redness: answers.redness, duration: answers.duration }, riskFactors: answers.riskFactors, riskScore }),
     }).catch(() => {});
   };
 

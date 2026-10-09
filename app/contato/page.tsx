@@ -5,6 +5,7 @@ import { Logo } from '@/components';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { captureUtm } from '@/lib/leads';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -102,6 +103,7 @@ export default function ContactPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          ...captureUtm(),
           name: formData.name,
           whatsapp: formData.phone,
           email: formData.email,
