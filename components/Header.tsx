@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, MessageCircle, Phone, HeartPulse, Sun, Moon } from 'lucide-react';
+import { Menu, X, MessageCircle, Phone, HeartPulse } from 'lucide-react';
 import { Logo } from './Logo';
-import { useTheme } from '@/app/context/ThemeProvider';
+import { ThemeToggle } from './ThemeToggle';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
@@ -25,12 +25,11 @@ export function Header({
   ],
   ctaButton = {
     label: 'Agendar no WhatsApp',
-    href: 'https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta.',
+    href: 'https://wa.me/5571999159975?text=Ol%C3%A1%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta.',
   },
   onOpenCalculator,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -110,18 +109,7 @@ export function Header({
         {/* CTA Button + Theme Toggle */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Theme Toggle */}
-          <button
-            type="button"
-            aria-label={theme === 'dark' ? 'Alternar para modo claro' : 'Alternar para modo escuro'}
-            onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-4 w-4" />
-            ) : (
-              <Moon className="h-4 w-4" />
-            )}
-          </button>
+          <ThemeToggle size="sm" className="hidden sm:block" />
 
           {/* WhatsApp CTA */}
           <div className="hidden sm:flex">

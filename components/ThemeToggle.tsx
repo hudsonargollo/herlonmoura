@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { useTheme } from '@/app/context/ThemeProvider';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, Moon, RotateCcw } from 'lucide-react';
 
 interface ThemeToggleProps {
   size?: 'sm' | 'md' | 'lg';
@@ -33,25 +34,26 @@ export function ThemeToggle({ size = 'md', className = '' }: ThemeToggleProps) {
       onClick={toggleTheme}
       className={`relative inline-flex items-center rounded-full border border-border transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${sizeClasses[size]} ${className}`}
     >
-      {/* Background track with sun/moon icons */}
+      {/* Background track — sun and moon swap opacity via React expression */}
       <motion.span
         className="absolute inset-0 flex items-center justify-between px-1"
         initial={false}
-        animate={theme === 'dark' ? 'dark' : 'light'}
+        animate={theme === 'dark' ? { opacity: 1 } : { opacity: 0.6 }}
+        transition={{ duration: 0.3 }}
       >
         <motion.span
-          className="text-sm"
-          animate={{ opacity: theme === 'dark' ? 0.3 : 1 }}
+          className="flex items-center justify-center"
+          animate={{ opacity: theme === 'dark' ? 0.25 : 1 }}
           transition={{ duration: 0.2 }}
         >
-          ☀️
+          <Sun className={iconSize[size]} strokeWidth={2} />
         </motion.span>
         <motion.span
-          className="text-sm"
-          animate={{ opacity: theme === 'dark' ? 1 : 0.3 }}
+          className="flex items-center justify-center"
+          animate={{ opacity: theme === 'dark' ? 1 : 0.25 }}
           transition={{ duration: 0.2 }}
         >
-          🌙
+          <Moon className={iconSize[size]} strokeWidth={2} />
         </motion.span>
       </motion.span>
 
@@ -60,36 +62,38 @@ export function ThemeToggle({ size = 'md', className = '' }: ThemeToggleProps) {
         className="absolute top-0.5 left-0.5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-background shadow-md"
         initial={false}
         animate={theme === 'dark' ? { x: 26 } : { x: 0 }}
+        transition={{ type: 'spring', stiffness: 500, damping: 25 }}
         style={{
           width: 'calc(100% - 4px)',
           maxWidth: '36px',
           height: 'calc(100% - 4px)',
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 25 }}
       >
-        {theme === 'dark' ? (
-          <motion.span
-            key="moon"
-            initial={{ opacity: 0, rotate: -90 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            exit={{ opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.2 }}
-            className={iconSize[size]}
-          >
-            🌙
-          </motion.span>
-        ) : (
-          <motion.span
-            key="sun"
-            initial={{ opacity: 0, rotate: 90 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            exit={{ opacity: 0, rotate: -90 }}
-            transition={{ duration: 0.2 }}
-            className={iconSize[size]}
-          >
-            ☀️
-          </motion.span>
-        )}
+        <AnimatePresence mode="wait">
+          {theme === 'dark' ? (
+            <motion.span
+              key="moon"
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.2 }}
+              className={iconSize[size]}
+            >
+              <Moon strokeWidth={2} />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="sun"
+              initial={{ opacity: 0, rotate: 90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: -90 }}
+              transition={{ duration: 0.2 }}
+              className={iconSize[size]}
+            >
+              <Sun strokeWidth={2} />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </motion.div>
     </button>
   );

@@ -27,20 +27,17 @@ export function ThemeProvider({
   children: React.ReactNode;
   defaultTheme?: Theme;
 }) {
-  const [theme, setThemeState] = useState<Theme>(defaultTheme);
+  const [theme, setThemeState] = useState<Theme>('light');
 
   useEffect(() => {
-    // Check localStorage on mount
+    // Check localStorage on mount - only override default if user has explicit preference
     const stored = localStorage.getItem('theme') as Theme | null;
     if (stored === 'light' || stored === 'dark') {
       setThemeState(stored);
-    } else {
-      // Check system preference
-      const systemPrefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-      setThemeState(systemPrefersDark ? 'dark' : 'light');
+      return;
     }
+    // Default to light mode on first visit (not dark, even if system prefers dark)
+    // Users can still toggle using the switch
   }, []);
 
   useEffect(() => {
