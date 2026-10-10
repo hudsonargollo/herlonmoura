@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   Activity,
   Check,
@@ -14,10 +14,22 @@ import {
   Header,
   Footer,
   DVTModal,
+  Hero3D,
+  ProcedureCard,
+  ScrollProgress,
 } from '@/components';
 
 export default function Home() {
   const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Parallax for hero image
+  const { scrollYProgress: heroScrollProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroImageY = useTransform(heroScrollProgress, [0, 1], [0, -30]);
+  const heroImageScale = useTransform(heroScrollProgress, [0, 1], [1, 1.05]);
 
   // === COPY FROM LIVE SITE (herlonmoura.com.br) ===
   const MAIN_HEADLINE = 'Dr. Herlon Moura';
@@ -38,7 +50,7 @@ export default function Home() {
       title: 'Doppler vascular',
       description:
         'O Doppler vascular é um exame de ultrassom que analisa o fluxo sanguíneo em artérias e veias. É indolor, não invasivo e pode ser realizado em diversas partes do corpo.',
-      tag: 'Diagnóstico',
+      tag: 'DiagNóstico',
     },
     {
       title: 'Tratamento de varizes com laser',
@@ -82,10 +94,17 @@ export default function Home() {
     'https://wa.me/5571999159975?text=Ol%C3%A1%2C%20estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20Dr.%20Herlon%20Moura.';
 
   const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6, ease: 'easeOut' as const },
+    viewport: { once: true, margin: '-50px' },
+    transition: { duration: 0.7, ease: [0.21, 0.45, 0.35, 1] },
+  };
+
+  const fadeInScale = {
+    initial: { opacity: 0, scale: 0.9 },
+    whileInView: { opacity: 1, scale: 1 },
+    viewport: { once: true, margin: '-50px' },
+    transition: { duration: 0.6, ease: [0.21, 0.45, 0.35, 1] },
   };
 
   const staggerContainer = {
@@ -93,79 +112,140 @@ export default function Home() {
     whileInView: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.12,
+        delayChildren: 0.15,
       },
     },
-    viewport: { once: true },
+    viewport: { once: true, margin: '-50px' },
+  };
+
+  const floating = {
+    animate: {
+      y: [-5, 5, -5],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        repeatType: 'reverse' as const,
+        ease: 'easeInOut',
+      },
+    },
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <ScrollProgress />
       <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
-      {/* Hero Section - matches live site exactly */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-sky-50">
+      {/* Hero Section - matches live site with 3D enhancement */}
+      <section
+        ref={heroRef}
+        className="relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-sky-50"
+      >
+        {/* Animated background gradient overlay */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-sky-200/30 blur-[100px]"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.4, 0.3],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-navy-100/20 blur-[100px]"
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          />
+        </div>
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8 py-12 lg:py-20">
             {/* Left Column: Hero Content */}
-            <div className="lg:col-span-7">
+            <motion.div
+              className="lg:col-span-7"
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.21, 0.45, 0.35, 1] }}
+            >
               {/* Brand Logo */}
-              <div className="mb-8">
+              <motion.div
+                className="mb-8"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
                 <img
                   src="https://herlonmoura.com.br/wp-content/uploads/2025/04/Marca_Dr._Herlon_Moura_page-0008-removebg-preview.png"
                   alt="Dr. Herlon Moura - Marca"
                   className="h-12 w-auto"
                 />
-              </div>
+              </motion.div>
 
               {/* Headline */}
-              <h1 className="text-display-md sm:text-display-lg font-heading font-bold text-primary leading-tight mb-2">
+              <motion.h1
+                className="text-display-md sm:text-display-lg font-heading font-bold text-primary leading-tight mb-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+              >
                 {MAIN_HEADLINE}
-              </h1>
-              <p className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-6">
+              </motion.h1>
+              <motion.p
+                className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+              >
                 {MAIN_SUBHEADLINE}
-              </p>
+              </motion.p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4 mb-8">
-                <a
+              <motion.div
+                className="flex flex-wrap gap-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+              >
+                <motion.a
                   href="https://wa.me/5571999159975?source=google_ads"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 rounded bg-tertiary px-6 py-3.5 text-sm text-tertiary-foreground shadow-lg hover:bg-tertiary-hover transition-all"
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <MessageCircle className="h-4 w-4" />
                   <span>Chame no whatsapp</span>
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="https://wa.me/5571999159975"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded border border-primary/30 bg-transparent px-6 py-3.5 text-sm text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <span>Agendar uma consulta</span>
-                </a>
-              </div>
+                </motion.a>
+              </motion.div>
 
               {/* Phone */}
-              <p className="text-lg font-semibold text-primary">
+              <motion.p
+                className="text-lg font-semibold text-primary"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+              >
                 (71) 99915-9975
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
-            {/* Right Column: Doctor Photo */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-[380px]">
-                <Image
-                  src="/images/dr-herlon-moura.png"
-                  alt="Dr. Herlon Moura dos Santos"
-                  width={380}
-                  height={520}
-                  className="h-auto w-full object-cover object-top"
-                  priority
-                />
-              </div>
+            {/* Right Column: 3D Hero */}
+            <div className="lg:col-span-5">
+              <Hero3D />
             </div>
           </div>
         </div>
@@ -192,10 +272,15 @@ export default function Home() {
             </h2>
             <ul className="space-y-4">
               {WHY_CHOOSE_ITEMS.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-base text-foreground">
+                <motion.li
+                  key={item}
+                  className="flex items-start gap-3 text-base text-foreground"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                >
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </motion.div>
@@ -244,36 +329,24 @@ export default function Home() {
             </a>
           </motion.div>
 
-          {/* Procedure Cards */}
+          {/* Procedure Cards with 3D tilt */}
           <div id="procedimentos-lista" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PROCEDURES.map((proc) => {
+            {PROCEDURES.map((proc, idx) => {
               const procWhatsApp = `https://wa.me/5571999159975?text=${encodeURIComponent(
                 `Olá Dr. Herlon Moura, gostaria de saber mais sobre ${proc.title}.`
               )}`;
               return (
                 <motion.div
                   key={proc.title}
-                  className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
-                  variants={fadeInUp}
+                  variants={fadeInScale}
+                  transition={{ delay: idx * 0.1 }}
                 >
-                  <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-navy-700 mb-3">
-                    {proc.tag}
-                  </span>
-                  <h4 className="text-lg font-heading font-bold text-primary mb-2">
-                    {proc.title}
-                  </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                    {proc.description}
-                  </p>
-                  <a
+                  <ProcedureCard
+                    title={proc.title}
+                    description={proc.description}
+                    tag={proc.tag}
                     href={procWhatsApp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded bg-tertiary px-4 py-2 text-xs text-tertiary-foreground hover:bg-tertiary-hover transition-all"
-                  >
-                    SAIBA MAIS
-                    <ArrowRight className="h-3 w-3" />
-                  </a>
+                  />
                 </motion.div>
               );
             })}
@@ -295,6 +368,7 @@ export default function Home() {
               <motion.div
                 className="relative w-full max-w-[380px]"
                 variants={fadeInUp}
+                style={{ y: heroImageY, scale: heroImageScale }}
               >
                 <Image
                   src="/images/dr-herlon-moura.png"
@@ -302,6 +376,7 @@ export default function Home() {
                   width={380}
                   height={520}
                   className="h-auto w-full object-cover object-top rounded-lg shadow-2xl"
+                  priority
                 />
               </motion.div>
             </div>
@@ -313,26 +388,24 @@ export default function Home() {
               <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary">
                 {DOCTOR_NAME}
               </h2>
-              <p className="text-base font-medium text-primary">
-                {DOCTOR_ROLE}
-              </p>
-              <p className="text-sm text-muted-foreground font-medium">
-                {DOCTOR_RQE}
-              </p>
+              <p className="text-base font-medium text-primary">{DOCTOR_ROLE}</p>
+              <p className="text-sm text-muted-foreground font-medium">{DOCTOR_RQE}</p>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 {DOCTOR_BIO}
               </p>
 
               <div className="pt-4">
-                <a
+                <motion.a
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded bg-primary px-6 py-3.5 text-sm text-primary-foreground shadow-lg hover:bg-primary-hover transition-all"
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   SAIBA MAIS
                   <ArrowRight className="h-4 w-4" />
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           </div>
@@ -360,14 +433,16 @@ export default function Home() {
               Responda às 4 etapas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
             </p>
             <div className="mt-4">
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setIsCalculatorModalOpen(true)}
                 className="inline-flex items-center gap-2 rounded bg-primary px-6 py-3 text-sm text-primary-foreground hover:bg-primary-hover transition-all shadow-sm"
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <HeartPulse className="h-4 w-4" />
                 <span>Abrir Calculadora</span>
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         </div>
@@ -397,7 +472,14 @@ export default function Home() {
               className="inline-flex items-center gap-2.5 rounded bg-primary px-7 py-4 text-base text-primary-foreground shadow-xl hover:bg-primary-hover transition-all"
             >
               <MessageCircle className="h-5 w-5" />
-              <span>Fale conosco e agenda já!</span>
+              <motion.span
+                className="hidden sm:inline"
+                variants={floating}
+                animate="animate"
+              >
+                Fale conosco e agenda já!
+              </motion.span>
+              <span className="sm:hidden">WhatsApp</span>
             </a>
 
             <div className="mt-8">
@@ -409,8 +491,8 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-primary/70">
-              <span>R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
-              <span>(71) 98344-9737 / (71) 99915-9975</span>
+              <span>📍 R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
+              <span>📞 (71) 98344-9737 / (71) 99915-9975</span>
             </div>
           </motion.div>
         </div>
@@ -419,15 +501,18 @@ export default function Home() {
       <Footer />
 
       {/* Quick Floating Test Trigger Button */}
-      <aside className="fixed bottom-5 right-5 z-30 hidden sm:block" aria-label="Acesso rápido ao teste de risco">
+      <motion.aside
+        className="fixed bottom-5 right-5 z-30 hidden sm:block"
+        aria-label="Acesso rápido ao teste de risco"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
+      >
         <motion.button
           type="button"
           onClick={() => setIsCalculatorModalOpen(true)}
-          className="group flex items-center gap-2.5 rounded-full bg-card/90 border border-primary/50 px-4 py-2.5 text-xs font-bold text-foreground shadow-2xl backdrop-blur-xl transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-primary/30 hover:scale-105 active:scale-95"
+          className="group flex items-center gap-2.5 rounded-full bg-card/90 border border-primary/50 px-4 py-2.5 text-xs font-bold text-foreground shadow-2xl backdrop-blur-xl transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-primary/30 active:scale-95"
           aria-label="Abrir teste rápido de TVP"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -436,7 +521,7 @@ export default function Home() {
           </span>
           <span>Teste de Risco TVP</span>
         </motion.button>
-      </aside>
+      </motion.aside>
 
       {/* DVT Modal */}
       <DVTModal
