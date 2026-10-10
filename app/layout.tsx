@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Lexend, Fira_Code } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/app/context/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -63,9 +62,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} ${lexend.variable} ${firaCode.variable} font-sans antialiased`}
       >
-        <ThemeProvider defaultTheme="light">
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

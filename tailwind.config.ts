@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ['class'],
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -79,12 +78,10 @@ const config: Config = {
           sky: {
             DEFAULT: '#68A9F2',
             light: '#8FC4F7',
-            dark: '#4A8FE0',
           },
           taupe: {
             DEFAULT: '#A4978E',
             light: '#C4B8AF',
-            dark: '#8A7D74',
           },
         },
 

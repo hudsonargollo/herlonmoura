@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, MessageCircle, Phone, HeartPulse } from 'lucide-react';
 import { Logo } from './Logo';
-import { ThemeToggle } from './ThemeToggle';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
@@ -106,11 +105,8 @@ export function Header({
           })}
         </nav>
 
-        {/* CTA Button + Theme Toggle */}
+        {/* CTA Button */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Theme Toggle */}
-          <ThemeToggle size="sm" className="hidden sm:block" />
-
           {/* WhatsApp CTA */}
           <div className="hidden sm:flex">
             <a
