@@ -16,6 +16,6 @@ export { DVTModal } from './DVTModal';
 export { SocialProofTicker } from './SocialProofTicker';
 export { SymptomNavigator } from './SymptomNavigator';
 export { ArticleCard } from './ArticleCard';
-export { Hero3D } from './Hero3D';
+export { Hero3D, VascularScene } from './Hero3D';
 export { ProcedureCard } from './ProcedureCard';
 export { ScrollProgress } from './ScrollProgress';

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import {
   Activity,
   Check,
@@ -14,7 +14,7 @@ import {
   Header,
   Footer,
   DVTModal,
-  Hero3D,
+  VascularScene,
   ProcedureCard,
   ScrollProgress,
 } from '@/components';
@@ -93,6 +93,7 @@ export default function Home() {
   const WHATSAPP_URL =
     'https://wa.me/5571999159975?text=Ol%C3%A1%2C%20estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20Dr.%20Herlon%20Moura.';
 
+  // Animation variants
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
@@ -131,17 +132,23 @@ export default function Home() {
     },
   };
 
+  const springHover = {
+    whileHover: { scale: 1.03, y: -2 },
+    whileTap: { scale: 0.98 },
+    transition: { type: 'spring', stiffness: 400, damping: 25 },
+  };
+
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <ScrollProgress />
       <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
-      {/* Hero Section - matches live site with 3D enhancement */}
+      {/* Hero Section — doctor photo on the right, content on the left */}
       <section
         ref={heroRef}
         className="relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-sky-50"
       >
-        {/* Animated background gradient overlay */}
+        {/* Animated background gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-sky-200/30 blur-[100px]"
@@ -214,19 +221,17 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 rounded bg-tertiary px-6 py-3.5 text-sm text-tertiary-foreground shadow-lg hover:bg-tertiary-hover transition-all"
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  {...springHover}
                 >
                   <MessageCircle className="h-4 w-4" />
                   <span>Chame no whatsapp</span>
                 </motion.a>
                 <motion.a
-                  href="https://wa.me/5571999159975"
+                  href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded border border-primary/30 bg-transparent px-6 py-3.5 text-sm text-primary hover:bg-primary hover:text-primary-foreground transition-all"
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  {...springHover}
                 >
                   <span>Agendar uma consulta</span>
                 </motion.a>
@@ -243,22 +248,60 @@ export default function Home() {
               </motion.p>
             </motion.div>
 
-            {/* Right Column: 3D Hero */}
-            <div className="lg:col-span-5">
-              <Hero3D />
-            </div>
+            {/* Right Column: Doctor Photo (NOT three.js) */}
+            <motion.div
+              className="lg:col-span-5 flex justify-center"
+              initial={{ opacity: 0, x: 40, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.8, ease: [0.21, 0.45, 0.35, 1], delay: 0.2 }}
+            >
+              <div className="relative">
+                {/* Subtle glow behind photo */}
+                <div className="absolute -inset-8 rounded-full bg-gradient-to-b from-sky-200/40 via-white to-navy-100/30 blur-3xl" />
+                {/* The doctor photo from the live site */}
+                <img
+                  src="/images/dr-herlon-moura.png"
+                  alt="Dr. Herlon Moura dos Santos - Angiologista"
+                  className="relative h-auto w-[420px] max-w-full object-cover object-top rounded-2xl shadow-2xl ring-1 ring-white/50"
+                  style={{
+                    maskImage: 'linear-gradient(to bottom, #000 70%, transparent)',
+                  }}
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Angiologista Description Section - matches live site */}
+      {/* Description Section — 3D vascular scene as background decoration */}
       <motion.section
-        className="py-16 sm:py-20 bg-background"
+        className="relative py-20 sm:py-24 bg-background overflow-hidden"
         variants={staggerContainer}
         initial="initial"
         whileInView="whileInView"
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Floating 3D vascular scene on the left (elsewhere, not hero) */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 hidden lg:block opacity-30">
+          <div className="h-[400px] w-[400px]">
+            <VascularScene />
+          </div>
+        </div>
+
+        {/* Animated background orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute bottom-20 right-10 h-[300px] w-[300px] rounded-full bg-navy-100/10 blur-[80px]"
+            animate={{ opacity: [0.15, 0.25, 0.15] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute top-10 left-1/3 h-[250px] w-[250px] rounded-full bg-sky-200/20 blur-[80px]"
+            animate={{ opacity: [0.2, 0.3, 0.2] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          />
+        </div>
+
+        <div className="container mx-auto relative px-4 sm:px-6 lg:px-8">
           <motion.div className="mx-auto max-w-3xl text-center" variants={fadeInUp}>
             <p className="text-lg text-muted-foreground leading-relaxed">
               {ANGIO_DESCRIPTION}
@@ -267,7 +310,7 @@ export default function Home() {
 
           {/* Why Choose */}
           <motion.div className="mx-auto max-w-2xl mt-12" variants={fadeInUp}>
-            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary text-center mb-8">
+            <h2 className="text-center text-2xl font-heading font-bold text-primary sm:text-3xl mb-8">
               Por que escolher meu atendimento?
             </h2>
             <ul className="space-y-4">
@@ -278,7 +321,7 @@ export default function Home() {
                   whileHover={{ x: 5 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                  <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
                   <span>{item}</span>
                 </motion.li>
               ))}
@@ -287,17 +330,36 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Procedures Section - matches live site (sky blue background) */}
+      {/* Procedures Section */}
       <motion.section
         id="procedimentos"
-        className="py-16 sm:py-24 bg-secondary"
+        className="relative py-16 sm:py-24 bg-secondary overflow-hidden"
         variants={staggerContainer}
         initial="initial"
         whileInView="whileInView"
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Floating 3D scene on the right */}
+        <div className="absolute bottom-0 right-0 hidden xl:block opacity-15">
+          <div className="h-[500px] w-[500px]">
+            <VascularScene />
+          </div>
+        </div>
+
+        {/* Subtle animated pulse in the background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <motion.div
+            className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30"
+            animate={{
+              scale: [1, 3, 1],
+              opacity: [0.5, 0, 0.5],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeOut' }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div className="mx-auto max-w-3xl text-center mb-12" variants={fadeInUp}>
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
+            <h2 className="text-white mb-4 text-3xl font-heading font-bold sm:text-4xl">
               Angiologista em Salvador?
             </h2>
             <p className="text-lg text-white/90 mb-6">
@@ -313,11 +375,11 @@ export default function Home() {
             </a>
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="text-center mb-12">
-            <h3 className="text-2xl font-heading font-bold text-white mb-2">
+          <motion.div className="mb-12 text-center" variants={fadeInUp}>
+            <h3 className="mb-2 text-2xl font-heading font-bold text-white">
               Atendimento Humanizado
             </h3>
-            <p className="text-white/80 mb-4">
+            <p className="mb-4 text-white/80">
               Nosso foco é o melhor atendimento pensando em seu bem estar. Veja alguns de nossos serviços.
             </p>
             <a
@@ -330,10 +392,13 @@ export default function Home() {
           </motion.div>
 
           {/* Procedure Cards with 3D tilt */}
-          <div id="procedimentos-lista" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            id="procedimentos-lista"
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+          >
             {PROCEDURES.map((proc, idx) => {
               const procWhatsApp = `https://wa.me/5571999159975?text=${encodeURIComponent(
-                `Olá Dr. Herlon Moura, gostaria de saber mais sobre ${proc.title}.`
+                `Olá Dr. Herlon Moura, gostaria de saber mais sobre ${proc.title}.`,
               )}`;
               return (
                 <motion.div
@@ -354,10 +419,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Doctor Bio Section - matches live site */}
+      {/* Doctor Bio Section */}
       <motion.section
         id="sobre"
-        className="py-20 sm:py-24 bg-background"
+        className="relative py-20 sm:py-24 bg-background"
         variants={staggerContainer}
         initial="initial"
         whileInView="whileInView"
@@ -385,12 +450,12 @@ export default function Home() {
               className="lg:col-span-7 space-y-6"
               variants={fadeInUp}
             >
-              <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary">
+              <h2 className="text-2xl font-heading font-bold text-primary sm:text-3xl">
                 {DOCTOR_NAME}
               </h2>
-              <p className="text-base font-medium text-primary">{DOCTOR_ROLE}</p>
-              <p className="text-sm text-muted-foreground font-medium">{DOCTOR_RQE}</p>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              <p className="font-medium text-primary">{DOCTOR_ROLE}</p>
+              <p className="text-sm font-medium text-muted-foreground">{DOCTOR_RQE}</p>
+              <p className="leading-relaxed text-sm sm:text-base text-muted-foreground">
                 {DOCTOR_BIO}
               </p>
 
@@ -400,8 +465,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded bg-primary px-6 py-3.5 text-sm text-primary-foreground shadow-lg hover:bg-primary-hover transition-all"
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  {...springHover}
                 >
                   SAIBA MAIS
                   <ArrowRight className="h-4 w-4" />
@@ -415,14 +479,24 @@ export default function Home() {
       {/* DVT Risk Calculator Section */}
       <motion.section
         id="calculadora-tvp"
-        className="py-20 sm:py-28 bg-gradient-to-b from-muted/30 via-background to-muted/30"
+        className="relative py-20 sm:py-28 bg-gradient-to-b from-muted/30 via-background to-muted/30"
         variants={staggerContainer}
         initial="initial"
         whileInView="whileInView"
       >
+        {/* Subtle 3D pulse effect */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 hidden lg:block opacity-10">
+          <div className="h-[300px] w-[300px]">
+            <VascularScene />
+          </div>
+        </div>
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div className="mx-auto max-w-3xl text-center mb-10" variants={fadeInUp}>
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold text-primary mb-3">
+          <motion.div
+            className="mx-auto max-w-3xl text-center mb-10"
+            variants={fadeInUp}
+          >
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold text-primary">
               <Activity className="h-4 w-4" />
               <span>Triagem Vascular Rápida</span>
             </div>
@@ -437,8 +511,7 @@ export default function Home() {
                 type="button"
                 onClick={() => setIsCalculatorModalOpen(true)}
                 className="inline-flex items-center gap-2 rounded bg-primary px-6 py-3 text-sm text-primary-foreground hover:bg-primary-hover transition-all shadow-sm"
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                {...springHover}
               >
                 <HeartPulse className="h-4 w-4" />
                 <span>Abrir Calculadora</span>
@@ -448,10 +521,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Final CTA Section - matches live site footer */}
+      {/* Final CTA Section */}
       <motion.section
         id="contato"
-        className="py-16 sm:py-20"
+        className="relative py-16 sm:py-20"
         style={{ backgroundColor: 'rgba(104, 169, 242, 0.19)' }}
         variants={staggerContainer}
         initial="initial"
@@ -459,7 +532,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div className="mx-auto max-w-3xl text-center" variants={fadeInUp}>
-            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-3">
+            <h2 className="text-2xl font-heading font-bold text-primary mb-3 sm:text-3xl">
               Vamos agendar sua consulta?
             </h2>
             <p className="text-lg text-primary/80 mb-6">
@@ -486,11 +559,11 @@ export default function Home() {
               <img
                 src="https://herlonmoura.com.br/wp-content/uploads/2025/04/Marca_Dr._Herlon_Moura_page-0008-removebg-preview.png"
                 alt="Dr. Herlon Moura"
-                className="h-10 w-auto mx-auto mb-6"
+                className="mx-auto mb-6 h-10 w-auto"
               />
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-primary/70">
+            <div className="flex flex-col items-center justify-center gap-6 text-sm text-primary/70 sm:flex-row">
               <span>📍 R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
               <span>📞 (71) 98344-9737 / (71) 99915-9975</span>
             </div>
@@ -513,10 +586,9 @@ export default function Home() {
           onClick={() => setIsCalculatorModalOpen(true)}
           className="group flex items-center gap-2.5 rounded-full bg-card/90 border border-primary/50 px-4 py-2.5 text-xs font-bold text-foreground shadow-2xl backdrop-blur-xl transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-primary/30 active:scale-95"
           aria-label="Abrir teste rápido de TVP"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          {...springHover}
         >
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/20 text-primary group-hover:bg-muted/90 group-hover:text-primary">
+          <span className="group-hover:bg-muted/90 group-hover:text-primary flex h-6 w-6 items-center justify-center rounded-full bg-primary/20 text-primary">
             <HeartPulse className="h-3.5 w-3.5" />
           </span>
           <span>Teste de Risco TVP</span>
