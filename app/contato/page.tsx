@@ -5,7 +5,6 @@ import { Logo } from '@/components';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { captureUtm } from '@/lib/leads';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -103,7 +102,6 @@ export default function ContactPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...captureUtm(),
           name: formData.name,
           whatsapp: formData.phone,
           email: formData.email,
@@ -147,7 +145,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-dark-elevated">
       <Header
         logo={<Logo size="md" animated={false} />}
         navItems={navItems}
@@ -163,10 +161,10 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="mb-lg text-display-lg font-bold text-foreground md:text-display-lg">
+            <h1 className="mb-lg text-display-lg font-bold text-neutral-light md:text-display-lg">
               Entre em Contato
             </h1>
-            <p className="mx-auto max-w-2xl text-body-lg text-muted-foreground">
+            <p className="mx-auto max-w-2xl text-body-lg text-neutral-medium">
               Estamos aqui para responder suas perguntas e agendar sua consulta
             </p>
           </motion.div>
@@ -214,12 +212,12 @@ export default function ContactPage() {
                 <motion.a
                   key={index}
                   href={contact.href}
-                  className="rounded-xl border border-glass bg-glass p-lg transition-all hover:border-primary hover:bg-glass-hover"
+                  className="rounded-xl border border-glass bg-glass p-lg transition-all hover:border-surgical-teal hover:bg-glass-hover"
                   variants={itemVariants}
                 >
-                  <Icon className="mb-md h-8 w-8 text-primary" />
-                  <h3 className="mb-md text-heading-3 font-semibold text-foreground">{contact.title}</h3>
-                  <p className="text-body-regular text-muted-foreground">{contact.value}</p>
+                  <Icon className="mb-md h-8 w-8 text-surgical-teal" />
+                  <h3 className="mb-md text-heading-3 font-semibold text-neutral-light">{contact.title}</h3>
+                  <p className="text-body-regular text-neutral-medium">{contact.value}</p>
                 </motion.a>
               );
             })}
@@ -228,7 +226,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form */}
-      <section className="bg-muted py-20 md:py-32">
+      <section className="bg-neutral-dark py-20 md:py-32">
         <Container>
           <motion.div
             className="mx-auto max-w-2xl"
@@ -237,7 +235,7 @@ export default function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="mb-lg text-heading-1 font-bold text-foreground">Envie uma Mensagem</h2>
+            <h2 className="mb-lg text-heading-1 font-bold text-neutral-light">Envie uma Mensagem</h2>
 
             {submitted && (
               <motion.div
@@ -311,10 +309,10 @@ export default function ContactPage() {
                   placeholder="Sua mensagem aqui..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className={`w-full rounded-lg border px-lg py-md font-regular text-foreground placeholder-neutral-medium transition-all ${
+                  className={`w-full rounded-lg border px-lg py-md font-regular text-neutral-light placeholder-neutral-medium transition-all ${
                     errors.message
                       ? 'border-error-red bg-error-red bg-opacity-10'
-                      : 'border-glass bg-glass hover:border-primary focus:border-primary focus:outline-none'
+                      : 'border-glass bg-glass hover:border-surgical-teal focus:border-surgical-teal focus:outline-none'
                   }`}
                   rows={6}
                 />

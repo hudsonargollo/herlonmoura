@@ -12,19 +12,19 @@ describe('Card Component', () => {
     it('renders with standard variant by default', () => {
       render(<Card data-testid="card">Standard</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('bg-card');
+      expect(card).toHaveClass('bg-neutral-dark');
     });
 
     it('renders with glass variant', () => {
       render(<Card variant="glass" data-testid="card">Glass</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('glass-effect');
+      expect(card).toHaveClass('glass-card');
     });
 
     it('renders with correct base styles', () => {
       render(<Card data-testid="card">Base styles</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('rounded-xl');
+      expect(card).toHaveClass('rounded-lg');
       expect(card).toHaveClass('p-6');
       expect(card).toHaveClass('transition-all');
     });
@@ -38,10 +38,10 @@ describe('Card Component', () => {
       expect(card).toHaveClass('shadow-lg');
     });
 
-    it('glass variant has glass-effect class', () => {
+    it('glass variant has glass-card class', () => {
       render(<Card variant="glass" data-testid="card">Glass</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('glass-effect');
+      expect(card).toHaveClass('glass-card');
     });
   });
 

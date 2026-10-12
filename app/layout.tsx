@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Lexend, Fira_Code } from "next/font/google";
+import { Inter, Poppins, Fira_Code } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -15,13 +15,6 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const lexend = Lexend({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-lexend",
-  display: "swap",
-});
-
 const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-fira-code",
@@ -29,9 +22,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Herlon Moura – Angiologista em Salvador",
+  title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
   description:
-    "Consulte com Dr. Herlon Moura, angiologista e cirurgião vascular em Salvador, Bahia. Tratamento de varizes, trombose venosa profunda e doenças vasculares.",
+    "Consulte com Dr. Herlon Moura, especialista em angiologia e cirurgia vascular em Salvador, Bahia. Tratamento de varizes, trombose venosa profunda e doenças vasculares.",
   keywords: [
     "angiologista Salvador",
     "cirurgia vascular",
@@ -40,9 +33,9 @@ export const metadata: Metadata = {
     "especialista vascular",
   ],
   openGraph: {
-    title: "Dr. Herlon Moura – Angiologista em Salvador",
+    title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
     description:
-      "Consulte com Dr. Herlon Moura, angiologista e cirurgião vascular em Salvador, Bahia.",
+      "Consulte com Dr. Herlon Moura, especialista em angiologia e cirurgia vascular em Salvador, Bahia.",
     type: "website",
   },
 };
@@ -51,16 +44,16 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): React.ReactNode {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} ${lexend.variable} ${firaCode.variable} font-sans antialiased`}
+        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} bg-dark-elevated font-sans text-neutral-light`}
       >
         {children}
       </body>

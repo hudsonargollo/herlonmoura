@@ -419,6 +419,7 @@ describe('Hero Section - Property-Based Tests', () => {
 
             render(
               <HeroSection
+                backgroundImage={backgroundImage}
                 logoSvg={<Logo size="lg" animated={true} />}
               />
             );

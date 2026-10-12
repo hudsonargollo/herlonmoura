@@ -12,13 +12,13 @@ describe('Button Component', () => {
     it('renders with primary variant by default', () => {
       render(<Button>Primary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-primary');
+      expect(button).toHaveClass('bg-surgical-teal');
     });
 
     it('renders with secondary variant', () => {
       render(<Button variant="secondary">Secondary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('border-primary');
+      expect(button).toHaveClass('border-surgical-teal');
     });
 
     it('renders with ghost variant', () => {
@@ -69,7 +69,7 @@ describe('Button Component', () => {
     it('is keyboard accessible', () => {
       render(<Button>Keyboard</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('focus-visible:outline-primary');
+      expect(button).toHaveClass('focus-visible:outline-surgical-teal');
     });
   });
 

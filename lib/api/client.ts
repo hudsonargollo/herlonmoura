@@ -64,7 +64,7 @@ async function request<T>(
       body: body ? JSON.stringify(body) : undefined,
     });
 
-    const raw: any = await res.json().catch(() => ({}));
+    const raw = await res.json().catch(() => ({}));
 
     if (!res.ok) {
       return {

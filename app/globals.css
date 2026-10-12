@@ -3,185 +3,100 @@
 @tailwind utilities;
 
 /* ============================================
-   DESIGN SYSTEM: THREE-LAYER TOKENS
-   (primitive → semantic → component)
-   Brand palette extracted from herlonmoura.com.br
+   DESIGN SYSTEM: CSS CUSTOM PROPERTIES
    ============================================ */
 
-/* === PRIMITIVE TOKENS === */
 :root {
-  /* Gray Scale (light mode base) */
-  --color-gray-50:  #F9FAFB;
-  --color-gray-100: #F3F4F6;
-  --color-gray-200: #E5E7EB;
-  --color-gray-300: #D1D5DB;
-  --color-gray-400: #9CA3AF;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1F2937;
-  --color-gray-900: #111827;
-  --color-gray-950: #030712;
+  /* Primary Colors */
+  --color-dark-elevated: #0f172a;
+  --color-surgical-teal: #14b8a6;
+  --color-surgical-teal-dark: #0d9488;
 
-  /* Brand Palette - extracted from herlonmoura.com.br */
-  --color-navy-50:  #EFF4FA;
-  --color-navy-100: #D6E4F5;
-  --color-navy-200: #ADC9EB;
-  --color-navy-300: #84ADE1;
-  --color-navy-400: #5B92D7;
-  --color-navy-500: #3A6FB8;
-  --color-navy-600: #1D3C73;  /* Primary - headings, links */
-  --color-navy-700: #152D54;  /* Primary dark */
-  --color-navy-800: #0F1F3A;
-  --color-navy-900: #0A1428;
+  /* Supporting Colors */
+  --color-neutral-light: #f8fafc;
+  --color-neutral-medium: #94a3b8;
+  --color-neutral-dark: #1e293b;
+  --color-success-green: #10b981;
+  --color-warning-amber: #f59e0b;
+  --color-error-red: #ef4444;
 
-  --color-sky-50:  #F0F7FE;
-  --color-sky-100: #DBEDFC;
-  --color-sky-200: #B7DBF9;
-  --color-sky-300: #93C9F6;
-  --color-sky-400: #68A9F2;  /* Secondary - section backgrounds, CTAs */
-  --color-sky-500: #4A8FE0;
-  --color-sky-600: #3A75C4;
-  --color-sky-700: #2C5BA0;
-
-  --color-taupe-50:  #F5F3F1;
-  --color-taupe-100: #E8E4E1;
-  --color-taupe-200: #D1C9C3;
-  --color-taupe-300: #BAAEA5;
-  --color-taupe-400: #A4978E;  /* Tertiary - buttons on dark backgrounds */
-  --color-taupe-500: #8A7D74;
-  --color-taupe-600: #6E635B;
-
-  /* Spacing Scale (4px base) */
-  --space-0:   0;
-  --space-1:   0.25rem;
-  --space-2:   0.5rem;
-  --space-3:   0.75rem;
-  --space-4:   1rem;
-  --space-5:   1.25rem;
-  --space-6:   1.5rem;
-  --space-8:   2rem;
-  --space-10:  2.5rem;
-  --space-12:  3rem;
-  --space-16:  4rem;
-  --space-20:  5rem;
-  --space-24:  6rem;
-
-  /* Typography */
-  --font-size-xs:    0.75rem;
-  --font-size-sm:    0.875rem;
-  --font-size-base:  1rem;
-  --font-size-lg:    1.125rem;
-  --font-size-xl:    1.25rem;
-  --font-size-2xl:   1.5rem;
-  --font-size-3xl:   1.875rem;
-  --font-size-4xl:   2.25rem;
-  --font-size-5xl:   3rem;
-
-  --font-weight-normal:   400;
-  --font-weight-medium:   500;
-  --font-weight-semibold: 600;
-  --font-weight-bold:     700;
-
-  --line-height-tight:  1.25;
-  --line-height-snug:   1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.625;
-
-  /* Border Radius (subtle, matches live site) */
-  --radius-sm:     0.125rem;
-  --radius-DEFAULT: 3px;
-  --radius-md:     0.375rem;
-  --radius-lg:     0.5rem;
-  --radius-xl:     0.75rem;
-  --radius-2xl:    1rem;
-  --radius-3xl:    1.5rem;
-  --radius-full:   9999px;
-
-  /* Shadows */
-  --shadow-sm:      0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-DEFAULT: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md:      0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg:      0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl:      0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --shadow-2xl:     0 25px 50px -12px rgb(0 0 0 / 0.25);
+  /* Glassmorphism Colors */
+  --color-glass-surface: rgba(15, 23, 42, 0.7);
+  --color-glass-surface-hover: rgba(15, 23, 42, 0.85);
+  --color-glass-border: rgba(20, 184, 166, 0.2);
+  --color-glass-border-hover: rgba(20, 184, 166, 0.4);
+  --color-glass-overlay: rgba(15, 23, 42, 0.4);
 
   /* Font Stacks */
-  --font-inter:     "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-lexend:    "Lexend", "Inter", system-ui, sans-serif;
-  --font-fira-code: "Fira Code", monospace;
+  --font-inter: "Inter";
+  --font-poppins: "Poppins";
+  --font-fira-code: "Fira Code";
 
-  /* Motion */
-  --duration-150:  150ms;
-  --duration-300:  300ms;
-  --duration-500:  500ms;
+  /* Typography Scale */
+  --font-display-lg: 48px;
+  --font-display-md: 36px;
+  --font-heading-1: 32px;
+  --font-heading-2: 24px;
+  --font-heading-3: 20px;
+  --font-body-lg: 18px;
+  --font-body-regular: 16px;
+  --font-body-small: 14px;
+  --font-caption: 12px;
 
-  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-}
+  /* Line Heights */
+  --line-height-display-lg: 56px;
+  --line-height-display-md: 44px;
+  --line-height-heading-1: 40px;
+  --line-height-heading-2: 32px;
+  --line-height-heading-3: 28px;
+  --line-height-body-lg: 28px;
+  --line-height-body-regular: 24px;
+  --line-height-body-small: 20px;
+  --line-height-caption: 16px;
 
-/* === SEMANTIC TOKENS (Light Mode - DEFAULT) === */
-:root {
-  /* Background & Foreground */
-  --color-background:       #FFFFFF;
-  --color-foreground:       #181818;  /* from live site body text */
+  /* Spacing Scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+  --spacing-5xl: 80px;
 
-  /* Card / Surface */
-  --color-card:             #FFFFFF;
-  --color-card-foreground:  #181818;
+  /* Responsive Breakpoints */
+  --breakpoint-mobile: 320px;
+  --breakpoint-tablet: 641px;
+  --breakpoint-desktop: 1025px;
+  --breakpoint-ultra-wide: 1441px;
 
-  /* Popover */
-  --color-popover:          #FFFFFF;
-  --color-popover-foreground: #181818;
+  /* Shadows */
+  --shadow-glass: 0 10px 30px 0 rgba(0, 0, 0, 0.35);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
-  /* Primary - Medical Navy Blue */
-  --color-primary:          #1D3C73;       /* Navy 600 */
-  --color-primary-hover:    #152D54;       /* Navy 700 */
-  --color-primary-active:   #0F1F3A;       /* Navy 800 */
-  --color-primary-foreground: #FFFFFF;
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 
-  /* Secondary - Medical Sky Blue */
-  --color-secondary:        #68A9F2;       /* Sky 400 */
-  --color-secondary-hover:  #4A8FE0;       /* Sky 500 */
-  --color-secondary-foreground: #FFFFFF;
+  /* Transitions */
+  --ease-material: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms var(--ease-material);
+  --transition-base: 300ms var(--ease-material);
+  --transition-slow: 500ms var(--ease-material);
 
-  /* Accent - Light Sky tint */
-  --color-accent:           #DBEDFC;       /* Sky 100 */
-  --color-accent-foreground: #152D54;      /* Navy 700 */
-
-  /* Muted */
-  --color-muted:            #F3F4F6;       /* Gray 100 */
-  --color-muted-foreground: #6B7280;       /* Gray 500 */
-
-  /* Destructive */
-  --color-destructive:         #EF4444;
-  --color-destructive-hover:   #DC2626;
-  --color-destructive-foreground: #FFFFFF;
-
-  /* Borders */
-  --color-border:           #E5E7EB;       /* Gray 200 */
-  --color-input:            #E5E7EB;
-  --color-ring:             #1D3C73;       /* Navy 600 */
-
-  /* Tertiary (taupe - for buttons on dark backgrounds) */
-  --color-tertiary:         #A4978E;
-  --color-tertiary-hover:   #8A7D74;
-  --color-tertiary-foreground: #FFFFFF;
-
-  /* Glassmorphism */
-  --color-glass-surface:       rgba(255, 255, 255, 0.8);
-  --color-glass-surface-hover: rgba(255, 255, 255, 0.95);
-  --color-glass-border:        rgba(29, 60, 115, 0.15);
-  --color-glass-border-hover:  rgba(29, 60, 115, 0.3);
-
-  /* Background Gradients */
-  --gradient-hero: linear-gradient(to bottom, #FFFFFF, #F9FAFB, #F0F7FE);
-  --gradient-section: linear-gradient(to bottom, #FFFFFF, #F9FAFB);
-
-  /* Neutral (for backward compat) */
-  --color-neutral-light: #F8FAFC;
-  --color-neutral-medium: #94A3B8;
-  --color-neutral-dark: #1E293B;
+  /* Z-Index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
 }
 
 /* ============================================
@@ -189,83 +104,19 @@
    ============================================ */
 
 .glass-effect {
-  background-color: var(--color-glass-surface);
-  border: 1px solid var(--color-glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
-  transition: all var(--duration-300) var(--ease-out);
+  @apply rounded-xl border border-glass bg-glass backdrop-blur-[10px];
 }
 
-.glass-effect:hover {
-  background-color: var(--color-glass-surface-hover);
-  border-color: var(--color-glass-border-hover);
-}
-
-.glass-input {
-  background-color: var(--color-glass-surface);
-  border: 1px solid var(--color-glass-border);
-  color: var(--color-foreground);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all var(--duration-150) var(--ease-out);
-}
-
-.glass-input::placeholder {
-  color: var(--color-muted-foreground);
-}
-
-.glass-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
-}
-
-.glass-button {
-  background-color: var(--color-primary);
-  color: var(--color-primary-foreground);
-  font-weight: var(--font-weight-semibold);
-  padding: var(--space-3) var(--space-6);
-  border-radius: var(--radius-md);
-  border: none;
-  transition: all var(--duration-150) var(--ease-out);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.glass-button:hover {
-  background-color: var(--color-primary-hover);
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-primary) 35%, transparent);
-}
-
-.glass-button:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+.glass-effect-hover {
+  @apply transition-all duration-300 hover:border-glass-hover hover:bg-glass-hover;
 }
 
 /* ============================================
-   SMOOTH SCROLLING & BASE STYLES
+   SMOOTH SCROLLING
    ============================================ */
 
 html {
   scroll-behavior: smooth;
-}
-
-@layer base {
-  body {
-    @apply font-sans antialiased;
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
-  }
 }
 
 /* ============================================
@@ -273,8 +124,7 @@ html {
    ============================================ */
 
 :focus-visible {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 2px;
+  @apply outline-2 outline-offset-2 outline-surgical-teal;
 }
 
 /* ============================================
@@ -282,7 +132,9 @@ html {
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -291,18 +143,59 @@ html {
 }
 
 /* ============================================
+   TYPOGRAPHY DEFAULTS
+   ============================================ */
+
+body {
+  @apply font-sans;
+}
+
+h1 {
+  @apply text-display-lg;
+}
+
+h2 {
+  @apply text-display-md;
+}
+
+h3 {
+  @apply text-heading-1;
+}
+
+h4 {
+  @apply text-heading-2;
+}
+
+h5 {
+  @apply text-heading-3;
+}
+
+p {
+  @apply text-body-regular;
+}
+
+small {
+  @apply text-body-small;
+}
+
+/* ============================================
    FORM ELEMENTS
    ============================================ */
 
-@layer base {
-  input, textarea, select {
-    @apply rounded-lg border bg-background px-4 py-3 text-foreground placeholder-muted-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background;
-  }
+button {
+  @apply transition-all duration-300;
+}
 
-  input:disabled, textarea:disabled, select:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+input,
+textarea,
+select {
+  @apply rounded-lg border border-neutral-dark bg-neutral-dark px-4 py-3 text-neutral-light placeholder-neutral-medium transition-all duration-300 focus:border-surgical-teal focus:outline-none;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  @apply cursor-not-allowed opacity-50;
 }
 
 /* ============================================
@@ -310,7 +203,7 @@ html {
    ============================================ */
 
 a {
-  @apply text-primary transition-colors hover:text-primary-hover;
+  @apply text-surgical-teal transition-colors duration-300 hover:text-surgical-teal-dark;
 }
 
 /* ============================================
@@ -318,16 +211,96 @@ a {
    ============================================ */
 
 img {
-  @apply max-w-full h-auto;
+  @apply max-w-full;
 }
 
 /* ============================================
-   UTILITY CLASSES
+   UTILITY CLASSES: GLASSMORPHISM VARIANTS
    ============================================ */
 
-.container-mobile { @apply px-4; }
-.container-tablet { @apply px-6; }
-.container-desktop { @apply mx-auto max-w-container px-8; }
+.glass-card {
+  background-color: var(--color-glass-surface);
+  border: 1px solid var(--color-glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass);
+  transition: all var(--transition-base);
+}
+
+.glass-card:hover {
+  background-color: var(--color-glass-surface-hover);
+  border-color: var(--color-glass-border-hover);
+}
+
+.glass-card-hover {
+  @apply transition-all duration-300 hover:border-glass-hover hover:bg-glass-hover;
+}
+
+.glass-input {
+  background-color: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-neutral-light);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.glass-input::placeholder {
+  color: var(--color-neutral-medium);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--color-surgical-teal);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.25);
+}
+
+.glass-button {
+  background-color: var(--color-surgical-teal);
+  color: #ffffff;
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.glass-button:hover {
+  background-color: var(--color-surgical-teal-dark);
+  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35);
+}
+
+.glass-button:focus-visible {
+  outline: 2px solid var(--color-surgical-teal);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   UTILITY CLASSES: RESPONSIVE CONTAINERS
+   ============================================ */
+
+.container-mobile {
+  @apply px-4;
+}
+
+.container-tablet {
+  @apply px-6;
+}
+
+.container-desktop {
+  @apply mx-auto max-w-container px-8;
+}
+
+/* ============================================
+   UTILITY CLASSES: TYPOGRAPHY HELPERS
+   ============================================ */
 
 .text-truncate {
   @apply overflow-hidden text-ellipsis whitespace-nowrap;
@@ -347,9 +320,25 @@ img {
   overflow: hidden;
 }
 
-.flex-center { @apply flex items-center justify-center; }
-.flex-between { @apply flex items-center justify-between; }
-.flex-col-center { @apply flex flex-col items-center justify-center; }
+/* ============================================
+   UTILITY CLASSES: FLEX HELPERS
+   ============================================ */
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-between {
+  @apply flex items-center justify-between;
+}
+
+.flex-col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
+/* ============================================
+   UTILITY CLASSES: GRID HELPERS
+   ============================================ */
 
 .grid-auto-fit {
   @apply grid gap-6;
@@ -360,6 +349,10 @@ img {
   @apply grid gap-6;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
+
+/* ============================================
+   UTILITY CLASSES: VISIBILITY
+   ============================================ */
 
 .sr-only {
   position: absolute;
@@ -372,3 +365,110 @@ img {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ============================================
+   UTILITY CLASSES: ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 1s ease-out;
+}
+
+.animate-slide-left {
+  animation: slideLeft 1s ease-out;
+}
+
+.animate-slide-right {
+  animation: slideRight 1s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out;
+}
+
+.animate-pulse-custom {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
