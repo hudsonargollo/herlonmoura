@@ -40,7 +40,7 @@ export function Footer({
   copyright = `© ${new Date().getFullYear()} Dr. Herlon Moura dos Santos. Todos os direitos reservados.`,
 }: FooterProps) {
   return (
-    <footer className="border-t border-surgical-teal/20 bg-slate-950 text-slate-300">
+    <footer className="border-t border-default bg-bg-tertiary text-secondary">
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:py-16">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Info */}
@@ -48,10 +48,10 @@ export function Footer({
             <Link href="/" className="inline-block">
               <Logo size="md" />
             </Link>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-tertiary leading-relaxed">
               Dr. Herlon Moura dos Santos
               <br />
-              <strong className="text-slate-200">Cirurgião Vascular e Endovascular</strong>
+              <strong className="text-primary">Cirurgião Vascular e Endovascular</strong>
               <br />
               CRM/BA 23904 • RQE Nº 19791 / RQE Nº 22436
               <br />
@@ -66,7 +66,7 @@ export function Footer({
           {/* Links sections */}
           {sections.map((section) => (
             <div key={section.title}>
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-white">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
                 {section.title}
               </h3>
               <ul className="space-y-2.5 text-xs">
@@ -74,7 +74,7 @@ export function Footer({
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 transition-colors hover:text-surgical-teal"
+                      className="text-tertiary transition-colors hover:text-surgical-teal"
                     >
                       {link.label}
                     </Link>
@@ -86,17 +86,17 @@ export function Footer({
 
           {/* Contact Details */}
           <div>
-            <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-white">
+            <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-primary">
               Consultório Salvador
             </h3>
-            <ul className="space-y-3 text-xs text-slate-400">
+            <ul className="space-y-3 text-xs text-tertiary">
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-surgical-teal flex-shrink-0 mt-0.5" />
                 <span>R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-surgical-teal flex-shrink-0" />
-                <a href="tel:+5571983449737" className="hover:text-white transition-colors">
+                <a href="tel:+5571983449737" className="hover:text-primary transition-colors">
                   (71) 98344-9737
                 </a>
               </li>
@@ -127,8 +127,8 @@ export function Footer({
         </div>
 
         {/* Legal notice & Copyright */}
-        <div className="mt-12 border-t border-slate-800/80 pt-8 text-center text-xs text-slate-400">
-          <p className="max-w-3xl mx-auto leading-relaxed text-slate-400 mb-4">
+        <div className="mt-12 border-t border-default pt-8 text-center text-xs text-tertiary">
+          <p className="max-w-3xl mx-auto leading-relaxed text-tertiary mb-4">
             Aviso Legal: As informações contidas neste website têm caráter puramente informativo e educativo, destinadas à orientação do público e não substituem o diagnóstico ou consulta presencial realizada por médico especialista, em conformidade com as resoluções do Conselho Federal de Medicina (CFM).
           </p>
           <p>{copyright}</p>

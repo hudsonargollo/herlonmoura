@@ -19,7 +19,7 @@ interface ArticleCardProps {
 
 export function ArticleCard({ post }: ArticleCardProps) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 transition-all hover:border-surgical-teal/40 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-surgical-teal/5">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-default bg-bg-card transition-all duration-300 hover:border-surgical-teal/40 hover:bg-bg-card-hover">
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <Image
@@ -37,15 +37,15 @@ export function ArticleCard({ post }: ArticleCardProps) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-base font-bold text-white leading-snug group-hover:text-surgical-teal transition-colors line-clamp-2">
+        <h3 className="text-base font-bold text-primary leading-snug group-hover:text-surgical-teal transition-colors line-clamp-2">
           {post.title}
         </h3>
-        <p className="mt-2 flex-1 text-sm text-slate-300 leading-relaxed line-clamp-3">
+        <p className="mt-2 flex-1 text-sm text-secondary leading-relaxed line-clamp-3">
           {post.excerpt}
         </p>
 
         {/* Meta */}
-        <div className="mt-4 flex items-center gap-3 text-[11px] text-slate-400">
+        <div className="mt-4 flex items-center gap-3 text-[11px] text-tertiary">
           <span className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
             {post.date}

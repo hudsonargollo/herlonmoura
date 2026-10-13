@@ -112,7 +112,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-dark-elevated text-slate-100">
+    <main className="min-h-screen bg-surface text-primary">
       <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
       {/* Hero Section with Doctor Photo & Real Branding */}
@@ -123,78 +123,78 @@ export default function Home() {
       />
 
       {/* Trust & Credibility Ticker Bar */}
-      <section className="border-y border-surgical-teal/20 bg-slate-950/80 py-6 backdrop-blur-md">
+      <section className="border-y border-default bg-bg-secondary/80 py-6 backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6 text-center">
-            <div className="rounded-xl border border-white/5 bg-slate-900/40 p-4">
+            <div className="rounded-xl border border-default bg-bg-card p-4">
               <span className="block text-2xl sm:text-3xl font-black text-surgical-teal">15+</span>
-              <span className="mt-1 block text-xs sm:text-sm text-slate-300">Anos de Prática Clínica</span>
+              <span className="mt-1 block text-xs sm:text-sm text-secondary">Anos de Prática Clínica</span>
             </div>
-            <div className="rounded-xl border border-white/5 bg-slate-900/40 p-4">
+            <div className="rounded-xl border border-default bg-bg-card p-4">
               <span className="block text-2xl sm:text-3xl font-black text-emerald-400">UFBA</span>
-              <span className="mt-1 block text-xs sm:text-sm text-slate-300">Formação Médica de Elite</span>
+              <span className="mt-1 block text-xs sm:text-sm text-secondary">Formação Médica de Elite</span>
             </div>
-            <div className="rounded-xl border border-white/5 bg-slate-900/40 p-4">
+            <div className="rounded-xl border border-default bg-bg-card p-4">
               <span className="block text-2xl sm:text-3xl font-black text-surgical-teal">RQE</span>
-              <span className="mt-1 block text-xs sm:text-sm text-slate-300">Nº 19791 / 22436</span>
+              <span className="mt-1 block text-xs sm:text-sm text-secondary">Nº 19791 / 22436</span>
             </div>
-            <div className="rounded-xl border border-white/5 bg-slate-900/40 p-4">
+            <div className="rounded-xl border border-default bg-bg-card p-4">
               <span className="block text-2xl sm:text-3xl font-black text-emerald-400">Graça</span>
-              <span className="mt-1 block text-xs sm:text-sm text-slate-300">Consultório em Salvador</span>
+              <span className="mt-1 block text-xs sm:text-sm text-secondary">Consultório em Salvador</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Why Choose — matches WordPress "Por que escolher meu atendimento?" */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-dark-elevated to-slate-950">
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-surface to-bg-tertiary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-block rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-3 py-1 text-xs font-semibold text-surgical-teal mb-3">
               Atendimento Humanizado & Alta Tecnologia
             </span>
-            <h2 className="text-3xl font-extrabold sm:text-4xl text-white">
+            <h2 className="text-3xl font-extrabold sm:text-4xl text-primary">
               Por que escolher meu atendimento?
             </h2>
           </div>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition-all hover:border-surgical-teal/50 hover:bg-slate-900">
+            <div className="rounded-2xl border border-default bg-bg-card p-6 transition-all hover:border-surgical-teal/50 hover:bg-bg-card-hover">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surgical-teal/15 text-surgical-teal mb-5">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Tratamentos Minimamente Invasivos</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-primary mb-2">Tratamentos Minimamente Invasivos</h3>
+              <p className="text-sm text-secondary leading-relaxed">
                 Tratamentos minimamente invasivos com recuperação rápida
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition-all hover:border-surgical-teal/50 hover:bg-slate-900">
+            <div className="rounded-2xl border border-default bg-bg-card p-6 transition-all hover:border-surgical-teal/50 hover:bg-bg-card-hover">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 mb-5">
                 <HeartPulse className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Consultas Humanizadas</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-primary mb-2">Consultas Humanizadas</h3>
+              <p className="text-sm text-secondary leading-relaxed">
                 Consultas humanizadas com foco no seu bem-estar
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition-all hover:border-surgical-teal/50 hover:bg-slate-900">
+            <div className="rounded-2xl border border-default bg-bg-card p-6 transition-all hover:border-surgical-teal/50 hover:bg-bg-card-hover">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surgical-teal/15 text-surgical-teal mb-5">
                 <Waves className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Ambiente Confortável</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-primary mb-2">Ambiente Confortável</h3>
+              <p className="text-sm text-secondary leading-relaxed">
                 Ambiente confortável e seguro em Salvador e região metropolitana
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition-all hover:border-surgical-teal/50 hover:bg-slate-900">
+            <div className="rounded-2xl border border-default bg-bg-card p-6 transition-all hover:border-surgical-teal/50 hover:bg-bg-card-hover">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 mb-5">
                 <ShieldCheck className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Convênios Selecionados</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-primary mb-2">Convênios Selecionados</h3>
+              <p className="text-sm text-secondary leading-relaxed">
                 Atendimento particular e convênios selecionados
               </p>
             </div>
@@ -203,17 +203,17 @@ export default function Home() {
       </section>
 
       {/* Procedures Section */}
-      <section id="procedimentos" className="py-16 sm:py-24 bg-slate-950">
+      <section id="procedimentos" className="py-16 sm:py-24 bg-bg-tertiary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-surgical-teal">
                 Especialidades Cirúrgicas
               </span>
-              <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl text-white">
+              <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl text-primary">
                 Procedimentos e Tratamentos Especializados
               </h2>
-              <p className="mt-3 text-base text-slate-300 max-w-2xl">
+              <p className="mt-3 text-base text-secondary max-w-2xl">
                 Soluções vasculares modernas para eliminação de varizes, alívio de sintomas circulatórios e procedimentos de alta precisão.
               </p>
             </div>
@@ -234,7 +234,7 @@ export default function Home() {
               return (
                 <div
                   key={proc.title}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition-all duration-300 hover:border-surgical-teal/40 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-surgical-teal/5"
+                  className="group relative flex flex-col justify-between rounded-2xl border border-default bg-bg-card p-6 transition-all duration-300 hover:border-surgical-teal/40 hover:bg-bg-card-hover hover:shadow-xl hover:shadow-surgical-teal/5"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-3 mb-4">
@@ -245,18 +245,18 @@ export default function Home() {
                         {proc.tag}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-surgical-teal transition-colors">
+                    <h3 className="text-xl font-bold text-primary group-hover:text-surgical-teal transition-colors">
                       {proc.title}
                     </h3>
-                    <div className="text-xs font-medium text-slate-400 mt-0.5 mb-3">
+                    <div className="text-xs font-medium text-tertiary mt-0.5 mb-3">
                       {proc.subtitle}
                     </div>
-                    <p className="text-sm text-slate-300 leading-relaxed">
+                    <p className="text-sm text-secondary leading-relaxed">
                       {proc.description}
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-800/60">
+                  <div className="mt-6 pt-4 border-t border-default">
                     <a
                       href={`https://wa.me/5571999159975?text=${encodeURIComponent(
                         `Olá Dr. Herlon Moura, gostaria de agendar uma consulta sobre ${proc.title}.`
@@ -277,23 +277,23 @@ export default function Home() {
       </section>
 
       {/* Symptom Mapping Section — matches WordPress structure */}
-      <section id="sintomas" className="py-16 sm:py-24 bg-dark-elevated">
+      <section id="sintomas" className="py-16 sm:py-24 bg-surface">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-surgical-teal">
               Identificação de Sinais
             </span>
-            <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl text-white">
+            <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl text-primary">
               Você apresenta algum destes sintomas circulatórios?
             </h2>
-            <p className="mt-3 text-base text-slate-300">
+            <p className="mt-3 text-base text-secondary">
               O diagnóstico vascular precoce previne complicações graves como úlceras de perna, trombose e insuficiência venosa crônica.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Braços e Pernas — matches WP exactly */}
-            <div className="rounded-3xl border border-surgical-teal/30 bg-slate-900/80 p-8 shadow-xl">
+            <div className="rounded-3xl border border-surgical-teal/30 bg-bg-card p-8 shadow-xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surgical-teal/20 text-surgical-teal">
                   <Activity className="h-5 w-5" />
@@ -376,7 +376,7 @@ export default function Home() {
       </section>
 
       {/* Interactive DVT Risk Calculator Anchor Section */}
-      <section id="calculadora-tvp" className="py-20 sm:py-28 bg-gradient-to-b from-slate-950 via-dark-elevated to-slate-950 relative overflow-hidden">
+      <section id="calculadora-tvp" className="py-20 sm:py-28 bg-gradient-to-b from-bg-tertiary via-surface to-bg-tertiary relative overflow-hidden">
         <div className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-500/10 blur-[130px]" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center mb-10">
@@ -384,10 +384,10 @@ export default function Home() {
               <Activity className="h-4 w-4" />
               <span>Triagem Vascular Rápida</span>
             </div>
-            <h2 className="text-3xl font-extrabold sm:text-5xl text-white">
+            <h2 className="text-3xl font-extrabold sm:text-5xl text-primary">
               Calculadora de Risco de Trombose (TVP)
             </h2>
-            <p className="mt-4 text-base text-slate-300">
+            <p className="mt-4 text-base text-secondary">
               Responda às 4 etapas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
             </p>
             <div className="mt-4">
@@ -408,13 +408,13 @@ export default function Home() {
       </section>
 
       {/* Doctor Bio & Credentials Section */}
-      <section id="sobre" className="py-20 sm:py-24 bg-slate-950 border-t border-slate-800">
+      <section id="sobre" className="py-20 sm:py-24 bg-bg-tertiary border-t border-default">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-full max-w-[380px]">
                 <div className="absolute inset-0 rounded-3xl bg-surgical-teal/20 blur-2xl" />
-                <div className="relative z-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-2xl p-2">
+                <div className="relative z-10 overflow-hidden rounded-3xl border border-default bg-surface-raised shadow-2xl p-2">
                   <Image
                     src="/images/dr-herlon-moura.png"
                     alt="Dr. Herlon Moura dos Santos"
@@ -431,7 +431,7 @@ export default function Home() {
                 <Award className="h-4 w-4" />
                 <span>Formação de Excelência</span>
               </div>
-              <h2 className="text-3xl font-extrabold sm:text-4xl text-white">
+              <h2 className="text-3xl font-extrabold sm:text-4xl text-primary">
                 Dr. Herlon Moura dos Santos
               </h2>
               <p className="text-base text-teal-300 font-medium">
@@ -444,7 +444,7 @@ export default function Home() {
                 Combinamos a mais alta tecnologia de imagem diagnóstica (Eco-Doppler colorido) e procedimentos minimamente invasivos a laser com a escuta clínica atenta, cuidando do paciente de forma integral.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-default">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-surgical-teal flex-shrink-0" />
                   <span className="text-sm text-slate-200">Membro da SBACV</span>
@@ -480,19 +480,19 @@ export default function Home() {
       </section>
 
       {/* Final CTA — matches WordPress "Vamos agendar sua consulta?" */}
-      <section id="contato" className="py-20 sm:py-28 bg-slate-950 border-t border-slate-800">
+      <section id="contato" className="py-20 sm:py-28 bg-bg-tertiary border-t border-default">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-block rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-3 py-1 text-xs font-semibold text-surgical-teal mb-3">
               Agendamento Facilitado
             </span>
-            <h2 className="text-3xl font-extrabold sm:text-4xl text-white mb-4">
+            <h2 className="text-3xl font-extrabold sm:text-4xl text-primary mb-4">
               Vamos agendar sua consulta?
             </h2>
-            <p className="text-base text-slate-300 mb-6">
+            <p className="text-base text-secondary mb-6">
               Fale conosco e agenda já!
             </p>
-            <p className="text-sm text-slate-400 mb-8">
+            <p className="text-sm text-tertiary mb-8">
               Nosso foco é o melhor atendimento pensando em seu bem estar. Atendimento humanizado com muito amor.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
@@ -515,7 +515,7 @@ export default function Home() {
                 Fale no WhatsApp
               </a>
             </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-400">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-tertiary">
               <span>📍 R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
               <span>📞 (71) 98344-9737 / (71) 99915-9975</span>
             </div>
@@ -530,7 +530,7 @@ export default function Home() {
         <button
           type="button"
           onClick={() => setIsCalculatorModalOpen(true)}
-          className="group flex items-center gap-2.5 rounded-full bg-slate-900/90 border border-surgical-teal/50 px-4 py-2.5 text-xs font-bold text-white shadow-2xl backdrop-blur-xl transition-all hover:bg-surgical-teal hover:text-slate-950 hover:shadow-surgical-teal/30 hover:scale-105 active:scale-95"
+          className="group flex items-center gap-2.5 rounded-full bg-surface-overlay border border-surgical-teal/50 px-4 py-2.5 text-xs font-bold text-primary shadow-2xl backdrop-blur-xl transition-all hover:bg-surgical-teal hover:text-text-inverse hover:shadow-surgical-teal/30 hover:scale-105 active:scale-95"
           aria-label="Abrir teste rápido de TVP"
         >
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal group-hover:bg-slate-950 group-hover:text-surgical-teal">

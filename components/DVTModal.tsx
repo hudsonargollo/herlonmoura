@@ -45,7 +45,7 @@ export function DVTModal({ isOpen, onClose }: DVTModalProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-950/85 backdrop-blur-md"
+            className="fixed inset-0 bg-surface-overlay/85 backdrop-blur-md"
             aria-hidden="true"
           />
 
@@ -58,25 +58,25 @@ export function DVTModal({ isOpen, onClose }: DVTModalProps) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="tvp-modal-title"
-            className="relative z-10 w-full max-w-2xl my-auto overflow-hidden rounded-3xl border border-surgical-teal/30 bg-slate-900/98 shadow-2xl backdrop-blur-2xl"
+            className="relative z-10 w-full max-w-2xl my-auto overflow-hidden rounded-3xl border border-surgical-teal/30 bg-surface shadow-2xl"
           >
             {/* Top Bar with Close button */}
-            <div className="flex items-center justify-between border-b border-white/10 px-5 sm:px-6 py-3.5 bg-slate-950/70">
+            <div className="flex items-center justify-between border-b border-default px-5 sm:px-6 py-3.5 bg-surface">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surgical-teal/20 text-surgical-teal">
                   <HeartPulse className="h-4 w-4" />
                 </span>
                 <div>
-                  <h3 id="tvp-modal-title" className="text-sm sm:text-base font-bold text-white">
+                  <h3 id="tvp-modal-title" className="text-sm sm:text-base font-bold text-primary">
                     Calculadora Interativa de TVP
                   </h3>
-                  <p className="text-[11px] text-slate-400">Dr. Herlon Moura • Triagem Vascular</p>
+                  <p className="text-[11px] text-tertiary">Dr. Herlon Moura • Triagem Vascular</p>
                 </div>
               </div>
 
               <button
                 onClick={onClose}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-slate-300 transition-colors hover:bg-white/15 hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-raised text-secondary transition-colors hover:bg-surface-raised"
                 aria-label="Fechar janela"
               >
                 <X className="h-4 w-4" />

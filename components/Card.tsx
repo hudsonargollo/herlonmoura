@@ -8,7 +8,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-  standard: 'border border-neutral-dark bg-neutral-dark shadow-lg',
+  standard: 'border border-default bg-surface-raised shadow-lg',
   glass: 'glass-card',
 };
 

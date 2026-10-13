@@ -1,9 +1,9 @@
 'use client';
 
-import React, { Suspense, useMemo } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { Suspense, useMemo, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Float, useProgress } from '@react-three/drei';
-import { motion } from 'framer-motion';
+import * as THREE from 'three';
 
 // Premium medical 3D scene: vascular network with flowing particles
 function VascularGeometry() {
@@ -46,71 +46,55 @@ function VascularGeometry() {
   return (
     <>
       {/* Central aorta sphere with pulsing emissive glow */}
-      <group position={[0, 0, 0]}>
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, delay: 0 }}
+      <PulsingSphere />
+
+      {/* Orbiting diagnostic rings (Doppler ultrasound waves) */}
+      {Array.from({ length: 4 }).map((_, i) => (
+        <mesh
+          key={`orbit-${i}`}
+          rotation={[0, (i * Math.PI) / 4, Math.PI / 2]}
         >
-          <mesh>
-            <sphereGeometry args={[0.6, 48, 48]} />
-            <meshStandardMaterial
-              color="#1D3C73"
-              emissive="#68A9F2"
-              emissiveIntensity={0.5}
-              toneMapped={false}
-            />
-          </mesh>
-        </motion.div>
+          <torusGeometry args={[1.5 + i * 0.4, 0.03, 4, 200]} />
+          <meshStandardMaterial
+            color="#68A9F2"
+            emissive="#68A9F2"
+            emissiveIntensity={0.2}
+            transparent
+            opacity={0.5}
+          />
+        </mesh>
+      ))}
 
-        {/* Orbiting diagnostic rings (Doppler ultrasound waves) */}
-        {Array.from({ length: 4 }).map((_, i) => (
-          <mesh
-            key={`orbit-${i}`}
-            rotation={[0, (i * Math.PI) / 4, Math.PI / 2]}
-          >
-            <torusGeometry args={[1.5 + i * 0.4, 0.03, 4, 200]} />
-            <meshStandardMaterial
-              color="#68A9F2"
-              emissive="#68A9F2"
-              emissiveIntensity={0.2}
-              transparent
-              opacity={0.5}
-            />
-          </mesh>
-        ))}
-
-        {/* DNA double helix strand using beads */}
-        <group position={[0, 0, -1.5]}>
-          {Array.from({ length: 15 }).map((_, i) => {
-            const angle = (i / 15) * Math.PI * 4;
-            const y = (i / 15) * 5 - 2.5;
-            const radius = 0.8;
-            const x = Math.cos(angle) * radius;
-            const z = Math.sin(angle) * radius;
-            const x2 = Math.cos(angle + Math.PI) * radius;
-            const z2 = Math.sin(angle + Math.PI) * radius;
-            return (
-              <group key={`dna-${i}`}>
-                {/* Left strand bead */}
-                <mesh position={[x, y, z]}>
-                  <sphereGeometry args={[0.04, 12, 12]} />
-                  <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
-                </mesh>
-                {/* Right strand bead */}
-                <mesh position={[x2, y + 0.1, z2]}>
-                  <sphereGeometry args={[0.04, 12, 12]} />
-                  <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
-                </mesh>
-                {/* Rung connecting strands */}
-                <mesh position={[(x + x2) / 2, y, (z + z2) / 2]} rotation={[0, angle, 0]}>
-                  <cylinderGeometry args={[0.01, 0.01, radius * 2, 6]} />
-                  <meshStandardMaterial color="#10B981" transparent opacity={0.5} />
-                </mesh>
-              </group>
-            );
-          })}
-        </group>
+      {/* DNA double helix strand using beads */}
+      <group position={[0, 0, -1.5]}>
+        {Array.from({ length: 15 }).map((_, i) => {
+          const angle = (i / 15) * Math.PI * 4;
+          const y = (i / 15) * 5 - 2.5;
+          const radius = 0.8;
+          const x = Math.cos(angle) * radius;
+          const z = Math.sin(angle) * radius;
+          const x2 = Math.cos(angle + Math.PI) * radius;
+          const z2 = Math.sin(angle + Math.PI) * radius;
+          return (
+            <group key={`dna-${i}`}>
+              {/* Left strand bead */}
+              <mesh position={[x, y, z]}>
+                <sphereGeometry args={[0.04, 12, 12]} />
+                <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
+              </mesh>
+              {/* Right strand bead */}
+              <mesh position={[x2, y + 0.1, z2]}>
+                <sphereGeometry args={[0.04, 12, 12]} />
+                <meshStandardMaterial color="#10B981" emissive="#10B981" emissiveIntensity={0.3} />
+              </mesh>
+              {/* Rung connecting strands */}
+              <mesh position={[(x + x2) / 2, y, (z + z2) / 2]} rotation={[0, angle, 0]}>
+                <cylinderGeometry args={[0.01, 0.01, radius * 2, 6]} />
+                <meshStandardMaterial color="#10B981" transparent opacity={0.5} />
+              </mesh>
+            </group>
+          );
+        })}
       </group>
 
       {/* Vessel segments */}
@@ -157,6 +141,34 @@ function VascularGeometry() {
         </Float>
       ))}
     </>
+  );
+}
+
+// Pulsing sphere component using useFrame for animation (no framer-motion inside Canvas)
+function PulsingSphere() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+
+  useFrame((state) => {
+    if (meshRef.current && materialRef.current) {
+      const t = state.clock.elapsedTime;
+      const scale = 1 + Math.sin(t * 2) * 0.05;
+      meshRef.current.scale.setScalar(scale);
+      materialRef.current.emissiveIntensity = 0.4 + Math.sin(t * 2) * 0.2;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[0.6, 48, 48]} />
+      <meshStandardMaterial
+        ref={materialRef}
+        color="#1D3C73"
+        emissive="#68A9F2"
+        emissiveIntensity={0.5}
+        toneMapped={false}
+      />
+    </mesh>
   );
 }
 

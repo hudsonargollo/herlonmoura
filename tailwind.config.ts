@@ -5,33 +5,60 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: ["class"],
   theme: {
     extend: {
       // ============================================
-      // COLOR PALETTE
+      // COLOR PALETTE — mapped to CSS variables
       // ============================================
       colors: {
         // Primary Colors
-        "dark-elevated": "#0F172A",
+        "dark-elevated": "var(--color-dark-elevated)",
         "surgical-teal": {
-          DEFAULT: "#14B8A6",
-          dark: "#0D9488",
+          DEFAULT: "var(--color-surgical-teal)",
+          dark: "var(--color-surgical-teal-dark)",
         },
 
         // Supporting Colors
-        "neutral-light": "#F8FAFC",
-        "neutral-medium": "#94A3B8",
-        "neutral-dark": "#1E293B",
-        "success-green": "#10B981",
-        "warning-amber": "#F59E0B",
-        "error-red": "#EF4444",
+        "neutral-light": "var(--color-neutral-light)",
+        "neutral-medium": "var(--color-neutral-medium)",
+        "neutral-dark": "var(--color-neutral-dark)",
+        "success-green": "var(--color-success-green)",
+        "warning-amber": "var(--color-warning-amber)",
+        "error-red": "var(--color-error-red",
 
         // Status group (alias)
         status: {
-          green: "#10B981",
-          amber: "#F59E0B",
-          red: "#EF4444",
+          green: "var(--color-success-green)",
+          amber: "var(--color-warning-amber)",
+          red: "var(--color-error-red)",
         },
+
+        // ============================================
+        // SEMANTIC COLOR TOKENS
+        // ============================================
+        // Backgrounds
+        "bg-primary": "var(--color-bg-primary)",
+        "bg-secondary": "var(--color-bg-secondary)",
+        "bg-tertiary": "var(--color-bg-tertiary)",
+        "bg-card": "var(--color-bg-card)",
+        "bg-card-hover": "var(--color-bg-card-hover)",
+
+        // Text
+        "text-primary": "var(--color-text-primary)",
+        "text-secondary": "var(--color-text-secondary)",
+        "text-tertiary": "var(--color-text-tertiary)",
+        "text-inverse": "var(--color-text-inverse)",
+
+        // Borders
+        "border-default": "var(--color-border-default)",
+        "border-subtle": "var(--color-border-subtle)",
+        "border-strong": "var(--color-border-strong)",
+
+        // Surfaces
+        surface: "var(--color-surface)",
+        "surface-raised": "var(--color-surface-raised)",
+        "surface-overlay": "var(--color-surface-overlay)",
       },
 
       // ============================================
@@ -47,17 +74,17 @@ const config: Config = {
       // BACKGROUND COLORS
       // ============================================
       backgroundColor: {
-        glass: "rgba(15, 23, 42, 0.7)",
-        "glass-hover": "rgba(15, 23, 42, 0.85)",
-        "glass-overlay": "rgba(15, 23, 42, 0.4)",
+        glass: "var(--color-glass-surface)",
+        "glass-hover": "var(--color-glass-surface-hover)",
+        "glass-overlay": "var(--color-glass-overlay)",
       },
 
       // ============================================
       // BORDER COLORS
       // ============================================
       borderColor: {
-        glass: "rgba(20, 184, 166, 0.2)",
-        "glass-hover": "rgba(20, 184, 166, 0.4)",
+        glass: "var(--color-glass-border)",
+        "glass-hover": "var(--color-glass-border-hover)",
       },
 
       // ============================================
@@ -99,8 +126,6 @@ const config: Config = {
 
       // ============================================
       // RESPONSIVE BREAKPOINTS
-      // Spec tokens added alongside Tailwind defaults
-      // (sm/md/lg) so existing breakpoint usage keeps working.
       // ============================================
       screens: {
         mobile: "320px",
@@ -120,10 +145,10 @@ const config: Config = {
       // SHADOWS
       // ============================================
       boxShadow: {
-        glass: "0 10px 30px 0 rgba(0, 0, 0, 0.35)",
-        sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-        md: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-        lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+        glass: "var(--shadow-glass)",
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
       },
 
       // ============================================

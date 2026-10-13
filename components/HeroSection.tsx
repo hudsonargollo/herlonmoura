@@ -51,7 +51,7 @@ export function HeroSection({
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-extrabold tracking-tight text-primary sm:text-5xl lg:text-6xl">
               {headline ? (
                 <span>{headline}</span>
               ) : (
@@ -67,12 +67,12 @@ export function HeroSection({
             {logoSvg && <div className="mt-4 flex">{logoSvg}</div>}
 
             {/* Subtitle */}
-            <p className="mt-5 text-lg text-slate-300 sm:text-xl leading-relaxed max-w-2xl">
+            <p className="mt-5 text-lg text-secondary sm:text-xl leading-relaxed max-w-2xl">
               {subheadline}
             </p>
 
             {/* Key Pillars */}
-            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-xl text-sm text-slate-300">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-xl text-sm text-secondary">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal">
                   ✓
@@ -134,14 +134,14 @@ export function HeroSection({
             </div>
 
             {/* Quick Contact Micro-Proof */}
-            <div className="mt-8 flex items-center gap-6 border-t border-white/10 pt-6 text-xs text-slate-400">
+            <div className="mt-8 flex items-center gap-6 border-t border-default pt-6 text-xs text-tertiary">
               <div>
-                <span className="block font-semibold text-slate-200">Consultório em Salvador</span>
+                <span className="block font-semibold text-primary">Consultório em Salvador</span>
                 <span>R. Eng. Célso Tôrres, 654 - Graça</span>
               </div>
               <div className="h-8 w-px bg-white/10" />
               <div>
-                <span className="block font-semibold text-slate-200">Agendamento Ágil</span>
+                <span className="block font-semibold text-primary">Agendamento Ágil</span>
                 <span>WhatsApp: (71) 99915-9975</span>
               </div>
             </div>
@@ -176,14 +176,14 @@ export function HeroSection({
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute -left-6 bottom-16 z-20 hidden rounded-2xl border border-surgical-teal/30 bg-slate-900/90 p-4 shadow-xl backdrop-blur-md sm:flex items-center gap-3"
+                className="absolute -right-4 top-12 z-20 hidden rounded-2xl border border-emerald-500/30 bg-bg-card backdrop-blur-xl p-4 shadow-2xl lg:block"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surgical-teal/20 text-surgical-teal">
                   <Award className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-white">15+ Anos</div>
-                  <div className="text-xs text-slate-400">Prática Clínica & Cirúrgica</div>
+                  <div className="text-sm font-bold text-primary">15+ Anos</div>
+                  <div className="text-xs text-tertiary">Prática Clínica & Cirúrgica</div>
                 </div>
               </motion.div>
 
@@ -198,7 +198,7 @@ export function HeroSection({
                   <Sparkles className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">Laser & Espuma Densa</div>
+                  <div className="text-xs font-bold text-primary">Laser & Espuma Densa</div>
                   <div className="text-[11px] text-slate-400">Tecnologia Minimamente Invasiva</div>
                 </div>
               </motion.div>

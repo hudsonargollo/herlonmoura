@@ -12,7 +12,7 @@ describe('Card Component', () => {
     it('renders with standard variant by default', () => {
       render(<Card data-testid="card">Standard</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('bg-neutral-dark');
+      expect(card).toHaveClass('bg-surface-raised');
     });
 
     it('renders with glass variant', () => {

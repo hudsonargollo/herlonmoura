@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, MessageCircle, Phone, HeartPulse } from 'lucide-react';
 import { Logo } from './Logo';
+import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
   logo?: React.ReactNode;
@@ -30,12 +31,12 @@ export function Header({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-surgical-teal/15 bg-dark-elevated/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-default bg-surface/90 backdrop-blur-md">
       {/* Top microbar with phone/address */}
-      <div className="hidden border-b border-white/5 bg-slate-950/60 px-4 py-1.5 text-xs text-neutral-medium sm:block">
+      <div className="hidden border-b border-subtle bg-bg-secondary/60 px-4 py-1.5 text-xs text-secondary sm:block">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-slate-300">
+            <span className="flex items-center gap-1.5 text-secondary">
               <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               Atendimento em Salvador – Graça | Particular e Convênios
             </span>
@@ -75,7 +76,7 @@ export function Header({
                 <button
                   key={item.href}
                   onClick={onOpenCalculator}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-surgical-teal/10 px-3 py-1 text-sm font-semibold text-surgical-teal border border-surgical-teal/30 transition-all hover:bg-surgical-teal hover:text-slate-950"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-surgical-teal/10 px-3 py-1 text-sm font-semibold text-surgical-teal border border-surgical-teal/30 transition-all hover:bg-surgical-teal hover:text-text-inverse"
                 >
                   <HeartPulse className="h-3.5 w-3.5" />
                   <span>{item.label}</span>
@@ -86,7 +87,7 @@ export function Header({
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-slate-200 transition-colors hover:text-surgical-teal"
+                className="text-sm font-medium text-primary transition-colors hover:text-surgical-teal"
               >
                 {item.label}
               </Link>
@@ -94,8 +95,9 @@ export function Header({
           })}
         </nav>
 
-        {/* CTA Button */}
+        {/* Theme Toggle + CTA Button */}
         <div className="hidden sm:flex items-center gap-3">
+          <ThemeToggle />
           <a
             href={ctaButton.href}
             target="_blank"
@@ -110,16 +112,16 @@ export function Header({
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="rounded-lg p-2 text-slate-200 hover:bg-white/5 lg:hidden"
+          className="rounded-lg p-2 text-primary hover:bg-surface-raised lg:hidden"
           aria-label="Abrir menu"
         >
-          {isMenuOpen ? <X className="h-6 w-6 text-surgical-teal" /> : <Menu className="h-6 w-6 text-slate-200" />}
+          {isMenuOpen ? <X className="h-6 w-6 text-surgical-teal" /> : <Menu className="h-6 w-6 text-primary" />}
         </button>
       </div>
 
       {/* Mobile Drawer Menu */}
       {isMenuOpen && (
-        <div className="border-t border-white/10 bg-slate-900/98 px-6 py-6 backdrop-blur-xl lg:hidden">
+        <div className="border-t border-subtle bg-surface-overlay px-6 py-6 backdrop-blur-xl lg:hidden">
           <nav className="flex flex-col space-y-4">
             {navItems.map((item) => {
               if (item.isCalculator && onOpenCalculator) {
@@ -136,7 +138,7 @@ export function Header({
                       <HeartPulse className="h-4 w-4" />
                       {item.label}
                     </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider bg-surgical-teal text-slate-950 px-2 py-0.5 rounded">
+                    <span className="text-xs font-semibold uppercase tracking-wider bg-surgical-teal text-text-inverse px-2 py-0.5 rounded">
                       Abrir Teste
                     </span>
                   </button>
@@ -147,13 +149,13 @@ export function Header({
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-base font-medium text-slate-200 transition-colors hover:text-surgical-teal"
+                  className="text-base font-medium text-primary transition-colors hover:text-surgical-teal"
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <div className="pt-4 border-t border-white/10">
+            <div className="pt-4 border-t border-subtle">
               <a
                 href={ctaButton.href}
                 target="_blank"
@@ -164,7 +166,10 @@ export function Header({
                 <MessageCircle className="h-4 w-4" />
                 {ctaButton.label}
               </a>
-              <div className="mt-4 flex flex-col gap-2 text-xs text-slate-400">
+              <div className="mt-4 flex justify-center">
+                <ThemeToggle />
+              </div>
+              <div className="mt-4 flex flex-col gap-2 text-xs text-tertiary">
                 <p>📍 R. Eng. Célso Tôrres, 654 - Graça, Salvador</p>
                 <p>📞 (71) 98344-9737 / (71) 99915-9975</p>
               </div>

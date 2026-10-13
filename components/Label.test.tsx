@@ -15,7 +15,7 @@ describe('Label Component', () => {
       expect(label).toHaveClass('block');
       expect(label).toHaveClass('text-sm');
       expect(label).toHaveClass('font-medium');
-      expect(label).toHaveClass('text-neutral-light');
+      expect(label).toHaveClass('text-primary');
     });
   });
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Fira_Code } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,22 +41,37 @@ export const metadata: Metadata = {
   },
 };
 
+const themeInitScript = `
+(function() {
+  try {
+    var stored = localStorage.getItem('herlonmoura-theme');
+    var theme = (stored === 'light' || stored === 'dark') ? stored : 'light';
+    var root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+  } catch (e) {
+    document.documentElement.classList.add('light');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }): React.ReactNode {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className="light" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} bg-dark-elevated font-sans text-neutral-light`}
+        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} bg-surface font-sans text-primary`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

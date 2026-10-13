@@ -223,7 +223,7 @@ export function DVTRiskCalculator({
       className={`mx-auto w-full max-w-2xl rounded-3xl ${
         inModal
           ? 'bg-transparent p-1'
-          : 'border border-surgical-teal/25 bg-slate-900/95 p-5 sm:p-7 shadow-2xl backdrop-blur-xl'
+          : 'border border-surgical-teal/25 bg-bg-card p-5 sm:p-7 shadow-2xl backdrop-blur-xl'
       } ${className}`}
     >
       {/* Step Header & Progress (Steps 1 to 4) */}
@@ -233,7 +233,7 @@ export function DVTRiskCalculator({
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-xs font-bold text-surgical-teal">
               {state.currentStep}
             </span>
-            <span className="text-xs font-medium text-slate-300">
+            <span className="text-xs font-medium text-secondary">
               Etapa {state.currentStep} de {TOTAL_STEPS}
             </span>
           </div>
@@ -274,28 +274,28 @@ export function DVTRiskCalculator({
                 <HeartPulse className="h-6 w-6 animate-pulse" />
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-black text-white">
+              <h3 className="text-xl sm:text-2xl font-black text-primary">
                 Calculadora de Risco de TVP
               </h3>
-              <p className="mt-1.5 text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+              <p className="mt-1.5 text-xs sm:text-sm text-secondary max-w-md mx-auto leading-relaxed">
                 Responda a 4 perguntas rápidas para estimar sua probabilidade clínica de trombose venosa profunda.
               </p>
 
               <div className="mt-4 grid grid-cols-3 gap-2 text-left max-w-sm mx-auto">
-                <div className="rounded-xl border border-white/5 bg-slate-950/60 p-2 text-center">
+                <div className="rounded-xl border border-default bg-bg-tertiary/60 p-2 text-center">
                   <Clock className="mx-auto h-3.5 w-3.5 text-surgical-teal mb-0.5" />
-                  <span className="block text-[11px] font-semibold text-white">1 Minuto</span>
-                  <span className="block text-[9px] text-slate-400">Rápido & Ágil</span>
+                  <span className="block text-[11px] font-semibold text-primary">1 Minuto</span>
+                  <span className="block text-[9px] text-tertiary">Rápido & Ágil</span>
                 </div>
-                <div className="rounded-xl border border-white/5 bg-slate-950/60 p-2 text-center">
+                <div className="rounded-xl border border-default bg-bg-tertiary/60 p-2 text-center">
                   <Shield className="mx-auto h-3.5 w-3.5 text-emerald-400 mb-0.5" />
-                  <span className="block text-[11px] font-semibold text-white">100% Privado</span>
-                  <span className="block text-[9px] text-slate-400">Sem Cadastro</span>
+                  <span className="block text-[11px] font-semibold text-primary">100% Privado</span>
+                  <span className="block text-[9px] text-tertiary">Sem Cadastro</span>
                 </div>
-                <div className="rounded-xl border border-white/5 bg-slate-950/60 p-2 text-center">
+                <div className="rounded-xl border border-default bg-bg-tertiary/60 p-2 text-center">
                   <Activity className="mx-auto h-3.5 w-3.5 text-surgical-teal mb-0.5" />
-                  <span className="block text-[11px] font-semibold text-white">Score Clínico</span>
-                  <span className="block text-[9px] text-slate-400">Dr. Herlon Moura</span>
+                  <span className="block text-[11px] font-semibold text-primary">Score Clínico</span>
+                  <span className="block text-[9px] text-tertiary">Dr. Herlon Moura</span>
                 </div>
               </div>
 
@@ -322,10 +322,10 @@ export function DVTRiskCalculator({
               exit="exit"
               className="py-1"
             >
-              <h4 className="text-base sm:text-lg font-bold text-white text-center">
+              <h4 className="text-base sm:text-lg font-bold text-primary text-center">
                 Qual é a sua faixa etária?
               </h4>
-              <p className="mt-0.5 text-xs text-slate-400 text-center mb-4">
+              <p className="mt-0.5 text-xs text-tertiary text-center mb-4">
                 A idade influencia diretamente a elasticidade venosa e a coagulação.
               </p>
 
@@ -344,7 +344,7 @@ export function DVTRiskCalculator({
                       className={`flex flex-col items-start rounded-2xl border p-3 text-left transition-all active:scale-98 ${
                         isSelected
                           ? 'border-surgical-teal bg-surgical-teal/20 shadow-md shadow-surgical-teal/10'
-                          : 'border-white/10 bg-slate-950/60 hover:border-white/20 hover:bg-slate-950'
+                          : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
                       }`}
                     >
                       <div className="flex w-full items-center justify-between">
@@ -353,13 +353,13 @@ export function DVTRiskCalculator({
                         </span>
                         <span
                           className={`h-4 w-4 rounded-full border flex items-center justify-center ${
-                            isSelected ? 'border-surgical-teal bg-surgical-teal text-slate-950' : 'border-slate-600'
+                            isSelected ? 'border-surgical-teal bg-surgical-teal text-text-inverse' : 'border-default'
                           }`}
                         >
-                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-slate-950" />}
+                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-text-inverse" />}
                         </span>
                       </div>
-                      <span className="mt-0.5 text-[11px] text-slate-400">{item.desc}</span>
+                      <span className="mt-0.5 text-[11px] text-tertiary">{item.desc}</span>
                     </button>
                   );
                 })}
@@ -378,10 +378,10 @@ export function DVTRiskCalculator({
               exit="exit"
               className="py-1"
             >
-              <h4 className="text-base sm:text-lg font-bold text-white text-center">
+              <h4 className="text-base sm:text-lg font-bold text-primary text-center">
                 Qual é o seu nível recente de movimentação?
               </h4>
-              <p className="mt-0.5 text-xs text-slate-400 text-center mb-4">
+              <p className="mt-0.5 text-xs text-tertiary text-center mb-4">
                 A estase sanguínea prolongada nas pernas é um gatilho para coágulos.
               </p>
 
@@ -400,7 +400,7 @@ export function DVTRiskCalculator({
                       className={`flex flex-col items-start rounded-2xl border p-2.5 sm:p-3 text-left transition-all active:scale-98 ${
                         isSelected
                           ? 'border-surgical-teal bg-surgical-teal/20 shadow-md shadow-surgical-teal/10'
-                          : 'border-white/10 bg-slate-950/60 hover:border-white/20 hover:bg-slate-950'
+                          : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
                       }`}
                     >
                       <div className="flex w-full items-center justify-between">
@@ -409,13 +409,13 @@ export function DVTRiskCalculator({
                         </span>
                         <span
                           className={`h-3.5 w-3.5 rounded-full border flex items-center justify-center flex-shrink-0 ml-1 ${
-                            isSelected ? 'border-surgical-teal bg-surgical-teal text-slate-950' : 'border-slate-600'
+                            isSelected ? 'border-surgical-teal bg-surgical-teal text-text-inverse' : 'border-default'
                           }`}
                         >
-                          {isSelected && <span className="h-1 w-1 rounded-full bg-slate-950" />}
+                          {isSelected && <span className="h-1 w-1 rounded-full bg-text-inverse" />}
                         </span>
                       </div>
-                      <span className="mt-0.5 text-[10px] sm:text-[11px] text-slate-400">{item.desc}</span>
+                      <span className="mt-0.5 text-[10px] sm:text-[11px] text-tertiary">{item.desc}</span>
                     </button>
                   );
                 })}
@@ -434,10 +434,10 @@ export function DVTRiskCalculator({
               exit="exit"
               className="py-1"
             >
-              <h4 className="text-base sm:text-lg font-bold text-white text-center">
+              <h4 className="text-base sm:text-lg font-bold text-primary text-center">
                 Passou por cirurgia ou trauma recente?
               </h4>
-              <p className="mt-0.5 text-xs text-slate-400 text-center mb-4">
+              <p className="mt-0.5 text-xs text-tertiary text-center mb-4">
                 Procedimentos de médio/grande porte aumentam temporariamente a coagulação.
               </p>
 
@@ -447,12 +447,12 @@ export function DVTRiskCalculator({
                   className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-98 ${
                     state.responses.recentSurgery === true
                       ? 'border-surgical-teal bg-surgical-teal/25 shadow-lg shadow-surgical-teal/10'
-                      : 'border-white/10 bg-slate-950/60 hover:border-white/20 hover:bg-slate-950'
+                      : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
                   }`}
                 >
                   <Scissors className={`h-6 w-6 mb-1.5 ${state.responses.recentSurgery === true ? 'text-surgical-teal' : 'text-slate-400'}`} />
-                  <span className="text-sm font-bold text-white">Sim</span>
-                  <span className="mt-0.5 text-[10px] text-slate-400">Cirurgia/gesso nos últimos 3 meses</span>
+                  <span className="text-sm font-bold text-primary">Sim</span>
+                  <span className="mt-0.5 text-[10px] text-tertiary">Cirurgia/gesso nos últimos 3 meses</span>
                 </button>
 
                 <button
@@ -460,12 +460,12 @@ export function DVTRiskCalculator({
                   className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-98 ${
                     state.responses.recentSurgery === false
                       ? 'border-emerald-400 bg-emerald-500/25 shadow-lg shadow-emerald-500/10'
-                      : 'border-white/10 bg-slate-950/60 hover:border-white/20 hover:bg-slate-950'
+                      : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
                   }`}
                 >
                   <CheckCircle2 className={`h-6 w-6 mb-1.5 ${state.responses.recentSurgery === false ? 'text-emerald-400' : 'text-slate-400'}`} />
-                  <span className="text-sm font-bold text-white">Não</span>
-                  <span className="mt-0.5 text-[10px] text-slate-400">Sem cirurgias no período</span>
+                  <span className="text-sm font-bold text-primary">Não</span>
+                  <span className="mt-0.5 text-[10px] text-tertiary">Sem cirurgias no período</span>
                 </button>
               </div>
             </motion.div>
@@ -482,7 +482,7 @@ export function DVTRiskCalculator({
               exit="exit"
               className="py-1"
             >
-              <h4 className="text-base sm:text-lg font-bold text-white text-center">
+              <h4 className="text-base sm:text-lg font-bold text-primary text-center">
                 Apresenta algum destes fatores adicionais?
               </h4>
               <p className="mt-0.5 text-xs text-slate-400 text-center mb-3">
@@ -514,7 +514,7 @@ export function DVTRiskCalculator({
                       <span>{item.label}</span>
                       <span
                         className={`h-4 w-4 rounded flex items-center justify-center border ${
-                          isSelected ? 'border-surgical-teal bg-surgical-teal text-slate-950' : 'border-slate-600'
+                          isSelected ? 'border-surgical-teal bg-surgical-teal text-text-inverse' : 'border-default'
                         }`}
                       >
                         {isSelected && <span className="text-[10px] font-black">✓</span>}
@@ -540,15 +540,15 @@ export function DVTRiskCalculator({
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-surgical-teal/20 text-surgical-teal border border-surgical-teal/30">
                 <Mail className="h-6 w-6" />
               </div>
-              <h4 className="text-heading-3 font-heading font-bold text-neutral-light mb-1">
+              <h4 className="text-heading-3 font-heading font-bold text-primary mb-1">
                 Quase lá — nos contate
               </h4>
-              <p className="text-xs text-neutral-medium mb-5">
+              <p className="text-xs text-secondary mb-5">
                 Informe nome e e-mail para receber seu resultado e acompanhar sua saúde vascular.
               </p>
               <div className="space-y-3 max-w-sm mx-auto">
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary" />
                   <input
                     type="text"
                     value={state.name}
@@ -558,7 +558,7 @@ export function DVTRiskCalculator({
                   />
                 </div>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-medium" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary" />
                   <input
                     type="email"
                     value={state.email}
@@ -600,8 +600,8 @@ export function DVTRiskCalculator({
                   <span className="inline-block rounded-full bg-emerald-500/20 px-3 py-0.5 text-xs font-extrabold text-emerald-400 border border-emerald-500/30">
                     Baixo Risco Estimado (Score: {state.riskScore} pts)
                   </span>
-                  <h4 className="mt-1.5 text-lg font-bold text-white">Parâmetros Dentro da Normalidade</h4>
-                  <p className="mt-1 text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
+                  <h4 className="mt-1.5 text-lg font-bold text-primary">Parâmetros Dentro da Normalidade</h4>
+                  <p className="mt-1 text-xs text-secondary max-w-md mx-auto leading-relaxed">
                     Você não apresenta acúmulo de fatores críticos de TVP. Mantenha boa hidratação, caminhadas diárias e pausas ativas em viagens longas.
                   </p>
                 </div>
@@ -615,8 +615,8 @@ export function DVTRiskCalculator({
                   <span className="inline-block rounded-full bg-amber-500/20 px-3 py-0.5 text-xs font-extrabold text-amber-400 border border-amber-500/30">
                     Risco Moderado de TVP (Score: {state.riskScore} pts)
                   </span>
-                  <h4 className="mt-1.5 text-lg font-bold text-white">Atenção Preventiva Recomendada</h4>
-                  <p className="mt-1 text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
+                  <h4 className="mt-1.5 text-lg font-bold text-primary">Atenção Preventiva Recomendada</h4>
+                  <p className="mt-1 text-xs text-secondary max-w-md mx-auto leading-relaxed">
                     Fatores combinados indicam a importância de um Eco-Doppler Vascular preventivo no consultório do Dr. Herlon Moura para avaliar a circulação.
                   </p>
                 </div>
@@ -630,8 +630,8 @@ export function DVTRiskCalculator({
                   <span className="inline-block rounded-full bg-rose-500/20 px-3 py-0.5 text-xs font-extrabold text-rose-400 border border-rose-500/30">
                     {state.riskCategory === 'critical' ? 'Risco Crítico / Atenção' : 'Alto Risco Identificado'} (Score: {state.riskScore} pts)
                   </span>
-                  <h4 className="mt-1.5 text-lg font-bold text-white">Avaliação Vascular Prioritária</h4>
-                  <p className="mt-1 text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
+                  <h4 className="mt-1.5 text-lg font-bold text-primary">Avaliação Vascular Prioritária</h4>
+                  <p className="mt-1 text-xs text-secondary max-w-md mx-auto leading-relaxed">
                     Múltiplos fatores de risco vascular associados. Se sentir dor na panturrilha ou inchaço assimétrico, consulte um cirurgião vascular com prioridade.
                   </p>
                 </div>
@@ -675,7 +675,7 @@ export function DVTRiskCalculator({
         <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
           <button
             onClick={handleBack}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 transition-colors hover:text-white"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-tertiary transition-colors hover:text-surgical-teal"
           >
             <ChevronLeft className="h-4 w-4" />
             <span>Voltar</span>

@@ -11,7 +11,7 @@ export function Label({
   children,
   ...props
 }: LabelProps) {
-  const baseStyles = 'block text-sm font-medium text-neutral-light';
+  const baseStyles = 'block text-sm font-medium text-primary';
   const combinedClassName = `${baseStyles} ${className}`;
 
   return (
