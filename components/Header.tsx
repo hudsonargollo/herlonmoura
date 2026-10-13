@@ -17,6 +17,7 @@ export function Header({
   logo,
   navItems = [
     { label: 'Sobre', href: '/sobre' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Procedimentos', href: '/#procedimentos' },
     { label: 'Sintomas', href: '/#sintomas' },
     { label: 'Calculadora TVP', href: '/calculadora-dvt', isCalculator: true },
