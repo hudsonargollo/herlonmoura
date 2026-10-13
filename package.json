@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "blog:gen": "tsx lib/blog.ts"
   },
   "dependencies": {
     "@cloudflare/d1": "^1.4.1",

@@ -1,33 +1,17 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
-import { loadBlogPosts, type BlogPost } from '@/lib/blog';
-
-export const metadata = {
-  title: 'Blog – Dr. Herlon Moura | Angiologia e Cirurgia Vascular',
-  description:
-    'Artigos sobre saúde vascular, tratamentos de varizes, trombose, Doppler e prevenção. Orientações do Dr. Herlon Moura, angiologista em Salvador.',
-  keywords: [
-    'blog angiologista Salvador',
-    'varizes tratamento',
-    'trombose venosa',
-    'doppler vascular',
-    'cirurgia vascular Salvador',
-  ],
-  openGraph: {
-    title: 'Blog – Dr. Herlon Moura',
-    description: 'Artigos sobre saúde vascular e tratamentos modernos.',
-    type: 'website',
-  },
-};
+import type { BlogPost } from '@/lib/blog';
+import { BLOG_POSTS } from '@/lib/blog-data.generated';
 
 const CATEGORIES = ['Todas', 'Varizes', 'Trombose', 'Diagnóstico', 'Prevenção', 'Procedimentos', 'Tratamentos'];
 
-export default async function BlogPage({ searchParams }: { searchParams: Promise<{ categoria?: string; q?: string }> }) {
-  const { categoria, q } = await searchParams;
-  const allPosts = loadBlogPosts();
-  const category = categoria ?? 'Todas';
-  const query = q ?? '';
+export default function BlogPage() {
+  const [category, setCategory] = useState('Todas');
+  const [query, setQuery] = useState('');
+  const allPosts: BlogPost[] = BLOG_POSTS;
 
   const filtered = allPosts.filter((p: BlogPost) => {
     const matchCat = category !== 'Todas' ? p.category === category : true;
@@ -54,9 +38,10 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
           {/* Category filters */}
           <div className="mt-6 flex flex-wrap justify-center gap-2">
             {CATEGORIES.map((cat) => (
-              <Link
+              <button
                 key={cat}
-                href={`/blog${cat !== 'Todas' ? `?categoria=${cat.toLowerCase()}` : ''}`}
+                type="button"
+                onClick={() => setCategory(cat)}
                 className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
                   category === cat
                     ? 'border-surgical-teal/40 bg-surgical-teal/15 text-surgical-teal'
@@ -64,16 +49,17 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
                 }`}
               >
                 {cat}
-              </Link>
+              </button>
             ))}
           </div>
 
           {/* Search */}
           <div className="mt-5">
-            <form action="/blog" method="get" className="flex justify-center">
+            <form onSubmit={(e) => e.preventDefault()} className="flex justify-center">
               <input
                 name="q"
-                defaultValue={query}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Pesquisar artigos…"
                 className="w-full max-w-md rounded-xl border border-default bg-surface-raised px-4 py-2.5 text-sm text-primary placeholder:text-tertiary focus:border-surgical-teal/50 focus:outline-none"
               />
