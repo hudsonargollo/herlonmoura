@@ -203,8 +203,17 @@ export default function Home() {
       </section>
 
       {/* Procedures Section */}
-      <section id="procedimentos" className="py-16 sm:py-24 bg-bg-tertiary">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="procedimentos" className="relative py-16 sm:py-24 bg-bg-tertiary">
+        {/* Anatomical circulatory-system accent (BR variant), right side, faded */}
+        <Image
+          src="/images/brand/banner-segundasecao.jpg"
+          alt=""
+          fill
+          aria-hidden
+          sizes="100vw"
+          className="object-cover object-left opacity-[0.07]"
+        />
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-surgical-teal">
@@ -375,6 +384,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Mid-page banner: real consultório / ultrasound photo (BR variant) */}
+      <section className="relative h-[280px] sm:h-[360px] overflow-hidden">
+        <Image
+          src="/images/brand/banner-meiohome.jpg"
+          alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/20 to-transparent" />
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+          <div className="max-w-md text-white">
+            <span className="inline-block rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold backdrop-blur-md mb-3">
+              Diagnóstico de Precisão
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold drop-shadow-lg">
+              Eco-Doppler colorido no próprio consultório
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-white/90 drop-shadow">
+              Tecnologia de imagem para avaliar artérias e veias com precisão, sem filas e com explicação clara de cada resultado.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Interactive DVT Risk Calculator Anchor Section */}
       <section id="calculadora-tvp" className="py-20 sm:py-28 bg-gradient-to-b from-bg-tertiary via-surface to-bg-tertiary relative overflow-hidden">
         <div className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-500/10 blur-[130px]" />
@@ -414,13 +448,13 @@ export default function Home() {
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-full max-w-[380px]">
                 <div className="absolute inset-0 rounded-3xl bg-surgical-teal/20 blur-2xl" />
-                <div className="relative z-10 overflow-hidden rounded-3xl border border-default bg-surface-raised shadow-2xl p-2">
+                <div className="relative z-10 overflow-hidden rounded-3xl border border-default bg-surface-raised shadow-2xl">
                   <Image
-                    src="/images/dr-herlon-moura.png"
+                    src="/images/brand/banner-mobile.png"
                     alt="Dr. Herlon Moura dos Santos"
                     width={380}
                     height={520}
-                    className="h-auto w-full rounded-2xl object-cover"
+                    className="h-auto w-full object-cover"
                   />
                 </div>
               </div>
