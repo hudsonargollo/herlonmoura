@@ -1,18 +1,4 @@
----
-title: "Dr. Herlon Moura — Plataforma de Saúde Vascular"
-description: "Portal completo do Dr. Herlon Moura: angiologista e cirurgião vascular em Salvador, BA. Blog educativo, calculadora de risco TVP, agendamento WhatsApp, CRM dashboard."
-keywords:
-  - "angiologista Salvador"
-  - "cirurgião vascular Salvador"
-  - "varizes tratamento"
-  - "trombose venosa profunda"
-  - "doppler vascular"
-  - "plataforma saúde vascular"
-openGraph:
-  title: "Dr. Herlon Moura — Plataforma de Saúde Vascular"
-  description: "Portal completo do Dr. Herlon Moura: blog educativo, calculadora de risco TVP, agendamento WhatsApp, CRM com lead capture e aprovação de artigos."
-  type: website
----
+// metadata for plataforma page
 
 import { Header, Footer, HeroSection, Button, Container, Card, Grid } from '@/components';
 import { HeartPulse, Activity, ShieldCheck, Zap, MessageCircle, Phone, MapPin, Clock, ArrowRight, Sparkles, Waves, Award, CheckCircle2, Stethoscope } from 'lucide-react';
