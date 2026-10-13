@@ -42,10 +42,10 @@ does not. This is a build, sequenced in three phases below.
 
 ## Phase 1 — Make the scheduler live, embed it, connect bookings to CRM
 
-Outcome: a patient can pick a slot from the site; the booking lands in the
-CRM as an appointment.
+STATUS (2026-10-13): Origin side DONE and verified. Only the Cloudflare
+edge certificate remains — see "Blocker" below.
 
-1. Finish Cal.com first-run setup
+### 1. Finish Cal.com first-run setup — PENDING (needs you)
    - Complete `/auth/setup` on the self-hosted instance: admin account,
      timezone (America/Bahia), availability (consultório hours).
    - Create event type(s): "Consulta – Angiologia / Cirurgia Vascular"
@@ -54,19 +54,37 @@ CRM as an appointment.
    - Enable "Require additional notes" off; keep it short.
 
 2. Expose it publicly (the real blocker)
-   - Add an nginx vhost for `cal.herlonmoura.clubemkt.digital` →
-     `172.17.0.1:3400`, with TLS (Let's Encrypt via the existing cert flow).
-   - Confirm Cal.com serves over HTTPS on that host.
-   - (DNS already points at Cloudflare — only the origin + cert are missing.)
+   - DONE (origin): nginx vhost for `cal.herlonmoura.clubemkt.digital` →
+     Cal.com. Two host-level fixes applied:
+       * Cal.com now publishes `0.0.0.0:3400` (was `127.0.0.1:3400`,
+         unreachable from other containers) — docker-compose.yml updated.
+       * core_nginx (Swarm) config reloaded to include the cal vhost; it was
+         serving a stale copy. Vhost proxies to `172.17.0.1:3400` via the
+         docker bridge, matching every other service on this host.
+     Verified: `Host: cal.herlonmoura...` on the origin returns Cal.com
+     (307 → /auth/login → Setup page); all other sites still 200.
+   - BLOCKER (Cloudflare edge — needs you): the public HTTPS handshake fails
+     with "sslv3 alert handshake failure" and the host serves NO cert.
+     The DNS record resolves to Cloudflare (104.21.29.83 / 172.67.148.161)
+     but the hostname has no edge certificate / is not attached to a proxied
+     origin in the `clubemkt.digital` zone. My wrangler OAuth token only has
+     account/email scopes — no zone:edit — so I cannot fix this via API.
+     ACTION (Cloudflare dashboard for zone clubemkt.digital):
+       1. DNS → ensure `cal.herlonmoura` A record → VPS origin IP
+          (62.171.137.90), Proxy status = Proxied (orange cloud).
+       2. SSL/TLS → Edge Certificates → make sure Universal SSL covers it
+          (it should, for *.clubemkt.digital); if the cert is custom/limited,
+          the host won't get TLS until it's a normal proxied A record.
+       3. After it propagates, `https://cal.herlonmoura.clubemkt.digital/`
+          should load the Cal.com setup page.
+     Alternatively: give me a Cloudflare API token with Zone.DNS (Edit) for
+     clubemkt.digital and I'll create/fix the record myself.
 
-3. Embed on the site
-   - Add a "Agendar consulta" booking surface. Two supported modes:
-     a. Modal/embed: Cal.com embed snippet (react-cal-com / iframe) opened
-        from the hero CTA and the Contato section, OR
-     b. Dedicated `/agendar` route hosting the embed for a clean shareable URL.
-   - Recommendation: keep the existing "Agendar no WhatsApp" CTA AND add the
-     scheduler as a second path — some patients want instant booking, some
-     want to chat. Don't remove WhatsApp.
+3. Embed on the site — READY TO BUILD once the host is live (answer: BOTH)
+   - Modal: Cal.com embed opened from hero CTA + Contato section.
+   - Dedicated `/agendar` route hosting the embed (clean shareable URL).
+   - Keep the existing WhatsApp lead-capture CTA as the secondary path
+     (already shipped) — patients can book instantly OR chat.
 
 4. Bookings → CRM webhook
    - New Pages Function: `functions/api/crm/webhooks/calcom.ts`
