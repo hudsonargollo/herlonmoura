@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, X, MessageCircle, Phone, HeartPulse } from 'lucide-react';
 import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
+import { ContactModal } from './ContactModal';
 
 interface HeaderProps {
   logo?: React.ReactNode;
@@ -25,11 +26,12 @@ export function Header({
   ],
   ctaButton = {
     label: 'Agendar no WhatsApp',
-    href: 'https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta.',
+    href: 'https://wa.me/5571999159975',
   },
   onOpenCalculator,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-default bg-surface/90 backdrop-blur-md">
@@ -44,21 +46,20 @@ export function Header({
           </div>
           <div className="flex items-center gap-5">
             <a
-              href="tel:+5571983449737"
+              href="tel:+5571993449737"
               className="flex items-center gap-1.5 transition-colors hover:text-surgical-teal"
             >
               <Phone className="h-3.5 w-3.5 text-surgical-teal" />
               (71) 98344-9737
             </a>
-            <a
-              href="https://wa.me/5571999159975"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => setContactOpen(true)}
               className="flex items-center gap-1.5 font-medium text-emerald-400 transition-colors hover:text-emerald-300"
             >
               <MessageCircle className="h-3.5 w-3.5" />
               WhatsApp: (71) 99915-9975
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -103,15 +104,14 @@ export function Header({
         {/* Theme Toggle + CTA Button */}
         <div className="hidden sm:flex items-center gap-3">
           <ThemeToggle />
-          <a
-            href={ctaButton.href}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => setContactOpen(true)}
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all hover:bg-emerald-500 hover:shadow-emerald-700/40 active:scale-95"
           >
             <MessageCircle className="h-4 w-4" />
             <span>{ctaButton.label}</span>
-          </a>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -161,16 +161,17 @@ export function Header({
               );
             })}
             <div className="pt-4 border-t border-subtle">
-              <a
-                href={ctaButton.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-emerald-500"
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setContactOpen(true);
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-emerald-500"
               >
                 <MessageCircle className="h-4 w-4" />
                 {ctaButton.label}
-              </a>
+              </button>
               <div className="mt-4 flex justify-center">
                 <ThemeToggle />
               </div>
@@ -182,6 +183,12 @@ export function Header({
           </nav>
         </div>
       )}
+
+      <ContactModal
+        isOpen={contactOpen}
+        onClose={() => setContactOpen(false)}
+        context="Agendamento pelo site"
+      />
     </header>
   );
 }

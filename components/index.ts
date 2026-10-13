@@ -13,6 +13,7 @@ export { HeroSection } from './HeroSection';
 export { Logo } from './Logo';
 export { DVTRiskCalculator } from './DVTRiskCalculator';
 export { DVTModal } from './DVTModal';
+export { ContactModal } from './ContactModal';
 export { SocialProofTicker } from './SocialProofTicker';
 export { SymptomNavigator } from './SymptomNavigator';
 export { ArticleCard } from './ArticleCard';

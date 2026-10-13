@@ -10,6 +10,7 @@ import {
   Footer,
   DVTRiskCalculator,
   DVTModal,
+  ContactModal,
 } from '@/components';
 import {
   Activity,
@@ -29,6 +30,8 @@ import {
 
 export default function Home() {
   const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
+  const [contactContext, setContactContext] = useState<string | null>(null);
+  const openContact = (ctx: string) => setContactContext(ctx);
 
   const PROCEDURES = [
     {
@@ -120,6 +123,7 @@ export default function Home() {
         headline="Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador"
         subheadline="Angiologista é um médico especialista em diagnosticar e tratar doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua no sistema circulatório de braços, pernas, tronco e pescoço."
         onOpenCalculator={() => setIsCalculatorModalOpen(true)}
+        onBook={() => openContact('Agendar consulta')}
       />
 
       {/* Trust & Credibility Ticker Bar */}
@@ -226,15 +230,14 @@ export default function Home() {
                 Soluções vasculares modernas para eliminação de varizes, alívio de sintomas circulatórios e procedimentos de alta precisão.
               </p>
             </div>
-            <a
-              href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20gostaria%20de%20saber%20mais%20sobre%20os%20procedimentos."
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => openContact('Dúvidas sobre procedimentos')}
               className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-500 transition-colors flex-shrink-0"
             >
               <MessageCircle className="h-4 w-4" />
               Tirar Dúvidas no WhatsApp
-            </a>
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -266,17 +269,14 @@ export default function Home() {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-default">
-                    <a
-                      href={`https://wa.me/5571999159975?text=${encodeURIComponent(
-                        `Olá Dr. Herlon Moura, gostaria de agendar uma consulta sobre ${proc.title}.`
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => openContact(`Interesse em: ${proc.title}`)}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-surgical-teal hover:text-teal-300 transition-colors"
                     >
                       <span>Consultar disponibilidade</span>
                       <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
+                    </button>
                   </div>
                 </div>
               );
@@ -329,15 +329,14 @@ export default function Home() {
               </ul>
 
               <div className="mt-8 pt-6 border-t border-default">
-                <a
-                  href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20sinto%20dores/inchaço%20nas%20pernas%20e%20gostaria%20de%20uma%20avaliação."
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openContact('Avaliação: sintomas em braços e pernas')}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-surgical-teal/20 border border-surgical-teal/40 px-5 py-3 text-sm font-semibold text-surgical-teal hover:bg-surgical-teal hover:text-white transition-all"
                 >
                   <MessageCircle className="h-4 w-4" />
                   Agendar Exame das Pernas
-                </a>
+                </button>
               </div>
             </div>
 
@@ -369,15 +368,14 @@ export default function Home() {
               </ul>
 
               <div className="mt-8 pt-6 border-t border-default">
-                <a
-                  href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20gostaria%20de%20uma%20avaliação%20para%20sintomas%20vasculares."
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openContact('Avaliação: sintomas em tronco e pescoço')}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 px-5 py-3 text-sm font-semibold text-emerald-300 hover:bg-emerald-500 hover:text-white transition-all"
                 >
                   <MessageCircle className="h-4 w-4" />
                   FALE CONOSCO
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -498,15 +496,14 @@ export default function Home() {
               </div>
 
               <div className="pt-4">
-                <a
-                  href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20gostaria%20de%20agendar%20uma%20consulta."
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openContact('Agendar consulta')}
                   className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-950/40 hover:bg-emerald-500 transition-all"
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>Agendar Consulta com Dr. Herlon</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -530,23 +527,22 @@ export default function Home() {
               Nosso foco é o melhor atendimento pensando em seu bem estar. Atendimento humanizado com muito amor.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-              <a
-                href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta."
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => openContact('Agendar consulta')}
                 className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-emerald-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/50 hover:bg-emerald-500 transition-all"
               >
                 <MessageCircle className="h-5 w-5" />
-                <span>WhatsApp</span>
-              </a>
+                <span>Agendar pelo WhatsApp</span>
+              </button>
               <a
-                href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta."
+                href="https://wa.me/5571999159975"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-surgical-teal/40 bg-surgical-teal/10 px-6 py-3.5 text-sm font-semibold text-surgical-teal hover:bg-surgical-teal hover:text-slate-950 transition-all"
               >
                 <MessageCircle className="h-4 w-4" />
-                Fale no WhatsApp
+                Conversa direta
               </a>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-tertiary">
@@ -578,6 +574,13 @@ export default function Home() {
       <DVTModal
         isOpen={isCalculatorModalOpen}
         onClose={() => setIsCalculatorModalOpen(false)}
+      />
+
+      {/* WhatsApp lead-capture modal (name, email, convênio/particular) */}
+      <ContactModal
+        isOpen={contactContext !== null}
+        onClose={() => setContactContext(null)}
+        context={contactContext ?? undefined}
       />
     </main>
   );

@@ -11,6 +11,8 @@ interface HeroSectionProps {
   primaryCTA?: { label: string; href: string };
   secondaryCTA?: { label: string; href?: string };
   onOpenCalculator?: () => void;
+  /** When provided, the primary CTA opens the lead-capture flow instead of a raw link. */
+  onBook?: () => void;
   logoSvg?: React.ReactNode;
 }
 
@@ -26,6 +28,7 @@ export function HeroSection({
     href: '#calculadora-tvp',
   },
   onOpenCalculator,
+  onBook,
   logoSvg,
 }: HeroSectionProps) {
   return (
@@ -108,15 +111,26 @@ export function HeroSection({
 
             {/* CTAs */}
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <a
-                href={primaryCTA.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 rounded-xl bg-emerald-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/20 transition-all hover:bg-emerald-500 hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <MessageCircle className="h-5 w-5" />
-                <span>{primaryCTA.label}</span>
-              </a>
+              {onBook ? (
+                <button
+                  type="button"
+                  onClick={onBook}
+                  className="inline-flex items-center justify-center gap-3 rounded-xl bg-emerald-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/20 transition-all hover:bg-emerald-500 hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  <span>{primaryCTA.label}</span>
+                </button>
+              ) : (
+                <a
+                  href={primaryCTA.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 rounded-xl bg-emerald-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/20 transition-all hover:bg-emerald-500 hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  <span>{primaryCTA.label}</span>
+                </a>
+              )}
 
               {onOpenCalculator ? (
                 <button
