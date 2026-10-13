@@ -63,10 +63,14 @@ export function Header({
         </div>
       </div>
 
-      <div className="container mx-auto flex items-center justify-between px-4 py-3 sm:px-6">
+      <div className="container mx-auto flex items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:py-5">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0 transition-opacity hover:opacity-95" aria-label="Dr. Herlon Moura - Início">
-          {logo || <Logo size="md" />}
+        <Link
+          href="/"
+          className="flex flex-shrink-0 items-center py-1 transition-opacity hover:opacity-95"
+          aria-label="Dr. Herlon Moura - Início"
+        >
+          {logo || <Logo size="lg" />}
         </Link>
 
         {/* Desktop Navigation */}

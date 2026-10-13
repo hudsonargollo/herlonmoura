@@ -126,10 +126,10 @@
    ============================================ */
 :root.light {
   --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f8fafc;
-  --color-bg-tertiary: #f1f5f9;
-  --color-bg-card: rgba(255, 255, 255, 0.85);
-  --color-bg-card-hover: rgba(255, 255, 255, 0.95);
+  --color-bg-secondary: #f1f5f9;
+  --color-bg-tertiary: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #f8fafc;
 
   --color-text-primary: #0f172a;
   --color-text-secondary: #475569;

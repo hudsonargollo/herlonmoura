@@ -30,7 +30,7 @@ export function HeroSection({
   logoSvg,
 }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-dark-elevated to-slate-900 py-12 lg:py-20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-bg-primary via-surface to-bg-tertiary py-12 lg:py-20">
       {/* Background glow effects */}
       <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-surgical-teal/10 blur-[120px]" />
       <div className="pointer-events-none absolute top-1/3 -right-40 -z-10 h-[400px] w-[500px] rounded-full bg-emerald-500/10 blur-[100px]" />
@@ -160,7 +160,7 @@ export function HeroSection({
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-surgical-teal/30 via-emerald-500/20 to-transparent blur-2xl" />
 
               {/* Doctor Cutout Image */}
-              <div className="relative z-10 flex justify-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-slate-800/80 to-slate-950/90 shadow-2xl backdrop-blur-xl pt-6 px-4">
+              <div className="relative z-10 flex justify-center overflow-hidden rounded-3xl border border-default bg-gradient-to-b from-surface-raised to-surface shadow-2xl backdrop-blur-xl pt-6 px-4">
                 <Image
                   src="/images/dr-herlon-moura.png"
                   alt="Dr. Herlon Moura - Angiologista e Cirurgião Vascular"
@@ -176,7 +176,7 @@ export function HeroSection({
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute -right-4 top-12 z-20 hidden rounded-2xl border border-emerald-500/30 bg-bg-card backdrop-blur-xl p-4 shadow-2xl lg:block"
+                className="absolute -right-4 top-12 z-20 hidden rounded-2xl border border-emerald-500/30 bg-surface backdrop-blur-xl p-4 shadow-2xl lg:block"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surgical-teal/20 text-surgical-teal">
                   <Award className="h-6 w-6" />
@@ -192,14 +192,14 @@ export function HeroSection({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="absolute -right-4 top-12 z-20 hidden rounded-2xl border border-emerald-500/30 bg-slate-900/90 p-3.5 shadow-xl backdrop-blur-md sm:flex items-center gap-3"
+                className="absolute -right-4 top-12 z-20 hidden rounded-2xl border border-emerald-500/30 bg-surface p-3.5 shadow-xl backdrop-blur-md sm:flex items-center gap-3"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
                   <Sparkles className="h-5 w-5" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-primary">Laser & Espuma Densa</div>
-                  <div className="text-[11px] text-slate-400">Tecnologia Minimamente Invasiva</div>
+                  <div className="text-[11px] text-tertiary">Tecnologia Minimamente Invasiva</div>
                 </div>
               </motion.div>
             </div>

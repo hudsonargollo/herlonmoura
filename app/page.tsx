@@ -241,7 +241,7 @@ export default function Home() {
                       <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-surgical-teal/15 text-surgical-teal transition-transform group-hover:scale-105">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <span className="rounded-full bg-slate-800/80 px-2.5 py-1 text-[11px] font-semibold text-teal-300 border border-teal-500/20">
+                      <span className="rounded-full bg-surgical-teal/10 px-2.5 py-1 text-[11px] font-semibold text-surgical-teal border border-surgical-teal/25">
                         {proc.tag}
                       </span>
                     </div>
@@ -293,14 +293,14 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Braços e Pernas — matches WP exactly */}
-            <div className="rounded-3xl border border-surgical-teal/30 bg-bg-card p-8 shadow-xl">
+            <div className="rounded-3xl border border-surgical-teal/30 bg-surface-raised p-8 shadow-xl shadow-surgical-teal/5">
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surgical-teal/20 text-surgical-teal">
                   <Activity className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Braços e Pernas</h3>
-                  <p className="text-xs text-slate-400">Sintomas em membros superiores e inferiores</p>
+                  <h3 className="text-xl font-bold text-primary">Braços e Pernas</h3>
+                  <p className="text-xs text-tertiary">Sintomas em membros superiores e inferiores</p>
                 </div>
               </div>
 
@@ -310,7 +310,7 @@ export default function Home() {
 
               <ul className="space-y-3">
                 {LEG_SYMPTOMS.map((symp) => (
-                  <li key={symp} className="flex items-start gap-3 text-sm text-slate-200">
+                  <li key={symp} className="flex items-start gap-3 text-sm text-secondary">
                     <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal text-xs mt-0.5">
                       ✓
                     </span>
@@ -319,12 +319,12 @@ export default function Home() {
                 ))}
               </ul>
 
-              <div className="mt-8 pt-6 border-t border-slate-800">
+              <div className="mt-8 pt-6 border-t border-default">
                 <a
                   href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20sinto%20dores/inchaço%20nas%20pernas%20e%20gostaria%20de%20uma%20avaliação."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-surgical-teal/20 border border-surgical-teal/40 px-5 py-3 text-sm font-semibold text-surgical-teal hover:bg-surgical-teal hover:text-slate-950 transition-all"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-surgical-teal/20 border border-surgical-teal/40 px-5 py-3 text-sm font-semibold text-surgical-teal hover:bg-surgical-teal hover:text-white transition-all"
                 >
                   <MessageCircle className="h-4 w-4" />
                   Agendar Exame das Pernas
@@ -333,14 +333,14 @@ export default function Home() {
             </div>
 
             {/* Tronco e Pescoço — matches WP exactly */}
-            <div className="rounded-3xl border border-emerald-500/30 bg-slate-900/80 p-8 shadow-xl">
+            <div className="rounded-3xl border border-emerald-500/30 bg-surface-raised p-8 shadow-xl shadow-emerald-500/5">
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
                   <HeartPulse className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Tronco e Pescoço</h3>
-                  <p className="text-xs text-slate-400">Sintomas vasculares centrais</p>
+                  <h3 className="text-xl font-bold text-primary">Tronco e Pescoço</h3>
+                  <p className="text-xs text-tertiary">Sintomas vasculares centrais</p>
                 </div>
               </div>
 
@@ -350,7 +350,7 @@ export default function Home() {
 
               <ul className="space-y-3">
                 {NECK_SYMPTOMS.map((symp) => (
-                  <li key={symp} className="flex items-start gap-3 text-sm text-slate-200">
+                  <li key={symp} className="flex items-start gap-3 text-sm text-secondary">
                     <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-xs mt-0.5">
                       ✓
                     </span>
@@ -359,12 +359,12 @@ export default function Home() {
                 ))}
               </ul>
 
-              <div className="mt-8 pt-6 border-t border-slate-800">
+              <div className="mt-8 pt-6 border-t border-default">
                 <a
                   href="https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon,%20gostaria%20de%20uma%20avaliação%20para%20sintomas%20vasculares."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 px-5 py-3 text-sm font-semibold text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 transition-all"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 px-5 py-3 text-sm font-semibold text-emerald-300 hover:bg-emerald-500 hover:text-white transition-all"
                 >
                   <MessageCircle className="h-4 w-4" />
                   FALE CONOSCO
@@ -437,29 +437,29 @@ export default function Home() {
               <p className="text-base text-teal-300 font-medium">
                 Cirurgião Vascular e Endovascular – CRM/BA 23904 • RQE Nº 19791 / RQE Nº 22436
               </p>
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-secondary leading-relaxed">
                 Com graduação médica pela conceituada <strong>Universidade Federal da Bahia (UFBA)</strong> e especializações em Cirurgia Vascular e Endovascular, ofereço um atendimento acolhedor, ético e personalizado em Salvador.
               </p>
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-secondary leading-relaxed">
                 Combinamos a mais alta tecnologia de imagem diagnóstica (Eco-Doppler colorido) e procedimentos minimamente invasivos a laser com a escuta clínica atenta, cuidando do paciente de forma integral.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-default">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-surgical-teal flex-shrink-0" />
-                  <span className="text-sm text-slate-200">Membro da SBACV</span>
+                  <span className="text-sm text-secondary">Membro da SBACV</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-surgical-teal flex-shrink-0" />
-                  <span className="text-sm text-slate-200">Especialista em Cirurgia Endovascular</span>
+                  <span className="text-sm text-secondary">Especialista em Cirurgia Endovascular</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-surgical-teal flex-shrink-0" />
-                  <span className="text-sm text-slate-200">Laser e Espuma Densa Ecoguiada</span>
+                  <span className="text-sm text-secondary">Laser e Espuma Densa Ecoguiada</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-surgical-teal flex-shrink-0" />
-                  <span className="text-sm text-slate-200">Acessos para Quimioterapia e Hemodiálise</span>
+                  <span className="text-sm text-secondary">Acessos para Quimioterapia e Hemodiálise</span>
                 </div>
               </div>
 

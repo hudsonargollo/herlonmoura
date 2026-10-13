@@ -35,7 +35,7 @@ export function Logo({
           width={width}
           height={height}
           priority
-          className="h-auto w-auto max-h-[60px] object-contain drop-shadow-[0_2px_10px_rgba(20,184,166,0.15)]"
+          className="h-auto w-auto max-h-[72px] object-contain drop-shadow-[0_2px_10px_rgba(20,184,166,0.15)]"
         />
       </div>
     );
