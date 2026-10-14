@@ -19,10 +19,10 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
   const navItems = [
-    { label: 'Sobre', href: '/sobre' },
-    { label: 'Condições', href: '/condicoes' },
-    { label: 'Serviços', href: '/servicos' },
+    { label: 'Dr. Herlon Moura', href: '/sobre' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Procedimentos', href: '/consultas-e-procedimentos' },
+    { label: 'Sintomas', href: '/#sintomas' },
     { label: 'Contato', href: '/contato' },
   ];
 

@@ -62,6 +62,24 @@ export function DVTRiskCalculator({
 
   const TOTAL_STEPS = 5; // Step 0 (Intro), 1 (Age), 2 (Mobility), 3 (Surgery), 4 (Factors), 5 (Contact), 6 (Result)
   const CONTACT_STEP = 5; // New step for email/name
+  const AUTO_ADVANCE_STEPS = [1, 2, 3]; // Single-choice steps advance on tap
+
+  // Timer for auto-advance so the user sees their selection before the slide changes
+  const advanceTimer = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
+    };
+  }, []);
+
+  const scheduleAdvance = (delay = 300) => {
+    if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
+    advanceTimer.current = window.setTimeout(() => {
+      setState((prev) => ({ ...prev, currentStep: prev.currentStep + 1, direction: 1 }));
+      advanceTimer.current = null;
+    }, delay);
+  };
 
   const computeScore = (responses: DVTCalculatorState['responses']) => {
     let score = 0;
@@ -146,6 +164,7 @@ export function DVTRiskCalculator({
       ...prev,
       responses: { ...prev.responses, ageRange: val },
     }));
+    scheduleAdvance();
   };
 
   const selectMobility = (val: string) => {
@@ -153,6 +172,7 @@ export function DVTRiskCalculator({
       ...prev,
       responses: { ...prev.responses, mobility: val },
     }));
+    scheduleAdvance();
   };
 
   const selectSurgery = (val: boolean) => {
@@ -160,6 +180,7 @@ export function DVTRiskCalculator({
       ...prev,
       responses: { ...prev.responses, recentSurgery: val },
     }));
+    scheduleAdvance();
   };
 
   const toggleFactor = (val: string) => {
@@ -220,15 +241,13 @@ export function DVTRiskCalculator({
 
   return (
     <div
-      className={`mx-auto w-full max-w-2xl rounded-3xl ${
-        inModal
-          ? 'bg-transparent p-1'
-          : 'border border-surgical-teal/25 bg-bg-card p-5 sm:p-7 shadow-2xl backdrop-blur-xl'
+      className={`relative mx-auto w-full max-w-2xl ${
+        inModal ? 'bg-transparent p-1' : 'glass glass-strong rounded-lg p-5 sm:p-7'
       } ${className}`}
     >
       {/* Step Header & Progress (Steps 1 to 4) */}
       {state.currentStep > 0 && state.currentStep <= TOTAL_STEPS && (
-        <div className="mb-4 flex items-center justify-between border-b border-white/5 pb-3">
+        <div className="relative z-10 mb-4 flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--glass-border)' }}>
           <div className="flex items-center gap-2">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-xs font-bold text-surgical-teal">
               {state.currentStep}
@@ -257,7 +276,7 @@ export function DVTRiskCalculator({
       )}
 
       {/* Dynamic Step Content Area with No-Scroll Bounds */}
-      <div className="relative min-h-[300px] flex flex-col justify-center">
+      <div className="relative z-10 min-h-[300px] flex flex-col justify-center">
         <AnimatePresence mode="wait" custom={state.direction}>
           {/* STEP 0: INTRO */}
           {state.currentStep === 0 && (
@@ -675,7 +694,7 @@ export function DVTRiskCalculator({
 
       {/* Navigation Footer (Steps 1 to 6) */}
       {state.currentStep > 0 && state.currentStep <= TOTAL_STEPS && (
-        <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
+        <div className="relative z-10 mt-4 flex items-center justify-between border-t pt-3" style={{ borderColor: 'var(--glass-border)' }}>
           <button
             onClick={handleBack}
             className="inline-flex items-center gap-1 text-xs font-semibold text-tertiary transition-colors hover:text-surgical-teal"
@@ -684,14 +703,21 @@ export function DVTRiskCalculator({
             <span>Voltar</span>
           </button>
 
-          <button
-            onClick={handleNext}
-            disabled={!isStepValid()}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-surgical-teal px-5 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-surgical-teal-dark hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <span>{state.currentStep === TOTAL_STEPS ? 'Ver Resultado' : state.currentStep === CONTACT_STEP ? 'Avançar' : 'Próxima'}</span>
-            <ChevronRight className="h-4 w-4" />
-          </button>
+          {AUTO_ADVANCE_STEPS.includes(state.currentStep) ? (
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-tertiary">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-surgical-teal" />
+              Avança automaticamente
+            </span>
+          ) : (
+            <button
+              onClick={handleNext}
+              disabled={!isStepValid()}
+              className="btn-edge btn-edge-primary btn-edge-sm"
+            >
+              <span>{state.currentStep === TOTAL_STEPS ? 'Ver Resultado' : state.currentStep === CONTACT_STEP ? 'Avançar' : 'Próxima'}</span>
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          )}
         </div>
       )}
     </div>

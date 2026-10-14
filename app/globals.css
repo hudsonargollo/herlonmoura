@@ -857,3 +857,520 @@ img {
   pointer-events: none;
   z-index: 1;
 }
+
+/* ============================================
+   CLINIQ ICON FONTS
+   The original herlonmoura.com.br (cliniq theme) icon fonts, vendored
+   locally so the procedure glyphs match the source site exactly.
+   Glyph codepoints are mapped in components/CliniqIcon.tsx.
+   ============================================ */
+@font-face {
+  font-family: "CliniqDentistry";
+  src: url("/fonts/cliniq/Dentistry.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "CliniqHealth";
+  src: url("/fonts/cliniq/Health.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "CliniqMedic";
+  src: url("/fonts/cliniq/Medic.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "CliniqNursing";
+  src: url("/fonts/cliniq/Nursing.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "CliniqOrthopedics";
+  src: url("/fonts/cliniq/Orthopedics.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "CliniqRemixHealth";
+  src: url("/fonts/cliniq/RemixIconsHealth.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.cliniq-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  speak: never;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   GLASS v2 — high-contrast, physically-plausible, light + dark
+   Modelled on real frosted glass: a translucent tinted pane, a crisp
+   1px refractive edge, a specular highlight along the lit (top) edge,
+   and a layered shadow that separates it from the page.
+   ============================================ */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.38);
+  --glass-border: rgba(10, 37, 64, 0.10);
+  --glass-border-strong: rgba(10, 37, 64, 0.17);
+  --glass-highlight: rgba(255, 255, 255, 0.95);
+  --glass-inner-shadow: rgba(10, 37, 64, 0.06);
+  --glass-shadow:
+    0 1px 1px rgba(10, 37, 64, 0.04),
+    0 8px 20px -8px rgba(10, 37, 64, 0.16),
+    0 28px 60px -28px rgba(10, 37, 64, 0.24);
+  --glass-shadow-lg:
+    0 1px 1px rgba(10, 37, 64, 0.05),
+    0 14px 32px -10px rgba(10, 37, 64, 0.20),
+    0 44px 90px -36px rgba(10, 37, 64, 0.30);
+  --glass-blur: 20px;
+  --glass-saturate: 1.7;
+}
+
+:root.dark {
+  --glass-bg: rgba(26, 36, 47, 0.55);
+  --glass-bg-strong: rgba(26, 36, 47, 0.78);
+  --glass-bg-subtle: rgba(26, 36, 47, 0.34);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-border-strong: rgba(255, 255, 255, 0.18);
+  --glass-highlight: rgba(255, 255, 255, 0.22);
+  --glass-inner-shadow: rgba(0, 0, 0, 0.30);
+  --glass-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.30),
+    0 8px 20px -8px rgba(0, 0, 0, 0.45),
+    0 28px 60px -28px rgba(0, 0, 0, 0.60);
+  --glass-shadow-lg:
+    0 1px 1px rgba(0, 0, 0, 0.35),
+    0 14px 32px -10px rgba(0, 0, 0, 0.50),
+    0 44px 90px -36px rgba(0, 0, 0, 0.70);
+}
+
+/* Base glass pane. Compose with a radius utility. */
+.glass {
+  position: relative;
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+  isolation: isolate;
+}
+
+/* Specular highlight along the top edge — the single detail that reads
+   as "glass" rather than "grey box". */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    to bottom,
+    var(--glass-highlight) 0%,
+    transparent 28%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glass:hover {
+  border-color: var(--glass-border-strong);
+}
+
+/* Heavier variant for panels that carry a lot of text. */
+.glass-strong {
+  background-color: var(--glass-bg-strong);
+}
+
+/* Small selectable tiles (calculator options, chips). */
+.glass-tile {
+  background-color: var(--glass-bg-subtle);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 1px 2px var(--glass-inner-shadow);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.glass-tile:hover {
+  background-color: var(--glass-bg);
+  border-color: var(--glass-border-strong);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 6px 16px -6px var(--glass-inner-shadow);
+}
+
+/* ============================================
+   GLOW EFFECTS — animated, for icons and accents
+   All motion is disabled under prefers-reduced-motion (handled globally
+   further up this file).
+   ============================================ */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes glow-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.85);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes icon-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes sheen-sweep {
+  0% {
+    transform: translateX(-120%) rotate(8deg);
+  }
+  100% {
+    transform: translateX(220%) rotate(8deg);
+  }
+}
+
+@keyframes border-trace {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3.2s ease-in-out infinite;
+}
+
+.glow-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid currentColor;
+  animation: glow-ring 2.8s ease-out infinite;
+  pointer-events: none;
+}
+
+.icon-float {
+  animation: icon-float 4s ease-in-out infinite;
+}
+
+/* Sweeping light across a surface on hover. */
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%) rotate(8deg);
+  pointer-events: none;
+}
+.sheen:hover::after {
+  animation: sheen-sweep 0.9s ease-out;
+}
+
+/* ============================================
+   BUTTONS v2 — angular, high-contrast, deliberate
+   Squared corners with a notched bottom-right corner, uppercase
+   letterspaced labels, a hard offset shadow and a decisive fill sweep.
+   ============================================ */
+.btn-edge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%
+  );
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* Fill sweep that rises from the bottom on hover. */
+.btn-edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateY(101%);
+  transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-edge:hover::before {
+  transform: translateY(0);
+}
+
+.btn-edge:active {
+  transform: translateY(1px);
+}
+
+.btn-edge:disabled,
+.btn-edge[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-edge:disabled::before,
+.btn-edge[aria-disabled="true"]::before {
+  transform: translateY(101%);
+}
+
+/* Primary — navy block with a gold sweep and hard offset shadow. */
+.btn-edge-primary {
+  background-color: var(--s-color-action-primary);
+  color: #ffffff;
+  box-shadow: 4px 4px 0 0 color-mix(in srgb, var(--s-color-action-gold) 55%, transparent);
+}
+.btn-edge-primary::before {
+  background-color: var(--s-color-action-gold);
+}
+.btn-edge-primary:hover {
+  color: var(--g-color-base-primary);
+  box-shadow: 6px 6px 0 0 color-mix(in srgb, var(--s-color-action-gold) 75%, transparent);
+  transform: translate(-2px, -2px);
+}
+
+/* Gold — inverted emphasis, for secondary placement. */
+.btn-edge-gold {
+  background-color: var(--s-color-action-gold);
+  color: var(--g-color-base-primary);
+  box-shadow: 4px 4px 0 0 color-mix(in srgb, var(--s-color-action-primary) 45%, transparent);
+}
+.btn-edge-gold::before {
+  background-color: var(--s-color-action-primary);
+}
+.btn-edge-gold:hover {
+  color: #ffffff;
+  box-shadow: 6px 6px 0 0 color-mix(in srgb, var(--s-color-action-primary) 65%, transparent);
+  transform: translate(-2px, -2px);
+}
+
+/* Outline — bordered, fills solid on hover. */
+.btn-edge-outline {
+  background-color: transparent;
+  color: var(--s-color-action-primary);
+  border-color: var(--s-color-action-primary);
+}
+.btn-edge-outline::before {
+  background-color: var(--s-color-action-primary);
+}
+.btn-edge-outline:hover {
+  color: #ffffff;
+  box-shadow: 4px 4px 0 0 color-mix(in srgb, var(--s-color-action-gold) 50%, transparent);
+  transform: translate(-2px, -2px);
+}
+
+/* Ghost — quiet tertiary action. */
+.btn-edge-ghost {
+  background-color: transparent;
+  color: var(--s-color-content-muted);
+  border-color: var(--glass-border-strong);
+  box-shadow: none;
+}
+.btn-edge-ghost::before {
+  background-color: color-mix(in srgb, var(--s-color-action-primary) 12%, transparent);
+}
+.btn-edge-ghost:hover {
+  color: var(--s-color-action-primary);
+  border-color: var(--s-color-action-primary);
+}
+
+/* WhatsApp — the one place a brand green is justified. */
+.btn-edge-whatsapp {
+  background-color: #128c4a;
+  color: #ffffff;
+  box-shadow: 4px 4px 0 0 color-mix(in srgb, #25d366 55%, transparent);
+}
+.btn-edge-whatsapp::before {
+  background-color: #25d366;
+}
+.btn-edge-whatsapp:hover {
+  color: #06301a;
+  box-shadow: 6px 6px 0 0 color-mix(in srgb, #25d366 80%, transparent);
+  transform: translate(-2px, -2px);
+}
+
+/* Compact size for in-card actions. */
+.btn-edge-sm {
+  padding: 0.6rem 1rem;
+  font-size: 0.7rem;
+  gap: 0.45rem;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    0 100%
+  );
+}
+
+/* Full-width variant. */
+.btn-edge-block {
+  width: 100%;
+}
+
+/* ============================================
+   CARD v2 — edgy glass panel with a traced accent edge
+   ============================================ */
+.card-edge {
+  position: relative;
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%
+  );
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card-edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to bottom,
+    var(--glass-highlight) 0%,
+    transparent 22%
+  );
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Corner accent that draws on hover. */
+.card-edge::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 48%,
+    color-mix(in srgb, var(--s-color-action-gold) 70%, transparent) 50%,
+    color-mix(in srgb, var(--s-color-action-gold) 70%, transparent) 100%
+  );
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.card-edge:hover {
+  transform: translateY(-3px);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+.card-edge:hover::after {
+  opacity: 1;
+}
+
+.card-edge > * {
+  position: relative;
+  z-index: 2;
+}
+

@@ -216,14 +216,39 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
     const statusHistory = [{ status, timestamp: now, note: "lead created" }];
 
+    // `leads.visitor_id` has a FK to `visitors(id)` and the deployed D1 has
+    // foreign_keys=ON. The site's analytics sends an anonymous localStorage id
+    // that has no row yet, so ensure the visitor exists before the lead insert
+    // — otherwise every submission fails with a FK constraint error.
+    if (body.visitor_id) {
+      await db
+        .prepare(
+          `INSERT INTO visitors (id, email, name, first_seen, last_seen, total_visits)
+           VALUES (?, ?, ?, ?, ?, 1)
+           ON CONFLICT(id) DO UPDATE SET
+             last_seen = excluded.last_seen,
+             total_visits = total_visits + 1,
+             email = COALESCE(visitors.email, excluded.email),
+             name = COALESCE(visitors.name, excluded.name)`
+        )
+        .bind(
+          body.visitor_id,
+          body.email ?? null,
+          body.name ?? null,
+          now,
+          now
+        )
+        .run();
+    }
+
     await db
       .prepare(
         `INSERT INTO leads (
            id, name, whatsapp, email, visitor_id, source, source_detail,
            status, score, tags, notes, next_action, status_history, status_changed_at,
            utm_source, utm_medium, utm_campaign, utm_term, utm_content, landing_page,
-           created_at, updated_at
-         ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+           interest, created_at, updated_at
+         ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
       )
       .bind(
         id,
@@ -246,6 +271,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         body.utm_term ?? null,
         body.utm_content ?? null,
         body.landing_page ?? body.url ?? null,
+        body.interest ?? null,
         now,
         now
       )

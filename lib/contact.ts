@@ -18,17 +18,21 @@ export type InsuranceChoice = 'particular' | 'convenio';
 export interface ContactLead {
   name: string;
   email: string;
+  whatsapp?: string;
   insurance: InsuranceChoice;
   insuranceName?: string;
+  /** What the visitor is specifically interested in (procedure, section). */
+  interest?: string;
+  /** Coarse origin: which section/CTA produced the lead. */
+  sourceSection?: string;
 }
 
 /**
  * Build a prefilled WhatsApp (wa.me) deep link that carries the lead's details.
  *
- * The message format starts with "Agendar consulta." followed by the lead's
- * name, email, and insurance type. It ends with "gostaria de agendar uma
- * consulta..." — keeping it concise and action-oriented per user preference
- * (no "Gostaria de falar com a secretaria" preamble).
+ * The message opens with the lead's stated interest when there is one, so the
+ * secretary sees what the person wants before anything else. Name, e-mail and
+ * insurance follow, then the booking line. Concise and action-oriented.
  */
 export function buildWhatsappLink(
   lead: ContactLead,
@@ -36,16 +40,28 @@ export function buildWhatsappLink(
   leadId?: string
 ): string {
   const lines: string[] = [];
+
+  if (lead.interest) {
+    lines.push(`Interesse: ${lead.interest}`);
+    lines.push('');
+  }
+
   lines.push('Agendar consulta.');
   lines.push(`Nome: ${lead.name}`);
   lines.push(`E-mail: ${lead.email}`);
+  if (lead.whatsapp) lines.push(`WhatsApp: ${lead.whatsapp}`);
   lines.push(
     lead.insurance === 'convenio'
       ? `Atendimento: Convênio — ${lead.insuranceName || 'não informado'}`
       : 'Atendimento: Particular'
   );
   lines.push('gostaria de agendar uma consulta...');
-  if (extra) {
+
+  // `extra` carries the human context. Skip it when it merely repeats the
+  // interest already shown at the top of the message.
+  const extraRedundant =
+    !!extra && !!lead.interest && extra.toLowerCase().includes(lead.interest.toLowerCase());
+  if (extra && !extraRedundant) {
     lines.push('');
     lines.push(extra);
   }

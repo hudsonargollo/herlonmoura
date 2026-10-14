@@ -17,9 +17,9 @@ interface HeaderProps {
 export function Header({
   logo,
   navItems = [
-    { label: 'Sobre', href: '/sobre' },
+    { label: 'Dr. Herlon Moura', href: '/sobre' },
     { label: 'Blog', href: '/blog' },
-    { label: 'Procedimentos', href: '/#procedimentos' },
+    { label: 'Procedimentos', href: '/consultas-e-procedimentos' },
     { label: 'Sintomas', href: '/#sintomas' },
     { label: 'Calculadora TVP', href: '/calculadora-dvt', isCalculator: true },
     { label: 'Contato', href: '/contato' },

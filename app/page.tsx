@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
@@ -10,8 +10,12 @@ import {
   DVTRiskCalculator,
   DVTModal,
   ContactModal,
+  CliniqIcon,
+  EdgeButton,
 } from '@/components';
 import { SCHEDULER_URL } from '@/lib/contact';
+import { PROCEDURES } from '@/lib/procedures';
+import { initSectionTracking, trackCtaClick, trackModalOpen } from '@/lib/analytics';
 import {
   Activity,
   Calendar,
@@ -31,7 +35,6 @@ import {
   GitBranch,
   Microscope,
 } from 'lucide-react';
-
 /* ============================================
    Per-procedure icons — each glyph mirrors the meaning of the
    source site's (herlonmoura.com.br) WordPress font-glyph icon,
@@ -140,67 +143,23 @@ function Badge({ children, icon }: { children: React.ReactNode; icon?: React.Rea
 
 export default function Home() {
   const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
-  const [contactContext, setContactContext] = useState<string | null>(null);
-  const openContact = (ctx: string) => setContactContext(ctx);
+  // Contact modal state — carries both the section that opened it (for
+  // reporting) and the specific interest (procedure) into WhatsApp + CRM.
+  const [contact, setContact] = useState<{
+    sectionId: string;
+    interest?: string;
+    context?: string;
+    title?: string;
+  } | null>(null);
 
-  const PROCEDURES = [
-    {
-      title: 'Doppler Vascular',
-      subtitle: 'Exame de Ultrassom do Fluxo Sanguíneo',
-      description:
-        'O Doppler vascular é um exame de ultrassom que analisa o fluxo sanguíneo em artérias e veias. É indolor, não invasivo e pode ser realizado em diversas partes do corpo.',
-      icon: Waves,
-      tag: 'Diagnóstico',
-    },
-    {
-      title: 'Tratamento de Varizes com Laser',
-      subtitle: 'Procedimento Minimamente Invasivo',
-      description:
-        'É um procedimento minimamente invasivo que utiliza a energia do laser para destruir as veias doentes.',
-      icon: Zap,
-      tag: 'Laser',
-    },
-    {
-      title: 'Escleroterapia com Espuma Densa',
-      subtitle: 'Tratamento em Consultório',
-      description:
-        'Tratamento para varizes e pequenos vasinhos que consiste na injeção de uma espuma na veia. O procedimento é minimamente invasivo e pode ser realizado em consultório.',
-      icon: Droplets,
-      tag: 'Espuma',
-    },
-    {
-      title: 'Microcirurgia de Varizes',
-      subtitle: 'Flebectomia Ambulatorial',
-      description:
-        'Procedimento que remove varizes pequenas e médias por meio de pequenas incisões. É um procedimento minimamente invasivo que pode ser realizado no consultório. É também conhecida como flebectomia ambulatória.',
-      icon: Microscope,
-      tag: 'Cirúrgico',
-    },
-    {
-      title: 'Implante de Cateter Port-o-Cath',
-      subtitle: 'Acesso para Quimioterapia',
-      description:
-        'O cateter Port-a-Cath é um dispositivo totalmente implantável que facilita a aplicação de quimioterapia e outros tratamentos.',
-      icon: Syringe,
-      tag: 'Oncológico',
-    },
-    {
-      title: 'Implante de Cateter Permcath',
-      subtitle: 'Acesso para Hemodiálise',
-      description:
-        'O cateter Permcath é um cateter de longa permanência que é implantado em uma veia profunda do paciente para realizar hemodiálise.',
-      icon: HeartPulse,
-      tag: 'Vascular',
-    },
-    {
-      title: 'Fístula Arteriovenosa (FAV)',
-      subtitle: 'Acesso para Hemodiálise',
-      description:
-        'A confecção de uma fístula arteriovenosa (FAV) para hemodiálise é um procedimento cirúrgico que une uma artéria a uma veia. É o melhor acesso vascular para hemodiálise.',
-      icon: GitBranch,
-      tag: 'Cirúrgico',
-    },
-  ];
+  const openContact = (sectionId: string, interest?: string, context?: string, title?: string) =>
+    setContact({ sectionId, interest, context, title });
+
+  // Start section-view tracking once the page has mounted.
+  useEffect(() => {
+    const teardown = initSectionTracking();
+    return teardown;
+  }, []);
 
   const LEG_SYMPTOMS = [
     'Dor e/ou inchaço constante nos braços e pernas',
@@ -225,19 +184,26 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen overflow-x-hidden" style={{ backgroundColor: TOKEN.canvas, color: TOKEN.body }}>
+    <main className="min-h-screen overflow-x-clip" style={{ backgroundColor: TOKEN.canvas, color: TOKEN.body }}>
       <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
       {/* Hero Section with Doctor Photo & Real Branding */}
       <HeroSection
         headline="Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador"
         subheadline="Angiologista é um médico especialista em diagnosticar e tratar doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua no sistema circulatório de braços, pernas, tronco e pescoço."
-        onOpenCalculator={() => setIsCalculatorModalOpen(true)}
-        onBook={() => openContact('Agendar consulta')}
+        onOpenCalculator={() => {
+          trackCtaClick('hero', 'Calculadora de Risco de TVP');
+          trackModalOpen('hero', 'Calculadora de Risco de TVP');
+          setIsCalculatorModalOpen(true);
+        }}
+        onBook={() => {
+          trackCtaClick('hero', 'Agendar Consulta');
+          openContact('hero', undefined, 'Agendar consulta', 'Agendar Consulta');
+        }}
       />
 
       {/* Trust & Credibility Ticker Bar */}
-      <section className="border-y py-6" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
+      <section data-analytics-section="trust-ticker" className="border-y py-6" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4 sm:gap-6">
             {[
@@ -263,7 +229,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose — matches WordPress "Por que escolher meu atendimento?" */}
-      <section className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
+      <section data-analytics-section="por-que-escolher" className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <Eyebrow>Atendimento Humanizado &amp; Alta Tecnologia</Eyebrow>
@@ -321,7 +287,7 @@ export default function Home() {
       </section>
 
       {/* Procedures Section */}
-      <section id="procedimentos" className="relative overflow-hidden py-16 sm:py-24" style={{ backgroundColor: TOKEN.surface }}>
+      <section id="procedimentos" data-analytics-section="procedimentos" className="relative overflow-hidden py-16 sm:py-24" style={{ backgroundColor: TOKEN.surface }}>
         {/* Anatomical circulatory-system accent (BR variant), right side, faded */}
         <Image
           src="/images/brand/banner-segundasecao.jpg"
@@ -343,75 +309,82 @@ export default function Home() {
                 Soluções vasculares modernas para eliminação de varizes, alívio de sintomas circulatórios e procedimentos de alta precisão.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => openContact('Dúvidas sobre procedimentos')}
-              className="inline-flex flex-shrink-0 items-center gap-2 px-5 py-3 text-body-small"
-              style={primaryButtonStyle}
+            <EdgeButton
+              variant="primary"
+              onClick={() => {
+                trackCtaClick('procedimentos', 'Tirar Dúvidas no WhatsApp');
+                openContact('procedimentos', undefined, 'Dúvidas sobre procedimentos', 'Tirar Dúvidas');
+              }}
             >
               <MessageCircle className="h-4 w-4" />
               Tirar Dúvidas no WhatsApp
-            </button>
+            </EdgeButton>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {PROCEDURES.map((proc) => {
-              const Icon = proc.icon;
-              return (
-                <div
-                  key={proc.title}
-                  className="group flex flex-col justify-between"
-                  style={{ ...cardStyle, padding: '1.5rem' }}
-                >
-                  <div>
-                    <div className="mb-4 flex items-center justify-between gap-3">
-                      <div
-                        className="flex h-12 w-12 items-center justify-center rounded-xl"
-                        style={{
-                          backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
-                          color: 'var(--s-color-action-primary)',
-                        }}
-                      >
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <span
-                        className="rounded-full border px-2.5 py-1 text-[11px] font-semibold"
-                        style={{ borderColor: TOKEN.cardBorder, color: TOKEN.muted }}
-                      >
-                        {proc.tag}
-                      </span>
-                    </div>
-                    <h3 className="text-heading-3" style={headingStyle}>
-                      {proc.title}
-                    </h3>
-                    <div className="mt-1 text-caption" style={mutedStyle}>
-                      {proc.subtitle}
-                    </div>
-                    <p className="mt-3 text-body-small leading-relaxed" style={bodyStyle}>
-                      {proc.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-6 border-t pt-4" style={{ borderColor: TOKEN.cardBorder }}>
-                    <button
-                      type="button"
-                      onClick={() => openContact(`Interesse em: ${proc.title}`)}
-                      className="inline-flex items-center gap-1.5 text-caption font-semibold"
-                      style={{ color: TOKEN.actionPrimary }}
-                    >
-                      <span>Consultar disponibilidade</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
+            {PROCEDURES.map((proc) => (
+              <article key={proc.slug} className="card-edge group flex flex-col p-6">
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <span
+                    className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-sm"
+                    style={{
+                      backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 10%, transparent)',
+                      color: 'var(--s-color-action-primary)',
+                    }}
+                  >
+                    <CliniqIcon
+                      name={proc.icon}
+                      size={38}
+                      className="relative z-10"
+                      color="var(--s-color-action-primary)"
+                    />
+                  </span>
+                  <span
+                    className="rounded-sm border px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider"
+                    style={{ borderColor: TOKEN.cardBorder, color: TOKEN.muted }}
+                  >
+                    {proc.tag}
+                  </span>
                 </div>
-              );
-            })}
+
+                <h3 className="text-heading-3" style={headingStyle}>
+                  {proc.title}
+                </h3>
+                <div className="mt-1 text-caption font-medium" style={{ color: TOKEN.actionPrimary }}>
+                  {proc.subtitle}
+                </div>
+                <p className="mt-3 flex-1 text-body-small leading-relaxed" style={bodyStyle}>
+                  {proc.description}
+                </p>
+
+                <div className="mt-6">
+                  <EdgeButton
+                    variant="outline"
+                    size="sm"
+                    block
+                    onClick={() => {
+                      trackCtaClick(`procedure:${proc.slug}`, proc.title);
+                      openContact(
+                        `procedure:${proc.slug}`,
+                        proc.title,
+                        `Interesse em: ${proc.title}`,
+                        'Consultar Disponibilidade'
+                      );
+                    }}
+                    aria-label={`Consultar disponibilidade de ${proc.title}`}
+                  >
+                    <span>Consultar disponibilidade</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </EdgeButton>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Symptom Mapping Section — matches WordPress structure */}
-      <section id="sintomas" className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
+      <section id="sintomas" data-analytics-section="sintomas" className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <Eyebrow>Identificação de Sinais</Eyebrow>
@@ -468,15 +441,22 @@ export default function Home() {
               </ul>
 
               <div className="mt-8 border-t pt-6" style={{ borderColor: TOKEN.cardBorder }}>
-                <button
-                  type="button"
-                  onClick={() => openContact('Avaliação: sintomas em braços e pernas')}
-                  className="inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-body-small"
-                  style={primaryButtonStyle}
+                <EdgeButton
+                  variant="primary"
+                  block
+                  onClick={() => {
+                    trackCtaClick('sintomas', 'Agendar Exame das Pernas');
+                    openContact(
+                      'sintomas',
+                      'Avaliação de sintomas em braços e pernas',
+                      'Avaliação: sintomas em braços e pernas',
+                      'Agendar Exame'
+                    );
+                  }}
                 >
                   <MessageCircle className="h-4 w-4" />
                   Agendar Exame das Pernas
-                </button>
+                </EdgeButton>
               </div>
             </div>
 
@@ -524,15 +504,22 @@ export default function Home() {
               </ul>
 
               <div className="mt-8 border-t pt-6" style={{ borderColor: TOKEN.cardBorder }}>
-                <button
-                  type="button"
-                  onClick={() => openContact('Avaliação: sintomas em tronco e pescoço')}
-                  className="inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-body-small"
-                  style={goldButtonStyle}
+                <EdgeButton
+                  variant="gold"
+                  block
+                  onClick={() => {
+                    trackCtaClick('sintomas', 'Fale Conosco (tronco e pescoço)');
+                    openContact(
+                      'sintomas',
+                      'Avaliação de sintomas em tronco e pescoço',
+                      'Avaliação: sintomas em tronco e pescoço',
+                      'Fale Conosco'
+                    );
+                  }}
                 >
                   <MessageCircle className="h-4 w-4" />
-                  FALE CONOSCO
-                </button>
+                  Fale Conosco
+                </EdgeButton>
               </div>
             </div>
           </div>
@@ -548,7 +535,7 @@ export default function Home() {
         high enough to include head + upper body) and object-top positioning so
         the visible band always includes the top of the frame.
       */}
-      <section className="relative h-[400px] overflow-hidden sm:h-[520px] lg:h-[640px]">
+      <section data-analytics-section="eco-doppler-banner" className="relative h-[400px] overflow-hidden sm:h-[520px] lg:h-[640px]">
         <Image
           src="/images/brand/banner-meiohome.jpg"
           alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
@@ -577,7 +564,7 @@ export default function Home() {
       </section>
 
       {/* Interactive DVT Risk Calculator Anchor Section */}
-      <section id="calculadora-tvp" className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: TOKEN.surface }}>
+      <section id="calculadora-tvp" data-analytics-section="calculadora-tvp" className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-10 max-w-3xl text-center">
             <div className="mb-3 inline-flex items-center justify-center">
@@ -590,15 +577,17 @@ export default function Home() {
               Responda às 4 etapas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
             </p>
             <div className="mt-4">
-              <button
-                type="button"
-                onClick={() => setIsCalculatorModalOpen(true)}
-                className="inline-flex items-center gap-2 border px-4 py-2 text-caption font-bold"
-                style={{ ...primaryButtonStyle, fontWeight: 700 }}
+              <EdgeButton
+                variant="outline"
+                onClick={() => {
+                  trackCtaClick('calculadora-tvp', 'Abrir em Modo Janela Flutuante');
+                  trackModalOpen('calculadora-tvp', 'Calculadora TVP');
+                  setIsCalculatorModalOpen(true);
+                }}
               >
                 <HeartPulse className="h-4 w-4" />
                 <span>Abrir em Modo Janela Flutuante</span>
-              </button>
+              </EdgeButton>
             </div>
           </div>
 
@@ -608,7 +597,7 @@ export default function Home() {
       </section>
 
       {/* Doctor Bio & Credentials Section */}
-      <section id="sobre" className="border-t py-20 sm:py-24" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.canvas }}>
+      <section id="sobre" data-analytics-section="sobre" className="border-t py-20 sm:py-24" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.canvas }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-12">
             <div className="flex justify-center lg:col-span-5">
@@ -660,15 +649,16 @@ export default function Home() {
               </div>
 
               <div className="pt-4">
-                <button
-                  type="button"
-                  onClick={() => openContact('Agendar consulta')}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 text-body-small"
-                  style={{ ...primaryButtonStyle, fontWeight: 700 }}
+                <EdgeButton
+                  variant="primary"
+                  onClick={() => {
+                    trackCtaClick('sobre', 'Agendar Consulta com Dr. Herlon');
+                    openContact('sobre', undefined, 'Agendar consulta', 'Agendar Consulta');
+                  }}
                 >
-                  <MessageCircle className="h-5 w-5" />
+                  <MessageCircle className="h-4 w-4" />
                   <span>Agendar Consulta com Dr. Herlon</span>
-                </button>
+                </EdgeButton>
               </div>
             </div>
           </div>
@@ -676,7 +666,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA — matches WordPress "Vamos agendar sua consulta?" */}
-      <section id="contato" className="border-t py-20 sm:py-28" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
+      <section id="contato" data-analytics-section="contato" className="border-t py-20 sm:py-28" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <Eyebrow>Agendamento Facilitado</Eyebrow>
@@ -690,25 +680,25 @@ export default function Home() {
               Nosso foco é o melhor atendimento pensando em seu bem estar. Atendimento humanizado com muito amor.
             </p>
             <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button
-                type="button"
-                onClick={() => openContact('Agendar consulta')}
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 text-body-regular"
-                style={{ ...primaryButtonStyle, fontWeight: 700 }}
+              <EdgeButton
+                variant="whatsapp"
+                onClick={() => {
+                  trackCtaClick('contato', 'Agendar pelo WhatsApp');
+                  openContact('contato', undefined, 'Agendar consulta', 'Agendar Consulta');
+                }}
               >
-                <MessageCircle className="h-5 w-5" />
+                <MessageCircle className="h-4 w-4" />
                 <span>Agendar pelo WhatsApp</span>
-              </button>
-              <a
+              </EdgeButton>
+              <EdgeButton
+                variant="outline"
+                external
                 href={SCHEDULER_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border px-6 py-3.5 text-body-small"
-                style={{ ...primaryButtonStyle, backgroundColor: 'transparent', color: TOKEN.actionPrimary, borderColor: TOKEN.actionPrimary }}
+                onClick={() => trackCtaClick('contato', 'Agendar no Calendário')}
               >
                 <Calendar className="h-4 w-4" />
-                Agendar no Calendário
-              </a>
+                <span>Agendar no Calendário</span>
+              </EdgeButton>
             </div>
             <div className="flex flex-col items-center justify-center gap-6 text-body-small sm:flex-row" style={mutedStyle}>
               <span>📍 R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
@@ -720,43 +710,21 @@ export default function Home() {
 
       <Footer />
 
-      {/* Quick Floating Test Trigger Button */}
-      <aside className="fixed bottom-5 right-5 z-30 hidden sm:block" aria-label="Acesso rápido ao teste de risco">
-        <button
-          type="button"
-          onClick={() => setIsCalculatorModalOpen(true)}
-          className="flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-caption font-bold shadow-2xl"
-          style={{
-            backgroundColor: TOKEN.surface,
-            borderColor: TOKEN.actionPrimary,
-            color: TOKEN.heading,
-          }}
-          aria-label="Abrir teste rápido de TVP"
-        >
-          <span
-            className="flex h-6 w-6 items-center justify-center rounded-full"
-            style={{
-              backgroundColor: 'var(--s-color-bg-accent)',
-              color: 'var(--g-color-base-primary)',
-            }}
-          >
-            <HeartPulse className="h-3.5 w-3.5" />
-          </span>
-          <span>Teste de Risco TVP</span>
-        </button>
-      </aside>
-
       {/* DVT Modal with zero scroll */}
       <DVTModal
         isOpen={isCalculatorModalOpen}
         onClose={() => setIsCalculatorModalOpen(false)}
       />
 
-      {/* WhatsApp lead-capture modal (name, email, convênio/particular) */}
+      {/* WhatsApp lead-capture modal — carries section + interest into the
+          WhatsApp message and the CRM lead record. */}
       <ContactModal
-        isOpen={contactContext !== null}
-        onClose={() => setContactContext(null)}
-        context={contactContext ?? undefined}
+        isOpen={contact !== null}
+        onClose={() => setContact(null)}
+        sectionId={contact?.sectionId}
+        interest={contact?.interest}
+        context={contact?.context}
+        title={contact?.title}
       />
     </main>
   );

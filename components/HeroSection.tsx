@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MessageCircle, Activity, ShieldCheck, ArrowRight, Sparkles, CheckCircle2, Syringe, Waves, Zap } from 'lucide-react';
+import { MessageCircle, Activity, ShieldCheck, ArrowRight, Waves, Zap } from 'lucide-react';
 
 interface HeroSectionProps {
   headline?: string;
@@ -21,6 +21,10 @@ interface HeroSectionProps {
    Hero. Headings use Montserrat, body copy uses Inter (both via the
    v2.0 token stack). The h1 below is the element the typography fix
    targets — it must resolve to Montserrat, never the UA serif.
+
+   Layout: two-column. Copy on the left, the doctor's portrait as the
+   prominent visual anchor on the right, sitting over a faded full-bleed
+   consultório banner so the medical context is still present.
    ============================================ */
 
 const HEADING_STACK = 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif';
@@ -49,188 +53,264 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden">
-      {/* Full-bleed professional banner (Dr. Herlon performing an Eco-Doppler exam) */}
-      {/*
-        banner-home2.jpg was a tight studio portrait with NO patient and NO
-        doppler machine in the frame — object-cover + object-right cropped it
-        so the doctor filled the frame and the action was lost. Swapped to
-        banner-meiohome.jpg (2560×1706, 3:2): the doctor, the seated patient
-        and the ultrasound machine are all visible; object-top keeps the head
-        in-frame on short viewports (same technique as the mid-page banner).
-      */}
+      {/* Full-bleed consultório banner — heavily faded, provides medical context only.
+          The doctor's portrait in the right column is the prominent visual. */}
       <Image
         src="/images/brand/banner-meiohome.jpg"
-        alt="Dr. Herlon Moura realizando exame de Eco-Doppler com a paciente no consultório"
+        alt=""
         fill
         priority
+        aria-hidden
         sizes="100vw"
         className="object-cover object-[50%_35%]"
+        style={{ opacity: 0.35 }}
       />
 
-      {/* Legibility scrim: strong on the left (where the copy sits), clear on the right (the doctor) */}
+      {/* Soft wash so the faded banner never competes with the copy or the portrait */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, var(--s-color-bg-canvas) 55%, rgba(248,249,250,0.1) 100%)',
+            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0.94) 45%, rgba(248,249,250,0.72) 75%, rgba(248,249,250,0.55) 100%)',
         }}
       />
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to top, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0) 40%, rgba(248,249,250,0.2) 100%)',
+            'linear-gradient(to top, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0) 45%, rgba(248,249,250,0.35) 100%)',
         }}
       />
 
-      <div className="relative mx-auto w-full max-w-container px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="max-w-xl lg:max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-          >
-            {/* Medical Credentials Pill */}
-            <div
-              className="mb-6 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold"
-              style={{
-                borderColor: 'var(--c-card-border)',
-                backgroundColor: 'var(--s-color-bg-surface)',
-                color: 'var(--s-color-action-primary)',
-              }}
+      <div className="relative mx-auto w-full max-w-container px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
+          {/* ---------- Copy column ---------- */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
             >
-              <ShieldCheck className="h-4 w-4" />
-              <span>CRM/BA 23904 • RQE 19791 / 22436 • Formado pela UFBA</span>
-            </div>
+              {/* Medical Credentials Pill */}
+              <div
+                className="mb-6 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold"
+                style={{
+                  borderColor: 'var(--c-card-border)',
+                  backgroundColor: 'var(--s-color-bg-surface)',
+                  color: 'var(--s-color-action-primary)',
+                }}
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span>CRM/BA 23904 • RQE 19791 / 22436 • Formado pela UFBA</span>
+              </div>
 
-            {/* Headline — Montserrat, v2.0 display scale */}
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl"
-              style={{
-                fontFamily: HEADING_STACK,
-                color: 'var(--s-color-content-heading)',
-                fontWeight: 700,
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {headline ? (
-                <span>{headline}</span>
-              ) : (
-                <>
-                  Cuidado Vascular de Excelência com{' '}
-                  <span style={{ color: 'var(--s-color-action-primary)' }}>Dr. Herlon Moura</span>
-                </>
-              )}
-            </h1>
+              {/* Headline — Montserrat, v2.0 display scale */}
+              <h1
+                className="text-4xl sm:text-5xl lg:text-[3.4rem]"
+                style={{
+                  fontFamily: HEADING_STACK,
+                  color: 'var(--s-color-content-heading)',
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {headline ? (
+                  <span>{headline}</span>
+                ) : (
+                  <>
+                    Cuidado Vascular de Excelência com{' '}
+                    <span style={{ color: 'var(--s-color-action-primary)' }}>Dr. Herlon Moura</span>
+                  </>
+                )}
+              </h1>
 
-            {logoSvg && <div className="mt-4 flex">{logoSvg}</div>}
+              {logoSvg && <div className="mt-4 flex">{logoSvg}</div>}
 
-            {/* Subtitle — Inter */}
-            <p className="mt-5 text-lg leading-relaxed sm:text-xl" style={{ color: 'var(--s-color-content-body)' }}>
-              {subheadline}
-            </p>
+              {/* Subtitle — Inter */}
+              <p className="mt-5 max-w-xl text-lg leading-relaxed sm:text-xl" style={{ color: 'var(--s-color-content-body)' }}>
+                {subheadline}
+              </p>
 
-            {/* Key Pillars — each pillar mirrors the source site's Health glyph,
-                recreated with a distinct v2-token lucide icon */}
-            <div className="mt-6 grid grid-cols-1 gap-3 text-body-small sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
-              {[
-                { icon: ShieldCheck, label: 'Tratamentos minimamente invasivos' },
-                { icon: Activity, label: 'Recuperação rápida sem internação' },
-                { icon: Waves, label: 'Eco-Doppler Vascular no consultório' },
-                { icon: Zap, label: 'Laser e espuma densa ecoguiada' },
-              ].map((pillar) => (
-                <div key={pillar.label} className="flex items-center gap-2.5">
-                  <span
-                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
+              {/* Key Pillars — each pillar mirrors the source site's Health glyph,
+                  recreated with a distinct v2-token lucide icon */}
+              <div className="mt-6 grid grid-cols-1 gap-3 text-body-small sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
+                {[
+                  { icon: ShieldCheck, label: 'Tratamentos minimamente invasivos' },
+                  { icon: Activity, label: 'Recuperação rápida sem internação' },
+                  { icon: Waves, label: 'Eco-Doppler Vascular no consultório' },
+                  { icon: Zap, label: 'Laser e espuma densa ecoguiada' },
+                ].map((pillar) => (
+                  <div key={pillar.label} className="flex items-center gap-2.5">
+                    <span
+                      className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
+                      style={{
+                        backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 20%, transparent)',
+                        color: 'var(--s-color-action-gold)',
+                      }}
+                    >
+                      <pillar.icon className="h-4 w-4" />
+                    </span>
+                    <span>{pillar.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTAs */}
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                {onBook ? (
+                  <button
+                    type="button"
+                    onClick={onBook}
+                    className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
+                    style={primaryButtonStyle}
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    <span>{primaryCTA.label}</span>
+                  </button>
+                ) : (
+                  <a
+                    href={primaryCTA.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
+                    style={primaryButtonStyle}
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    <span>{primaryCTA.label}</span>
+                  </a>
+                )}
+
+                {onOpenCalculator ? (
+                  <button
+                    type="button"
+                    onClick={onOpenCalculator}
+                    className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
                     style={{
-                      backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 20%, transparent)',
-                      color: 'var(--s-color-action-gold)',
+                      ...primaryButtonStyle,
+                      backgroundColor: 'transparent',
+                      color: 'var(--s-color-action-primary)',
+                      borderColor: 'var(--s-color-action-primary)',
                     }}
                   >
-                    <pillar.icon className="h-4 w-4" />
+                    <Activity className="h-5 w-5" />
+                    <span>{secondaryCTA.label}</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <a
+                    href={secondaryCTA.href || '#calculadora-tvp'}
+                    className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
+                    style={{
+                      ...primaryButtonStyle,
+                      backgroundColor: 'transparent',
+                      color: 'var(--s-color-action-primary)',
+                      borderColor: 'var(--s-color-action-primary)',
+                    }}
+                  >
+                    <Activity className="h-5 w-5" />
+                    <span>{secondaryCTA.label}</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+
+              {/* Quick Contact Micro-Proof */}
+              <div className="mt-8 flex items-center gap-6 border-t pt-6 text-caption" style={{ borderColor: 'var(--c-card-border)', color: 'var(--s-color-content-muted)' }}>
+                <div>
+                  <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
+                    Consultório em Salvador
                   </span>
-                  <span>{pillar.label}</span>
+                  <span>R. Eng. Célso Tôrres, 654 - Graça</span>
                 </div>
-              ))}
-            </div>
+                <div className="h-8 w-px" style={{ backgroundColor: 'var(--c-card-border)' }} />
+                <div>
+                  <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
+                    Agendamento Ágil
+                  </span>
+                  <span>WhatsApp: (71) 99915-9975</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
 
-            {/* CTAs */}
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              {onBook ? (
-                <button
-                  type="button"
-                  onClick={onBook}
-                  className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
-                  style={primaryButtonStyle}
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  <span>{primaryCTA.label}</span>
-                </button>
-              ) : (
-                <a
-                  href={primaryCTA.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
-                  style={primaryButtonStyle}
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  <span>{primaryCTA.label}</span>
-                </a>
-              )}
+          {/* ---------- Prominent portrait column ---------- */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
+              className="relative mx-auto w-full max-w-[420px] lg:max-w-none"
+            >
+              {/* Gold ambient glow behind the portrait */}
+              <div
+                className="pointer-events-none absolute -inset-6 rounded-[2.5rem] blur-3xl"
+                style={{ backgroundColor: 'var(--s-color-action-gold)', opacity: 0.22 }}
+              />
+              <div
+                className="pointer-events-none absolute -inset-3 rounded-[2rem] blur-2xl"
+                style={{ backgroundColor: 'var(--s-color-action-primary)', opacity: 0.12 }}
+              />
 
-              {onOpenCalculator ? (
-                <button
-                  type="button"
-                  onClick={onOpenCalculator}
-                  className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
+              {/* Portrait card */}
+              <div
+                className="relative z-10 overflow-hidden rounded-[2rem] border"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 35%, transparent)',
+                  backgroundColor: 'color-mix(in srgb, var(--s-color-bg-surface) 70%, transparent)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  boxShadow:
+                    'inset 0 1px 0 rgba(255,255,255,0.35), 0 24px 48px -16px rgba(10,37,64,0.28), 0 8px 20px -10px rgba(10,37,64,0.14)',
+                }}
+              >
+                <Image
+                  src="/images/brand/dr-photoroom.png"
+                  alt="Dr. Herlon Moura dos Santos — Angiologista e Cirurgião Vascular"
+                  width={853}
+                  height={1280}
+                  priority
+                  sizes="(max-width: 1024px) 420px, 40vw"
+                  className="h-auto w-full object-contain object-bottom"
+                />
+
+                {/* Name plate pinned to the bottom of the portrait */}
+                <div
+                  className="absolute inset-x-0 bottom-0 px-5 py-4"
                   style={{
-                    ...primaryButtonStyle,
-                    backgroundColor: 'transparent',
-                    color: 'var(--s-color-action-primary)',
-                    borderColor: 'var(--s-color-action-primary)',
+                    background:
+                      'linear-gradient(to top, rgba(10,37,64,0.92) 0%, rgba(10,37,64,0.70) 55%, rgba(10,37,64,0) 100%)',
                   }}
                 >
-                  <Activity className="h-5 w-5" />
-                  <span>{secondaryCTA.label}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              ) : (
-                <a
-                  href={secondaryCTA.href || '#calculadora-tvp'}
-                  className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
-                  style={{
-                    ...primaryButtonStyle,
-                    backgroundColor: 'transparent',
-                    color: 'var(--s-color-action-primary)',
-                    borderColor: 'var(--s-color-action-primary)',
-                  }}
-                >
-                  <Activity className="h-5 w-5" />
-                  <span>{secondaryCTA.label}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              )}
-            </div>
+                  <p
+                    className="text-base font-bold leading-tight"
+                    style={{ fontFamily: HEADING_STACK, color: '#FFFFFF' }}
+                  >
+                    Dr. Herlon Moura dos Santos
+                  </p>
+                  <p className="mt-0.5 text-xs font-medium" style={{ color: 'rgba(255,255,255,0.82)' }}>
+                    Angiologista e Cirurgião Vascular
+                  </p>
+                </div>
+              </div>
 
-            {/* Quick Contact Micro-Proof */}
-            <div className="mt-8 flex items-center gap-6 border-t pt-6 text-caption" style={{ borderColor: 'var(--c-card-border)', color: 'var(--s-color-content-muted)' }}>
-              <div>
-                <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
-                  Consultório em Salvador
-                </span>
-                <span>R. Eng. Célso Tôrres, 654 - Graça</span>
+              {/* Floating credibility chip */}
+              <div
+                className="absolute -bottom-4 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold shadow-lg sm:flex"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 40%, transparent)',
+                  backgroundColor: 'var(--s-color-bg-surface)',
+                  color: 'var(--s-color-content-heading)',
+                }}
+              >
+                <span
+                  className="inline-block h-2 w-2 rounded-full"
+                  style={{ backgroundColor: 'var(--g-color-success)' }}
+                />
+                <span>15+ anos de prática clínica</span>
               </div>
-              <div className="h-8 w-px" style={{ backgroundColor: 'var(--c-card-border)' }} />
-              <div>
-                <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
-                  Agendamento Ágil
-                </span>
-                <span>WhatsApp: (71) 99915-9975</span>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

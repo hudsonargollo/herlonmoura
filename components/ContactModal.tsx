@@ -9,6 +9,8 @@ import {
   type ContactLead,
   type InsuranceChoice,
 } from '@/lib/contact';
+import { trackModalSubmit, trackWhatsappClick, getVisitorId } from '@/lib/analytics';
+import { getInterestCopy } from '@/lib/modal-copy';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -17,6 +19,13 @@ interface ContactModalProps {
   context?: string;
   /** Heading override. */
   title?: string;
+  /**
+   * The specific thing the visitor wants (e.g. a procedure title). Travels
+   * into the WhatsApp message and is persisted on the lead for reporting.
+   */
+  interest?: string;
+  /** Analytics section id this modal was opened from. */
+  sectionId?: string;
 }
 
 const POPULAR_PLANS = ['Bradesco Saúde', 'SulAmérica', 'Unimed', 'Amil', 'Hapvida', 'Geap'];
@@ -27,7 +36,10 @@ const FIELD_CLASS =
 
 const LABEL_CLASS = 'block text-body-small font-semibold text-[var(--s-color-content-heading)] mb-2';
 
-export function ContactModal({ isOpen, onClose, context, title }: ContactModalProps) {
+export function ContactModal({ isOpen, onClose, context, title, interest, sectionId }: ContactModalProps) {
+  // Copy adapts to what the visitor clicked: a specific procedure gets its own
+  // short headline + facts; a bare section gets a short generic line.
+  const copy = getInterestCopy(sectionId, interest);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [insurance, setInsurance] = useState<InsuranceChoice>('particular');
@@ -77,6 +89,8 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
       email: email.trim(),
       insurance,
       insuranceName: insurance === 'convenio' ? plan.trim() : undefined,
+      interest,
+      sourceSection: sectionId,
     };
 
     setSubmitting(true);
@@ -93,9 +107,11 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
           email: lead.email,
           source: 'whatsapp_cta',
           source_detail: context ?? null,
+          interest: interest ?? null,
           notes: lead.insurance === 'convenio' ? `Convênio: ${lead.insuranceName}` : 'Particular',
           insurance: lead.insurance,
           insurance_name: lead.insuranceName ?? null,
+          visitor_id: getVisitorId(),
         }),
       });
       const result = (await res.json().catch(() => ({}))) as { id?: string };
@@ -104,10 +120,18 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
       // ignore — WhatsApp link still works
     }
 
+    // Record the conversion for section-level reporting.
+    trackModalSubmit(sectionId ?? 'desconhecido', interest ?? context ?? 'contato', {
+      insurance: lead.insurance,
+      insurance_name: lead.insuranceName ?? null,
+      lead_id: leadId ?? null,
+    });
+
     const wa = buildWhatsappLink(lead, context, leadId);
     setWaLink(wa);
     setSubmitting(false);
     // Auto-redirect to WhatsApp as soon as the lead is saved.
+    trackWhatsappClick(sectionId ?? 'desconhecido', interest ?? 'contato');
     window.open(wa, '_blank', 'noopener,noreferrer');
     onClose();
   };
@@ -172,10 +196,10 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
                 </span>
                 <div>
                   <h3 id="contact-modal-title" className="font-heading text-heading-3 font-bold text-[var(--s-color-content-heading)]">
-                    {title ?? 'Agendar Consulta'}
+                    {copy.headline}
                   </h3>
-                  {context && (
-                    <p className="mt-0.5 text-caption text-[var(--s-color-content-muted)]">{context}</p>
+                  {interest && (
+                    <p className="mt-0.5 text-caption text-[var(--s-color-content-muted)]">{interest}</p>
                   )}
                 </div>
               </div>
@@ -190,10 +214,34 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
 
             {!waLink ? (
               <form onSubmit={handleSubmit} className="space-y-5 px-6 pb-6">
-                <p className="text-body-small leading-relaxed text-[var(--s-color-content-body)]">
-                  Preencha seus dados abaixo e a equipe do Dr. Herlon dará continuidade ao seu
-                  atendimento diretamente no WhatsApp. Leva apenas alguns segundos.
+                {/* One short, interest-specific line — no generic paragraph. */}
+                <p className="text-body-small leading-snug text-[var(--s-color-content-body)]">
+                  {copy.note}
                 </p>
+
+                {/* Scannable facts for the chosen procedure (fragments, not sentences). */}
+                {copy.facts.length > 0 && (
+                  <ul className="flex flex-wrap gap-1.5">
+                    {copy.facts.map((fact) => (
+                      <li
+                        key={fact}
+                        className="inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-caption font-medium"
+                        style={{
+                          borderColor: 'var(--c-card-border)',
+                          backgroundColor: 'var(--g-color-surface-raised)',
+                          color: 'var(--s-color-content-body)',
+                        }}
+                      >
+                        <Check
+                          className="h-3 w-3 shrink-0"
+                          style={{ color: 'var(--s-color-action-gold)' }}
+                          aria-hidden="true"
+                        />
+                        {fact}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 {/* Name */}
                 <motion.div
@@ -331,14 +379,13 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
                   )}
                 </button>
 
-                {/* Privacy note — legible but appropriately subdued */}
-                <p className="flex items-start justify-center gap-2 px-2 text-caption leading-relaxed text-[var(--s-color-content-muted)]">
+                {/* Privacy note — short, one line. */}
+                <p className="flex items-center justify-center gap-2 text-caption text-[var(--s-color-content-muted)]">
                   <ShieldCheck
-                    className="mt-px h-4 w-4 shrink-0 text-[var(--s-color-action-gold)]"
+                    className="h-3.5 w-3.5 shrink-0 text-[var(--s-color-action-gold)]"
                     aria-hidden="true"
                   />
-                  Seus dados são utilizados exclusivamente para este contato e para o agendamento
-                  do seu atendimento.
+                  Usamos seus dados apenas para este contato.
                 </p>
               </form>
             ) : (
@@ -358,8 +405,8 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
                 <h4 className="mt-4 font-heading text-heading-3 font-bold text-[var(--s-color-content-heading)]">
                   Tudo pronto, {name.split(' ')[0]}!
                 </h4>
-                <p className="mx-auto mt-2 max-w-xs text-body-small leading-relaxed text-[var(--s-color-content-body)]">
-                  Sua conversa no WhatsApp já foi iniciada com os seus dados preenchidos.
+                <p className="mx-auto mt-2 max-w-xs text-body-small leading-snug text-[var(--s-color-content-body)]">
+                  Sua conversa no WhatsApp já abriu com os seus dados.
                 </p>
                 <a
                   href={waLink}
