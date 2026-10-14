@@ -303,7 +303,7 @@ const IMPROVEMENTS: { title: string; icon: React.ElementType; items: BeforeAfter
       {
         area: 'Appointment scheduling',
         before: 'WhatsApp-only booking',
-        after: 'Cal.com self-hosted scheduler integration (cal.herlonmoura.clubemkt.digital). "Agendar Consulta" CTAs link directly to the booking calendar. Blocked on DNS setup',
+        after: 'Cal.com self-hosted scheduler integration (cal.clubemkt.digital). "Agendar Consulta" CTAs link directly to the booking calendar. Blocked on DNS setup',
         status: 'partial',
       },
       {
@@ -593,7 +593,7 @@ export default function DocPage() {
             {[
               { title: 'Structured data (JSON-LD)', desc: 'Add LocalBusiness, MedicalCondition, FAQ, and Article schema for rich search results.', icon: Search },
               { title: 'Sitemap & robots.txt', desc: 'Generate sitemap.xml from the route tree and add robots.txt for crawler guidance.', icon: Globe },
-              { title: 'Cal.com DNS', desc: 'Create Cloudflare A record for cal.herlonmoura.clubemkt.digital → VPS 62.171.137.90 to activate direct booking.', icon: Calendar },
+              { title: 'Cal.com DNS', desc: 'Create Cloudflare A record for cal.clubemkt.digital → VPS 62.171.137.90 to activate direct booking.', icon: Calendar },
               { title: 'Multi-role admin access', desc: 'Add editor, reviewer, and viewer roles beyond the current single admin role.', icon: Shield },
               { title: 'Lead scoring refinement', desc: 'Automated scoring based on source, engagement events, and calculator risk scores.', icon: BarChart3 },
               { title: 'Advanced analytics', desc: 'Conversion funnels, cohort analysis, per-procedure engagement reports in the admin dashboard.', icon: BarChart3 },

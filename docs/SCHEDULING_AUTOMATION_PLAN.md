@@ -21,7 +21,7 @@ Already built and working:
 - Admin CRM dashboard: kanban, lead detail, manual email send
   (`POST /api/crm/email`).
 - Self-hosted Cal.com: `calcom_web` / `cal_db` (pg16) / `cal_redis`, healthy.
-  `NEXT_PUBLIC_WEBAPP_URL=https://cal.herlonmoura.clubemkt.digital`,
+  `NEXT_PUBLIC_WEBAPP_URL=https://cal.clubemkt.digital`,
   email via Resend SMTP (noreply@resend.dev). DNS for that host already
   resolves to Cloudflare.
 
@@ -54,7 +54,7 @@ edge certificate remains — see "Blocker" below.
    - Enable "Require additional notes" off; keep it short.
 
 2. Expose it publicly (the real blocker)
-   - DONE (origin): nginx vhost for `cal.herlonmoura.clubemkt.digital` →
+   - DONE (origin): nginx vhost for `cal.clubemkt.digital` →
      Cal.com. Two host-level fixes applied:
        * Cal.com now publishes `0.0.0.0:3400` (was `127.0.0.1:3400`,
          unreachable from other containers) — docker-compose.yml updated.
@@ -75,7 +75,7 @@ edge certificate remains — see "Blocker" below.
        2. SSL/TLS → Edge Certificates → make sure Universal SSL covers it
           (it should, for *.clubemkt.digital); if the cert is custom/limited,
           the host won't get TLS until it's a normal proxied A record.
-       3. After it propagates, `https://cal.herlonmoura.clubemkt.digital/`
+       3. After it propagates, `https://cal.clubemkt.digital/`
           should load the Cal.com setup page.
      Alternatively: give me a Cloudflare API token with Zone.DNS (Edit) for
      clubemkt.digital and I'll create/fix the record myself.
@@ -203,7 +203,7 @@ win-back, upsell, recall.
 (`RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL` already set.)
 
 ## Open questions for you
-1. Public scheduler host: `cal.herlonmoura.clubemkt.digital` (already has DNS)
+1. Public scheduler host: `cal.clubemkt.digital` (already has DNS)
    or a subdomain of the main site? Recommend the former.
 2. Embed style: modal opened from CTAs, a dedicated `/agendar` page, or both?
 3. Keep the WhatsApp CTA alongside booking, or replace? Recommend keep both.

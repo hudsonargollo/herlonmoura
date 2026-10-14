@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFade, Pagination, Autoplay } from 'swiper/modules';
+import { EffectFade, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { motion, type Variants } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { CliniqIcon, EdgeButton } from '@/components';
@@ -11,6 +11,7 @@ import { trackCtaClick } from '@/lib/analytics';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const TOKEN = {
   heading: 'var(--s-color-content-heading)',
@@ -112,10 +113,11 @@ export function ProceduresSlider({ onCtaClick }: ProceduresSliderProps) {
       `}</style>
 
       <Swiper
-        modules={[EffectFade, Pagination, Autoplay]}
+        modules={[EffectFade, Pagination, Autoplay, Navigation]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
-        pagination={{ clickable: true, el: '.swiper-pagination' }}
+        pagination={{ clickable: true }}
+        navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
         autoplay={{ delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true }}
         slidesPerView={1}
         spaceBetween={24}

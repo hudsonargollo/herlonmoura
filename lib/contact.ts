@@ -11,7 +11,7 @@ export const ADMIN_BASE_URL = 'https://herlonmoura.clubemkt.digital';
 export const ADMIN_CRMLINK_PATH = '/admin/crm';
 
 /** Cal.com self-hosted scheduler URL for direct appointment booking. */
-export const SCHEDULER_URL = 'https://cal.herlonmoura.clubemkt.digital';
+export const SCHEDULER_URL = 'https://cal.clubemkt.digital';
 
 export type InsuranceChoice = 'particular' | 'convenio';
 
