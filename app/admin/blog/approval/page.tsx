@@ -6,6 +6,7 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { FormInput } from '@/components/FormInput';
 import { api } from '@/lib/admin/api';
+import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 
 interface BlogPost {
   slug: string; title: string; excerpt: string; date: string; category: string;
@@ -18,6 +19,14 @@ const STATUS_LABELS: Record<string, string> = { draft: 'Rascunho', approval: 'Ap
 const STATUS_COLORS: Record<string, string> = { draft: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30', approval: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30', published: 'bg-success-green/15 text-success-green border-success-green/30', archived: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30' };
 
 export default function BlogApprovalQueue() {
+  return (
+    <ProtectedRoute requiredRole="reviewer">
+      <BlogApprovalQueueContent />
+    </ProtectedRoute>
+  );
+}
+
+function BlogApprovalQueueContent() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [authorFilter, setAuthorFilter] = useState('all');

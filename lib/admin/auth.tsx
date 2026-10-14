@@ -6,7 +6,7 @@ export interface AdminUser {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'editor' | 'viewer';
+  role: 'admin' | 'editor' | 'reviewer' | 'viewer';
 }
 
 interface AuthContextType {

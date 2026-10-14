@@ -45,7 +45,7 @@ export default function AdminPage() {
   const [activeSection, setActiveSection] = useState<Section>('crm');
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requiredRole="editor">
       <div className="flex min-h-screen bg-dark-elevated">
         <Sidebar activeSection={activeSection} onNavigate={setActiveSection} />
 

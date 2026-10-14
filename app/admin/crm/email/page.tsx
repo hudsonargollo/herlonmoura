@@ -22,7 +22,17 @@ const DEFAULT_SEQUENCE: EmailStep[] = [
   { id: '3', delayDays: 7, subject: 'Última chance — Vamos conversar?', body: 'Estou à disposição para agendar uma avaliação.', trigger: 'no_response_7d' },
 ];
 
+import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
+
 export default function EmailSequenceDesigner() {
+  return (
+    <ProtectedRoute requiredRole="editor">
+      <EmailSequenceDesignerContent />
+    </ProtectedRoute>
+  );
+}
+
+function EmailSequenceDesignerContent() {
   const [steps, setSteps] = useState<EmailStep[]>(DEFAULT_SEQUENCE);
   const [name, setName] = useState('Sequência Principal');
   const [saving, setSaving] = useState(false);

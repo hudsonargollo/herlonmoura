@@ -7,8 +7,8 @@ import { Shield, User } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState('admin@herlonmoura.com.br');
-  const [password, setPassword] = React.useState('admin2026!');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
@@ -97,7 +97,7 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-4 text-center text-[11px] text-neutral-medium">
-            Credenciais de demonstração: admin@herlonmoura.com.br / admin2026!
+            Acesso restrito à equipe Dr. Herlon Moura
           </p>
         </div>
       </div>

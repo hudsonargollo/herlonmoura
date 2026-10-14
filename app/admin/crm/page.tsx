@@ -6,6 +6,7 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { FormInput } from '@/components/FormInput';
 import { api } from '@/lib/admin/api';
+import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 
 type SourceFilter = 'all' | 'contact' | 'questionnaire' | 'whatsapp' | 'referral' | 'social';
 type StatusFilter = 'all' | 'new' | 'contacted' | 'qualified' | 'appointment' | 'converted' | 'lost';
@@ -31,6 +32,14 @@ const STATUS_LABELS: Record<string, string> = { new: 'Novo', contacted: 'Contata
 const STATUS_COLORS: Record<string, string> = { new: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30', contacted: 'bg-surgical-teal/15 text-surgical-teal border-surgical-teal/30', qualified: 'bg-info/15 text-info border-info/30', appointment: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30', converted: 'bg-success-green/15 text-success-green border-success-green/30', lost: 'bg-error-red/15 text-error-red border-error-red/30' };
 
 export default function CRMLeadList() {
+  return (
+    <ProtectedRoute requiredRole="editor">
+      <CRMLeadListContent />
+    </ProtectedRoute>
+  );
+}
+
+function CRMLeadListContent() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [search, setSearch] = useState('');
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all');

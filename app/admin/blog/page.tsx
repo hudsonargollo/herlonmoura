@@ -6,11 +6,20 @@ import { Button } from '@/components/Button';
 import { BlogEditor } from '@/components/admin/BlogEditor';
 import { BlogEditorList } from '@/components/admin/BlogEditorList';
 import { api } from '@/lib/admin/api';
+import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 
 type View = 'list' | 'editor';
 type Action = 'edit' | 'new' | 'publish' | 'delete';
 
 export default function BlogPage() {
+  return (
+    <ProtectedRoute requiredRole="editor">
+      <BlogPageContent />
+    </ProtectedRoute>
+  );
+}
+
+function BlogPageContent() {
   const [view, setView] = useState<View>('list');
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
   const [action, setAction] = useState<Action | null>(null);

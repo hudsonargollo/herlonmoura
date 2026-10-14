@@ -7,9 +7,17 @@ import { Loader2, Shield } from 'lucide-react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  requiredRole?: 'admin' | 'editor' | 'reviewer' | 'viewer';
 }
 
-export function ProtectedRoute({ children }: ProtectedRouteProps) {
+const ROLE_HIERARCHY: Record<string, number> = {
+  admin: 4,
+  editor: 3,
+  reviewer: 2,
+  viewer: 1,
+};
+
+export function ProtectedRoute({ children, requiredRole = 'viewer' }: ProtectedRouteProps) {
   const { isAuthenticated, user } = useAuth();
   const router = useRouter();
   const [checking, setChecking] = React.useState(true);
@@ -19,10 +27,16 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
       setChecking(false);
       if (!isAuthenticated) {
         router.replace('/admin');
+      } else if (user && requiredRole) {
+        const userLevel = ROLE_HIERARCHY[user.role] ?? 0;
+        const requiredLevel = ROLE_HIERARCHY[requiredRole] ?? 0;
+        if (userLevel < requiredLevel) {
+          router.replace('/admin/dashboard');
+        }
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, user, requiredRole, router]);
 
   if (checking) {
     return (
@@ -34,6 +48,26 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (!isAuthenticated) {
     return null;
+  }
+
+  if (user && requiredRole) {
+    const userLevel = ROLE_HIERARCHY[user.role] ?? 0;
+    const requiredLevel = ROLE_HIERARCHY[requiredRole] ?? 0;
+    if (userLevel < requiredLevel) {
+      return (
+        <div className="flex h-screen items-center justify-center bg-dark-elevated">
+          <div className="text-center">
+            <Shield className="h-12 w-12 mx-auto mb-4 text-error-red" />
+            <p className="text-heading-3 font-heading font-semibold text-neutral-light">
+              Acesso restrito
+            </p>
+            <p className="mt-2 text-body-small text-neutral-medium">
+              Seu perfil ({user.role}) não tem permissão para esta página.
+            </p>
+          </div>
+        </div>
+      );
+    }
   }
 
   return <>{children}</>;

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { TrendingUp, Users, FileText, MessageSquare, Clock, ArrowUp, ArrowDown, Activity, Filter } from 'lucide-react';
 import { Card } from '@/components/Card';
 import { api } from '@/lib/admin/api';
+import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 
 interface DashboardStats {
   leads: { total: number; new: number };
@@ -18,6 +19,14 @@ interface DashboardStats {
 const STATUS_COLORS: Record<string, string> = { new: 'bg-neutral-medium/15 text-neutral-medium', contacted: 'bg-surgical-teal/15 text-surgical-teal', qualified: 'bg-info/15 text-info', converted: 'bg-success-green/15 text-success-green', lost: 'bg-error-red/15 text-error-red' };
 
 export default function AdminDashboard() {
+  return (
+    <ProtectedRoute requiredRole="viewer">
+      <AdminDashboardContent />
+    </ProtectedRoute>
+  );
+}
+
+function AdminDashboardContent() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
