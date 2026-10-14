@@ -4,6 +4,7 @@ import { Header, Footer, Container, Card, Button, Logo } from '@/components';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { physicianSchema } from '@/lib/structured-data';
 
 export default function AboutPage() {
   const navItems = [
@@ -81,6 +82,10 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-surface">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(physicianSchema()) }}
+      />
       <Header
         logo={<Logo size="md" animated={false} />}
         navItems={navItems}

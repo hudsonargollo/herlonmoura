@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import type { BlogPost } from '@/lib/blog';
 import { BLOG_POSTS } from '@/lib/blog-data.generated';
+import { blogPostingSchema } from '@/lib/structured-data';
 
 const CATEGORIES = ['Todas', 'Varizes', 'Trombose', 'Diagnóstico', 'Prevenção', 'Procedimentos', 'Tratamentos'];
 
@@ -23,6 +24,10 @@ export default function BlogPage() {
 
   return (
     <main className="min-h-screen bg-surface text-primary">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema()) }}
+      />
       <section className="py-16 sm:py-24 bg-gradient-to-b from-bg-tertiary via-surface to-surface">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-3 py-1 text-xs font-semibold text-surgical-teal mb-3">

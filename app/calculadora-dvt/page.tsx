@@ -3,10 +3,15 @@
 import { Header, Footer, DVTRiskCalculator } from '@/components';
 import { ShieldCheck, Activity, Phone, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
+import { medicalWebPageSchema } from '@/lib/structured-data';
 
 export default function DVTRiskCalculatorPage() {
   return (
     <main className="min-h-screen bg-surface text-primary">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalWebPageSchema()) }}
+      />
       <Header />
 
       {/* Hero / Intro banner */}

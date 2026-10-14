@@ -6,6 +6,7 @@ import { PROCEDURES } from '@/lib/procedures';
 import { motion } from 'framer-motion';
 import { Stethoscope, ArrowRight, MessageCircle, Phone } from 'lucide-react';
 import { initSectionTracking, trackCtaClick } from '@/lib/analytics';
+import { medicalProcedureSchema } from '@/lib/structured-data';
 
 const TOKEN = {
   heading: 'var(--s-color-content-heading)',
@@ -48,6 +49,10 @@ export default function ConsultasProcedimentosPage() {
 
   return (
     <main className="min-h-screen overflow-x-clip" style={{ backgroundColor: TOKEN.canvas, color: TOKEN.body }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalProcedureSchema()) }}
+      />
       <Header />
 
       {/* Hero */}

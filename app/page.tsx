@@ -35,6 +35,7 @@ import {
   GitBranch,
   Microscope,
 } from 'lucide-react';
+import { medicalBusinessSchema } from '@/lib/structured-data';
 /* ============================================
    Per-procedure icons — each glyph mirrors the meaning of the
    source site's (herlonmoura.com.br) WordPress font-glyph icon,
@@ -185,6 +186,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-x-clip" style={{ backgroundColor: TOKEN.canvas, color: TOKEN.body }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalBusinessSchema()) }}
+      />
       <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
       {/* Hero Section with Doctor Photo & Real Branding */}

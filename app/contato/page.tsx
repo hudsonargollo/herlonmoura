@@ -5,6 +5,7 @@ import { Logo } from '@/components';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { contactPageSchema } from '@/lib/structured-data';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -146,6 +147,10 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-dark-elevated">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema()) }}
+      />
       <Header
         logo={<Logo size="md" animated={false} />}
         navItems={navItems}
