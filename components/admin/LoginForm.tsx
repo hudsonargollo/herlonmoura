@@ -84,7 +84,10 @@ export function LoginForm() {
           </form>
 
           <p className="mt-4 text-center text-[11px] text-neutral-medium">
-            Credenciais de demonstração: admin@herlonmoura.com.br / admin2026!
+            Super Admin: hudson@dev.com / doc123
+          </p>
+          <p className="mt-1 text-center text-[11px] text-neutral-medium">
+            Admin: doc@user.com / doc123 &nbsp;|&nbsp; Staff: sec@user.com / doc123
           </p>
         </div>
       </div>

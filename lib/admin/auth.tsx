@@ -2,10 +2,11 @@
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 
-interface AdminUser {
+export interface AdminUser {
+  id: string;
   name: string;
   email: string;
-  role: 'admin' | 'editor';
+  role: 'admin' | 'editor' | 'viewer';
 }
 
 interface AuthContextType {
@@ -17,24 +18,38 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Simple demo auth — replace with real auth in production
-const DEMO_CREDENTIALS = { email: 'admin@herlonmoura.com.br', password: 'admin2026!' };
-const DEMO_USER: AdminUser = { name: 'Administrador', email: 'admin@herlonmoura.com.br', role: 'admin' };
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AdminUser | null>(null);
+  const [user, setUser] = useState<AdminUser | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const stored = localStorage.getItem('admin_user');
+    const token = localStorage.getItem('admin_token');
+    if (stored && token) {
+      try { return JSON.parse(stored); } catch { return null; }
+    }
+    return null;
+  });
 
   const login = useCallback(async (email: string, password: string): Promise<boolean> => {
-    // Simulate network delay
-    await new Promise((r) => setTimeout(r, 400));
-    if (email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password) {
-      setUser(DEMO_USER);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!res.ok) return false;
+      const data = await res.json();
+      localStorage.setItem('admin_token', data.token);
+      localStorage.setItem('admin_user', JSON.stringify(data.user));
+      setUser(data.user);
       return true;
+    } catch {
+      return false;
     }
-    return false;
   }, []);
 
   const logout = useCallback(() => {
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_user');
     setUser(null);
   }, []);
 
