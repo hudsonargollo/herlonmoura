@@ -960,41 +960,41 @@ img {
    and a layered shadow that separates it from the page.
    ============================================ */
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.58);
-  --glass-bg-strong: rgba(255, 255, 255, 0.78);
-  --glass-bg-subtle: rgba(255, 255, 255, 0.38);
-  --glass-border: rgba(10, 37, 64, 0.10);
-  --glass-border-strong: rgba(10, 37, 64, 0.17);
+  --glass-bg: rgba(255, 255, 255, 0.42);
+  --glass-bg-strong: rgba(255, 255, 255, 0.62);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.28);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-border-strong: rgba(255, 255, 255, 0.80);
   --glass-highlight: rgba(255, 255, 255, 0.95);
-  --glass-inner-shadow: rgba(10, 37, 64, 0.06);
+  --glass-inner-shadow: rgba(10, 37, 64, 0.08);
   --glass-shadow:
-    0 1px 1px rgba(10, 37, 64, 0.04),
-    0 8px 20px -8px rgba(10, 37, 64, 0.16),
-    0 28px 60px -28px rgba(10, 37, 64, 0.24);
+    0 1px 1px rgba(10, 37, 64, 0.06),
+    0 10px 24px -8px rgba(10, 37, 64, 0.22),
+    0 32px 64px -28px rgba(10, 37, 64, 0.35);
   --glass-shadow-lg:
-    0 1px 1px rgba(10, 37, 64, 0.05),
-    0 14px 32px -10px rgba(10, 37, 64, 0.20),
-    0 44px 90px -36px rgba(10, 37, 64, 0.30);
-  --glass-blur: 20px;
-  --glass-saturate: 1.7;
+    0 2px 2px rgba(10, 37, 64, 0.06),
+    0 18px 36px -12px rgba(10, 37, 64, 0.28),
+    0 48px 96px -36px rgba(10, 37, 64, 0.40);
+  --glass-blur: 24px;
+  --glass-saturate: 1.8;
 }
 
 :root.dark {
-  --glass-bg: rgba(26, 36, 47, 0.55);
-  --glass-bg-strong: rgba(26, 36, 47, 0.78);
-  --glass-bg-subtle: rgba(26, 36, 47, 0.34);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-border-strong: rgba(255, 255, 255, 0.18);
-  --glass-highlight: rgba(255, 255, 255, 0.22);
+  --glass-bg: rgba(26, 36, 47, 0.38);
+  --glass-bg-strong: rgba(26, 36, 47, 0.58);
+  --glass-bg-subtle: rgba(26, 36, 47, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-border-strong: rgba(255, 255, 255, 0.28);
+  --glass-highlight: rgba(255, 255, 255, 0.30);
   --glass-inner-shadow: rgba(0, 0, 0, 0.30);
   --glass-shadow:
     0 1px 1px rgba(0, 0, 0, 0.30),
-    0 8px 20px -8px rgba(0, 0, 0, 0.45),
-    0 28px 60px -28px rgba(0, 0, 0, 0.60);
+    0 10px 24px -8px rgba(0, 0, 0, 0.45),
+    0 32px 64px -28px rgba(0, 0, 0, 0.60);
   --glass-shadow-lg:
-    0 1px 1px rgba(0, 0, 0, 0.35),
-    0 14px 32px -10px rgba(0, 0, 0, 0.50),
-    0 44px 90px -36px rgba(0, 0, 0, 0.70);
+    0 2px 2px rgba(0, 0, 0, 0.35),
+    0 18px 36px -12px rgba(0, 0, 0, 0.50),
+    0 48px 96px -36px rgba(0, 0, 0, 0.70);
 }
 
 /* Base glass pane. Compose with a radius utility. */
