@@ -121,12 +121,17 @@ export default function LoginPage() {
         >
           {/* Logo */}
           <div className="mb-8 text-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/brand/logo.png"
-              alt="Dr. Herlon Moura"
-              className="mx-auto mb-4 h-16 w-auto object-contain"
-            />
+            <div
+              className="mx-auto mb-4 flex h-20 w-auto items-center justify-center rounded-2xl px-6"
+              style={{ backgroundColor: 'rgba(248, 250, 252, 0.95)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/brand/logo.png"
+                alt="Dr. Herlon Moura"
+                className="h-14 w-auto object-contain"
+              />
+            </div>
             <h1
               className="text-2xl font-bold"
               style={{
