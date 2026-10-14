@@ -2,11 +2,28 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header, Footer, CliniqIcon, EdgeButton, ContactModal } from '@/components';
-import { PROCEDURES } from '@/lib/procedures';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { Stethoscope, ArrowRight, MessageCircle, Phone } from 'lucide-react';
 import { initSectionTracking, trackCtaClick } from '@/lib/analytics';
 import { medicalProcedureSchema } from '@/lib/structured-data';
+
+const ProceduresSlider = dynamic(
+  () => import('@/components/ProceduresSlider').then(mod => mod.ProceduresSlider),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className="card-edge h-64 animate-pulse bg-[var(--s-color-bg-surface)] opacity-30"
+          />
+        ))}
+      </div>
+    ),
+  },
+);
 
 const TOKEN = {
   heading: 'var(--s-color-content-heading)',
@@ -30,11 +47,6 @@ const mutedStyle: React.CSSProperties = { color: TOKEN.muted };
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
 
 export default function ConsultasProcedimentosPage() {
@@ -95,7 +107,7 @@ export default function ConsultasProcedimentosPage() {
         </div>
       </section>
 
-      {/* Procedures Grid */}
+      {/* Procedures Slider */}
       <section data-analytics-section="procedimentos-grid" className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.canvas }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -103,61 +115,12 @@ export default function ConsultasProcedimentosPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {PROCEDURES.map((proc) => (
-              <motion.article key={proc.slug} variants={itemVariants} className="card-edge group flex flex-col p-6">
-                <div className="mb-4 flex items-start justify-between gap-3">
-                  {/* Original cliniq glyph from the source site */}
-                  <span
-                    className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-sm"
-                    style={{
-                      backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 10%, transparent)',
-                      color: 'var(--s-color-action-primary)',
-                    }}
-                  >
-                    <CliniqIcon
-                      name={proc.icon}
-                      size={38}
-                      className="relative z-10"
-                      color="var(--s-color-action-primary)"
-                    />
-                  </span>
-                  <span
-                    className="rounded-sm border px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider"
-                    style={{ borderColor: TOKEN.cardBorder, color: TOKEN.muted }}
-                  >
-                    {proc.tag}
-                  </span>
-                </div>
-
-                <h2 className="text-lg font-bold leading-snug" style={headingStyle}>
-                  {proc.title}
-                </h2>
-                <div className="mt-1 text-sm font-medium" style={{ color: TOKEN.actionPrimary }}>
-                  {proc.subtitle}
-                </div>
-                <p className="mt-3 flex-1 text-sm leading-relaxed" style={bodyStyle}>
-                  {proc.description}
-                </p>
-
-                <div className="mt-6">
-                  <EdgeButton
-                    variant="outline"
-                    size="sm"
-                    block
-                    onClick={() => {
-                      trackCtaClick(`procedure:${proc.slug}`, proc.title);
-                      setContact({ sectionId: `procedure:${proc.slug}`, interest: proc.title });
-                    }}
-                    aria-label={`Consultar disponibilidade de ${proc.title}`}
-                  >
-                    <span>Consultar disponibilidade</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </EdgeButton>
-                </div>
-              </motion.article>
-            ))}
+            <ProceduresSlider
+              onCtaClick={(sectionId, interest) =>
+                setContact({ sectionId, interest })
+              }
+            />
           </motion.div>
         </div>
       </section>
