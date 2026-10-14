@@ -1,5 +1,5 @@
 name = "herlon-moura-crm"
-main = "workers/src/index.ts"
+main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
 [[d1_databases]]
@@ -11,7 +11,7 @@ database_id = "d2852878-3462-47f7-a799-71a07015814b"
 binding = "KV"
 id = "40662a6fbf1249299a71124fbcd647d7"
 
-[[ai]]
+[ai]
 binding = "AI"
 
 [vars]
@@ -19,11 +19,9 @@ JWT_SECRET = "change-me-in-production-use-a-secure-random-value"
 ADMIN_EMAIL = "admin@herlonmoura.com"
 
 [triggers]
-cron = "0 6 * * *"
+crons = ["0 6 * * *"]
 
-[[routes]]
-pattern = "api.herlonmoura.com/*"
-zone_id = ""
-
-# Or use Pages Functions for dashboard routes
-# This worker handles API only; dashboard is Next.js Pages
+# Routes require a zone in the Cloudflare account.
+# api.herlonmoura.com has no zone yet (domain is at HostGator).
+# The worker is reachable at its default URL.
+# To add custom domain later: add zone -> set zone_id -> re-deploy.
