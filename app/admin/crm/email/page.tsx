@@ -3,7 +3,6 @@
 import React, { useState, useCallback } from 'react';
 import { Plus, Trash2, Save, ArrowUp, ArrowDown, Mail, Send, Clock, Filter } from 'lucide-react';
 import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
 import { FormInput } from '@/components/FormInput';
 
 interface EmailStep {
@@ -77,32 +76,46 @@ function EmailSequenceDesignerContent() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-display-md font-heading font-semibold text-neutral-light">Designador de E-mail Sequência</h1>
-          <p className="text-sm text-neutral-medium">Crie e gerencie fluxos de e-mail automáticos.</p>
+          <h1 className="text-display-md font-heading font-semibold text-white">Designador de E-mail Sequência</h1>
+          <p className="text-sm text-slate-400">Crie e gerencie fluxos de e-mail automáticos.</p>
         </div>
-        <Button variant="primary" size="sm" onClick={handleSave} disabled={saving}><Save className="mr-1.5 h-4 w-4" /> {saving ? 'Salvando...' : 'Salvar Sequência'}</Button>
+        <Button variant="primary" size="sm" onClick={handleSave} disabled={saving}>
+          <Save className="mr-1.5 h-4 w-4" /> {saving ? 'Salvando...' : 'Salvar Sequência'}
+        </Button>
       </div>
 
-      {saveMsg && <div className={`rounded-xl border px-4 py-3 text-sm ${saveMsg.startsWith('Erro') ? 'border-error-red/30 bg-error-red/5 text-error-red' : 'border-success-green/30 bg-success-green/5 text-success-green'}`}>{saveMsg}</div>}
+      {saveMsg && (
+        <div className={`rounded-2xl border px-4 py-3 text-sm ${
+          saveMsg.startsWith('Erro') ? 'border-red-500/30 bg-red-500/5 text-red-400' : 'border-emerald-500/30 bg-emerald-500/5 text-emerald-400'
+        }`}>
+          {saveMsg}
+        </div>
+      )}
 
       {/* Name */}
-      <Card variant="glass" className="p-4">
+      <div className="admin-glass p-5">
         <FormInput label="Nome da Sequência" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ex: Sequência Principal" />
-      </Card>
+      </div>
 
       {/* Steps */}
       <div className="space-y-4">
         {steps.map((step, idx) => (
-          <Card key={step.id} variant="glass" className="p-5 relative">
+          <div key={step.id} className="admin-glass p-5 relative">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-surgical-teal/15 text-surgical-teal text-sm font-bold">{idx + 1}</span>
-                <h3 className="text-heading-3 font-heading font-semibold text-neutral-light">Passo {idx + 1}</h3>
+                <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-brand-accent/15 text-brand-accent text-sm font-bold">{idx + 1}</span>
+                <h3 className="text-heading-3 font-heading font-semibold text-white">Passo {idx + 1}</h3>
               </div>
               <div className="flex items-center gap-1">
-                <Button variant="ghost" size="sm" disabled={idx === 0} onClick={() => moveStep(step.id, 'up')}><ArrowUp className="h-4 w-4" /></Button>
-                <Button variant="ghost" size="sm" disabled={idx === steps.length - 1} onClick={() => moveStep(step.id, 'down')}><ArrowDown className="h-4 w-4" /></Button>
-                <Button variant="ghost" size="sm" className="text-error-red border-error-red/30" onClick={() => removeStep(step.id)}><Trash2 className="h-4 w-4" /></Button>
+                <Button variant="ghost" size="sm" disabled={idx === 0} onClick={() => moveStep(step.id, 'up')}>
+                  <ArrowUp className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" disabled={idx === steps.length - 1} onClick={() => moveStep(step.id, 'down')}>
+                  <ArrowDown className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" className="text-red-400 border-red-500/30" onClick={() => removeStep(step.id)}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </div>
             </div>
 
@@ -115,14 +128,21 @@ function EmailSequenceDesignerContent() {
               <FormInput label="Assunto" value={step.subject} onChange={(e) => updateStep(step.id, 'subject', e.target.value)} placeholder="Assunto do e-mail" />
             </div>
             <div className="mt-3">
-              <label className="mb-2 block text-sm font-medium text-neutral-light">Corpo</label>
-              <textarea value={step.body} onChange={(e) => updateStep(step.id, 'body', e.target.value)} placeholder="Conteúdo do e-mail..." className="w-full min-h-[100px] rounded-lg border border-neutral-dark bg-neutral-dark px-4 py-3 text-sm text-neutral-light placeholder-neutral-medium transition-all duration-300 focus:outline-none focus:border-surgical-teal focus:ring-2 focus:ring-surgical-teal/25 resize-y" />
+              <label className="mb-2 block text-sm font-medium text-white">Corpo</label>
+              <textarea
+                value={step.body}
+                onChange={(e) => updateStep(step.id, 'body', e.target.value)}
+                placeholder="Conteúdo do e-mail..."
+                className="w-full min-h-[100px] rounded-2xl border border-slate-700/50 bg-slate-800/40 px-4 py-3 text-sm text-white placeholder-slate-500 transition-all duration-300 focus:outline-none focus:border-brand-accent/50 focus:ring-2 focus:ring-brand-accent/20 resize-y"
+              />
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
-      <Button variant="secondary" size="sm" onClick={addStep}><Plus className="mr-1.5 h-4 w-4" /> Adicionar Passo</Button>
+      <Button variant="secondary" size="sm" onClick={addStep}>
+        <Plus className="mr-1.5 h-4 w-4" /> Adicionar Passo
+      </Button>
     </div>
   );
 }

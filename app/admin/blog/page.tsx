@@ -49,11 +49,10 @@ function BlogPageContent() {
   if (view === 'editor') {
     return (
       <div>
-        <Button variant="ghost" size="sm" onClick={handleBack} className="mb-4"><ArrowLeft className="mr-1.5 h-4 w-4" /> Voltar à lista</Button>
-        <BlogEditor
-          initialPost={undefined}
-          onSave={() => { setView('list'); setEditingSlug(null); }}
-        />
+        <Button variant="ghost" size="sm" onClick={handleBack} className="mb-4">
+          <ArrowLeft className="mr-1.5 h-4 w-4" /> Voltar à lista
+        </Button>
+        <BlogEditor initialPost={undefined} onSave={() => { setView('list'); setEditingSlug(null); }} />
       </div>
     );
   }
@@ -62,19 +61,30 @@ function BlogPageContent() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-display-md font-heading font-semibold text-neutral-light">Blog Editor</h1>
-          <p className="text-sm text-neutral-medium">Crie e gerencie artigos do blog.</p>
+          <h1 className="text-display-md font-heading font-semibold text-white">Blog Editor</h1>
+          <p className="text-sm text-slate-400">Crie e gerencie artigos do blog.</p>
         </div>
-        <Button variant="primary" size="sm" onClick={handleNew}><Edit3 className="mr-1.5 h-4 w-4" /> Novo Artigo</Button>
+        <button
+          onClick={handleNew}
+          className="flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-brand-accent/90 transition-colors"
+        >
+          <Edit3 className="h-4 w-4" /> Novo Artigo
+        </button>
       </div>
 
       {/* Action bar */}
       {selectedSlug && (
-        <div className="flex items-center gap-2 rounded-xl border border-surgical-teal/20 bg-surgical-teal/5 px-4 py-3">
-          <span className="text-sm text-neutral-light">Selecionado: {selectedSlug}</span>
-          <Button variant="primary" size="sm" onClick={() => handlePublish(selectedSlug)}><Send className="mr-1.5 h-4 w-4" /> Publicar</Button>
-          <Button variant="secondary" size="sm" onClick={() => handleEdit(selectedSlug)}><Edit3 className="mr-1.5 h-4 w-4" /> Editar</Button>
-          <Button variant="ghost" size="sm" className="text-error-red border-error-red/30" onClick={() => handleDelete(selectedSlug)}><Trash2 className="mr-1.5 h-4 w-4" /> Excluir</Button>
+        <div className="flex items-center gap-2 rounded-2xl border border-brand-accent/20 bg-brand-accent/5 px-4 py-3">
+          <span className="text-sm text-white">Selecionado: {selectedSlug}</span>
+          <button onClick={() => handlePublish(selectedSlug)} className="flex items-center gap-1.5 rounded-2xl bg-brand-accent/15 px-4 py-1.5 text-xs font-semibold text-brand-accent hover:bg-brand-accent/25 transition-colors">
+            <Send className="h-3.5 w-3.5" /> Publicar
+          </button>
+          <button onClick={() => handleEdit(selectedSlug)} className="flex items-center gap-1.5 rounded-2xl bg-surface-cardDark/60 px-4 py-1.5 text-xs font-semibold text-slate-300 hover:bg-surface-cardDark transition-colors">
+            <Edit3 className="h-3.5 w-3.5" /> Editar
+          </button>
+          <button onClick={() => handleDelete(selectedSlug)} className="flex items-center gap-1.5 rounded-2xl bg-red-500/10 px-4 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-500/20 transition-colors">
+            <Trash2 className="h-3.5 w-3.5" /> Excluir
+          </button>
         </div>
       )}
 

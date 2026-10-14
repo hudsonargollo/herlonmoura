@@ -38,6 +38,8 @@ const config: Config = {
           raised: "var(--g-color-surface-raised)",
           overlay: "var(--g-color-surface-overlay)",
           "card-hover": "var(--g-color-surface-card-hover)",
+          dark: "#0B0F19",
+          cardDark: "#1E293B",
         },
 
         // Text colors
@@ -83,6 +85,19 @@ const config: Config = {
         // --- Legacy medical accent (now maps to v2.0 primary) ---
         "medical-teal": "var(--color-medical-teal)",
         "medical-soft": "var(--color-medical-soft)",
+
+        // --- Admin redesign tokens ---
+        brand: {
+          DEFAULT: "#111827",
+          accent: "#E6FF57",
+          muted: "#9CA3AF",
+        },
+        medical: {
+          purple: "#E2E8F0",
+          blue: "#E0F2FE",
+          yellow: "#FEF9C3",
+          teal: "#CCFBF1",
+        },
 
         // --- Legacy earth accent (now maps to v2.0 accent) ---
         earth: "var(--color-earth)",
@@ -249,6 +264,7 @@ const config: Config = {
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
         card: "var(--shadow-card)",
+        soft: "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
       },
 
       // ============================================
@@ -260,6 +276,8 @@ const config: Config = {
         lg: "12px",      /* v2.0: card radius */
         xl: "16px",
         button: "6px",   /* v2.0: all buttons use 6px radius */
+        "2xl": "1rem",
+        "3xl": "1.5rem",
       },
 
       // ============================================

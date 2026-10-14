@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/admin/auth';
 import { Button } from '@/components/Button';
 import { FormInput } from '@/components/FormInput';
 import { Shield, Lock } from 'lucide-react';
+import { HeartPulseSvg } from '@/components/ui/MedicalIcons';
 
 export function LoginForm() {
   const { login } = useAuth();
@@ -32,26 +33,26 @@ export function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-dark-elevated px-4">
+    <div className="flex min-h-screen items-center justify-center bg-surface-dark px-4">
       <div className="w-full max-w-md">
         {/* Brand */}
         <div className="mb-8 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-surgical-teal/15 text-surgical-teal mb-4">
-            <Shield className="h-8 w-8" />
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-3xl bg-brand-accent/15 mb-4">
+            <HeartPulseSvg className="h-7 w-7 text-brand-accent" />
           </div>
-          <h1 className="text-heading-2 font-heading font-semibold text-neutral-light">
+          <h1 className="text-heading-2 font-heading font-semibold text-white">
             Painel Admin
           </h1>
-          <p className="mt-2 text-body-small text-neutral-medium">
+          <p className="mt-2 text-body-small text-slate-400">
             Dr. Herlon Moura — Sistema de Gestão
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="glass-card p-8">
+        <div className="admin-glass p-8">
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div className="flex items-center justify-center mb-4">
-              <Lock className="h-5 w-5 text-neutral-medium" />
+              <Lock className="h-5 w-5 text-slate-500" />
             </div>
 
             <FormInput
@@ -73,20 +74,20 @@ export function LoginForm() {
             />
 
             {error && (
-              <p className="text-center text-xs text-error-red" role="alert">
+              <p className="text-center text-xs text-red-400" role="alert">
                 {error}
               </p>
             )}
 
-            <Button type="submit" variant="primary" size="lg" className="w-full" isLoading={loading}>
+            <Button type="submit" variant="primary" size="lg" className="w-full rounded-3xl" isLoading={loading}>
               Entrar
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-[11px] text-neutral-medium">
+          <p className="mt-4 text-center text-[11px] text-slate-500">
             Super Admin: hudson@dev.com / doc123
           </p>
-          <p className="mt-1 text-center text-[11px] text-neutral-medium">
+          <p className="mt-1 text-center text-[11px] text-slate-500">
             Admin: doc@user.com / doc123 &nbsp;|&nbsp; Staff: sec@user.com / doc123
           </p>
         </div>

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Filter, Clock, Plus, ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
 import { FormInput } from '@/components/FormInput';
 import { api } from '@/lib/admin/api';
 import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
@@ -29,7 +28,14 @@ const SOURCES: SourceFilter[] = ['all', 'contact', 'questionnaire', 'whatsapp', 
 const SOURCE_LABELS: Record<string, string> = { all: 'Todas', contact: 'Contato', questionnaire: 'Questionário', whatsapp: 'WhatsApp', referral: 'Indicação', social: 'Social' };
 const STATUSES: StatusFilter[] = ['all', 'new', 'contacted', 'qualified', 'appointment', 'converted', 'lost'];
 const STATUS_LABELS: Record<string, string> = { new: 'Novo', contacted: 'Contatado', qualified: 'Qualificado', appointment: 'Consulta', converted: 'Convertido', lost: 'Perdido' };
-const STATUS_COLORS: Record<string, string> = { new: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30', contacted: 'bg-surgical-teal/15 text-surgical-teal border-surgical-teal/30', qualified: 'bg-info/15 text-info border-info/30', appointment: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30', converted: 'bg-success-green/15 text-success-green border-success-green/30', lost: 'bg-error-red/15 text-error-red border-error-red/30' };
+const STATUS_COLORS: Record<string, string> = {
+  new: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
+  contacted: 'bg-teal-500/15 text-teal-400 border-teal-500/30',
+  qualified: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+  appointment: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30',
+  converted: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+  lost: 'bg-red-500/15 text-red-400 border-red-500/30',
+};
 
 export default function CRMLeadList() {
   return (
@@ -75,14 +81,14 @@ function CRMLeadListContent() {
   return (
     <div className="space-y-5">
       {/* Filters */}
-      <Card variant="glass" className="p-4">
+      <div className="admin-glass p-5">
         <div className="flex items-center gap-2 mb-3">
-          <Filter className="h-4 w-4 text-surgical-teal" />
-          <span className="text-sm font-semibold text-neutral-light">Filtros</span>
+          <Filter className="h-4 w-4 text-brand-accent" />
+          <span className="text-sm font-semibold text-white">Filtros</span>
         </div>
         <div className="grid grid-cols-1 tablet:grid-cols-4 gap-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-medium" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input type="text" placeholder="Buscar nome ou ID..." value={search} onChange={(e) => setSearch(e.target.value)} className="glass-input pl-10 w-full text-sm" />
           </div>
           <select value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value as SourceFilter)} className="glass-input text-sm py-2">
@@ -102,61 +108,75 @@ function CRMLeadListContent() {
             <Button variant="ghost" size="sm" onClick={() => { setSearch(''); setSourceFilter('all'); setStatusFilter('all'); setDateFrom(''); setDateTo(''); }}>Limpar filtros</Button>
           )}
         </div>
-      </Card>
+      </div>
 
       {error && (
-        <div className="rounded-xl border border-error-red/30 bg-error-red/5 p-4 text-center">
-          <p className="text-sm text-error-red">{error}</p>
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/5 p-4 text-center">
+          <p className="text-sm text-red-400">{error}</p>
           <Button variant="primary" size="sm" onClick={fetchLeads} className="mt-2">Tentar novamente</Button>
         </div>
       )}
 
       {loading ? (
-        <div className="px-4 py-8 text-center text-neutral-medium">Carregando leads...</div>
+        <div className="px-4 py-8 text-center text-slate-400">Carregando leads...</div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-neutral-dark bg-neutral-dark/60">
+        <div className="overflow-hidden admin-glass">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutral-dark/60 bg-neutral-dark/40">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Paciente</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Fonte</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Score</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-neutral-medium uppercase">Criado</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-neutral-medium uppercase">Ações</th>
+              <tr className="border-b border-slate-700/50">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Paciente</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Fonte</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Score</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Criado</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-neutral-dark/40">
+            <tbody className="divide-y divide-slate-800/40">
               {filtered.map((lead) => (
-                <tr key={lead.id} className="transition-colors hover:bg-surgical-teal/5">
+                <tr key={lead.id} className="hover:bg-slate-800/20 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-surgical-teal/15 text-surgical-teal text-xs font-bold">{lead.name.charAt(0)}</div>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-accent/15 text-brand-accent text-xs font-bold">{lead.name.charAt(0)}</div>
                       <div>
-                        <p className="font-medium text-neutral-light">{lead.name}</p>
-                        <p className="text-[11px] text-neutral-medium">{lead.id}</p>
+                        <p className="font-medium text-white">{lead.name}</p>
+                        <p className="text-[11px] text-slate-500">{lead.id}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3"><span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${STATUS_COLORS[lead.status] || STATUS_COLORS.new}`}>{STATUS_LABELS[lead.status] || lead.status}</span></td>
-                  <td className="px-4 py-3 text-neutral-medium">{SOURCE_LABELS[lead.source] || lead.source}</td>
+                  <td className="px-4 py-3">
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium border ${STATUS_COLORS[lead.status] || STATUS_COLORS.new}`}>
+                      {STATUS_LABELS[lead.status] || lead.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-slate-400">{SOURCE_LABELS[lead.source] || lead.source}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <div className="h-1.5 w-12 rounded-full bg-neutral-dark overflow-hidden"><div className={`h-full rounded-full ${lead.score >= 70 ? 'bg-success-green' : lead.score >= 40 ? 'bg-warning-amber' : 'bg-error-red'}`} style={{ width: `${lead.score}%` }} /></div>
-                      <span className="text-xs text-neutral-medium">{lead.score}</span>
+                      <div className="h-1.5 w-12 rounded-full bg-slate-800 overflow-hidden">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${lead.score}%`,
+                            background: lead.score >= 70 ? '#E6FF57' : lead.score >= 40 ? '#F59E0B' : '#EF4444',
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs text-slate-400">{lead.score}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-neutral-medium">{lead.created_at?.slice(0, 10)}</td>
-                  <td className="px-4 py-3 text-right"><Button variant="ghost" size="sm">Detalhes</Button></td>
+                  <td className="px-4 py-3 text-slate-500">{lead.created_at?.slice(0, 10)}</td>
+                  <td className="px-4 py-3 text-right">
+                    <Button variant="ghost" size="sm">Detalhes</Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {filtered.length === 0 && <div className="px-4 py-8 text-center text-neutral-medium">Nenhum lead encontrado.</div>}
+          {filtered.length === 0 && <div className="px-4 py-8 text-center text-slate-500">Nenhum lead encontrado.</div>}
         </div>
       )}
 
-      <p className="text-[11px] text-neutral-medium">{filtered.length} de {leads.length} leads</p>
+      <p className="text-xs text-slate-500">{filtered.length} de {leads.length} leads</p>
     </div>
   );
 }
