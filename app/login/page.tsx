@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { Shield, User, Lock, HeartPulse, Activity, Stethoscope } from 'lucide-react';
+// HeartPulse used in floating icons below
 import dynamic from 'next/dynamic';
 
 const VascularScene = dynamic(() => import('@/components/Hero3D').then(m => m.VascularScene), {
@@ -120,9 +121,12 @@ export default function LoginPage() {
         >
           {/* Logo */}
           <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-surgical-teal/20 bg-surgical-teal/10">
-              <HeartPulse className="h-9 w-9 text-surgical-teal" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/brand/logo.png"
+              alt="Dr. Herlon Moura"
+              className="mx-auto mb-4 h-16 w-auto object-contain"
+            />
             <h1
               className="text-2xl font-bold"
               style={{
