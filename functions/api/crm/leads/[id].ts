@@ -219,11 +219,13 @@ export const onRequestPatch: PagesFunction<Env> = async ({ request, env, params 
   const user = await verifyAuth(request, env);
   if (!user) return json(401, { error: "Unauthorized" });
   return applyUpdate(request, env, String(params.id));
+};
 
 export const onRequestPut: PagesFunction<Env> = async ({ request, env, params }) => {
   const user = await verifyAuth(request, env);
   if (!user) return json(401, { error: "Unauthorized" });
   return applyUpdate(request, env, String(params.id));
+};
 
 export const onRequestDelete: PagesFunction<Env> = async ({ request, env, params }) => {
   const user = await verifyAuth(request, env);
