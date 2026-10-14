@@ -34,28 +34,30 @@ export function Header({
   const [contactOpen, setContactOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-default bg-surface/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b" style={{ borderColor: 'var(--c-card-border)', backgroundColor: 'var(--s-color-bg-surface)' }}>
       {/* Top microbar with phone/address */}
-      <div className="hidden border-b border-subtle bg-bg-secondary/60 px-4 py-1.5 text-xs text-secondary sm:block">
-        <div className="container mx-auto flex items-center justify-between">
+      <div className="hidden border-b px-4 py-1.5 text-caption sm:block" style={{ borderColor: 'var(--c-card-border)', backgroundColor: 'var(--s-color-bg-canvas)', color: 'var(--s-color-content-muted)' }}>
+        <div className="mx-auto flex w-full max-w-container items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-secondary">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="flex items-center gap-1.5" style={{ color: 'var(--s-color-content-muted)' }}>
+              <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: 'var(--g-color-success)' }} />
               Atendimento em Salvador – Graça | Particular e Convênios
             </span>
           </div>
           <div className="flex items-center gap-5">
             <a
-              href="tel:+5571993449737"
-              className="flex items-center gap-1.5 transition-colors hover:text-surgical-teal"
+              href="tel:+5571983449737"
+              className="flex items-center gap-1.5"
+              style={{ color: 'var(--s-color-action-primary)' }}
             >
-              <Phone className="h-3.5 w-3.5 text-surgical-teal" />
+              <Phone className="h-3.5 w-3.5" />
               (71) 98344-9737
             </a>
             <button
               type="button"
               onClick={() => setContactOpen(true)}
-              className="flex items-center gap-1.5 font-medium text-emerald-400 transition-colors hover:text-emerald-300"
+              className="flex items-center gap-1.5 font-medium"
+              style={{ color: 'var(--g-color-success)' }}
             >
               <MessageCircle className="h-3.5 w-3.5" />
               WhatsApp: (71) 99915-9975
@@ -64,11 +66,11 @@ export function Header({
         </div>
       </div>
 
-      <div className="container mx-auto flex items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:py-5">
+      <div className="mx-auto flex w-full max-w-container items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:py-5">
         {/* Logo */}
         <Link
           href="/"
-          className="flex flex-shrink-0 items-center py-1 transition-opacity hover:opacity-95"
+          className="flex flex-shrink-0 items-center py-1"
           aria-label="Dr. Herlon Moura - Início"
         >
           {logo || <Logo size="lg" />}
@@ -82,7 +84,12 @@ export function Header({
                 <button
                   key={item.href}
                   onClick={onOpenCalculator}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-surgical-teal/10 px-3 py-1 text-sm font-semibold text-surgical-teal border border-surgical-teal/30 transition-all hover:bg-surgical-teal hover:text-text-inverse"
+                  className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-body-small font-semibold"
+                  style={{
+                    borderColor: 'var(--s-color-action-primary)',
+                    backgroundColor: 'var(--s-color-bg-accent)',
+                    color: 'var(--g-color-base-primary)',
+                  }}
                 >
                   <HeartPulse className="h-3.5 w-3.5" />
                   <span>{item.label}</span>
@@ -93,7 +100,8 @@ export function Header({
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-primary transition-colors hover:text-surgical-teal"
+                className="text-body-small font-medium"
+                style={{ color: 'var(--s-color-content-body)' }}
               >
                 {item.label}
               </Link>
@@ -102,12 +110,18 @@ export function Header({
         </nav>
 
         {/* Theme Toggle + CTA Button */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden items-center gap-3 sm:flex">
           <ThemeToggle />
           <button
             type="button"
             onClick={() => setContactOpen(true)}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all hover:bg-emerald-500 hover:shadow-emerald-700/40 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-body-small"
+            style={{
+              backgroundColor: 'var(--c-button-primary-bg)',
+              color: 'var(--c-button-primary-text)',
+              borderRadius: 'var(--c-button-radius)',
+              fontWeight: 600,
+            }}
           >
             <MessageCircle className="h-4 w-4" />
             <span>{ctaButton.label}</span>
@@ -117,16 +131,17 @@ export function Header({
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="rounded-lg p-2 text-primary hover:bg-surface-raised lg:hidden"
+          className="rounded-lg p-2 lg:hidden"
+          style={{ color: 'var(--s-color-content-body)' }}
           aria-label="Abrir menu"
         >
-          {isMenuOpen ? <X className="h-6 w-6 text-surgical-teal" /> : <Menu className="h-6 w-6 text-primary" />}
+          {isMenuOpen ? <X className="h-6 w-6" style={{ color: 'var(--s-color-action-primary)' }} /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {/* Mobile Drawer Menu */}
       {isMenuOpen && (
-        <div className="border-t border-subtle bg-surface-overlay px-6 py-6 backdrop-blur-xl lg:hidden">
+        <div className="border-t px-6 py-6 lg:hidden" style={{ borderColor: 'var(--c-card-border)', backgroundColor: 'var(--s-color-bg-surface)' }}>
           <nav className="flex flex-col space-y-4">
             {navItems.map((item) => {
               if (item.isCalculator && onOpenCalculator) {
@@ -137,13 +152,24 @@ export function Header({
                       setIsMenuOpen(false);
                       onOpenCalculator();
                     }}
-                    className="flex items-center justify-between rounded-xl bg-surgical-teal/15 p-3 text-left text-base font-bold text-surgical-teal border border-surgical-teal/30"
+                    className="flex items-center justify-between rounded-xl border p-3 text-left text-body-regular font-bold"
+                    style={{
+                      borderColor: 'var(--s-color-action-primary)',
+                      backgroundColor: 'var(--s-color-bg-accent)',
+                      color: 'var(--g-color-base-primary)',
+                    }}
                   >
                     <span className="flex items-center gap-2">
                       <HeartPulse className="h-4 w-4" />
                       {item.label}
                     </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider bg-surgical-teal text-text-inverse px-2 py-0.5 rounded">
+                    <span
+                      className="rounded px-2 py-0.5 text-caption font-semibold uppercase tracking-wider"
+                      style={{
+                        backgroundColor: 'var(--s-color-action-primary)',
+                        color: 'var(--c-button-primary-text)',
+                      }}
+                    >
                       Abrir Teste
                     </span>
                   </button>
@@ -154,20 +180,27 @@ export function Header({
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-base font-medium text-primary transition-colors hover:text-surgical-teal"
+                  className="text-body-regular font-medium"
+                  style={{ color: 'var(--s-color-content-body)' }}
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <div className="pt-4 border-t border-subtle">
+            <div className="border-t pt-4" style={{ borderColor: 'var(--c-card-border)' }}>
               <button
                 type="button"
                 onClick={() => {
                   setIsMenuOpen(false);
                   setContactOpen(true);
                 }}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-emerald-500"
+                className="flex w-full items-center justify-center gap-2 px-5 py-3 text-center text-body-small"
+                style={{
+                  backgroundColor: 'var(--c-button-primary-bg)',
+                  color: 'var(--c-button-primary-text)',
+                  borderRadius: 'var(--c-button-radius)',
+                  fontWeight: 600,
+                }}
               >
                 <MessageCircle className="h-4 w-4" />
                 {ctaButton.label}
@@ -175,7 +208,7 @@ export function Header({
               <div className="mt-4 flex justify-center">
                 <ThemeToggle />
               </div>
-              <div className="mt-4 flex flex-col gap-2 text-xs text-tertiary">
+              <div className="mt-4 flex flex-col gap-2 text-caption" style={{ color: 'var(--s-color-content-muted)' }}>
                 <p>📍 R. Eng. Célso Tôrres, 654 - Graça, Salvador</p>
                 <p>📞 (71) 98344-9737 / (71) 99915-9975</p>
               </div>

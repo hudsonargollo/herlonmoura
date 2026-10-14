@@ -9,35 +9,121 @@ const config: Config = {
   theme: {
     extend: {
       // ============================================
-      // COLOR PALETTE — mapped to CSS variables
+      // v2.0 HEALTHNET × DR. HERLON MOURA COLOR PALETTE
       // ============================================
       colors: {
-        // Primary Colors
+        // --- v2.0 Primitive Brand Colors ---
+        // HealthNet brand palette — mapped to CSS variables for theming
+        primary: {
+          DEFAULT: "var(--g-color-base-primary)",     /* Navy white / deep navy */
+          dark: "var(--g-color-base-primary-bright)",
+          foreground: "var(--g-color-text-inverse)",
+        },
+        secondary: {
+          DEFAULT: "var(--g-color-base-secondary)",   /* Vibrant blue */
+          dark: "var(--g-color-base-secondary)",
+          foreground: "var(--g-color-text-inverse)",
+        },
+        accent: {
+          DEFAULT: "var(--g-color-accent)",             /* Gold/amber */
+          dark: "var(--g-color-accent-dark)",
+          foreground: "var(--g-color-base-primary)",
+        },
+
+        // --- v2.0 Semantic Color Groups ---
+        // Surface colors
+        surface: {
+          light: "var(--g-color-surface-light)",
+          card: "var(--g-color-surface-card)",
+          raised: "var(--g-color-surface-raised)",
+          overlay: "var(--g-color-surface-overlay)",
+          "card-hover": "var(--g-color-surface-card-hover)",
+        },
+
+        // Text colors
+        text: {
+          main: "var(--g-color-text-main)",
+          muted: "var(--g-color-text-muted)",
+          dim: "var(--g-color-text-dim)",
+          inverse: "var(--g-color-text-inverse)",
+        },
+
+        // Border colors
+        border: {
+          DEFAULT: "var(--border)",
+          subtle: "var(--g-color-border-subtle)",
+          strong: "var(--g-color-border-strong)",
+        },
+
+        // Status colors
+        status: {
+          green: "var(--g-color-success)",
+          amber: "var(--g-color-warning)",
+          red: "var(--g-color-error)",
+          yellow: "var(--g-color-warning)",
+          blue: "var(--g-color-base-secondary)",
+        },
+
+        // --- Legacy compatibility: maps to v2.0 via CSS variables ---
+        // These maintain backward compatibility with existing component classes
         "dark-elevated": "var(--color-dark-elevated)",
         "surgical-teal": {
           DEFAULT: "var(--color-surgical-teal)",
           dark: "var(--color-surgical-teal-dark)",
         },
-
-        // Supporting Colors
-        "neutral-light": "var(--color-neutral-light)",
-        "neutral-medium": "var(--color-neutral-medium)",
-        "neutral-dark": "var(--color-neutral-dark)",
+        "neutral": {
+          light: "var(--color-neutral-light)",
+          medium: "var(--color-neutral-medium)",
+          dark: "var(--color-neutral-dark)",
+        },
         "success-green": "var(--color-success-green)",
         "warning-amber": "var(--color-warning-amber)",
         "error-red": "var(--color-error-red)",
 
-        // Status group (alias)
-        status: {
-          green: "var(--color-success-green)",
-          amber: "var(--color-warning-amber)",
-          red: "var(--color-error-red)",
+        // --- Legacy medical accent (now maps to v2.0 primary) ---
+        "medical-teal": "var(--color-medical-teal)",
+        "medical-soft": "var(--color-medical-soft)",
+
+        // --- Legacy earth accent (now maps to v2.0 accent) ---
+        earth: "var(--color-earth)",
+        "earth-light": "var(--color-earth-light)",
+
+        // --- Legacy semantic aliases ---
+        "bg-primary": "var(--color-bg-primary)",
+        "bg-secondary": "var(--color-bg-secondary)",
+        "bg-tertiary": "var(--color-bg-tertiary)",
+        "bg-card": "var(--color-bg-card)",
+        "bg-card-hover": "var(--color-bg-card-hover)",
+        "text-primary": "var(--color-text-primary)",
+        "text-secondary": "var(--color-text-secondary)",
+        "text-tertiary": "var(--color-text-tertiary)",
+        "text-inverse": "var(--color-text-inverse)",
+        "border-default": "var(--color-border-default)",
+        "border-subtle": "var(--color-border-subtle)",
+        "border-strong": "var(--color-border-strong)",
+
+        // v2.0 Gold/amber as Tailwind-accessible names
+        gold: {
+          DEFAULT: "var(--g-color-accent)",
+          light: "var(--g-color-accent-light)",
+          dark: "var(--g-color-accent-dark)",
+        },
+
+        // v2.0 Navy as Tailwind-accessible names
+        navy: {
+          DEFAULT: "var(--g-color-base-primary-dim)",
+          dark: "var(--g-color-base-primary)",
         },
 
         // ============================================
-        // shadcn/ui semantic colors (mapped to CSS variables)
+        // shadcn/ui semantic colors (must live under
+        // colors so bg-background/text-foreground etc.
+        // resolve — Tailwind v3 does not read
+        // theme.extend.background as a color).
+        // NOTE: primary/secondary/accent are merged
+        // into the v2.0 groups above (with .foreground);
+        // "border" is merged into the v2.0 border group.
         // ============================================
-        border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
         background: "var(--background)",
@@ -50,21 +136,9 @@ const config: Config = {
           DEFAULT: "var(--popover)",
           foreground: "var(--popover-foreground)",
         },
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
         muted: {
           DEFAULT: "var(--muted)",
           foreground: "var(--muted-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
         },
         destructive: "var(--destructive)",
         sidebar: {
@@ -77,58 +151,23 @@ const config: Config = {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
-
-        // ============================================
-        // SEMANTIC COLOR TOKENS
-        // ============================================
-        // Backgrounds
-        "bg-primary": "var(--color-bg-primary)",
-        "bg-secondary": "var(--color-bg-secondary)",
-        "bg-tertiary": "var(--color-bg-tertiary)",
-        "bg-card": "var(--color-bg-card)",
-        "bg-card-hover": "var(--color-bg-card-hover)",
-
-        // Text
-        "text-primary": "var(--color-text-primary)",
-        "text-secondary": "var(--color-text-secondary)",
-        "text-tertiary": "var(--color-text-tertiary)",
-        "text-inverse": "var(--color-text-inverse)",
-
-        // Borders
-        "border-default": "var(--color-border-default)",
-        "border-subtle": "var(--color-border-subtle)",
-        "border-strong": "var(--color-border-strong)",
-
-        // Surfaces
-        surface: "var(--color-surface)",
-        "surface-raised": "var(--color-surface-raised)",
-        "surface-overlay": "var(--color-surface-overlay)",
-      },
-
-      // ============================================
-      // FONT STACKS
-      // ============================================
-      fontFamily: {
-        sans: ["var(--font-inter)", "var(--font-geist)", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
-        heading: ["var(--font-poppins)", "sans-serif"],
-        mono: ["var(--font-fira-code)", "monospace"],
       },
 
       // ============================================
       // BACKGROUND COLORS
       // ============================================
       backgroundColor: {
-        glass: "var(--color-glass-surface)",
-        "glass-hover": "var(--color-glass-surface-hover)",
-        "glass-overlay": "var(--color-glass-overlay)",
+        glass: "var(--g-color-glass-surface)",
+        "glass-hover": "var(--g-color-glass-surface-hover)",
+        "glass-overlay": "var(--g-color-glass-overlay)",
       },
 
       // ============================================
       // BORDER COLORS
       // ============================================
       borderColor: {
-        glass: "var(--color-glass-border)",
-        "glass-hover": "var(--color-glass-border-hover)",
+        glass: "var(--g-color-glass-border)",
+        "glass-hover": "var(--g-color-glass-border-hover)",
       },
 
       // ============================================
@@ -139,7 +178,23 @@ const config: Config = {
       },
 
       // ============================================
-      // SPACING SCALE
+      // FONT STACKS
+      // v2.0: Inter = body copy, Montserrat = headings.
+      // Every entry MUST terminate in a real generic family
+      // (sans-serif/monospace). A stack whose only fallback is a
+      // named font with no @font-face resolves to the UA default
+      // serif — that was the bug behind the "Times New Roman" h1.
+      // ============================================
+      fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
+        heading: ["var(--font-montserrat)", "var(--font-inter)", "system-ui", "sans-serif"],
+        montserrat: ["var(--font-montserrat)", "system-ui", "sans-serif"],
+        poppins: ["var(--font-poppins)", "var(--font-montserrat)", "system-ui", "sans-serif"],
+        mono: ["var(--font-fira-code)", "ui-monospace", "monospace"],
+      },
+
+      // ============================================
+      // SPACING SCALE (4px base grid)
       // ============================================
       spacing: {
         xs: "4px",
@@ -154,7 +209,7 @@ const config: Config = {
       },
 
       // ============================================
-      // TYPOGRAPHY SCALE
+      // TYPOGRAPHY SCALE (12px to 56px)
       // ============================================
       fontSize: {
         "display-lg": ["48px", { lineHeight: "56px", fontWeight: "700" }],
@@ -193,6 +248,7 @@ const config: Config = {
         sm: "var(--shadow-sm)",
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
+        card: "var(--shadow-card)",
       },
 
       // ============================================
@@ -201,8 +257,9 @@ const config: Config = {
       borderRadius: {
         sm: "4px",
         md: "8px",
-        lg: "12px",
+        lg: "12px",      /* v2.0: card radius */
         xl: "16px",
+        button: "6px",   /* v2.0: all buttons use 6px radius */
       },
 
       // ============================================
@@ -243,11 +300,11 @@ const config: Config = {
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         slideLeft: {
-          "0%": { transform: "translateX(20px)", opacity: "0" },
+          "0%": { transform: "translateX(-20px)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
         slideRight: {
-          "0%": { transform: "translateX(-20px)", opacity: "0" },
+          "0%": { transform: "translateX(20px)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
         scaleIn: {

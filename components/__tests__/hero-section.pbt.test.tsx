@@ -598,8 +598,10 @@ describe('Hero Section - Property-Based Tests', () => {
             const section = document.querySelector('section') as HTMLElement;
             expect(section).toBeInTheDocument();
 
-            // Verify section has proper structure
-            const container = section.querySelector('.container');
+            // Verify section has proper structure.
+            // v2.0 constrains content with the max-w-container utility
+            // rather than the legacy `.container` class.
+            const container = section.querySelector('.max-w-container');
             expect(container).toBeInTheDocument();
 
             unmount();

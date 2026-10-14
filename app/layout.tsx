@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Fira_Code, Geist } from "next/font/google";
+import { Inter, Poppins, Fira_Code, Geist, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,6 +16,13 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -50,9 +57,12 @@ const themeInitScript = `
     var stored = localStorage.getItem('herlonmoura-theme');
     var theme = (stored === 'light' || stored === 'dark') ? stored : 'light';
     var root = document.documentElement;
+    root.removeAttribute('data-theme');
     root.classList.remove('light', 'dark');
+    root.setAttribute('data-theme', theme);
     root.classList.add(theme);
   } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
     document.documentElement.classList.add('light');
   }
 })();
@@ -64,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.ReactNode {
   return (
-    <html lang="pt-BR" className={cn("light", "font-sans", geist.variable)} suppressHydrationWarning>
+    <html lang="pt-BR" className={cn("light", "font-sans", geist.variable)} data-theme="light" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,8 +82,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} ${firaCode.variable} bg-surface font-sans text-primary`}
-      >
+        className={`${inter.variable} ${poppins.variable} ${montserrat.variable} ${firaCode.variable} ${geist.variable} bg-surface font-sans text-primary`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

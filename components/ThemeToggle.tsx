@@ -13,7 +13,12 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     <button
       type="button"
       onClick={toggleTheme}
-      className={`relative flex h-9 w-9 items-center justify-center rounded-full border border-surgical-teal/30 bg-surgical-teal/10 transition-all hover:bg-surgical-teal/20 hover:border-surgical-teal/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surgical-teal ${className}`}
+      className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition-all ${className}`}
+      style={{
+        borderColor: 'var(--s-color-action-primary)',
+        backgroundColor: 'var(--s-color-bg-accent)',
+        color: 'var(--g-color-base-primary)',
+      }}
       aria-label={isDark ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
       title={isDark ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
     >
@@ -25,9 +30,9 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
         className="flex items-center justify-center"
       >
         {isDark ? (
-          <Sun className="h-4.5 w-4.5 text-surgical-teal" />
+          <Sun className="h-4.5 w-4.5" />
         ) : (
-          <Moon className="h-4.5 w-4.5 text-surgical-teal" />
+          <Moon className="h-4.5 w-4.5" />
         )}
       </motion.div>
     </button>

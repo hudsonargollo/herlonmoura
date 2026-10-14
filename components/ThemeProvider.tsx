@@ -28,13 +28,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  // Persist and apply class to <html>
+  // Persist and apply class + data-theme to <html> (both systems stay in sync)
   useEffect(() => {
     if (!mounted) return;
     localStorage.setItem(STORAGE_KEY, theme);
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
+    root.setAttribute('data-theme', theme);
   }, [theme, mounted]);
 
   const toggleTheme = () => {

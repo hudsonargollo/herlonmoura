@@ -468,3 +468,103 @@ export default config;
 ```
 
 > **Implementation note**: In this repository, the `neutral-*` and status colors are declared as flat tokens (`neutral-light`, `success-green`, `error-red`, …) because existing components already use those class names extensively. The nested `status.green` / `status.amber` / `status.red` aliases from the spec above are also available.
+
+---
+
+## 12. Design System v2.0 — HealthNet × Dr. Herlon Moura (NEW)
+
+Section 12 documents the current **v2.0** token layer that ships in `app/globals.css` and `tailwind.config.ts`, and the showcase route at **`/v2`** (`app/v2/page.tsx`). The v1 documentation in sections 1–11 above is preserved for the legacy glassmorphism components; new work should use the v2.0 tokens.
+
+### 12.1 Route: `/v2`
+
+- **URL**: `http://localhost:3000/v2` (`npm run dev`); static-exported as `out/v2.html`.
+- **File**: `app/v2/page.tsx` — a client component showcase: hero, full color palette (light + dark swatches with token names), typography scale (12/14/16/20/24/32/44/56px in Inter/Montserrat), button variants (primary blue + gold accent), and card components.
+- **Theme toggle**: the shared `ThemeToggle` switches `[data-theme]` between `"light"` and `"dark"` on `<html>` (and keeps the Tailwind `dark` class in sync — see 12.4).
+
+### 12.2 Global base colors (`--g-color-*`)
+
+Light mode is the **default** (`:root`); dark mode is the **override** (`[data-theme="dark"]`).
+
+| Token | Light | Dark | Name |
+|-------|-------|------|------|
+| `g-color-base-primary` | `#0A2540` | `#F4F7F6` | Deep Navy → Soft Off-White |
+| `g-color-base-secondary` | `#206095` | `#4A90E2` | Vascular Blue → Lighter Blue |
+| `g-color-accent` | `#C5A880` | `#D4B88E` | Champagne Gold → Lighter Gold |
+| `g-color-surface-light` | `#F8F9FA` | `#121A21` | Page canvas |
+| `g-color-surface-card` | `#FFFFFF` | `#1A242F` | Elevated card BG |
+| `g-color-text-main` | `#1A2B3C` | `#E2E8F0` | Dark Slate → Light text |
+| `g-color-text-muted` | `#5A6B7C` | `#94A3B8` | Muted text |
+| `g-color-border-subtle` | `#E2E8F0` | `#2A3A4A` | Subtle borders |
+
+Additional light-default tokens defined in `:root`: `--g-color-text-inverse`, `--g-color-text-dim`, `--g-color-border-strong`, accent variants (`-light`/`-dark`), primary variants (`-dim`/`-bright`), surface variants (`-raised`/`-overlay`/`-card-hover`), status colors, and glassmorphism tokens.
+
+### 12.3 Typography
+
+- **Family**: `'Inter', 'Montserrat', sans-serif`; weights 400 / 500 / 600 / 700.
+- Fonts load via `next/font/google` in `app/layout.tsx` (`--font-inter`, `--font-montserrat` CSS variables); the `/v2` page uses both in its inline font stack.
+
+| Token | Size | Rem |
+|-------|------|-----|
+| `g-font-size-xs` | 12px | 0.75rem |
+| `g-font-size-sm` | 14px | 0.875rem |
+| `g-font-size-base` | 16px | 1.0rem |
+| `g-font-size-md` | 20px | 1.25rem |
+| `g-font-size-lg` | 24px | 1.5rem |
+| `g-font-size-xl` | 32px | 2.0rem |
+| `g-font-size-2xl` | 44px | 2.75rem |
+| `g-font-size-3xl` | 56px | 3.5rem |
+
+### 12.4 Semantic tokens (`--s-color-*`)
+
+Defined in `:root` referencing the base tokens; dark values are overridden in `[data-theme="dark"]` so they auto-switch with the theme:
+
+| Token | Light | Dark |
+|-------|-------|------|
+| `s-color-bg-canvas` | `g-color-surface-light` | `#121A21` |
+| `s-color-bg-surface` | `g-color-surface-card` | `#1A242F` |
+| `s-color-bg-brand` | `g-color-base-primary` | `#F4F7F6` |
+| `s-color-bg-accent` | `g-color-accent` | `g-color-accent` |
+| `s-color-content-heading` | `g-color-base-primary` | `g-color-text-main` |
+| `s-color-content-body` | `g-color-text-main` | `g-color-text-muted` |
+| `s-color-content-muted` | `g-color-text-muted` | `g-color-text-muted` |
+| `s-color-content-inverse` | `g-color-surface-card` | `g-color-base-primary` |
+| `s-color-action-primary` | `g-color-base-secondary` | `g-color-base-secondary` |
+| `s-color-action-hover` | `#174872` | `#357ABD` |
+| `s-color-action-gold` | `g-color-accent` | `g-color-accent` |
+
+**Theme system sync**: `ThemeProvider` (and the inline init script in `app/layout.tsx`) set **both** the Tailwind `light`/`dark` class **and** `data-theme="light"|"dark"` on `<html>`, so the class-based dark mode used by legacy components and the attribute-based v2.0 theme stay in sync. Persisted under `localStorage['herlonmoura-theme']`; `<html>` carries `suppressHydrationWarning`.
+
+### 12.5 Component tokens (`--c-*`)
+
+| Token | Value |
+|-------|-------|
+| `c-button-primary-bg` | `s-color-action-primary` |
+| `c-button-primary-text` | `#FFFFFF` |
+| `c-button-gold-bg` | `g-color-accent` |
+| `c-button-gold-text` | `g-color-base-primary` |
+| `c-button-radius` | `6px` |
+| `c-card-bg` | `s-color-bg-surface` |
+| `c-card-border` | `g-color-border-subtle` |
+| `c-card-radius` | `12px` |
+| `c-card-shadow` | light: `0 4px 20px rgba(10,37,64,0.06)` · dark: `0 4px 20px rgba(0,0,0,0.4)` |
+
+The user-specified shorthand aliases (`--bg-canvas`, `--bg-surface`, `--text-heading`, `--text-body`, `--text-muted`, `--brand-primary`, `--brand-secondary`, `--accent-gold`, `--border-subtle`, `--card-shadow`) are also defined in `:root` / `[data-theme="dark"]` and mirror the values above.
+
+### 12.6 Reference CSS (exact v2.0 implementation)
+
+```css
+:root {
+  --bg-canvas: #F8F9FA; --bg-surface: #FFFFFF; --text-heading: #0A2540;
+  --text-body: #1A2B3C; --text-muted: #5A6B7C; --brand-primary: #0A2540;
+  --brand-secondary: #206095; --accent-gold: #C5A880; --border-subtle: #E2E8F0;
+  --card-shadow: 0 4px 20px rgba(10,37,64,0.06);
+}
+[data-theme="dark"] {
+  --bg-canvas: #121A21; --bg-surface: #1A242F; --text-heading: #F4F7F6;
+  --text-body: #E2E8F0; --text-muted: #94A3B8; --brand-primary: #F4F7F6;
+  --brand-secondary: #4A90E2; --accent-gold: #D4B88E; --border-subtle: #2A3A4A;
+  --card-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+```
+
+> **Implementation note**: The dark block is written as `[data-theme="dark"], :root.dark` in `app/globals.css` so it also fires for the class-based dark mode kept for legacy components. Light is the default (`:root`), per the v2.0 spec.

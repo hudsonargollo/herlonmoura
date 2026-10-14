@@ -16,6 +16,22 @@ interface HeroSectionProps {
   logoSvg?: React.ReactNode;
 }
 
+/* ============================================
+   Design System v2.0 — HealthNet × Dr. Herlon Moura
+   Hero. Headings use Montserrat, body copy uses Inter (both via the
+   v2.0 token stack). The h1 below is the element the typography fix
+   targets — it must resolve to Montserrat, never the UA serif.
+   ============================================ */
+
+const HEADING_STACK = 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif';
+
+const primaryButtonStyle: React.CSSProperties = {
+  backgroundColor: 'var(--c-button-primary-bg)',
+  color: 'var(--c-button-primary-text)',
+  borderRadius: 'var(--c-button-radius)',
+  fontWeight: 600,
+};
+
 export function HeroSection({
   headline,
   subheadline = 'Angiologista é um médico especialista em diagnosticar e tratar doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua no sistema circulatório de braços, pernas, tronco e pescoço.',
@@ -44,10 +60,22 @@ export function HeroSection({
       />
 
       {/* Legibility scrim: strong on the left (where the copy sits), clear on the right (the doctor) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/10" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-white/20" />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, var(--s-color-bg-canvas) 55%, rgba(248,249,250,0.1) 100%)',
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to top, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0) 40%, rgba(248,249,250,0.2) 100%)',
+        }}
+      />
 
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div className="relative mx-auto w-full max-w-container px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="max-w-xl lg:max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -55,58 +83,67 @@ export function HeroSection({
             transition={{ duration: 0.7, ease: 'easeOut' }}
           >
             {/* Medical Credentials Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-surgical-teal/30 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-surgical-teal shadow-sm backdrop-blur-md mb-6">
-              <ShieldCheck className="h-4 w-4 text-surgical-teal" />
+            <div
+              className="mb-6 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold"
+              style={{
+                borderColor: 'var(--c-card-border)',
+                backgroundColor: 'var(--s-color-bg-surface)',
+                color: 'var(--s-color-action-primary)',
+              }}
+            >
+              <ShieldCheck className="h-4 w-4" />
               <span>CRM/BA 23904 • RQE 19791 / 22436 • Formado pela UFBA</span>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl font-extrabold tracking-tight text-primary sm:text-5xl lg:text-6xl">
+            {/* Headline — Montserrat, v2.0 display scale */}
+            <h1
+              className="text-4xl sm:text-5xl lg:text-6xl"
+              style={{
+                fontFamily: HEADING_STACK,
+                color: 'var(--s-color-content-heading)',
+                fontWeight: 700,
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em',
+              }}
+            >
               {headline ? (
                 <span>{headline}</span>
               ) : (
                 <>
                   Cuidado Vascular de Excelência com{' '}
-                  <span className="bg-gradient-to-r from-surgical-teal via-teal-500 to-emerald-500 bg-clip-text text-transparent">
-                    Dr. Herlon Moura
-                  </span>
+                  <span style={{ color: 'var(--s-color-action-primary)' }}>Dr. Herlon Moura</span>
                 </>
               )}
             </h1>
 
             {logoSvg && <div className="mt-4 flex">{logoSvg}</div>}
 
-            {/* Subtitle */}
-            <p className="mt-5 text-lg text-secondary sm:text-xl leading-relaxed">
+            {/* Subtitle — Inter */}
+            <p className="mt-5 text-lg leading-relaxed sm:text-xl" style={{ color: 'var(--s-color-content-body)' }}>
               {subheadline}
             </p>
 
             {/* Key Pillars */}
-            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 text-sm text-secondary">
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal">
-                  ✓
-                </span>
-                <span>Tratamentos minimamente invasivos</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal">
-                  ✓
-                </span>
-                <span>Recuperação rápida sem internação</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-surgical-teal/20 text-surgical-teal">
-                  ✓
-                </span>
-                <span>Eco-Doppler Vascular no consultório</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600">
-                  <Sparkles className="h-3.5 w-3.5" />
-                </span>
-                <span>Laser e espuma densa ecoguiada</span>
-              </div>
+            <div className="mt-6 grid grid-cols-1 gap-3 text-body-small sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
+              {[
+                'Tratamentos minimamente invasivos',
+                'Recuperação rápida sem internação',
+                'Eco-Doppler Vascular no consultório',
+                'Laser e espuma densa ecoguiada',
+              ].map((pillar, i) => (
+                <div key={pillar} className="flex items-center gap-2.5">
+                  <span
+                    className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
+                    style={{
+                      backgroundColor: 'var(--s-color-bg-accent)',
+                      color: 'var(--g-color-base-primary)',
+                    }}
+                  >
+                    {i === 3 ? <Sparkles className="h-3.5 w-3.5" /> : '✓'}
+                  </span>
+                  <span>{pillar}</span>
+                </div>
+              ))}
             </div>
 
             {/* CTAs */}
@@ -115,7 +152,8 @@ export function HeroSection({
                 <button
                   type="button"
                   onClick={onBook}
-                  className="inline-flex items-center justify-center gap-3 rounded-xl bg-emerald-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/20 transition-all hover:bg-emerald-500 hover:-translate-y-0.5 active:translate-y-0"
+                  className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
+                  style={primaryButtonStyle}
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>{primaryCTA.label}</span>
@@ -125,7 +163,8 @@ export function HeroSection({
                   href={primaryCTA.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 rounded-xl bg-emerald-600 px-7 py-4 text-base font-bold text-white shadow-xl shadow-emerald-950/20 transition-all hover:bg-emerald-500 hover:-translate-y-0.5 active:translate-y-0"
+                  className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
+                  style={primaryButtonStyle}
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>{primaryCTA.label}</span>
@@ -136,7 +175,13 @@ export function HeroSection({
                 <button
                   type="button"
                   onClick={onOpenCalculator}
-                  className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-surgical-teal/40 bg-white/70 px-6 py-4 text-base font-semibold text-surgical-teal backdrop-blur-md transition-all hover:bg-surgical-teal hover:text-white hover:-translate-y-0.5 active:translate-y-0"
+                  className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
+                  style={{
+                    ...primaryButtonStyle,
+                    backgroundColor: 'transparent',
+                    color: 'var(--s-color-action-primary)',
+                    borderColor: 'var(--s-color-action-primary)',
+                  }}
                 >
                   <Activity className="h-5 w-5" />
                   <span>{secondaryCTA.label}</span>
@@ -145,7 +190,13 @@ export function HeroSection({
               ) : (
                 <a
                   href={secondaryCTA.href || '#calculadora-tvp'}
-                  className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-surgical-teal/40 bg-white/70 px-6 py-4 text-base font-semibold text-surgical-teal backdrop-blur-md transition-all hover:bg-surgical-teal hover:text-white hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
+                  style={{
+                    ...primaryButtonStyle,
+                    backgroundColor: 'transparent',
+                    color: 'var(--s-color-action-primary)',
+                    borderColor: 'var(--s-color-action-primary)',
+                  }}
                 >
                   <Activity className="h-5 w-5" />
                   <span>{secondaryCTA.label}</span>
@@ -155,14 +206,18 @@ export function HeroSection({
             </div>
 
             {/* Quick Contact Micro-Proof */}
-            <div className="mt-8 flex items-center gap-6 border-t border-default pt-6 text-xs text-tertiary">
+            <div className="mt-8 flex items-center gap-6 border-t pt-6 text-caption" style={{ borderColor: 'var(--c-card-border)', color: 'var(--s-color-content-muted)' }}>
               <div>
-                <span className="block font-semibold text-primary">Consultório em Salvador</span>
+                <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
+                  Consultório em Salvador
+                </span>
                 <span>R. Eng. Célso Tôrres, 654 - Graça</span>
               </div>
-              <div className="h-8 w-px bg-slate-300" />
+              <div className="h-8 w-px" style={{ backgroundColor: 'var(--c-card-border)' }} />
               <div>
-                <span className="block font-semibold text-primary">Agendamento Ágil</span>
+                <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
+                  Agendamento Ágil
+                </span>
                 <span>WhatsApp: (71) 99915-9975</span>
               </div>
             </div>
