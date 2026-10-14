@@ -13,12 +13,13 @@ import {
   ChevronRight,
   ClipboardList,
   HeartPulse,
+  BarChart3,
 } from 'lucide-react';
 import { useAuth } from '@/lib/admin/auth';
 
 interface SidebarProps {
   activeSection: string;
-  onNavigate: (section: 'crm' | 'appointments' | 'leads' | 'blog') => void;
+  onNavigate: (section: 'crm' | 'appointments' | 'leads' | 'blog' | 'analytics') => void;
 }
 
 const NAV_ITEMS = [
@@ -26,6 +27,7 @@ const NAV_ITEMS = [
   { id: 'appointments', label: 'Agendamentos', href: '/admin/crm/appointments', icon: Calendar },
   { id: 'leads', label: 'Leads', href: '/admin/crm/leads', icon: ClipboardList },
   { id: 'blog', label: 'Blog', href: '/admin/blog', icon: FileText },
+  { id: 'analytics', label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
 ];
 
 export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
@@ -77,7 +79,7 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id as 'crm' | 'appointments' | 'leads' | 'blog')}
+              onClick={() => onNavigate(item.id as 'crm' | 'appointments' | 'leads' | 'blog' | 'analytics')}
               className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-surgical-teal/10 text-surgical-teal'

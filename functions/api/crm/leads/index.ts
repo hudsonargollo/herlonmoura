@@ -269,6 +269,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         .run();
     }
 
+    // Automated lead scoring: source weight + engagement + risk score
+    const sourceWeights: Record<string, number> = {
+      whatsapp: 30, contact: 25, questionnaire: 20, freebie_download: 15,
+      'varizes-assessment': 20, 'trombose-screening': 20, test: 15,
+      blog: 10, social: 10, referral: 15,
+    };
+    const sourceScore = sourceWeights[body.source ?? "contact"] ?? 10;
+    const riskScore = body.riskScore ?? 0;
+    const engagementScore = Math.min(20, (body.engagement_events ?? 0) * 5);
+    const emailBonus = body.email ? 10 : 0;
+    const whatsappBonus = (body.whatsapp ?? body.phone) ? 10 : 0;
+    const computedScore = Math.min(100, sourceScore + riskScore + engagementScore + emailBonus + whatsappBonus);
+    const finalScore = Math.max(computedScore, body.score ?? 0);
+
     await db
       .prepare(
         `INSERT INTO leads (
@@ -287,7 +301,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         body.source ?? "contact",
         body.source_detail ?? body.subject ?? null,
         status,
-        body.score ?? body.riskScore ?? 0,
+        finalScore,
         JSON.stringify(body.tags ?? []),
         body.notes ?? "",
         body.next_action ?? "",

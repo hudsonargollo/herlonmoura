@@ -8,9 +8,10 @@ import { PatientDetail } from '@/components/admin/PatientDetail';
 import { AppointmentScheduler } from '@/components/admin/AppointmentScheduler';
 import { LeadStatusTracker } from '@/components/admin/LeadStatusTracker';
 import { BlogEditorList } from '@/components/admin/BlogEditorList';
-import { Users, Calendar, ClipboardList, FileText } from 'lucide-react';
+import AnalyticsFunnels from './analytics/page';
+import { Users, Calendar, ClipboardList, FileText, BarChart3 } from 'lucide-react';
 
-type Section = 'crm' | 'appointments' | 'leads' | 'blog';
+type Section = 'crm' | 'appointments' | 'leads' | 'blog' | 'analytics';
 
 interface CRMPageProps {
   activeSection: Section;
@@ -57,6 +58,7 @@ export default function AdminPage() {
               {activeSection === 'appointments' && <Calendar className="h-6 w-6 text-surgical-teal" />}
               {activeSection === 'leads' && <ClipboardList className="h-6 w-6 text-surgical-teal" />}
               {activeSection === 'blog' && <FileText className="h-6 w-6 text-surgical-teal" />}
+              {activeSection === 'analytics' && <BarChart3 className="h-6 w-6 text-surgical-teal" />}
               <h1 className="text-display-md font-heading font-semibold text-neutral-light">
                 {activeSection === 'crm'
                   ? 'CRM — Pacientes'
@@ -64,6 +66,8 @@ export default function AdminPage() {
                   ? 'Agendamentos'
                   : activeSection === 'leads'
                   ? 'Leads'
+                  : activeSection === 'analytics'
+                  ? 'Analytics'
                   : 'Blog Editor'}
               </h1>
             </div>
@@ -74,6 +78,8 @@ export default function AdminPage() {
                 ? 'Agende e acompanhe consultas.'
                 : activeSection === 'leads'
                 ? 'Acompanhe o pipeline de leads e taxas de conversão.'
+                : activeSection === 'analytics'
+                ? 'Funis de conversão, análise de coortes e engajamento por procedimento.'
                 : 'Crie e gerencie artigos do blog com preview em tempo real.'}
             </p>
           </header>
@@ -81,6 +87,8 @@ export default function AdminPage() {
           {/* Content */}
           {activeSection === 'blog' ? (
             <BlogEditorList />
+          ) : activeSection === 'analytics' ? (
+            <AnalyticsFunnels />
           ) : (
             <CRMPage activeSection={activeSection} onNavigate={setActiveSection} />
           )}
