@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageCircle, Loader2, CheckCircle2, ShieldCheck, ArrowLeft } from 'lucide-react';
 import {
   buildWhatsappLink,
-  CLINIC_PHONE,
+  SCHEDULER_URL,
   type ContactLead,
   type InsuranceChoice,
 } from '@/lib/contact';
@@ -138,7 +138,7 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
                 </span>
                 <div>
                   <h3 id="contact-modal-title" className="text-sm sm:text-base font-bold text-primary">
-                    {title ?? 'Falar com a secretaria'}
+                    {title ?? 'Agendar Consulta'}
                   </h3>
                   {context && <p className="text-[11px] text-tertiary">{context}</p>}
                 </div>
@@ -278,7 +278,7 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
                 </div>
                 <h4 className="text-lg font-bold text-primary">Tudo pronto, {name.split(' ')[0]}!</h4>
                 <p className="text-sm text-secondary">
-                  Clique abaixo para abrir o WhatsApp da secretaria com seus dados já preenchidos.
+                  Clique abaixo para abrir o WhatsApp com os dados do seu lead preenchidos.
                 </p>
                 <a
                   href={waLink}
@@ -289,8 +289,13 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
                   <MessageCircle className="h-5 w-5" /> Abrir WhatsApp
                 </a>
                 <div className="flex items-center justify-between pt-2">
-                  <a href={`tel:${CLINIC_PHONE.replace(/\D/g, '')}`} className="text-xs text-surgical-teal hover:underline">
-                    📞 {CLINIC_PHONE}
+                  <a
+                    href={SCHEDULER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-surgical-teal hover:underline"
+                  >
+                    📅 Agende diretamente no calendário
                   </a>
                   <button
                     onClick={() => setWaLink(null)}

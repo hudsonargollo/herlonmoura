@@ -12,8 +12,10 @@ import {
   DVTModal,
   ContactModal,
 } from '@/components';
+import { SCHEDULER_URL } from '@/lib/contact';
 import {
   Activity,
+  Calendar,
   CheckCircle2,
   Stethoscope,
   Sparkles,
@@ -448,7 +450,7 @@ export default function Home() {
                 <div className="absolute inset-0 rounded-3xl bg-surgical-teal/20 blur-2xl" />
                 <div className="relative z-10 overflow-hidden rounded-3xl border border-default bg-surface-raised shadow-2xl">
                   <Image
-                    src="/images/brand/banner-mobile.png"
+                    src="/images/brand/dr-photoroom.png"
                     alt="Dr. Herlon Moura dos Santos"
                     width={380}
                     height={520}
@@ -536,13 +538,13 @@ export default function Home() {
                 <span>Agendar pelo WhatsApp</span>
               </button>
               <a
-                href="https://wa.me/5571999159975"
+                href={SCHEDULER_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-surgical-teal/40 bg-surgical-teal/10 px-6 py-3.5 text-sm font-semibold text-surgical-teal hover:bg-surgical-teal hover:text-slate-950 transition-all"
               >
-                <MessageCircle className="h-4 w-4" />
-                Conversa direta
+                <Calendar className="h-4 w-4" />
+                Agendar no Calendário
               </a>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-tertiary">

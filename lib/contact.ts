@@ -10,6 +10,9 @@ export const ADMIN_BASE_URL = 'https://www.herlonmoura.clubemkt.digital';
 /** Path prefix for the secretary's CRM patient cards. */
 export const ADMIN_CRMLINK_PATH = '/admin/crm';
 
+/** Cal.com self-hosted scheduler URL for direct appointment booking. */
+export const SCHEDULER_URL = 'https://cal.herlonmoura.clubemkt.digital';
+
 export type InsuranceChoice = 'particular' | 'convenio';
 
 export interface ContactLead {

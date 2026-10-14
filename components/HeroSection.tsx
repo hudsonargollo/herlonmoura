@@ -21,7 +21,7 @@ export function HeroSection({
   subheadline = 'Angiologista é um médico especialista em diagnosticar e tratar doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua no sistema circulatório de braços, pernas, tronco e pescoço.',
   primaryCTA = {
     label: 'Agendar Consulta',
-    href: 'https://wa.me/5571999159975?text=Olá%20Dr.%20Herlon%20Moura,%20gostaria%20de%20agendar%20uma%20consulta.',
+    href: '#',
   },
   secondaryCTA = {
     label: 'Calculadora de Risco de TVP',
