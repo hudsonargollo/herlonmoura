@@ -172,8 +172,8 @@ export default function QuestionnairePage() {
                 onClick={() => toggleRiskFactor(factor)}
                 className={`w-full rounded-lg border px-6 py-4 text-left text-body-regular transition-all ${
                   answers.riskFactors.includes(factor)
-                    ? 'border-surgical-teal bg-surgical-teal bg-opacity-10 text-surgical-teal'
-                    : 'border-glass bg-glass text-neutral-light hover:border-surgical-teal hover:bg-glass-hover'
+                    ? 'glass-selected'
+                    : 'border-glass bg-glass text-neutral-light hover:bg-glass-hover'
                 }`}
               >
                 {factor}
