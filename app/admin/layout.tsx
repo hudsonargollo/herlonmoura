@@ -27,7 +27,7 @@ function AdminRoot() {
 
 export default function AdminPage() {
   return (
-    <div className="dark admin-scroll">
+    <div className="admin-scroll" data-theme="dark">
       <AuthProvider>
         <AdminRoot />
       </AuthProvider>

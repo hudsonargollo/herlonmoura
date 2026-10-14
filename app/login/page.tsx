@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { Shield, User, Lock, HeartPulse, Activity, Stethoscope } from 'lucide-react';
-// HeartPulse used in floating icons below
 import dynamic from 'next/dynamic';
 
 const VascularScene = dynamic(() => import('@/components/Hero3D').then(m => m.VascularScene), {
@@ -18,10 +17,17 @@ const VascularScene = dynamic(() => import('@/components/Hero3D').then(m => m.Va
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [error, setError] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch — only set dark theme after mount
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    setMounted(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,46 +70,22 @@ export default function LoginPage() {
 
       {/* Floating medical icons */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="absolute left-[8%] top-[15%] h-12 w-12 animate-pulse rounded-2xl border border-surgical-teal/20 bg-surgical-teal/5 backdrop-blur-sm"
-          style={{ animationDelay: '0s', animationDuration: '3s' }}
-        >
-          <div className="flex h-full w-full items-center justify-center">
-            <HeartPulse className="h-6 w-6 text-surgical-teal/60" />
+        {[
+          { Icon: HeartPulse, pos: 'left-[8%] top-[15%]', size: 'h-12 w-12', iconSize: 'h-6 w-6', color: 'text-surgical-teal/60', border: 'border-surgical-teal/20', bg: 'bg-surgical-teal/5', delay: '0s', dur: '3s' },
+          { Icon: Activity, pos: 'right-[12%] top-[20%]', size: 'h-10 w-10', iconSize: 'h-5 w-5', color: 'text-surgical-teal/50', border: 'border-surgical-teal/20', bg: 'bg-surgical-teal/5', delay: '1s', dur: '4s' },
+          { Icon: Stethoscope, pos: 'bottom-[18%] left-[15%]', size: 'h-10 w-10', iconSize: 'h-5 w-5', color: 'text-gold/50', border: 'border-gold/20', bg: 'bg-gold/5', delay: '2s', dur: '3.5s' },
+          { Icon: Shield, pos: 'bottom-[25%] right-[8%]', size: 'h-14 w-14', iconSize: 'h-7 w-7', color: 'text-surgical-teal/40', border: 'border-surgical-teal/15', bg: 'bg-surgical-teal/5', delay: '0.5s', dur: '4.5s' },
+        ].map(({ Icon, pos, size, iconSize, color, border, bg, delay, dur }, i) => (
+          <div
+            key={i}
+            className={`absolute ${pos} ${size} animate-pulse rounded-2xl border ${border} ${bg} backdrop-blur-sm`}
+            style={{ animationDelay: delay, animationDuration: dur }}
+          >
+            <div className="flex h-full w-full items-center justify-center">
+              <Icon className={`${iconSize} ${color}`} />
+            </div>
           </div>
-        </div>
-        <div
-          className="absolute right-[12%] top-[20%] h-10 w-10 animate-pulse rounded-2xl border border-surgical-teal/20 bg-surgical-teal/5 backdrop-blur-sm"
-          style={{ animationDelay: '1s', animationDuration: '4s' }}
-        >
-          <div className="flex h-full w-full items-center justify-center">
-            <Activity className="h-5 w-5 text-surgical-teal/50" />
-          </div>
-        </div>
-        <div
-          className="absolute bottom-[18%] left-[15%] h-10 w-10 animate-pulse rounded-2xl border border-gold/20 bg-gold/5 backdrop-blur-sm"
-          style={{ animationDelay: '2s', animationDuration: '3.5s' }}
-        >
-          <div className="flex h-full w-full items-center justify-center">
-            <Stethoscope className="h-5 w-5 text-gold/50" />
-          </div>
-        </div>
-        <div
-          className="absolute bottom-[25%] right-[8%] h-14 w-14 animate-pulse rounded-2xl border border-surgical-teal/15 bg-surgical-teal/5 backdrop-blur-sm"
-          style={{ animationDelay: '0.5s', animationDuration: '4.5s' }}
-        >
-          <div className="flex h-full w-full items-center justify-center">
-            <Shield className="h-7 w-7 text-surgical-teal/40" />
-          </div>
-        </div>
-        <div
-          className="absolute left-[45%] top-[8%] h-8 w-8 animate-pulse rounded-full border border-surgical-teal/15 bg-surgical-teal/5 backdrop-blur-sm"
-          style={{ animationDelay: '1.5s', animationDuration: '3.8s' }}
-        >
-          <div className="flex h-full w-full items-center justify-center">
-            <HeartPulse className="h-4 w-4 text-surgical-teal/40" />
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Login Card */}
@@ -113,27 +95,49 @@ export default function LoginPage() {
           style={{
             borderColor: 'rgba(20, 184, 166, 0.15)',
             backgroundColor: 'rgba(10, 22, 40, 0.75)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            backdropFilter: 'blur(24px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
             boxShadow:
               'inset 0 1px 0 rgba(255,255,255,0.08), 0 24px 48px -12px rgba(0,0,0,0.5)',
           }}
         >
           {/* Logo */}
-          <div className="mb-8 text-center">
+          <div className="mb-4 text-center">
             <div
-              className="mx-auto mb-4 flex h-20 w-auto items-center justify-center rounded-2xl px-6"
+              className="mx-auto flex h-16 w-auto items-center justify-center rounded-2xl px-5"
               style={{ backgroundColor: 'rgba(248, 250, 252, 0.95)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/brand/logo.png"
                 alt="Dr. Herlon Moura"
-                className="h-14 w-auto object-contain"
+                className="h-12 w-auto object-contain"
               />
             </div>
+          </div>
+
+          {/* Doctor Photo */}
+          <div className="mb-6 flex justify-center">
+            <div
+              className="relative h-24 w-24 overflow-hidden rounded-full border-2"
+              style={{
+                borderColor: 'rgba(20, 184, 166, 0.4)',
+                boxShadow: '0 0 20px rgba(20, 184, 166, 0.15)',
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/brand/dr-photoroom.png"
+                alt="Dr. Herlon Moura"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+          </div>
+
+          {/* Title */}
+          <div className="mb-6 text-center">
             <h1
-              className="text-2xl font-bold"
+              className="text-xl font-bold"
               style={{
                 fontFamily: 'var(--font-montserrat), system-ui, sans-serif',
                 color: '#f8fafc',
@@ -141,12 +145,12 @@ export default function LoginPage() {
             >
               Painel Administrativo
             </h1>
-            <p className="mt-1.5 text-sm text-slate-400">
+            <p className="mt-1 text-xs text-slate-400">
               Dr. Herlon Moura — Sistema de Gestão
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             {/* Email */}
             <div>
               <label className="mb-1.5 block text-xs font-medium text-slate-400">
@@ -194,7 +198,7 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="mt-5 text-center text-[11px] text-slate-500">
+          <p className="mt-4 text-center text-[11px] text-slate-500">
             Acesso restrito à equipe Dr. Herlon Moura
           </p>
         </div>
