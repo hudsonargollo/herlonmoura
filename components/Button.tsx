@@ -1,44 +1,49 @@
-import React from 'react';
+import { Button as ButtonPrimitive, buttonVariants } from "@/components/ui/button";
+import { cn } from "cn";
+import type { VariantProps } from "class-variance-authority";
+import type { ComponentProps } from "react";
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type LegacyButtonVariant = "primary" | "secondary" | "ghost";
+export type LegacyButtonSize = "sm" | "md" | "lg";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
+interface ButtonProps extends ComponentProps<"button"> {
+  variant?: LegacyButtonVariant;
+  size?: LegacyButtonSize;
   isLoading?: boolean;
   children: React.ReactNode;
 }
 
-const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-surgical-teal text-white hover:bg-surgical-teal-dark',
-  secondary: 'border border-surgical-teal bg-transparent text-surgical-teal hover:bg-surgical-teal hover:text-white',
-  ghost: 'bg-transparent text-surgical-teal underline hover:no-underline',
+// Map legacy variant names to shadcn variants
+const variantMap: Record<LegacyButtonVariant, string> = {
+  primary: "default",
+  secondary: "secondary",
+  ghost: "ghost",
 };
 
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-3 py-2 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-6 py-3 text-lg',
+const sizeMap: Record<LegacyButtonSize, string> = {
+  sm: "sm",
+  md: "default",
+  lg: "lg",
 };
 
 export function Button({
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   isLoading = false,
   disabled = false,
-  className = '',
+  className = "",
   children,
   ...props
 }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surgical-teal disabled:opacity-50 disabled:cursor-not-allowed';
-  
-  const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
+  const mappedVariant = variantMap[variant] as VariantProps<typeof buttonVariants>["variant"];
+  const mappedSize = sizeMap[size] as VariantProps<typeof buttonVariants>["size"];
 
   return (
-    <button
+    <ButtonPrimitive
+      variant={mappedVariant}
+      size={mappedSize}
       disabled={disabled || isLoading}
-      className={combinedClassName}
+      className={cn(className, "transition-all")}
       {...props}
     >
       {isLoading ? (
@@ -49,6 +54,8 @@ export function Button({
       ) : (
         children
       )}
-    </button>
+    </ButtonPrimitive>
   );
 }
+
+export { buttonVariants };

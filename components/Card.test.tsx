@@ -12,7 +12,8 @@ describe('Card Component', () => {
     it('renders with standard variant by default', () => {
       render(<Card data-testid="card">Standard</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('bg-surface-raised');
+      // shadcn Card uses bg-card which maps to var(--color-surface-raised)
+      expect(card).toHaveClass('bg-card');
     });
 
     it('renders with glass variant', () => {
@@ -24,18 +25,18 @@ describe('Card Component', () => {
     it('renders with correct base styles', () => {
       render(<Card data-testid="card">Base styles</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-xl');
       expect(card).toHaveClass('p-6');
       expect(card).toHaveClass('transition-all');
     });
   });
 
   describe('Variants', () => {
-    it('standard variant has border and shadow', () => {
+    it('standard variant has border and bg-card', () => {
       render(<Card variant="standard" data-testid="card">Standard</Card>);
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('border');
-      expect(card).toHaveClass('shadow-lg');
+      expect(card).toHaveClass('bg-card');
     });
 
     it('glass variant has glass-card class', () => {

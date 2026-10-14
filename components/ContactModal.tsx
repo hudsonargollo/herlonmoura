@@ -75,15 +75,16 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
 
     setSubmitting(true);
 
-    // Best-effort CRM ingestion — never block the WhatsApp handoff on it.
+    // Direct-to-database ingestion — save as a prospect and capture the row ID.
+    let leadId: string | undefined;
     try {
-      await fetch('/api/crm/leads', {
+      const res = await fetch('/api/crm/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: lead.name,
-          email: lead.email,
           whatsapp: '',
+          email: lead.email,
           source: 'whatsapp_cta',
           source_detail: context ?? null,
           notes: lead.insurance === 'convenio' ? `Convênio: ${lead.insuranceName}` : 'Particular',
@@ -91,12 +92,18 @@ export function ContactModal({ isOpen, onClose, context, title }: ContactModalPr
           insurance_name: lead.insuranceName ?? null,
         }),
       });
+      const result = (await res.json().catch(() => ({}))) as { id?: string };
+      leadId = result.id;
     } catch {
       // ignore — WhatsApp link still works
     }
 
-    setWaLink(buildWhatsappLink(lead, context));
+    const wa = buildWhatsappLink(lead, context, leadId);
+    setWaLink(wa);
     setSubmitting(false);
+    // Auto-redirect to WhatsApp as soon as the lead is saved.
+    window.open(wa, '_blank', 'noopener,noreferrer');
+    onClose();
   };
 
   return (

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Fira_Code } from "next/font/google";
+import { Inter, Poppins, Fira_Code, Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -61,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.ReactNode {
   return (
-    <html lang="pt-BR" className="light" suppressHydrationWarning>
+    <html lang="pt-BR" className={cn("light", "font-sans", geist.variable)} suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

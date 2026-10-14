@@ -1,4 +1,4 @@
-export { Button, type ButtonVariant, type ButtonSize } from './Button';
+export { Button, type LegacyButtonVariant as ButtonVariant, type LegacyButtonSize as ButtonSize } from './Button';
 export { Card, type CardVariant } from './Card';
 export { FormInput, type InputType, type InputState } from './FormInput';
 export { Label } from './Label';

@@ -35,7 +35,7 @@ describe('FormInput Component', () => {
     it('renders with default state', () => {
       render(<FormInput />);
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('border-neutral-medium');
+      expect(input).toHaveClass('border-input');
     });
 
     it('renders with error state', () => {
@@ -93,7 +93,8 @@ describe('FormInput Component', () => {
     it('has focus visible styles', () => {
       render(<FormInput />);
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('focus-visible:ring-2');
+      // shadcn Input uses focus-visible:ring-3
+      expect(input).toHaveClass('focus-visible:ring-3');
     });
 
     it('displays error message with proper styling', () => {

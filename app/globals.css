@@ -1,53 +1,70 @@
+@import "tw-animate-css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ============================================
    DESIGN SYSTEM: CSS CUSTOM PROPERTIES
+   Herlon Moura — adapted from Dribbble
+   healthcare palette (teal/greens + warm earth)
    ============================================ */
 
 :root {
-  /* Primary Colors */
-  --color-dark-elevated: #0f172a;
-  --color-surgical-teal: #14b8a6;
-  --color-surgical-teal-dark: #0d9488;
+  /* ============================================
+     BRAND COLORS (from Dribbble reference)
+     ============================================ */
+  /* Primary — surgical teal family */
+  --color-surgical-teal: #2aa680;          /* #59A48F deepened for brand */
+  --color-surgical-teal-dark: #22846e;      /* darker variant */
+  --color-surgical-teal-light: #a4d8cc;    /* #A4D8CC — soft teal highlight */
+
+  /* Secondary — warm earth accent */
+  --color-earth: #ab7a59;                  /* #AB7A59 — from Dribbble */
+  --color-earth-light: #d4b094;
+
+  /* Dark — deep charcoal */
+  --color-dark-elevated: #0a1411;          /* #0A1411 — from Dribbble */
 
   /* Supporting Colors */
   --color-neutral-light: #f8fafc;
   --color-neutral-medium: #94a3b8;
   --color-neutral-dark: #1e293b;
-  --color-success-green: #10b981;
+  --color-success-green: #22c55e;          /* #72D2B3 brightened for contrast */
   --color-warning-amber: #f59e0b;
   --color-error-red: #ef4444;
 
-  /* Glassmorphism Colors */
-  --color-glass-surface: rgba(15, 23, 42, 0.7);
-  --color-glass-surface-hover: rgba(15, 23, 42, 0.85);
-  --color-glass-border: rgba(20, 184, 166, 0.2);
-  --color-glass-border-hover: rgba(20, 184, 166, 0.4);
-  --color-glass-overlay: rgba(15, 23, 42, 0.4);
+  /* Medical accent — muted teal */
+  --color-medical-teal: #72d2b3;           /* #72D2B3 */
+  --color-medical-soft: #bedcd2;           /* #BEDCD2 */
+
+  /* Glassmorphism Colors — adapt to dark charcoal base */
+  --color-glass-surface: rgba(10, 20, 17, 0.7);
+  --color-glass-surface-hover: rgba(10, 20, 17, 0.85);
+  --color-glass-border: rgba(42, 166, 128, 0.2);
+  --color-glass-border-hover: rgba(42, 166, 128, 0.4);
+  --color-glass-overlay: rgba(10, 20, 17, 0.4);
 
   /* ============================================
      SEMANTIC COLOR TOKENS (DARK — default :root)
      ============================================ */
-  --color-bg-primary: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-bg-tertiary: #020617;
-  --color-bg-card: rgba(15, 23, 42, 0.7);
-  --color-bg-card-hover: rgba(15, 23, 42, 0.85);
+  --color-bg-primary: #0a1411;            /* dark charcoal background */
+  --color-bg-secondary: #1a2a25;         /* subtle elevation */
+  --color-bg-tertiary: #0a1411;
+  --color-bg-card: rgba(10, 20, 17, 0.7);
+  --color-bg-card-hover: rgba(10, 20, 17, 0.85);
 
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
   --color-text-tertiary: #64748b;
-  --color-text-inverse: #0f172a;
+  --color-text-inverse: #0a1411;
 
   --color-border-default: rgba(148, 163, 184, 0.15);
   --color-border-subtle: rgba(148, 163, 184, 0.08);
   --color-border-strong: rgba(148, 163, 184, 0.3);
 
-  --color-surface: #0f172a;
-  --color-surface-raised: #1e293b;
-  --color-surface-overlay: rgba(15, 23, 42, 0.95);
+  --color-surface: #0a1411;
+  --color-surface-raised: #1a2a25;
+  --color-surface-overlay: rgba(10, 20, 17, 0.95);
 
   /* Font Stacks */
   --font-inter: "Inter";
@@ -93,7 +110,7 @@
   --breakpoint-desktop: 1025px;
   --breakpoint-ultra-wide: 1441px;
 
-  /* Shadows */
+  /* Shadows — adapt for the charcoal base */
   --shadow-glass: 0 10px 30px 0 rgba(0, 0, 0, 0.35);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -125,13 +142,24 @@
    LIGHT THEME OVERRIDES
    ============================================ */
 :root.light {
+  /* Primary — surgical teal family (same in both) */
+  --color-surgical-teal: #2aa680;
+  --color-surgical-teal-dark: #22846e;
+  --color-surgical-teal-light: #a4d8cc;
+
+  /* Secondary — warm earth accent */
+  --color-earth: #ab7a59;
+  --color-earth-light: #d4b094;
+
+  --color-dark-elevated: #f8fafc;
+
   --color-bg-primary: #ffffff;
   --color-bg-secondary: #f1f5f9;
   --color-bg-tertiary: #f8fafc;
   --color-bg-card: #ffffff;
   --color-bg-card-hover: #f8fafc;
 
-  --color-text-primary: #0f172a;
+  --color-text-primary: #0a1411;
   --color-text-secondary: #475569;
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #f8fafc;
@@ -146,8 +174,8 @@
 
   --color-glass-surface: rgba(255, 255, 255, 0.75);
   --color-glass-surface-hover: rgba(255, 255, 255, 0.9);
-  --color-glass-border: rgba(20, 184, 166, 0.25);
-  --color-glass-border-hover: rgba(20, 184, 166, 0.45);
+  --color-glass-border: rgba(42, 166, 128, 0.25);
+  --color-glass-border-hover: rgba(42, 166, 128, 0.45);
   --color-glass-overlay: rgba(255, 255, 255, 0.5);
 
   --shadow-glass: 0 10px 30px 0 rgba(0, 0, 0, 0.08);
@@ -157,9 +185,50 @@
 }
 
 /* ============================================
+   shadcn/ui — map CSS variables to brand palette
+   ============================================ */
+:root {
+  --background: var(--color-bg-primary);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-surface-raised);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-surface-overlay);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-surgical-teal);
+  --primary-foreground: var(--color-text-inverse);
+  --secondary: var(--color-earth);
+  --secondary-foreground: var(--color-text-inverse);
+  --muted: var(--color-surface-raised);
+  --muted-foreground: var(--color-text-secondary);
+  --accent: var(--color-surgical-teal-light);
+  --accent-foreground: var(--color-bg-primary);
+  --destructive: var(--color-error-red);
+  --border: var(--color-border-default);
+  --input: var(--color-border-default);
+  --ring: var(--color-surgical-teal);
+  --radius: 12px;
+  --sidebar: var(--color-surface);
+  --sidebar-foreground: var(--color-text-primary);
+  --sidebar-primary: var(--color-surgical-teal);
+  --sidebar-primary-foreground: var(--color-text-inverse);
+  --sidebar-accent: var(--color-surface-raised);
+  --sidebar-accent-foreground: var(--color-text-primary);
+  --sidebar-border: var(--color-border-default);
+  --sidebar-ring: var(--color-surgical-teal);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ============================================
    GLASSMORPHISM EFFECTS
    ============================================ */
-
 .glass-effect {
   @apply rounded-xl border backdrop-blur-[10px];
   border-color: var(--color-glass-border);
@@ -178,7 +247,6 @@
 /* ============================================
    SMOOTH SCROLLING
    ============================================ */
-
 html {
   scroll-behavior: smooth;
 }
@@ -186,7 +254,6 @@ html {
 /* ============================================
    ACCESSIBILITY: FOCUS STATES
    ============================================ */
-
 :focus-visible {
   @apply outline-2 outline-offset-2 outline-surgical-teal;
 }
@@ -194,7 +261,6 @@ html {
 /* ============================================
    ACCESSIBILITY: REDUCED MOTION
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -209,7 +275,6 @@ html {
 /* ============================================
    THEME TRANSITION
    ============================================ */
-
 body {
   transition: background-color var(--transition-base),
     color var(--transition-base);
@@ -218,7 +283,6 @@ body {
 /* ============================================
    TYPOGRAPHY DEFAULTS
    ============================================ */
-
 body {
   @apply font-sans;
 }
@@ -254,7 +318,6 @@ small {
 /* ============================================
    FORM ELEMENTS
    ============================================ */
-
 button {
   @apply transition-all duration-300;
 }
@@ -283,7 +346,6 @@ select:disabled {
 /* ============================================
    LINKS
    ============================================ */
-
 a {
   @apply text-surgical-teal transition-colors duration-300 hover:text-surgical-teal-dark;
 }
@@ -291,7 +353,6 @@ a {
 /* ============================================
    IMAGES
    ============================================ */
-
 img {
   @apply max-w-full;
 }
@@ -299,7 +360,6 @@ img {
 /* ============================================
    UTILITY CLASSES: GLASSMORPHISM VARIANTS
    ============================================ */
-
 .glass-card {
   background-color: var(--color-glass-surface);
   border: 1px solid var(--color-glass-border);
@@ -342,7 +402,7 @@ img {
 .glass-input:focus {
   outline: none;
   border-color: var(--color-surgical-teal);
-  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.25);
+  box-shadow: 0 0 0 2px rgba(42, 166, 128, 0.25);
 }
 
 .glass-button {
@@ -361,7 +421,7 @@ img {
 
 .glass-button:hover {
   background-color: var(--color-surgical-teal-dark);
-  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35);
+  box-shadow: 0 4px 14px rgba(42, 166, 128, 0.35);
 }
 
 .glass-button:focus-visible {
@@ -372,7 +432,6 @@ img {
 /* ============================================
    UTILITY CLASSES: RESPONSIVE CONTAINERS
    ============================================ */
-
 .container-mobile {
   @apply px-4;
 }
@@ -388,7 +447,6 @@ img {
 /* ============================================
    UTILITY CLASSES: TYPOGRAPHY HELPERS
    ============================================ */
-
 .text-truncate {
   @apply overflow-hidden text-ellipsis whitespace-nowrap;
 }
@@ -410,7 +468,6 @@ img {
 /* ============================================
    UTILITY CLASSES: FLEX HELPERS
    ============================================ */
-
 .flex-center {
   @apply flex items-center justify-center;
 }
@@ -426,7 +483,6 @@ img {
 /* ============================================
    UTILITY CLASSES: GRID HELPERS
    ============================================ */
-
 .grid-auto-fit {
   @apply grid gap-6;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -440,7 +496,6 @@ img {
 /* ============================================
    UTILITY CLASSES: VISIBILITY
    ============================================ */
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -456,7 +511,6 @@ img {
 /* ============================================
    UTILITY CLASSES: ANIMATIONS
    ============================================ */
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -522,8 +576,7 @@ img {
 }
 
 @keyframes pulse {
-  0%,
-  100% {
+  0%, 100% {
     opacity: 1;
   }
   50% {
@@ -531,30 +584,133 @@ img {
   }
 }
 
-.animate-fade-in {
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes textureShift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+.analyze-fade-in {
   animation: fadeIn 0.8s ease-in-out;
 }
 
-.animate-slide-up {
+.analyze-slide-up {
   animation: slideUp 1s ease-out;
 }
 
-.animate-slide-down {
+.analyze-slide-down {
   animation: slideDown 1s ease-out;
 }
 
-.animate-slide-left {
+.analyze-slide-left {
   animation: slideLeft 1s ease-out;
 }
 
-.animate-slide-right {
+.analyze-slide-right {
   animation: slideRight 1s ease-out;
 }
 
-.animate-scale-in {
+.analyze-scale-in {
   animation: scaleIn 0.6s ease-out;
 }
 
-.animate-pulse-custom {
+.analyze-pulse-custom {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.analyze-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.analyze-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(42, 166, 128, 0.1) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ============================================
+   BRAND-EDGE ANIMATIONS
+   ============================================ */
+.medical-pulse {
+  animation: medicalPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes medicalPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(42, 166, 128, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(42, 166, 128, 0);
+  }
+}
+
+.medical-glow {
+  position: relative;
+  transition: --tw-shadow 300ms var(--ease-material);
+}
+
+.medical-glow:hover {
+  --tw-shadow: 0 0 20px rgba(42, 166, 128, 0.5), 0 0 40px rgba(42, 166, 128, 0.3);
+}
+
+/* ============================================
+   TEXTURE OVERLAYS
+   ============================================ */
+.body-texture {
+  position: relative;
+  isolation: isolate;
+}
+
+.body-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(42, 166, 128, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 80% 30%, rgba(171, 122, 89, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+  animation: textureShift 30s linear infinite;
+}
+
+.glass-card-texture {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(-135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%);
+  background-size: 3px 3px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
 }

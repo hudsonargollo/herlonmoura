@@ -1,53 +1,66 @@
-import React from 'react';
+import { cn } from "cn";
+import { Input as InputPrimitive } from "@/components/ui/input";
+import type { ComponentProps } from "react";
 
-export type InputType = 'text' | 'email' | 'password' | 'tel' | 'number' | 'date' | 'time';
-export type InputState = 'default' | 'error' | 'success';
+export type InputType = "text" | "email" | "password" | "tel" | "number" | "date" | "time";
+export type InputState = "default" | "error" | "success";
 
-interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+const stateStyles: Record<InputState, string> = {
+  default: "border-input focus:ring-ring",
+  error: "border-error-red focus:ring-error-red",
+  success: "border-success-green focus:ring-success-green",
+};
+
+interface FormInputProps extends ComponentProps<typeof InputPrimitive> {
   state?: InputState;
   errorMessage?: string;
   successMessage?: string;
   label?: string;
   helperText?: string;
+  variant?: "default" | "glass";
 }
 
-const stateStyles: Record<InputState, string> = {
-  default: 'border-neutral-medium focus:border-surgical-teal',
-  error: 'border-error-red focus:border-error-red',
-  success: 'border-success-green focus:border-success-green',
-};
-
 export function FormInput({
-  state = 'default',
+  state = "default",
   errorMessage,
   successMessage,
   label,
   helperText,
-  className = '',
+  className = "",
+  variant = "default",
   id,
-  type = 'text',
+  type = "text",
   ...props
 }: FormInputProps) {
-  const baseStyles = 'w-full rounded-lg border-2 bg-surface px-4 py-3 text-primary placeholder-secondary transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-surgical-teal focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed';
-  
-  const combinedClassName = `${baseStyles} ${stateStyles[state]} ${className}`;
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = id || `input-${Math.random().toString(36).substring(2, 9)}`;
+  const variantClass =
+    variant === "glass"
+      ? "glass-input border-glass"
+      : "bg-surface border-border";
 
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-primary">
+        <label
+          htmlFor={inputId}
+          className="mb-2 block text-sm font-medium text-foreground"
+        >
           {label}
         </label>
       )}
-      <input
+      <InputPrimitive
         id={inputId}
-        type={type}
-        className={combinedClassName}
+        type={type as any}
+        className={cn(
+          "w-full rounded-lg px-4 py-3 text-base transition-all duration-300",
+          variantClass,
+          stateStyles[state],
+          className
+        )}
         {...props}
       />
       {helperText && !errorMessage && !successMessage && (
-        <p className="mt-1 text-xs text-secondary">{helperText}</p>
+        <p className="mt-1 text-xs text-muted-foreground">{helperText}</p>
       )}
       {errorMessage && (
         <p className="mt-1 text-xs text-error-red">{errorMessage}</p>

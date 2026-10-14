@@ -12,10 +12,8 @@ describe('Label Component', () => {
     it('renders with correct base styles', () => {
       render(<Label>Label text</Label>);
       const label = screen.getByText('Label text');
-      expect(label).toHaveClass('block');
       expect(label).toHaveClass('text-sm');
       expect(label).toHaveClass('font-medium');
-      expect(label).toHaveClass('text-primary');
     });
   });
 

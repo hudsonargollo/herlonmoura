@@ -25,13 +25,57 @@ const config: Config = {
         "neutral-dark": "var(--color-neutral-dark)",
         "success-green": "var(--color-success-green)",
         "warning-amber": "var(--color-warning-amber)",
-        "error-red": "var(--color-error-red",
+        "error-red": "var(--color-error-red)",
 
         // Status group (alias)
         status: {
           green: "var(--color-success-green)",
           amber: "var(--color-warning-amber)",
           red: "var(--color-error-red)",
+        },
+
+        // ============================================
+        // shadcn/ui semantic colors (mapped to CSS variables)
+        // ============================================
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        destructive: "var(--destructive)",
+        sidebar: {
+          DEFAULT: "var(--sidebar)",
+          foreground: "var(--sidebar-foreground)",
+          primary: "var(--sidebar-primary)",
+          "primary-foreground": "var(--sidebar-primary-foreground)",
+          accent: "var(--sidebar-accent)",
+          "accent-foreground": "var(--sidebar-accent-foreground)",
+          border: "var(--sidebar-border)",
+          ring: "var(--sidebar-ring)",
         },
 
         // ============================================
@@ -65,7 +109,7 @@ const config: Config = {
       // FONT STACKS
       // ============================================
       fontFamily: {
-        sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
+        sans: ["var(--font-inter)", "var(--font-geist)", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
         heading: ["var(--font-poppins)", "sans-serif"],
         mono: ["var(--font-fira-code)", "monospace"],
       },
