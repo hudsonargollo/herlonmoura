@@ -15,8 +15,9 @@ id = "40662a6fbf1249299a71124fbcd647d7"
 binding = "AI"
 
 [vars]
-JWT_SECRET = "change-me-in-production-use-a-secure-random-value"
 ADMIN_EMAIL = "admin@herlonmoura.com"
+
+# JWT_SECRET is set via `wrangler secret put JWT_SECRET`
 
 [triggers]
 crons = ["0 6 * * *"]

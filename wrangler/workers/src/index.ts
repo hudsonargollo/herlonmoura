@@ -100,7 +100,8 @@ export default {
     const path = url.pathname.replace('/api', '');
 
     // Auth middleware (skip public routes)
-    const publicRoutes = ['/auth/login', '/auth/register', '/health'];
+    // /blog/generate is called by the Pages Function which already verified JWT
+    const publicRoutes = ['/auth/login', '/auth/register', '/health', '/blog/generate'];
     if (!publicRoutes.some(r => path === r || path.startsWith(r + '/'))) {
       const auth = request.headers.get('authorization');
       if (!auth?.startsWith('Bearer ')) return json(401, { error: 'unauthorized' });

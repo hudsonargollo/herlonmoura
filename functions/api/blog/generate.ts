@@ -78,13 +78,11 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     }
 
     const workerUrl = env.WORKER_URL || "https://herlon-moura-crm.hudsonargollo2.workers.dev";
-    const workerToken = request.headers.get("Authorization") || "";
 
     const workerRes = await fetch(`${workerUrl}/api/blog/generate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: workerToken,
       },
       body: JSON.stringify({ topics, count, category }),
     });
