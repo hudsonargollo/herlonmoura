@@ -300,6 +300,83 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* Location & Technology Section */}
+      <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--s-color-bg-canvas)' }}>
+        <Container>
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-primary md:text-4xl">Localização e Tecnologia</h2>
+            <p className="mt-3 text-gray-400">
+              Consultório equipado com tecnologia de ponta no coração de Salvador
+            </p>
+          </motion.div>
+
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative overflow-hidden rounded-2xl border"
+              style={{ borderColor: 'var(--c-card-border)', boxShadow: 'var(--c-card-shadow)' }}
+            >
+              <Image
+                src="/images/support/clinica-clap-recepcao.webp"
+                alt="Recepção do consultório do Dr. Herlon Moura"
+                width={600}
+                height={400}
+                className="h-auto w-full object-cover"
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              <div className="space-y-4">
+                {[
+                  { title: 'Eco-Doppler Colorido', desc: 'Equipamento de última geração para diagnóstico vascular preciso e indolor.' },
+                  { title: 'Consultório no Coração da Graça', desc: 'Localização privilegiada em Salvador, com fácil acesso para toda a região metropolitana.' },
+                  { title: 'Tecnologia Minimamente Invasiva', desc: 'Equipamentos de ponta para procedimentos com menor tempo de recuperação.' },
+                  { title: 'Ambiente Acolhedor', desc: 'Espaço confortável e humanizado, projetado para o bem-estar do paciente.' },
+                ].map((feature) => (
+                  <div key={feature.title} className="flex items-start gap-4">
+                    <div
+                      className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
+                      style={{ backgroundColor: 'var(--s-color-bg-accent)', color: 'var(--g-color-base-primary)' }}
+                    >
+                      <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>{feature.title}</h3>
+                      <p className="mt-1 text-body-small" style={{ color: 'var(--s-color-content-muted)' }}>{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-xl border p-6" style={{ borderColor: 'var(--c-card-border)', backgroundColor: 'var(--s-color-bg-surface)' }}>
+                <h3 className="mb-3 text-lg font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>Endereço</h3>
+                <p className="text-body-regular" style={{ color: 'var(--s-color-content-body)' }}>
+                  R. Eng. Célso Tôrres, 654 - Graça<br />
+                  Salvador - BA, Brasil
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </Container>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 md:py-24">
         <Container>

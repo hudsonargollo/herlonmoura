@@ -207,6 +207,52 @@ export default function Home() {
         }}
       />
 
+      {/* O que é um Angiologista? — educational section with vascular illustration */}
+      <section data-analytics-section="o-que-e-angiologista" className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.surface }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div className="order-2 lg:order-1">
+              <Eyebrow>Entenda a Especialidade</Eyebrow>
+              <h2 className="mt-3 text-display-md" style={headingStyle}>
+                O que é um Angiologista?
+              </h2>
+              <p className="mt-4 text-body-lg leading-relaxed" style={bodyStyle}>
+                O Angiologista é o médico especialista no diagnóstico e tratamento das doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua em todo o sistema circulatório, incluindo braços, pernas, tronco e pescoço.
+              </p>
+              <p className="mt-4 text-body-lg leading-relaxed" style={bodyStyle}>
+                Doenças como varizes, tromboses, obstruções arteriais e fazem parte do escopo de atuação deste especialista, que utiliza desde exames de imagem minimamente invasivos até cirurgias vasculares e endovasculares.
+              </p>
+              <div className="mt-6">
+                <EdgeButton
+                  variant="primary"
+                  onClick={() => {
+                    trackCtaClick('o-que-e-angiologista', 'Saiba mais sobre Angiologia');
+                    openContact('o-que-e-angiologista', undefined, 'Dúvidas sobre angiologia', 'Saiba Mais');
+                  }}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  <span>Tirar Dúvidas</span>
+                </EdgeButton>
+              </div>
+            </div>
+            <div className="order-1 flex justify-center lg:order-2">
+              <div className="relative w-full max-w-[500px]">
+                <div className="absolute inset-0 rounded-3xl" style={{ backgroundColor: 'var(--s-color-action-primary)', opacity: 0.08, filter: 'blur(2rem)' }} />
+                <div className="relative overflow-hidden rounded-3xl border" style={{ borderColor: TOKEN.cardBorder, backgroundColor: TOKEN.cardBg }}>
+                  <Image
+                    src="/images/support/body-vascular-network.webp"
+                    alt="Sistema vascular do corpo humano — ilustração da rede de vasos sanguíneos"
+                    width={500}
+                    height={400}
+                    className="h-auto w-full object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Trust & Credibility Ticker Bar */}
       <section data-analytics-section="trust-ticker" className="border-y py-6" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
@@ -526,6 +572,46 @@ export default function Home() {
                   <MessageCircle className="h-4 w-4" />
                   Fale Conosco
                 </EdgeButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Banner — ultrasound-patient-scan */}
+      <section data-analytics-section="cta-ultrassom" className="relative overflow-hidden py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl border" style={{ borderColor: TOKEN.cardBorder, ...cardStyle }}>
+            <div className="grid lg:grid-cols-2">
+              <div className="flex flex-col justify-center p-8 sm:p-12">
+                <Eyebrow>Diagnóstico Preciso</Eyebrow>
+                <h2 className="mt-3 text-heading-1" style={headingStyle}>
+                  Eco-Doppler Vascular no Consultório
+                </h2>
+                <p className="mt-4 text-body-regular leading-relaxed" style={bodyStyle}>
+                  Exame de ultrassom que avalia o fluxo sanguíneo em artérias e veias, identificando estreitamentos, obstruções, refluxo venoso e trombos — tudo na mesma sessão, com resultado explicado em linguagem clara.
+                </p>
+                <div className="mt-6">
+                  <EdgeButton
+                    variant="primary"
+                    onClick={() => {
+                      trackCtaClick('cta-ultrassom', 'Agendar Exame de Eco-Doppler');
+                      openContact('cta-ultrassom', undefined, 'Agendar exame de Eco-Doppler', 'Agendar Exame');
+                    }}
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Agendar Exame de Eco-Doppler</span>
+                  </EdgeButton>
+                </div>
+              </div>
+              <div className="relative min-h-[300px] lg:min-h-[400px]">
+                <Image
+                  src="/images/support/ultrasound-patient-scan.webp"
+                  alt="Dr. Herlon Moura realizando exame de ultrassom vascular em paciente"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>

@@ -1,20 +1,24 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/lib/admin/auth';
 import { LoginForm } from '@/components/admin/LoginForm';
-import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
-
 function AdminRoot() {
   const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/admin/crm');
+    }
+  }, [isAuthenticated, router]);
 
   if (isAuthenticated) {
     return (
-      <ProtectedRoute requiredRole="viewer">
-        <div className="flex items-center justify-center min-h-screen bg-surface-dark">
-          <p className="text-neutral-medium text-sm">Redirecionando...</p>
-        </div>
-      </ProtectedRoute>
+      <div className="flex items-center justify-center min-h-screen bg-surface-dark">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-accent border-t-transparent" />
+      </div>
     );
   }
 
