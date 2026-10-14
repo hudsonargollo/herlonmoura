@@ -92,6 +92,47 @@ const PROXIMOS_PASSOS: SectionItem[] = [
   },
 ];
 
+/* ── Comparação: antes vs depois ────────────── */
+
+const COMPARACOES: SectionItem[] = [
+  {
+    area: 'Agendamento',
+    before: 'Para marcar uma consulta, o paciente precisava ligar ou mandar mensagem no WhatsApp e aguardar resposta da equipe.',
+    after: 'O paciente pode agendar diretamente pelo site, pelo WhatsApp ou pelo agendamento online com o Dr. Herlon Moura.',
+    status: 'done',
+  },
+  {
+    area: 'Informações sobre saúde',
+    before: 'As informações vasculares estavam espalhadas em textos longos e genéricos, sem um blog organizado.',
+    after: 'Blog com 42 artigos educativos escritos de forma clara e acessível, sobre varizes, trombose, diagnóstico e prevenção.',
+    status: 'done',
+  },
+  {
+    area: 'Avaliação de sintomas',
+    before: 'O paciente não tinha como entender seus sintomas antes de consultar.',
+    after: 'Ferramentas interativas — Calculadora de Risco de TVP e Avaliação de Varizes — ajudam o paciente a entender seu caso antes da consulta.',
+    status: 'done',
+  },
+  {
+    area: 'Registro e acompanhamento',
+    before: 'Não havia sistema para registrar contatos nem acompanhar o histórico de cada paciente.',
+    after: 'Painel administrativo permite gerenciar pacientes, ver o histórico de interações e acompanhar o funil de conversão.',
+    status: 'done',
+  },
+  {
+    area: 'Publicação de conteúdo',
+    before: 'Publicar novos conteúdos no site exigia conhecimento técnico ou ajuda externa.',
+    after: 'A equipe pode criar e publicar novos artigos diretamente pelo painel, sem necessidade de conhecimento técnico.',
+    status: 'done',
+  },
+  {
+    area: 'Identidade visual',
+    before: 'Visual genérico, sem padrão de cores ou tipografia definido.',
+    after: 'Identidade visual profissional com cores, tipografia e estilo únicos, que transmitem confiança e credibilidade.',
+    status: 'done',
+  },
+];
+
 /* ── Ferramentas e tecnologias ──────────────── */
 
 const STACK = [
@@ -344,6 +385,23 @@ export default function DocPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Comparação: antes vs depois */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(16, 185, 129, 0.3)', color: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.08)' }}>
+              <ArrowRight className="h-4 w-4" />
+              <span>Antes e depois</span>
+            </div>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que mudou para melhor</h2>
+            <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
+              A plataforma foi totalmente reformulada para melhorar a experiência dos pacientes e facilitar o trabalho da equipe.
+            </p>
+          </div>
+          <SectionBlock title="Comparação: antes e depois" icon={Check} items={COMPARACOES} />
         </div>
       </section>
 
