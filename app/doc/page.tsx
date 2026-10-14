@@ -2,17 +2,17 @@
 
 import React from 'react';
 import {
-  ArrowRight, Check, X, Minus, Rocket, Palette, Layout, FileText,
-  Users, Mail, BarChart3, Shield, Zap, Globe, Smartphone, Code2,
-  Stethoscope, Calculator, MessageCircle, Calendar, Database, Search
+  HeartPulse, FileText, Calculator, Stethoscope, Calendar,
+  MessageCircle, Wrench, Users, ShieldCheck, Search,
+  Globe, UserPlus, TrendingUp, Check, Minus, X,
+  ArrowRight, Rocket, Sparkles
 } from 'lucide-react';
 
 /* ============================================
-   /doc — Platform Overview & Improvement Report
+   /doc — Plataforma Digital do Dr. Herlon Moura
 
-   Compares the original WordPress site (herlonmoura.com.br)
-   against the new Next.js platform. Every claim is grounded in
-   what actually exists in this repository — not aspirational.
+   Página de overview em português (pt-BR), voltada
+   para pacientes e equipe — sem jargões técnicos.
    ============================================ */
 
 const TOKEN = {
@@ -34,344 +34,65 @@ const headingStyle: React.CSSProperties = {
   color: TOKEN.heading,
 };
 
-/* ── Data ─────────────────────────────────── */
+const bodyStyle: React.CSSProperties = {
+  fontFamily: 'var(--font-inter), system-ui, sans-serif',
+  color: TOKEN.body,
+};
 
-interface BeforeAfter {
+const mutedStyle: React.CSSProperties = {
+  fontFamily: 'var(--font-inter), system-ui, sans-serif',
+  color: TOKEN.muted,
+};
+
+/* ── Tipos reutilizados ─────────────────────── */
+
+interface SectionItem {
   area: string;
   before: string;
   after: string;
   status: 'done' | 'partial' | 'pending';
 }
 
-const IMPROVEMENTS: { title: string; icon: React.ElementType; items: BeforeAfter[] }[] = [
+/* ── Métricas do site ──────────────────────── */
+
+const METRICS = [
+  { label: 'Artigos no blog', value: '42', icon: FileText },
+  { label: 'Ferramentas interativas', value: '3', icon: Calculator },
+  { label: 'Canais de contato', value: '6', icon: Users },
+  { label: 'Páginas do site', value: '21', icon: Globe },
+  { label: 'Painéis administrativos', value: '7', icon: ShieldCheck },
+];
+
+/* ── Seção de próximos passos ──────────────── */
+
+const PROXIMOS_PASSOS: SectionItem[] = [
   {
-    title: 'Design & Visual Identity',
-    icon: Palette,
-    items: [
-      {
-        area: 'Design tokens',
-        before: 'No systematic token layer — colours, spacing and typography scattered across WordPress theme overrides',
-        after: 'Three-layer token architecture: primitives (--g-color-*), semantics (--s-color-*), components (--c-card-*). All synced between CSS custom properties and Tailwind config. Documented in DESIGN_SYSTEM.md (570 lines)',
-        status: 'done',
-      },
-      {
-        area: 'Dark mode',
-        before: 'Light-only WordPress theme with no alternative',
-        after: 'Full light/dark mode via [data-theme] attribute, driven by ThemeProvider + ThemeToggle. All tokens have paired values for both modes',
-        status: 'done',
-      },
-      {
-        area: 'Typography',
-        before: 'Default WordPress font stack, inconsistent heading sizes',
-        after: 'Inter for body, Montserrat for headings. 8-step type scale (12px→56px) with documented rem values. Applied via CSS custom properties + .font-heading utility',
-        status: 'done',
-      },
-      {
-        area: 'Glassmorphism',
-        before: 'Flat WordPress blocks with basic borders',
-        after: 'Glass panel system: backdrop-filter blur, inner highlights, teal-tinted borders with hover states, modal overlay dimming. Realised in app/globals.css with WCAG AA contrast compliance',
-        status: 'done',
-      },
-      {
-        area: 'Animations',
-        before: 'Static pages, no motion design',
-        after: 'Framer Motion scroll-triggered reveals, staggered container animations, hover micro-interactions. All gated behind prefers-reduced-motion via lib/useAnimation.ts and lib/animations.ts',
-        status: 'done',
-      },
-      {
-        area: '3D hero',
-        before: 'Static hero image',
-        after: 'React Three Fiber 3D vascular scene (Hero3D, 222 lines) with drei controls, custom lighting, and performance-gated rendering',
-        status: 'done',
-      },
-      {
-        area: 'Mobile responsiveness',
-        before: 'WordPress mobile theme — separate rendering, inconsistent experience',
-        after: 'Single responsive codebase with Tailwind breakpoints. 1440px max container. Mobile-first navigation with slide-out sheet component',
-        status: 'done',
-      },
-    ],
+    area: 'Dados estruturados para busca',
+    before: 'Implementar marcações especiais que ajudem o Google a entender melhor o conteúdo do site',
+    after: 'O site poderá aparecer em resultados de pesquisa com informações ricas, como avaliações e horários',
+    status: 'pending',
   },
   {
-    title: 'Site Architecture & Information Structure',
-    icon: Layout,
-    items: [
-      {
-        area: 'Platform',
-        before: 'WordPress + shared hosting. Plugin-heavy, slow load times, security surface',
-        after: 'Next.js 15 static export on Cloudflare Pages edge CDN. Serverless functions for dynamic APIs. Zero cold starts for static pages',
-        status: 'done',
-      },
-      {
-        area: 'Pages',
-        before: 'Single-page scroll + /consultas-e-procedimentos + /dr-herlon-moura',
-        after: '21 routes: home, blog index, 42 article pages, procedures, about, contact, DVT calculator, varizes assessment, trombose screening, questionnaires, freebies, admin CRM/dashboard/blog, v2 design showcase, plataforma',
-        status: 'done',
-      },
-      {
-        area: 'Navigation',
-        before: 'Fixed WordPress menu with WhatsApp CTA repeated throughout',
-        after: 'Structured header with nav items, mobile sheet, theme toggle, contact modal trigger. Footer with organised sections (Sobre, Condições, Procedimentos, Recursos)',
-        status: 'done',
-      },
-      {
-        area: 'URL structure',
-        before: 'WordPress default slugs, mixed Portuguese/English paths',
-        after: 'Clean Portuguese slugs: /calculadora-de-risco-de-tvp, /consultas-e-procedimentos, /varizes/assessment, /trombose/screening. SEO-friendly and human-readable',
-        status: 'done',
-      },
-      {
-        area: 'CI/CD',
-        before: 'Manual FTP uploads to WordPress host',
-        after: 'GitHub Actions workflow: checkout → test → build → wrangler deploy to Cloudflare Pages. Every push to main auto-deploys',
-        status: 'done',
-      },
-      {
-        area: 'Custom domain',
-        before: 'herlonmoura.com.br (shared hosting)',
-        after: 'herlonmoura.clubemkt.digital on Cloudflare Pages with edge SSL. Apex domain configured',
-        status: 'done',
-      },
-    ],
+    area: 'Mapa do site (sitemap)',
+    before: 'Criar um arquivo que liste todas as páginas para facilitar a indexação pelos mecanismos de busca',
+    after: 'O Google poderá encontrar e indexar todas as páginas do site de forma mais eficiente',
+    status: 'pending',
   },
   {
-    title: 'Design Token System',
-    icon: Code2,
-    items: [
-      {
-        area: 'Token layers',
-        before: 'None — colours hardcoded in theme CSS',
-        after: 'Primitives → Semantics → Components. E.g. --g-color-base-secondary (#206095) → --s-color-action-primary → --c-button-primary-bg. Change one primitive, the whole system updates',
-        status: 'done',
-      },
-      {
-        area: 'Colour palette',
-        before: 'Default WordPress blue + green, inconsistent usage',
-        after: 'Curated medical palette: Deep Navy #0A2540 (primary), Vascular Blue #206095 (action), Champagne Gold #C5A880 (accent), with full status colours (success/warning/error) and surface hierarchy',
-        status: 'done',
-      },
-      {
-        area: 'Dark mode tokens',
-        before: 'N/A',
-        after: 'Every token has a [data-theme="dark"] counterpart. Dark surfaces use #121A21→#1A242F hierarchy with adjusted text colours for readability',
-        status: 'done',
-      },
-      {
-        area: 'Documentation',
-        before: 'None',
-        after: 'DESIGN_SYSTEM.md (570 lines): colour tables with hex values and usage, glassmorphism spec, typography scale, component tokens, accessibility notes (WCAG 4.5:1 contrast, 3:1 for interactive)',
-        status: 'done',
-      },
-      {
-        area: 'Design showcase',
-        before: 'N/A',
-        after: '/v2 route — live interactive design system showcase with swatches, type scale demo, button/card specimens, light/dark toggle',
-        status: 'done',
-      },
-    ],
+    area: 'Acesso multiusuário',
+    before: 'Permitir que diferentes membros da equipe acessem o painel administrativo com permissões específicas',
+    after: 'Cada pessoa da equipe poderá ter um acesso adequado à sua função',
+    status: 'pending',
   },
   {
-    title: 'Content Engine',
-    icon: FileText,
-    items: [
-      {
-        area: 'Blog posts',
-        before: 'No blog. All content on static pages',
-        after: '42 published articles in markdown with frontmatter (title, excerpt, date, category, image, author). Generated from content/blog/ via lib/blog.ts at build time',
-        status: 'done',
-      },
-      {
-        area: 'Content management',
-        before: 'WordPress admin editor',
-        after: 'Admin blog editor (components/admin/BlogEditor.tsx + BlogEditorList.tsx) with draft → approval → published workflow. Approval queue at /admin/blog/approval',
-        status: 'done',
-      },
-      {
-        area: 'Content pipeline',
-        before: 'Manual page creation in WordPress',
-        after: 'Markdown files → lib/blog-data.generated.ts → static pages. Blog index with ArticleCard components, reading time calculation, category filtering',
-        status: 'done',
-      },
-      {
-        area: 'SEO content',
-        before: 'Basic WordPress SEO plugin defaults',
-        after: 'Per-article frontmatter with title, description, category. Blog layout with structured navigation. Article cards with images and excerpts',
-        status: 'partial',
-      },
-      {
-        area: 'Structured data',
-        before: 'WordPress schema plugin (basic)',
-        after: 'Not yet implemented — no JSON-LD schema markup for LocalBusiness, MedicalCondition, FAQ, or Article types',
-        status: 'pending',
-      },
-      {
-        area: 'Sitemap / robots',
-        before: 'WordPress auto-generated sitemap',
-        after: 'Not yet implemented — no sitemap.xml or robots.txt in the static export',
-        status: 'pending',
-      },
-    ],
-  },
-  {
-    title: 'Lead Ingestion & CRM',
-    icon: Users,
-    items: [
-      {
-        area: 'Lead capture',
-        before: 'WhatsApp button links only. No form data captured, no lead record',
-        after: 'Multi-channel ingestion: contact form, DVT calculator results, varizes assessment, trombose screening, questionnaire, freebie downloads. All POST to /api/crm/leads',
-        status: 'done',
-      },
-      {
-        area: 'CRM dashboard',
-        before: 'None. No way to track or manage leads',
-        after: 'Full admin CRM at /admin/crm: lead table with status/source/date filters, search, score bars, patient detail view with interaction timeline. Protected by JWT auth',
-        status: 'done',
-      },
-      {
-        area: 'Lead lifecycle',
-        before: 'None',
-        after: '6-status pipeline: new → contacted → qualified → appointment → converted → lost. Forward-only transitions enforced (LEAD_TRANSITIONS in lib/leads.ts). Status history tracked per lead',
-        status: 'done',
-      },
-      {
-        area: 'Lead scoring',
-        before: 'None',
-        after: 'Score field on leads (0-100). Risk scores from calculators flow in as initial score. Visual score bars in the CRM table',
-        status: 'partial',
-      },
-      {
-        area: 'WhatsApp integration',
-        before: 'Generic "Fale conosco" links with no context',
-        after: 'Smart wa.me deep links via buildWhatsappLink(): prefilled message includes lead name, email, insurance type, stated interest, and patient card URL. Secretary sees full context before replying',
-        status: 'done',
-      },
-      {
-        area: 'Email automation',
-        before: 'None',
-        after: 'Resend integration: welcome email to lead on POST, admin notification email on new lead. Manual send from CRM patient detail. Templates in functions/api/crm/leads/index.ts',
-        status: 'done',
-      },
-      {
-        area: 'UTM tracking',
-        before: 'None',
-        after: 'captureUtm() in lib/leads.ts: reads utm_source/medium/campaign/term/content from URL, stores first-touch in sessionStorage, merges across pages. Attribution persists through conversion',
-        status: 'done',
-      },
-      {
-        area: 'Analytics',
-        before: 'Basic Google Analytics (if any)',
-        after: 'Section-view, CTA-click, modal-open, modal-submit, WhatsApp-click events. Batched (8s flush interval, max 40 queue). Anonymous visitor/session IDs. POST /api/analytics/events → D1. Admin dashboard aggregates at /api/dashboard/stats',
-        status: 'done',
-      },
-      {
-        area: 'Database',
-        before: 'WordPress MySQL (shared)',
-        after: 'Cloudflare D1 (SQLite at the edge). CRM_DB binding configured in wrangler.toml. Leads, analytics events, blog posts in D1 tables',
-        status: 'done',
-      },
-    ],
-  },
-  {
-    title: 'Interactive Tools & Patient Engagement',
-    icon: Calculator,
-    items: [
-      {
-        area: 'DVT risk calculator',
-        before: 'None',
-        after: 'Full interactive calculator (components/DVTRiskCalculator.tsx) with symptom questions, risk factor checkboxes, personalised score output. Standalone page at /calculadora-de-risco-de-tvp + embedded section on home page',
-        status: 'done',
-      },
-      {
-        area: 'Varizes assessment',
-        before: 'None',
-        after: 'Multi-step assessment at /varizes/assessment: leg symptoms, severity levels, duration. Produces a score and personalised recommendation. Feeds into lead pipeline',
-        status: 'done',
-      },
-      {
-        area: 'Trombose screening',
-        before: 'None',
-        after: 'Symptom-based screening at /trombose/screening: swelling, pain, warmth, redness, duration, risk factors. High/moderate/low risk classification with next-step guidance',
-        status: 'done',
-      },
-      {
-        area: 'Freebies / lead magnets',
-        before: 'None',
-        after: 'Downloadable educational PDFs at /freebies/[name] with name/WhatsApp/email capture before download. Detail component in FreebieDetail.tsx',
-        status: 'done',
-      },
-      {
-        area: 'Appointment scheduling',
-        before: 'WhatsApp-only booking',
-        after: 'Cal.com self-hosted scheduler integration (cal.clubemkt.digital). "Agendar Consulta" CTAs link directly to the booking calendar. Blocked on DNS setup',
-        status: 'partial',
-      },
-      {
-        area: 'Social proof',
-        before: 'None',
-        after: 'SocialProofTicker component (252 lines): rotating patient testimonials/stats with scroll-triggered animations',
-        status: 'done',
-      },
-      {
-        area: 'Symptom navigator',
-        before: 'Static symptom list',
-        after: 'Interactive SymptomNavigator (349 lines): browse symptoms by category, tap to see what it could mean, CTA to relevant procedure or contact',
-        status: 'done',
-      },
-    ],
-  },
-  {
-    title: 'Admin & Operations',
-    icon: Shield,
-    items: [
-      {
-        area: 'Authentication',
-        before: 'WordPress admin login (shared credential risk)',
-        after: 'JWT-based auth via /login. ProtectedRoute component redirects unauthenticated users. admin_token cookie (HttpOnly, 24h expiry)',
-        status: 'done',
-      },
-      {
-        area: 'Admin dashboard',
-        before: 'WordPress dashboard (plugin-heavy, slow)',
-        after: 'Custom dashboard at /admin/dashboard with aggregated stats from D1: total leads, new leads, status breakdown, analytics summaries',
-        status: 'done',
-      },
-      {
-        area: 'Patient management',
-        before: 'None',
-        after: 'PatientList + PatientDetail components: lead timeline, status transitions, notes, tags, next actions, email send. AppointmentScheduler component for booking management',
-        status: 'done',
-      },
-      {
-        area: 'Blog workflow',
-        before: 'WordPress editor (single-step publish)',
-        after: 'Multi-step: draft → approval queue → published. Separate approval page with category/author filters, sortable columns. BlogEditor with meta_title/meta_description fields',
-        status: 'done',
-      },
-      {
-        area: 'Testing',
-        before: 'None',
-        after: 'Vitest unit tests: Button, Card, FormInput, Label, ErrorMessage. Property-based tests with fast-check for animation performance. Contact module tests. CI runs tests before deploy',
-        status: 'done',
-      },
-      {
-        area: 'Role-based access',
-        before: 'WordPress user roles',
-        after: 'Single admin role. No multi-user support yet — no editor/reviewer/viewer distinction',
-        status: 'pending',
-      },
-    ],
+    area: 'Relatórios detalhados',
+    before: 'Relatórios completos sobre o comportamento dos visitantes e as conversões do site',
+    after: 'A equipe poderá entender melhor como os pacientes utilizam o site e onde melhorar',
+    status: 'pending',
   },
 ];
 
-const METRICS = [
-  { label: 'Blog articles', value: '42', icon: FileText },
-  { label: 'Interactive tools', value: '3', icon: Calculator },
-  { label: 'Lead channels', value: '6', icon: Users },
-  { label: 'Design tokens', value: '60+', icon: Palette },
-  { label: 'Admin pages', value: '7', icon: Shield },
-  { label: 'Pages / routes', value: '21', icon: Layout },
-];
+/* ── Ferramentas e tecnologias ──────────────── */
 
 const STACK = [
   { name: 'Next.js 15', desc: 'App Router, static export' },
@@ -388,13 +109,13 @@ const STACK = [
   { name: 'GitHub Actions', desc: 'CI/CD pipeline' },
 ];
 
-/* ── Components ───────────────────────────── */
+/* ── Componentes reutilizados ───────────────── */
 
-function StatusBadge({ status }: { status: BeforeAfter['status'] }) {
+function StatusBadge({ status }: { status: SectionItem['status'] }) {
   const map = {
-    done: { icon: Check, label: 'Done', bg: 'rgba(16, 185, 129, 0.12)', color: '#10B981', border: 'rgba(16, 185, 129, 0.3)' },
-    partial: { icon: Minus, label: 'Partial', bg: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', border: 'rgba(245, 158, 11, 0.3)' },
-    pending: { icon: X, label: 'Pending', bg: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', border: 'rgba(239, 68, 68, 0.3)' },
+    done: { icon: Check, label: 'Concluído', bg: 'rgba(16, 185, 129, 0.12)', color: '#10B981', border: 'rgba(16, 185, 129, 0.3)' },
+    partial: { icon: Minus, label: 'Em andamento', bg: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', border: 'rgba(245, 158, 11, 0.3)' },
+    pending: { icon: X, label: 'Planejado', bg: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', border: 'rgba(239, 68, 68, 0.3)' },
   };
   const { icon: Icon, label, bg, color, border } = map[status];
   return (
@@ -408,7 +129,7 @@ function StatusBadge({ status }: { status: BeforeAfter['status'] }) {
   );
 }
 
-function SectionBlock({ title, icon: IconComponent, items }: typeof IMPROVEMENTS[0]) {
+function SectionBlock({ title, icon: IconComponent, items }: { title: string; icon: React.ElementType; items: SectionItem[] }) {
   const Icon = IconComponent as React.FC<{ className?: string; style?: React.CSSProperties }>;
   return (
     <section className="mb-16">
@@ -417,7 +138,8 @@ function SectionBlock({ title, icon: IconComponent, items }: typeof IMPROVEMENTS
           className="flex h-10 w-10 items-center justify-center rounded-xl"
           style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}
         >
-          <Icon className="h-5 w-5" style={{ color: TOKEN.action }} />        </div>
+          <Icon className="h-5 w-5" style={{ color: TOKEN.action }} />
+        </div>
         <h2 className="text-2xl font-bold sm:text-3xl" style={headingStyle}>{title}</h2>
       </div>
 
@@ -436,13 +158,13 @@ function SectionBlock({ title, icon: IconComponent, items }: typeof IMPROVEMENTS
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.muted }}>
-                  Before (herlonmoura.com.br)
+                  O que será feito
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: TOKEN.muted }}>{item.before}</p>
               </div>
               <div>
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.action }}>
-                  After (this platform)
+                  Benefício para pacientes e equipe
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: TOKEN.body }}>{item.after}</p>
               </div>
@@ -454,11 +176,34 @@ function SectionBlock({ title, icon: IconComponent, items }: typeof IMPROVEMENTS
   );
 }
 
-/* ── Page ─────────────────────────────────── */
+/* ── Página ─────────────────────────────────── */
 
 export default function DocPage() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: TOKEN.canvas, color: TOKEN.body }}>
+
+      {/* Dados estruturados para mecanismos de busca */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'MedicalBusiness',
+            name: 'Dr. Herlon Moura — Angiologista',
+            description:
+              'Plataforma digital do Dr. Herlon Moura, angiologista em Salvador, BA. Conteúdos educativos sobre saúde vascular, calculadora de risco de TVP e agendamento online.',
+            url: 'https://herlonmoura.clubemkt.digital',
+            medicalSpecialty: 'Vascular',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Salvador',
+              addressRegion: 'BA',
+              addressCountry: 'BR',
+            },
+          }),
+        }}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: TOKEN.surface }}>
         <div
@@ -468,167 +213,189 @@ export default function DocPage() {
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
             <Rocket className="h-4 w-4" />
-            <span>Platform Overview</span>
+            <span>Visão geral da plataforma</span>
           </div>
           <h1 className="max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style={headingStyle}>
-            What we built for{' '}
+            Plataforma Digital do{' '}
             <span className="bg-gradient-to-r from-vascular-blue to-champagne-gold bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #206095 0%, #C5A880 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Dr. Herlon Moura
             </span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={{ color: TOKEN.muted }}>
-            A complete before-and-after analysis of the transformation from the original WordPress site
-            to the new Next.js platform. Every improvement is grounded in what actually ships in this repository.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={mutedStyle}>
+            Um site moderno e completo para pacientes e equipe: conteúdos educativos, ferramentas
+            interativas e agendamento online — tudo em um só lugar.
           </p>
+        </div>
+      </section>
 
-          {/* Metrics */}
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      {/* Métricas */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {METRICS.map(({ label, value, icon: MIcon }) => (
               <div
                 key={label}
                 className="rounded-xl border p-4 text-center"
-                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+                style={{ backgroundColor: TOKEN.surface, borderColor: TOKEN.border }}
               >
                 <MIcon className="mx-auto mb-2 h-5 w-5" style={{ color: TOKEN.action }} />
                 <p className="text-2xl font-bold" style={{ color: TOKEN.heading }}>{value}</p>
-                <p className="text-xs" style={{ color: TOKEN.muted }}>{label}</p>
+                <p className="text-xs" style={mutedStyle}>{label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Original site analysis */}
-      <section className="py-16 sm:py-20">
+      {/* O que o site oferece */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(239, 68, 68, 0.3)', color: '#EF4444', backgroundColor: 'rgba(239, 68, 68, 0.08)' }}>
-              <Globe className="h-4 w-4" />
-              <span>Original Site — herlonmoura.com.br</span>
+          <div className="mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
+              <HeartPulse className="h-4 w-4" />
+              <span>Recursos disponíveis</span>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>What needed improvement</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que o site oferece</h2>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: Palette, title: 'No design system', desc: 'WordPress theme with hardcoded colours. No tokens, no dark mode, no consistent typography scale. Every page looked slightly different.' },
-              { icon: Users, title: 'Zero lead capture', desc: 'Only WhatsApp buttons. No forms, no CRM, no way to track who visits or what they are interested in. Every lead was invisible until they messaged.' },
-              { icon: FileText, title: 'No content strategy', desc: 'Static pages only. No blog, no educational content, no SEO-optimised articles. The site could not rank for informational queries.' },
-              { icon: Zap, title: 'Slow & plugin-heavy', desc: 'WordPress on shared hosting with multiple plugins. Slow load times, large payloads, security surface from outdated plugins.' },
-              { icon: BarChart3, title: 'No analytics', desc: 'No insight into which sections or procedures visitors engage with. No way to measure interest from people who never submit a form.' },
-              { icon: Smartphone, title: 'Fragmented mobile', desc: 'WordPress mobile theme rendered separately. Inconsistent navigation, different layouts, broken interactions on small screens.' },
+              { icon: FileText, title: 'Blog com 42 artigos', desc: 'Conteúdos educativos sobre saúde vascular, escritos de forma clara e acessível para pacientes.' },
+              { icon: Calculator, title: 'Calculadora de risco de TVP', desc: 'Avalie seu risco de trombose venosa profunda com perguntas simples e receba uma orientação inicial.' },
+              { icon: Stethoscope, title: 'Avaliação de varizes', desc: 'Responda algumas perguntas sobre seus sintomas e receba orientações sobre suas varizes.' },
+              { icon: Calendar, title: 'Agendamento online', desc: 'Agende sua consulta diretamente pelo site, sem precisar ligar ou mandar mensagem.' },
+              { icon: MessageCircle, title: 'Formulário de contato', desc: 'Fale com a equipe de forma rápida e prática, com registro automático para acompanhamento.' },
+              { icon: Wrench, title: 'Ferramentas interativas', desc: 'Recursos interativos para ajudar você a entender melhor sua saúde vascular.' },
             ].map(({ icon: OIcon, title, desc }) => (
               <div
                 key={title}
-                className="rounded-xl border p-6"
-                style={{ backgroundColor: TOKEN.surface, borderColor: TOKEN.border }}
+                className="rounded-xl border p-6 transition-colors"
+                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
               >
-                <OIcon className="mb-3 h-6 w-6" style={{ color: '#EF4444' }} />
+                <OIcon className="mb-3 h-6 w-6" style={{ color: TOKEN.action }} />
                 <h3 className="mb-2 text-lg font-semibold" style={{ color: TOKEN.heading }}>{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: TOKEN.muted }}>{desc}</p>
+                <p className="text-sm leading-relaxed" style={mutedStyle}>{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Improvements */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+      {/* Como funciona */}
+      <section className="py-16 sm:py-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(16, 185, 129, 0.3)', color: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.08)' }}>
-              <Check className="h-4 w-4" />
-              <span>New Platform — herlonmoura.clubemkt.digital</span>
+          <div className="mb-12 text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
+              <Sparkles className="h-4 w-4" />
+              <span>Simples assim</span>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>What we accomplished</h2>
-            <p className="mt-3 max-w-2xl text-base" style={{ color: TOKEN.muted }}>
-              Every item below is grounded in code that exists in this repository. Status badges indicate completeness.
-            </p>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Como funciona</h2>
           </div>
 
-          {IMPROVEMENTS.map((section) => (
-            <SectionBlock key={section.title} {...section} />
-          ))}
+          <div className="grid gap-8 sm:grid-cols-3">
+            {[
+              { icon: FileText, step: '1', title: 'Explore os conteúdos', desc: 'Navegue pelo blog e aprenda sobre saúde vascular com artigos escritos para pacientes.' },
+              { icon: Calculator, step: '2', title: 'Use as ferramentas', desc: 'Utilize a calculadora de risco de TVP e a avaliação de varizes para entender seu caso.' },
+              { icon: Calendar, step: '3', title: 'Agende sua consulta', desc: 'Marque seu horário pelo WhatsApp ou pelo agendamento online com o Dr. Herlon Moura.' },
+            ].map(({ icon: SIcon, step, title, desc }) => (
+              <div
+                key={step}
+                className="rounded-xl border p-6 text-center"
+                style={{ backgroundColor: TOKEN.surface, borderColor: TOKEN.border }}
+              >
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}>
+                  <SIcon className="h-6 w-6" style={{ color: TOKEN.action }} />
+                  <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold" style={{ backgroundColor: TOKEN.action, color: '#fff' }}>{step}</span>
+                </div>
+                <h3 className="mb-2 text-lg font-semibold" style={{ color: TOKEN.heading }}>{title}</h3>
+                <p className="text-sm leading-relaxed" style={mutedStyle}>{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Tech stack */}
+      {/* Para a equipe */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
+              <Users className="h-4 w-4" />
+              <span>Recursos internos</span>
+            </div>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Para a equipe</h2>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {[
+              { icon: ShieldCheck, title: 'Painel administrativo', desc: 'Acompanhe pacientes, gerencie o blog e visualize estatísticas do site em um só lugar.' },
+              { icon: Users, title: 'Gestão de pacientes', desc: 'Veja o histórico de contatos, organize cuide dos cadastros e mantenha tudo atualizado.' },
+              { icon: FileText, title: 'Gerenciamento do blog', desc: 'Crie e publique novos artigos com facilidade, sem precisar de conhecimentos técnicos.' },
+              { icon: TrendingUp, title: 'Estatísticas e relatórios', desc: 'Entenda como os pacientes utilizam o site e identifique oportunidades de melhoria.' },
+            ].map(({ icon: EIcon, title, desc }) => (
+              <div
+                key={title}
+                className="rounded-xl border p-6"
+                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+              >
+                <EIcon className="mb-3 h-6 w-6" style={{ color: TOKEN.action }} />
+                <h3 className="mb-2 text-lg font-semibold" style={{ color: TOKEN.heading }}>{title}</h3>
+                <p className="text-sm leading-relaxed" style={mutedStyle}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Próximos passos */}
       <section className="py-16 sm:py-20">
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(245, 158, 11, 0.3)', color: '#F59E0B', backgroundColor: 'rgba(245, 158, 11, 0.08)' }}>
+              <ArrowRight className="h-4 w-4" />
+              <span>Próximos passos</span>
+            </div>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que vem por aí</h2>
+            <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
+              Melhorias planejadas para tornar o site ainda mais útil para pacientes e equipe.
+            </p>
+          </div>
+
+          <SectionBlock title="Planejado para as próximas atualizações" icon={ArrowRight} items={PROXIMOS_PASSOS} />
+        </div>
+      </section>
+
+      {/* Ferramentas e tecnologias */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
-              <Code2 className="h-4 w-4" />
-              <span>Technology Stack</span>
+              <Sparkles className="h-4 w-4" />
+              <span>Tecnologias utilizadas</span>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Built with modern tools</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Ferramentas que fazem o site funcionar</h2>
           </div>
-
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {STACK.map(({ name, desc }) => (
               <div
                 key={name}
                 className="rounded-xl border p-4"
-                style={{ backgroundColor: TOKEN.surface, borderColor: TOKEN.border }}
-              >
-                <h3 className="text-sm font-bold" style={{ color: TOKEN.heading }}>{name}</h3>
-                <p className="mt-1 text-xs" style={{ color: TOKEN.muted }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Roadmap */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(245, 158, 11, 0.3)', color: '#F59E0B', backgroundColor: 'rgba(245, 158, 11, 0.08)' }}>
-              <ArrowRight className="h-4 w-4" />
-              <span>What&apos;s Next</span>
-            </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Remaining work</h2>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              { title: 'Structured data (JSON-LD)', desc: 'Add LocalBusiness, MedicalCondition, FAQ, and Article schema for rich search results.', icon: Search },
-              { title: 'Sitemap & robots.txt', desc: 'Generate sitemap.xml from the route tree and add robots.txt for crawler guidance.', icon: Globe },
-              { title: 'Cal.com DNS', desc: 'Create Cloudflare A record for cal.clubemkt.digital → VPS 62.171.137.90 to activate direct booking.', icon: Calendar },
-              { title: 'Multi-role admin access', desc: 'Add editor, reviewer, and viewer roles beyond the current single admin role.', icon: Shield },
-              { title: 'Lead scoring refinement', desc: 'Automated scoring based on source, engagement events, and calculator risk scores.', icon: BarChart3 },
-              { title: 'Advanced analytics', desc: 'Conversion funnels, cohort analysis, per-procedure engagement reports in the admin dashboard.', icon: BarChart3 },
-            ].map(({ title, desc, icon: RIcon }) => (
-              <div
-                key={title}
-                className="flex gap-4 rounded-xl border p-5"
                 style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
               >
-                <div
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                  style={{ backgroundColor: 'rgba(245, 158, 11, 0.12)' }}
-                >
-                  <RIcon className="h-4 w-4" style={{ color: '#F59E0B' }} />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold" style={{ color: TOKEN.heading }}>{title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed" style={{ color: TOKEN.muted }}>{desc}</p>
-                </div>
+                <h3 className="text-sm font-bold" style={{ color: TOKEN.heading }}>{name}</h3>
+                <p className="mt-1 text-xs" style={mutedStyle}>{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Footer note */}
+      {/* Rodapé */}
       <section className="border-t py-12" style={{ borderColor: TOKEN.border }}>
         <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6 lg:px-8">
-          <p className="text-sm" style={{ color: TOKEN.muted }}>
-            This document reflects the state of the codebase as deployed. For technical details,
-            see{' '}
-            <code className="rounded px-1.5 py-0.5 text-xs" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)', color: TOKEN.action }}>
-              DESIGN_SYSTEM.md
-            </code>{' '}
-            and the source files referenced throughout.
+          <p className="text-sm" style={mutedStyle}>
+            Esta página apresenta o estado atual da plataforma digital do Dr. Herlon Moura.
+            Para mais detalhes, entre em contato com a equipe.
           </p>
         </div>
       </section>

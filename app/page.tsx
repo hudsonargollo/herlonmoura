@@ -294,14 +294,15 @@ export default function Home() {
       {/* Procedures Section */}
       <section id="procedimentos" data-analytics-section="procedimentos" className="relative overflow-hidden py-16 sm:py-24" style={{ backgroundColor: TOKEN.surface }}>
         {/* Anatomical circulatory-system accent (BR variant), right side, faded */}
-        <Image
-          src="/images/brand/banner-segundasecao.jpg"
-          alt=""
-          fill
+        <video
+          src="/images/videos/cardio.webm"
+          autoPlay
+          muted
+          loop
+          playsInline
           aria-hidden
-          sizes="100vw"
-          className="object-cover object-left"
-          style={{ opacity: 0.07 }}
+          className="absolute inset-0 h-full w-full object-cover object-left"
+          style={{ opacity: 0.15 }}
         />
         <div className="relative mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -546,7 +547,7 @@ export default function Home() {
           alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
           fill
           sizes="100vw"
-          className="object-cover object-[50%_12%]"
+          className="object-cover object-[70%_30%] sm:object-[60%_25%] lg:object-[55%_20%]"
         />
         <div
           className="absolute inset-0"

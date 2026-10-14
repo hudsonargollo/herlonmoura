@@ -62,7 +62,7 @@ export function HeroSection({
         priority
         aria-hidden
         sizes="100vw"
-        className="object-cover object-[50%_35%]"
+        className="object-cover object-[50%_20%] sm:object-[50%_35%]"
         style={{ opacity: 0.35 }}
       />
 
@@ -82,8 +82,8 @@ export function HeroSection({
         }}
       />
 
-      <div className="relative mx-auto w-full max-w-container px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
+      <div className="relative mx-auto w-full max-w-container px-4 py-10 sm:px-6 lg:px-8 lg:py-20">
+        <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
           {/* ---------- Copy column ---------- */}
           <div className="lg:col-span-7">
             <motion.div
@@ -240,7 +240,7 @@ export function HeroSection({
               initial={{ opacity: 0, scale: 0.96, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
-              className="relative mx-auto w-full max-w-[420px] lg:max-w-none"
+              className="relative mx-auto w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[420px] xl:max-w-none"
             >
               {/* Gold ambient glow behind the portrait */}
               <div
@@ -296,7 +296,7 @@ export function HeroSection({
 
               {/* Floating credibility chip */}
               <div
-                className="absolute -bottom-4 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold shadow-lg sm:flex"
+                className="pointer-events-none absolute -bottom-3 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-[11px] font-semibold shadow-lg sm:flex"
                 style={{
                   borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 40%, transparent)',
                   backgroundColor: 'var(--s-color-bg-surface)',
