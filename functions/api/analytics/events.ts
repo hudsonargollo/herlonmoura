@@ -7,6 +7,7 @@
 
 interface Env {
   CRM_DB: D1Database;
+  JWT_SECRET: string;
   ADMIN_TOKEN?: string;
 }
 
@@ -20,6 +21,31 @@ function json(status: number, data: unknown): Response {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     },
   });
+}
+
+async function verifyAuth(request: Request, env: Env): Promise<{ sub: string; role: string } | null> {
+  const auth = request.headers.get("Authorization");
+  if (!auth?.startsWith("Bearer ")) return null;
+  const token = auth.slice(7);
+  try {
+    const secret = env.JWT_SECRET || "dev-secret-change-me";
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      "raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["verify"]
+    );
+    const sig = Uint8Array.from(
+      atob(parts[2].replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0)
+    );
+    const valid = await crypto.subtle.verify("HMAC", key, sig, encoder.encode(`${parts[0]}.${parts[1]}`));
+    if (!valid) return null;
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
+    if (payload.exp && payload.exp * 1000 < Date.now()) return null;
+    return payload;
+  } catch {
+    return null;
+  }
 }
 
 const VALID_EVENT_TYPES = [
@@ -101,6 +127,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
  * Query params: ?days=30
  */
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
+  const user = await verifyAuth(request, env);
+  if (!user) return json(401, { error: "Unauthorized" });
   try {
     const db = env.CRM_DB;
     const url = new URL(request.url);
