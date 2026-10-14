@@ -61,7 +61,7 @@ describe('buildWhatsappLink', () => {
     it('includes patient card link when leadId is provided', () => {
       const link = buildWhatsappLink(baseLead, undefined, 't_12345');
       const decoded = decodeURIComponent(link.split('text=')[1]);
-      expect(decoded).toContain('https://www.herlonmoura.clubemkt.digital/admin/crm/t_12345');
+      expect(decoded).toContain('https://herlonmoura.clubemkt.digital/admin/crm/_?id=t_12345');
     });
 
     it('does NOT include patient card link when leadId is omitted', () => {

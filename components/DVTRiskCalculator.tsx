@@ -270,42 +270,45 @@ export function DVTRiskCalculator({
               exit="exit"
               className="text-center py-2"
             >
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-surgical-teal/20 to-emerald-500/20 text-surgical-teal border border-surgical-teal/30 shadow-lg shadow-surgical-teal/10">
-                <HeartPulse className="h-6 w-6 animate-pulse" />
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)', borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)' }}>
+                <HeartPulse className="h-6 w-6" style={{ color: 'var(--s-color-action-primary)' }} />
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-black text-primary">
-                Calculadora de Risco de TVP
-              </h3>
-              <p className="mt-1.5 text-xs sm:text-sm text-secondary max-w-md mx-auto leading-relaxed">
-                Responda a 4 perguntas rápidas para estimar sua probabilidade clínica de trombose venosa profunda.
+              <p className="text-body-small text-[var(--s-color-content-muted)] max-w-md mx-auto leading-relaxed">
+                Estime em segundos sua probabilidade clínica e entenda o que fazer a seguir.
               </p>
 
-              <div className="mt-4 grid grid-cols-3 gap-2 text-left max-w-sm mx-auto">
-                <div className="rounded-xl border border-default bg-bg-tertiary/60 p-2 text-center">
-                  <Clock className="mx-auto h-3.5 w-3.5 text-surgical-teal mb-0.5" />
-                  <span className="block text-[11px] font-semibold text-primary">1 Minuto</span>
-                  <span className="block text-[9px] text-tertiary">Rápido & Ágil</span>
+              <div className="mt-5 grid grid-cols-3 gap-3 text-left max-w-sm mx-auto">
+                <div className="rounded-xl border p-3 text-center" style={{ backgroundColor: 'var(--c-card-bg)', borderColor: 'var(--c-card-border)' }}>
+                  <div className="mx-auto mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}>
+                    <Clock className="h-4 w-4" style={{ color: 'var(--s-color-action-primary)' }} />
+                  </div>
+                  <span className="block text-caption font-semibold text-[var(--s-color-content-heading)]">1 Minuto</span>
+                  <span className="block text-[11px] text-[var(--s-color-content-muted)] mt-0.5">Rápido &amp; Ágil</span>
                 </div>
-                <div className="rounded-xl border border-default bg-bg-tertiary/60 p-2 text-center">
-                  <Shield className="mx-auto h-3.5 w-3.5 text-emerald-400 mb-0.5" />
-                  <span className="block text-[11px] font-semibold text-primary">100% Privado</span>
-                  <span className="block text-[9px] text-tertiary">Sem Cadastro</span>
+                <div className="rounded-xl border p-3 text-center" style={{ backgroundColor: 'var(--c-card-bg)', borderColor: 'var(--c-card-border)' }}>
+                  <div className="mx-auto mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}>
+                    <Shield className="h-4 w-4" style={{ color: 'var(--s-color-action-primary)' }} />
+                  </div>
+                  <span className="block text-caption font-semibold text-[var(--s-color-content-heading)]">100% Privado</span>
+                  <span className="block text-[11px] text-[var(--s-color-content-muted)] mt-0.5">Sem Cadastro</span>
                 </div>
-                <div className="rounded-xl border border-default bg-bg-tertiary/60 p-2 text-center">
-                  <Activity className="mx-auto h-3.5 w-3.5 text-surgical-teal mb-0.5" />
-                  <span className="block text-[11px] font-semibold text-primary">Score Clínico</span>
-                  <span className="block text-[9px] text-tertiary">Dr. Herlon Moura</span>
+                <div className="rounded-xl border p-3 text-center" style={{ backgroundColor: 'var(--c-card-bg)', borderColor: 'var(--c-card-border)' }}>
+                  <div className="mx-auto mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 18%, transparent)' }}>
+                    <Activity className="h-4 w-4" style={{ color: 'var(--s-color-action-gold)' }} />
+                  </div>
+                  <span className="block text-caption font-semibold text-[var(--s-color-content-heading)]">Score Clínico</span>
+                  <span className="block text-[11px] text-[var(--s-color-content-muted)] mt-0.5">Dr. Herlon Moura</span>
                 </div>
               </div>
 
-              <div className="mt-5">
+              <div className="mt-6">
                 <button
                   onClick={handleNext}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-surgical-teal to-teal-400 px-6 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-surgical-teal/20 transition-all hover:brightness-110 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2.5 rounded-[var(--c-button-radius)] bg-[var(--c-button-primary-bg)] px-6 py-3.5 text-base font-semibold text-white shadow-md transition-all hover:bg-[var(--s-color-action-hover)] hover:shadow-lg active:scale-[0.985]"
                 >
                   <span>Iniciar Avaliação</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-5 w-5" />
                 </button>
               </div>
             </motion.div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Logo } from './Logo';
-import { MapPin, Phone, MessageCircle, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, ShieldCheck, Clock, Instagram } from 'lucide-react';
 
 interface FooterSection {
   title: string;
@@ -99,18 +99,42 @@ export function Footer({
               Consultório Salvador
             </h3>
             <ul className="space-y-3 text-caption" style={{ color: 'var(--s-color-content-muted)' }}>
-              <li className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: 'var(--s-color-action-primary)' }} />
+              <li className="flex items-start gap-2.5">
+                <span
+                  className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
+                    color: 'var(--s-color-action-primary)',
+                  }}
+                >
+                  <MapPin className="h-4 w-4" />
+                </span>
                 <span>R. Eng. Célso Tôrres, 654 - Graça, Salvador - BA</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 flex-shrink-0" style={{ color: 'var(--s-color-action-primary)' }} />
-                <a href="tel:+5571983449737" style={{ color: 'var(--s-color-content-muted)' }}>
+              <li className="flex items-center gap-2.5">
+                <span
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
+                    color: 'var(--s-color-action-primary)',
+                  }}
+                >
+                  <Phone className="h-4 w-4" />
+                </span>
+                <a href="tel:+557****9737" style={{ color: 'var(--s-color-content-muted)' }}>
                   (71) 98344-9737
                 </a>
               </li>
-              <li className="flex items-center gap-2">
-                <MessageCircle className="h-4 w-4 flex-shrink-0" style={{ color: 'var(--g-color-success)' }} />
+              <li className="flex items-center gap-2.5">
+                <span
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--g-color-success) 14%, transparent)',
+                    color: 'var(--g-color-success)',
+                  }}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                </span>
                 <a
                   href="https://wa.me/5571999159975"
                   target="_blank"
@@ -118,6 +142,37 @@ export function Footer({
                   style={{ color: 'var(--g-color-success)' }}
                 >
                   WhatsApp: (71) 99915-9975
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 18%, transparent)',
+                    color: 'var(--s-color-action-gold)',
+                  }}
+                >
+                  <Clock className="h-4 w-4" />
+                </span>
+                <span>Seg a Sex, 8h às 18h</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
+                    color: 'var(--s-color-action-primary)',
+                  }}
+                >
+                  <Instagram className="h-4 w-4" />
+                </span>
+                <a
+                  href="https://www.instagram.com/dr.herlonmoura/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--s-color-content-muted)' }}
+                >
+                  @dr.herlonmoura
                 </a>
               </li>
             </ul>

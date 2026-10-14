@@ -46,12 +46,20 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
   const [transitioning, setTransitioning] = useState<LeadStatus | null>(null);
   const [nextAction, setNextAction] = useState('');
   const [savingAction, setSavingAction] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const { id } = await params;
+    // The static export bakes only the `_` param — real ids arrive as ?id=.
+    let effectiveId = id;
+    if (id === '_' && typeof window !== 'undefined') {
+      const q = new URLSearchParams(window.location.search).get('id');
+      if (q) effectiveId = q;
+    }
+    setLeadId(effectiveId);
     setLoading(true); setError(null);
     try {
-      const data: { lead: Lead; interactions: Interaction[] } = await api.get(`/api/crm/leads/${id}`);
+      const data: { lead: Lead; interactions: Interaction[] } = await api.get(`/api/crm/leads/${effectiveId}`);
       setLead(data.lead);
       setNextAction(data.lead.next_action || '');
       setInteractions(data.interactions || []);
@@ -62,11 +70,10 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
   useEffect(() => { load(); }, [load]);
 
   const handleTransition = async (to: LeadStatus) => {
-    if (!lead || !canTransition(lead.status, to)) return;
+    if (!lead || !leadId || !canTransition(lead.status, to)) return;
     setTransitioning(to);
     try {
-      const { id } = await params;
-      const data = await api.patch<{ lead: Lead }>(`/api/crm/leads/${id}`, { status: to });
+      const data = await api.patch<{ lead: Lead }>(`/api/crm/leads/${leadId}`, { status: to });
       setLead(data.lead);
       await load();
     } catch (e: any) { alert(`Erro: ${e.message}`); }
@@ -74,24 +81,22 @@ export default function CRMLeadDetail({ params }: { params: Promise<{ id: string
   };
 
   const handleSaveNextAction = async () => {
-    if (!lead) return;
+    if (!leadId) return;
     setSavingAction(true);
     try {
-      const { id } = await params;
-      const data = await api.patch<{ lead: Lead }>(`/api/crm/leads/${id}`, { next_action: nextAction });
+      const data = await api.patch<{ lead: Lead }>(`/api/crm/leads/${leadId}`, { next_action: nextAction });
       setLead(data.lead);
     } catch (e: any) { alert(`Erro: ${e.message}`); }
     finally { setSavingAction(false); }
   };
 
   const handleAddNote = async () => {
-    if (!note.trim()) return;
+    if (!note.trim() || !leadId) return;
     setSaving(true);
     try {
-      const { id } = await params;
       const iid = crypto.randomUUID();
-      await api.post('/api/crm/interactions', { id: iid, lead_id: id, type: 'note', metadata: JSON.stringify({ note }) });
-      setInteractions((prev) => [{ id: iid, lead_id: id, type: 'note', metadata: JSON.stringify({ note }), created_at: new Date().toISOString() }, ...prev]);
+      await api.post('/api/crm/interactions', { id: iid, lead_id: leadId, type: 'note', metadata: JSON.stringify({ note }) });
+      setInteractions((prev) => [{ id: iid, lead_id: leadId, type: 'note', metadata: JSON.stringify({ note }), created_at: new Date().toISOString() }, ...prev]);
       setNote('');
     } catch (e: any) { alert(`Erro: ${e.message}`); }
     finally { setSaving(false); }

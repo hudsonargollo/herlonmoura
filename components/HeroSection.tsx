@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MessageCircle, Activity, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { MessageCircle, Activity, ShieldCheck, ArrowRight, Sparkles, CheckCircle2, Syringe, Waves, Zap } from 'lucide-react';
 
 interface HeroSectionProps {
   headline?: string;
@@ -49,14 +49,22 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden">
-      {/* Full-bleed professional banner (doctor at his desk — no cutout halo) */}
+      {/* Full-bleed professional banner (Dr. Herlon performing an Eco-Doppler exam) */}
+      {/*
+        banner-home2.jpg was a tight studio portrait with NO patient and NO
+        doppler machine in the frame — object-cover + object-right cropped it
+        so the doctor filled the frame and the action was lost. Swapped to
+        banner-meiohome.jpg (2560×1706, 3:2): the doctor, the seated patient
+        and the ultrasound machine are all visible; object-top keeps the head
+        in-frame on short viewports (same technique as the mid-page banner).
+      */}
       <Image
-        src="/images/brand/banner-home2.jpg"
-        alt="Dr. Herlon Moura em seu consultório"
+        src="/images/brand/banner-meiohome.jpg"
+        alt="Dr. Herlon Moura realizando exame de Eco-Doppler com a paciente no consultório"
         fill
         priority
         sizes="100vw"
-        className="object-cover object-right"
+        className="object-cover object-[50%_35%]"
       />
 
       {/* Legibility scrim: strong on the left (where the copy sits), clear on the right (the doctor) */}
@@ -123,25 +131,26 @@ export function HeroSection({
               {subheadline}
             </p>
 
-            {/* Key Pillars */}
+            {/* Key Pillars — each pillar mirrors the source site's Health glyph,
+                recreated with a distinct v2-token lucide icon */}
             <div className="mt-6 grid grid-cols-1 gap-3 text-body-small sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
               {[
-                'Tratamentos minimamente invasivos',
-                'Recuperação rápida sem internação',
-                'Eco-Doppler Vascular no consultório',
-                'Laser e espuma densa ecoguiada',
-              ].map((pillar, i) => (
-                <div key={pillar} className="flex items-center gap-2.5">
+                { icon: ShieldCheck, label: 'Tratamentos minimamente invasivos' },
+                { icon: Activity, label: 'Recuperação rápida sem internação' },
+                { icon: Waves, label: 'Eco-Doppler Vascular no consultório' },
+                { icon: Zap, label: 'Laser e espuma densa ecoguiada' },
+              ].map((pillar) => (
+                <div key={pillar.label} className="flex items-center gap-2.5">
                   <span
-                    className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
+                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
                     style={{
-                      backgroundColor: 'var(--s-color-bg-accent)',
-                      color: 'var(--g-color-base-primary)',
+                      backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 20%, transparent)',
+                      color: 'var(--s-color-action-gold)',
                     }}
                   >
-                    {i === 3 ? <Sparkles className="h-3.5 w-3.5" /> : '✓'}
+                    <pillar.icon className="h-4 w-4" />
                   </span>
-                  <span>{pillar}</span>
+                  <span>{pillar.label}</span>
                 </div>
               ))}
             </div>

@@ -17,7 +17,6 @@ import {
   Calendar,
   CheckCircle2,
   Stethoscope,
-  Sparkles,
   Waves,
   Zap,
   ShieldCheck,
@@ -27,7 +26,24 @@ import {
   Clock,
   Check,
   MessageCircle,
+  Droplets,
+  Syringe,
+  GitBranch,
+  Microscope,
 } from 'lucide-react';
+
+/* ============================================
+   Per-procedure icons — each glyph mirrors the meaning of the
+   source site's (herlonmoura.com.br) WordPress font-glyph icon,
+   recreated here with lucide-react and styled to the v2.0 tokens:
+   - Doppler vascular        -> Waves (blood-flow imaging)
+   - Varizes com laser       -> Zap (laser energy)
+   - Escleroterapia espuma   -> Droplets (foam injection)
+   - Microcirurgia           -> Microscope (precise microsurgery)
+   - Cateter Port-o-Cath     -> Syringe (chemo access)
+   - Cateter Permcath        -> HeartPulse (hemodialysis access)
+   - Fístula arteriovenosa   -> GitBranch (artery-vein graft)
+   ============================================ */
 
 /* ============================================
    Design System v2.0 — HealthNet × Dr. Herlon Moura
@@ -149,7 +165,7 @@ export default function Home() {
       subtitle: 'Tratamento em Consultório',
       description:
         'Tratamento para varizes e pequenos vasinhos que consiste na injeção de uma espuma na veia. O procedimento é minimamente invasivo e pode ser realizado em consultório.',
-      icon: Sparkles,
+      icon: Droplets,
       tag: 'Espuma',
     },
     {
@@ -157,7 +173,7 @@ export default function Home() {
       subtitle: 'Flebectomia Ambulatorial',
       description:
         'Procedimento que remove varizes pequenas e médias por meio de pequenas incisões. É um procedimento minimamente invasivo que pode ser realizado no consultório. É também conhecida como flebectomia ambulatória.',
-      icon: Activity,
+      icon: Microscope,
       tag: 'Cirúrgico',
     },
     {
@@ -165,7 +181,7 @@ export default function Home() {
       subtitle: 'Acesso para Quimioterapia',
       description:
         'O cateter Port-a-Cath é um dispositivo totalmente implantável que facilita a aplicação de quimioterapia e outros tratamentos.',
-      icon: ShieldCheck,
+      icon: Syringe,
       tag: 'Oncológico',
     },
     {
@@ -173,7 +189,7 @@ export default function Home() {
       subtitle: 'Acesso para Hemodiálise',
       description:
         'O cateter Permcath é um cateter de longa permanência que é implantado em uma veia profunda do paciente para realizar hemodiálise.',
-      icon: Stethoscope,
+      icon: HeartPulse,
       tag: 'Vascular',
     },
     {
@@ -181,7 +197,7 @@ export default function Home() {
       subtitle: 'Acesso para Hemodiálise',
       description:
         'A confecção de uma fístula arteriovenosa (FAV) para hemodiálise é um procedimento cirúrgico que une uma artéria a uma veia. É o melhor acesso vascular para hemodiálise.',
-      icon: Activity,
+      icon: GitBranch,
       tag: 'Cirúrgico',
     },
   ];
@@ -285,8 +301,8 @@ export default function Home() {
                   <div
                     className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl"
                     style={{
-                      backgroundColor: 'var(--g-color-accent)',
-                      color: 'var(--g-color-base-primary)',
+                      backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 18%, transparent)',
+                      color: 'var(--s-color-action-gold)',
                     }}
                   >
                     <Icon className="h-6 w-6" />
@@ -350,13 +366,13 @@ export default function Home() {
                   <div>
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div
-                        className="flex h-11 w-11 items-center justify-center rounded-xl"
+                        className="flex h-12 w-12 items-center justify-center rounded-xl"
                         style={{
-                          backgroundColor: 'var(--s-color-bg-accent)',
-                          color: 'var(--g-color-base-primary)',
+                          backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
+                          color: 'var(--s-color-action-primary)',
                         }}
                       >
-                        <Icon className="h-5 w-5" />
+                        <Icon className="h-6 w-6" />
                       </div>
                       <span
                         className="rounded-full border px-2.5 py-1 text-[11px] font-semibold"
@@ -412,10 +428,10 @@ export default function Home() {
             <div style={{ ...cardStyle, padding: '2rem' }}>
               <div className="mb-6 flex items-center gap-3">
                 <div
-                  className="flex h-10 w-10 items-center justify-center rounded-xl"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl"
                   style={{
-                    backgroundColor: 'var(--s-color-bg-accent)',
-                    color: 'var(--g-color-base-primary)',
+                    backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
+                    color: 'var(--s-color-action-primary)',
                   }}
                 >
                   <Activity className="h-5 w-5" />
@@ -468,10 +484,10 @@ export default function Home() {
             <div style={{ ...cardStyle, padding: '2rem' }}>
               <div className="mb-6 flex items-center gap-3">
                 <div
-                  className="flex h-10 w-10 items-center justify-center rounded-xl"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl"
                   style={{
-                    backgroundColor: 'var(--s-color-bg-brand)',
-                    color: 'var(--s-color-content-inverse)',
+                    backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)',
+                    color: 'var(--s-color-action-primary)',
                   }}
                 >
                   <HeartPulse className="h-5 w-5" />
@@ -524,13 +540,21 @@ export default function Home() {
       </section>
 
       {/* Mid-page banner: real consultório / ultrasound photo (BR variant) */}
-      <section className="relative h-[280px] overflow-hidden sm:h-[360px]">
+      {/*
+        banner-meiohome.jpg is 2560×1706 (3:2) with Dr. Herlon's head/face in
+        the TOP-RIGHT of the frame (~10–20% from the top). A short, very wide
+        section makes object-cover crop the vertical middle — which cut the face
+        off, leaving only torso/hands. Fix: taller section (keeps the crop band
+        high enough to include head + upper body) and object-top positioning so
+        the visible band always includes the top of the frame.
+      */}
+      <section className="relative h-[400px] overflow-hidden sm:h-[520px] lg:h-[640px]">
         <Image
           src="/images/brand/banner-meiohome.jpg"
           alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
           fill
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-[50%_12%]"
         />
         <div
           className="absolute inset-0"
