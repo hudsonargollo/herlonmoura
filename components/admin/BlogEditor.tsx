@@ -75,7 +75,7 @@ export function BlogEditor({ initialPost, onSave, onPreview }: BlogEditorProps) 
     try {
       const slug = formData.title.toLowerCase().replace(/\s+/g, '-');
       if (initialPost?.title) {
-        await api.put(slug, formData);
+        await api.put(`/api/blog/${slug}`, formData);
       } else {
         await api.post<any>('/api/blog', formData);
       }

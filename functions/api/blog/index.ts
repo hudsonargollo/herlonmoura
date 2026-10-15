@@ -7,6 +7,12 @@ interface Env {
   JWT_SECRET: string;
 }
 
+type PagesFunction<Env> = (ctx: {
+  request: Request;
+  env: Env;
+  next?: () => Promise<Response>;
+}) => Response | Promise<Response>;
+
 function json(status: number, data: unknown): Response {
   return new Response(JSON.stringify(data), {
     status,
@@ -115,6 +121,84 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     ).run();
 
     return json(201, { id, slug: postSlug, title, status, readingTime });
+  } catch (e: any) {
+    return json(500, { error: e.message });
+  }
+};
+
+export const onRequestPut: PagesFunction<Env> = async ({ request, env }) => {
+  try {
+    const user = await verifyAuth(request, env);
+    if (!user) return json(401, { error: "Unauthorized" });
+
+    const body = (await request.json()) as Record<string, any>;
+    const { slug } = body;
+    const updateFields: string[] = [];
+    const binds: string[] = [];
+
+    if (body.title !== undefined) {
+      updateFields.push("title = ?");
+      binds.push(body.title);
+    }
+    if (body.excerpt !== undefined) {
+      updateFields.push("excerpt = ?");
+      binds.push(body.excerpt);
+    }
+    if (body.meta_title !== undefined) {
+      updateFields.push("meta_title = ?");
+      binds.push(body.meta_title);
+    }
+    if (body.meta_description !== undefined) {
+      updateFields.push("meta_description = ?");
+      binds.push(body.meta_description);
+    }
+    if (body.content !== undefined) {
+      updateFields.push("content = ?");
+      binds.push(body.content);
+    }
+    if (body.category !== undefined) {
+      updateFields.push("category = ?");
+      binds.push(body.category);
+    }
+    if (body.author !== undefined) {
+      updateFields.push("author = ?");
+      binds.push(body.author);
+    }
+    if (body.status !== undefined) {
+      updateFields.push("status = ?");
+      binds.push(body.status);
+    }
+
+    updateFields.push("updated_at = ?");
+    binds.push(new Date().toISOString());
+
+    if (updateFields.length === 0) {
+      return json(400, { error: "Nothing to update" });
+    }
+
+    binds.push(slug);
+
+    await db.prepare(
+      `UPDATE blog_posts SET ${updateFields.join(", ")} WHERE slug = ?`
+    ).bind(...binds).run();
+
+    return json(200, { slug, updated: true });
+  } catch (e: any) {
+    return json(500, { error: e.message });
+  }
+};
+
+export const onRequestDelete: PagesFunction<Env> = async ({ request, env }) => {
+  try {
+    const url = new URL(request.url);
+    const slug = url.pathname.split('/').pop();
+    if (!slug) return json(400, { error: "Missing slug" });
+
+    const user = await verifyAuth(request, env);
+    if (!user) return json(401, { error: "Unauthorized" });
+
+    await db.prepare("DELETE FROM blog_posts WHERE slug = ?").bind(slug).run();
+    return json(200, { deleted: true, slug });
   } catch (e: any) {
     return json(500, { error: e.message });
   }

@@ -1,21 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/admin/Sidebar';
 import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 import { api } from '@/lib/admin/api';
+import { Button } from '@/components/Button';
 import {
-  Users,
-  TrendingUp,
-  FileText,
-  Clock,
-  MessageSquare,
-  Activity,
-  Plus,
-  Eye,
-  Stethoscope,
-  BarChart3,
+  Users, TrendingUp, FileText, Clock, MessageSquare, Activity,
+  Plus, Eye, Stethoscope, BarChart3, ChevronRight, PlusCircle, Edit3,
+  Trash2, CheckCircle2, XCircle, Send, Search, ChevronDown
 } from 'lucide-react';
 
 type Section = 'dashboard' | 'crm' | 'leads' | 'blog' | 'analytics';
@@ -24,10 +18,89 @@ interface DashboardStats {
   leads: { total: number; new: number; byStatus: Record<string, number>; conversionRate: number };
   posts: { pending: number; published: number };
   interactions: number;
+  visitors: { total: number; unique: number };
+  sources: Record<string, number>;
   engagement: { weekOverWeek: number; monthOverMonth: number };
   avgScore: number;
-  sources: Record<string, number>;
 }
+
+interface Lead {
+  id: string;
+  name: string;
+  whatsapp: string;
+  email: string | null;
+  source: string;
+  status: string;
+  score: number;
+  tags: string;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+  status_history: string;
+}
+
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  author: string;
+  status: 'draft' | 'approval' | 'published' | 'archived';
+  readingTime: string;
+  content: string;
+  meta_title: string;
+  meta_description: string;
+  questionnaire_enabled: boolean;
+  freebie_name: string | null;
+}
+
+interface Funnel {
+  stage: string;
+  count: number;
+  rate: number;
+}
+
+interface Cohort {
+  week: string;
+  total: number;
+  converted: number;
+  lost: number;
+  conversionRate: number;
+}
+
+interface ProcedureEngagement {
+  name: string;
+  clicks: number;
+  leads: number;
+}
+
+const STATUS_COLORS: Record<string, string> = {
+  new: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
+  contacted: 'bg-teal-500/15 text-teal-400 border-teal-500/30',
+  qualified: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+  appointment: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30',
+  converted: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+  lost: 'bg-red-500/15 text-red-400 border-red-500/30',
+};
+
+const SOURCE_LABELS: Record<string, string> = {
+  all: 'Todas', contact: 'Contato', questionnaire: 'Questionário',
+  whatsapp: 'WhatsApp', referral: 'Indicação', social: 'Social'
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  new: 'Novo', contacted: 'Contatado', qualified: 'Qualificado',
+  appointment: 'Consulta', converted: 'Convertido', lost: 'Perdido'
+};
+
+const SOURCES: Array<'all' | 'contact' | 'questionnaire' | 'whatsapp' | 'referral' | 'social'> = [
+  'all', 'contact', 'questionnaire', 'whatsapp', 'referral', 'social'
+];
+
+const STATUS_FILTERS: Array<'all' | 'new' | 'contacted' | 'qualified' | 'appointment' | 'converted' | 'lost'> = [
+  'all', 'new', 'contacted', 'qualified', 'appointment', 'converted', 'lost'
+];
 
 export default function AdminPage() {
   return (
@@ -41,42 +114,37 @@ function AdminLanding() {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState<Section>('dashboard');
   const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [leadsCount, setLeadsCount] = useState<number>(0);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [funnel, setFunnel] = useState<Funnel[]>([]);
+  const [cohorts, setCohorts] = useState<Cohort[]>([]);
+  const [procedures, setProcedures] = useState<ProcedureEngagement[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const [statsData, leadsData] = await Promise.all([
-          api.get<DashboardStats>('/api/dashboard/stats'),
-          api.get<{ leads: unknown[] }>('/api/crm/leads'),
-        ]);
-        setStats(statsData);
-        setLeadsCount(leadsData.leads.length);
-      } catch {
-        // silent fail — sections render with zeros
-      } finally {
-        setLoading(false);
-      }
-    })();
+  const fetchAll = useCallback(async () => {
+    setLoading(true); setError(null);
+    try {
+      const [statsData, leadsData, postsData, analyticsData] = await Promise.all([
+        api.get<DashboardStats>('/api/dashboard/stats'),
+        api.get<{ leads: Lead[]; stats: { total: number; new: number; byStatus: Record<string, number> } }>('/api/crm/leads'),
+        api.get<{ posts: BlogPost[] }>('/api/blog'),
+        api.get<{ funnel: Funnel[]; cohorts: Cohort[]; procedures: ProcedureEngagement[] }>('/api/analytics/funnels?days=30'),
+      ]);
+      setStats(statsData);
+      setLeads(leadsData.leads);
+      setPosts(postsData.posts);
+      setFunnel(analyticsData.funnel);
+      setCohorts(analyticsData.cohorts);
+      setProcedures(analyticsData.procedures);
+    } catch (e: any) {
+      setError(e.message || 'Erro ao carregar dados');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const renderBentoCards = () => {
-    if (!stats) {
-      return [
-        { title: 'Total de Pacientes', value: '—', icon: Users, iconBg: 'bg-medical-teal', iconColor: 'text-teal-700' },
-        { title: 'Novos Leads', value: '—', icon: TrendingUp, iconBg: 'bg-brand-accent', iconColor: 'text-slate-900' },
-        { title: 'Interações', value: '—', icon: MessageSquare, iconBg: 'bg-medical-purple', iconColor: 'text-slate-700' },
-        { title: 'Taxa de Conversão', value: '—', icon: Activity, iconBg: 'bg-emerald-100', iconColor: 'text-emerald-700' },
-      ];
-    }
-    return [
-      { title: 'Total de Pacientes', value: leadsCount, icon: Users, iconBg: 'bg-medical-teal', iconColor: 'text-teal-700' },
-      { title: 'Novos Leads', value: stats.leads.new, icon: TrendingUp, iconBg: 'bg-brand-accent', iconColor: 'text-slate-900' },
-      { title: 'Interações', value: stats.interactions, icon: MessageSquare, iconBg: 'bg-medical-purple', iconColor: 'text-slate-700' },
-      { title: 'Taxa de Conversão', value: `${stats.leads.conversionRate ?? 0}%`, icon: Activity, iconBg: 'bg-emerald-100', iconColor: 'text-emerald-700' },
-    ];
-  };
+  useEffect(() => { fetchAll(); }, [fetchAll]);
 
   const renderContent = () => {
     switch (activeSection) {
@@ -90,14 +158,11 @@ function AdminLanding() {
                 <h1 className="text-display-md font-heading font-semibold text-white">CRM</h1>
                 <p className="text-sm text-slate-400">Gerencie leads e pacientes.</p>
               </div>
-              <button
-                onClick={() => router.push('/admin/crm')}
-                className="flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-brand-accent/90 transition-colors"
-              >
-                <Plus className="h-4 w-4" /> Ver CRM
-              </button>
+              <Button variant="primary" size="sm" onClick={() => router.push('/admin/crm')}>
+                <Plus className="h-4 w-4" /> Novo Lead
+              </Button>
             </div>
-            <p className="text-sm text-slate-400">Acesse o CRM completo em <strong>/admin/crm</strong>.</p>
+            <LeadsTable leads={leads} router={router} />
           </div>
         );
       case 'leads':
@@ -106,17 +171,13 @@ function AdminLanding() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-display-md font-heading font-semibold text-white">Leads</h1>
-                <p className="text-sm text-slate-400">Lista de leads do autor.{'\n'}<ul>
-                  <li>Novo</li><li>Contatado</li><li>Qualificado</li><li>Consulta</li><li>Convertido</li><li>Perdido</li></ul></p>
+                <p className="text-sm text-slate-400">Lista de leads do autor.</p>
               </div>
-              <button
-                onClick={() => router.push('/admin/crm')}
-                className="flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-brand-accent/90 transition-colors"
-              >
-                <Plus className="h-4 w-4" /> Ver Leads
-              </button>
+              <Button variant="primary" size="sm" onClick={() => router.push('/admin/crm')}>
+                <Plus className="h-4 w-4" /> Novo Lead
+              </Button>
             </div>
-            <p className="text-sm text-slate-400">Acesse a lista de leads em <strong>/admin/crm</strong>.</p>
+            <LeadsTable leads={leads} router={router} />
           </div>
         );
       case 'blog':
@@ -127,154 +188,18 @@ function AdminLanding() {
                 <h1 className="text-display-md font-heading font-semibold text-white">Blog</h1>
                 <p className="text-sm text-slate-400">Gerencie artigos e conteúdo.</p>
               </div>
-              <button
-                onClick={() => router.push('/admin/blog')}
-                className="flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-brand-accent/90 transition-colors"
-              >
+              <Button variant="primary" size="sm" onClick={() => router.push('/admin/blog')}>
                 <Plus className="h-4 w-4" /> Novo Artigo
-              </button>
+              </Button>
             </div>
-            <p className="text-sm text-slate-400">Acesse o editor de artigos em <strong>/admin/blog</strong>.</p>
+            <BlogPostTable posts={posts} fetchAll={fetchAll} router={router} />
           </div>
         );
       case 'analytics':
-        return (
-          <div className="space-y-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-display-md font-heading font-semibold text-white">Analytics</h1>
-                <p className="text-sm text-slate-400">Funis de conversão, coortes e engajamento.</p>
-              </div>
-              <button
-                onClick={() => router.push('/admin/analytics')}
-                className="flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-brand-accent/90 transition-colors"
-              >
-                <BarChart3 className="h-4 w-4" /> Ver Analytics
-              </button>
-            </div>
-            <p className="text-sm text-slate-400">Acesse os gráficos e análises em <strong>/admin/analytics</strong>.</p>
-          </div>
-        );
+        return <AnalyticsView funnel={funnel} cohorts={cohorts} procedures={procedures} />;
       default:
         return null;
     }
-  };
-
-  const renderDashboard = () => {
-    return (
-      <div className="space-y-5">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-2 tablet:grid-cols-4 gap-4">
-          <div className="rounded-3xl p-5 bg-surface-cardDark/50 border border-slate-700/40">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-medical-teal">
-                <Users className="h-4 w-4 text-teal-700" />
-              </div>
-              <span className="text-xs text-slate-400 uppercase tracking-wider">Total Leads</span>
-            </div>
-            <p className="text-2xl font-bold text-brand-accent">{loading ? '—' : leadsCount}</p>
-            <p className="text-xs text-slate-500 mt-1">novos registros</p>
-          </div>
-          <div className="rounded-3xl p-5 bg-surface-cardDark/50 border border-slate-700/40">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-100">
-                <TrendingUp className="h-4 w-4 text-emerald-700" />
-              </div>
-              <span className="text-xs text-slate-400 uppercase tracking-wider">Taxa Conversão</span>
-            </div>
-            <p className="text-2xl font-bold text-brand-accent">{loading ? '—' : stats?.leads.conversionRate ?? 0}%</p>
-          </div>
-          <div className="rounded-3xl p-5 bg-surface-cardDark/50 border border-slate-700/40">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-medical-blue">
-                <MessageSquare className="h-4 w-4 text-blue-700" />
-              </div>
-              <span className="text-xs text-slate-400 uppercase tracking-wider">Interações</span>
-            </div>
-            <p className="text-2xl font-bold text-brand-accent">{loading ? '—' : stats?.interactions ?? 0}</p>
-          </div>
-          <div className="rounded-3xl p-5 bg-surface-cardDark/50 border border-slate-700/40">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-medical-yellow">
-                <FileText className="h-4 w-4 text-yellow-700" />
-              </div>
-              <span className="text-xs text-slate-400 uppercase tracking-wider">Blog</span>
-            </div>
-            <p className="text-2xl font-bold text-brand-accent">{loading ? '—' : stats?.posts.published ?? 0}</p>
-            <p className="text-xs text-slate-500 mt-1">publicados</p>
-          </div>
-        </div>
-
-        {!loading && stats && (
-          <>
-            {/* Lead Sources */}
-            <div className="admin-glass p-5">
-              <h3 className="text-heading-3 font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                <Users className="h-4 w-4 text-brand-accent" /> Fontes de Lead
-              </h3>
-              {Object.entries(stats.sources || {}).length === 0 ? (
-                <p className="text-sm text-slate-400">Sem dados de fontes.</p>
-              ) : (
-                <div className="space-y-3">
-                  {Object.entries(stats.sources)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([source, count]) => {
-                      const total = Object.values(stats.sources).reduce((a, b) => a + b, 0);
-                      const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-                      return (
-                        <div key={source} className="flex items-center gap-3">
-                          <span className="w-24 text-xs text-slate-400 capitalize">{source}</span>
-                          <div className="flex-1 h-2.5 rounded-full bg-slate-800 overflow-hidden">
-                            <div
-                              className="h-full rounded-full bg-surgical-teal transition-all duration-500"
-                              style={{ width: `${pct}%` }}
-                            />
-                          </div>
-                          <span className="w-16 text-xs text-slate-300 text-right">{count} ({pct}%)</span>
-                        </div>
-                      );
-                    })}
-                </div>
-              )}
-            </div>
-
-            {/* Engagement */}
-            <div className="admin-glass p-5">
-              <h3 className="text-heading-3 font-heading font-semibold text-white mb-3 flex items-center gap-2">
-                <Activity className="h-4 w-4 text-brand-accent" /> Engajamento
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-400">Semana vs Semana</span>
-                  <span className="text-sm font-semibold text-emerald-400">+{stats.engagement?.weekOverWeek ?? 0}%</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-400">Mês vs Mês</span>
-                  <span className="text-sm font-semibold text-teal-400">+{stats.engagement?.monthOverMonth ?? 0}%</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Posts */}
-            <div className="admin-glass p-5">
-              <h3 className="text-heading-3 font-heading font-semibold text-white mb-3 flex items-center gap-2">
-                <FileText className="h-4 w-4 text-brand-accent" /> Posts
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-400">Pendentes</span>
-                  <span className="text-sm font-semibold text-yellow-400">{stats.posts.pending}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-400">Publicados</span>
-                  <span className="text-sm font-semibold text-emerald-400">{stats.posts.published}</span>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    );
   };
 
   return (
@@ -290,65 +215,438 @@ function AdminLanding() {
             </div>
             <div>
               <h1 className="text-display-md font-heading font-semibold text-white">
-                {activeSection === 'dashboard' ? 'Dashboard' : activeSection === 'crm' ? 'CRM' : activeSection === 'leads' ? 'Leads' : activeSection === 'blog' ? 'Blog' : 'Analytics'}
+                {activeSection === 'dashboard' && 'Dashboard'}
+                {activeSection === 'crm' && 'CRM'}
+                {activeSection === 'leads' && 'Leads'}
+                {activeSection === 'blog' && 'Blog'}
+                {activeSection === 'analytics' && 'Analytics'}
               </h1>
               <p className="text-sm text-slate-400">
-                {activeSection === 'dashboard' ? 'Visão geral do desempenho de leads e conteúdo.' :
-                 activeSection === 'crm' ? 'Gerencie cadastros de pacientes.' :
-                 activeSection === 'leads' ? 'Lista de leads.' :
-                 activeSection === 'blog' ? 'Gerencie artigos e conteúdo.' :
-                 'Funis de conversão, coortes e engajamento.'}
+                {activeSection === 'dashboard' && 'Visão geral do desempenho de leads e conteúdo.'}
+                {activeSection === 'crm' && 'Gerencie cadastros de pacientes.'}
+                {activeSection === 'leads' && 'Lista de leads.'}
+                {activeSection === 'blog' && 'Gerencie artigos e conteúdo.'}
+                {activeSection === 'analytics' && 'Funis de conversão, coortes e engajamento.'}
               </p>
             </div>
           </div>
         </header>
 
-        {/* Bento Grid — dashboard summary */}
-        {activeSection === 'dashboard' && (
-          <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4 mb-6">
-            {renderBentoCards().map((card) => (
-              <div
-                key={card.title}
-                className="rounded-3xl p-5 bg-surface-cardDark/50 border border-slate-700/40 hover:border-slate-600/50 transition-all duration-200"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-2xl shadow-card ${card.iconBg}`}>
-                    <card.icon className={`h-5 w-5 ${card.iconColor}`} />
-                  </div>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{card.title}</span>
-                </div>
-                <p className="text-3xl font-bold text-brand-accent">{card.value}</p>
-              </div>
-            ))}
+        {/* Loading */}
+        {loading && (
+          <div className="flex items-center justify-center py-12">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-surgical-teal border-t-transparent" />
           </div>
         )}
 
-        {activeSection === 'dashboard' && (
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => router.push('/admin/crm')}
-              className="flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-brand-accent/90 transition-colors"
-            >
-              <Plus className="h-4 w-4" /> Novo Lead
-            </button>
-            <button
-              onClick={() => router.push('/admin/blog')}
-              className="flex items-center gap-2 rounded-3xl bg-surface-cardDark/60 border border-slate-700/50 px-5 py-2.5 text-sm font-semibold text-slate-200 hover:bg-surface-cardDark transition-colors"
-            >
-              <FileText className="h-4 w-4" /> Criar Artigo
-            </button>
-            <button
-              onClick={() => router.push('/admin/blog/approval')}
-              className="flex items-center gap-2 rounded-3xl bg-surface-cardDark/60 border border-slate-700/50 px-5 py-2.5 text-sm font-semibold text-slate-200 hover:bg-surface-cardDark transition-colors"
-            >
-              <Eye className="h-4 w-4" /> Ver Blog
-            </button>
+        {/* Error */}
+        {error && (
+          <div className="rounded-2xl border border-red-500/30 bg-red-500/5 p-4 text-center">
+            <p className="text-sm text-red-400">{error}</p>
+            <Button variant="primary" size="sm" className="mt-3" onClick={fetchAll}>
+              Tentar novamente
+            </Button>
           </div>
         )}
 
         {/* Section content */}
-        {renderContent()}
+        {!loading && !error && renderContent()}
       </main>
+    </div>
+  );
+}
+
+function BentoCard({ title, value, icon: Icon, iconBg, iconColor }: {
+  title: string; value: string; icon: any; iconBg: string; iconColor: string;
+}) {
+  return (
+    <div className="rounded-3xl p-5 bg-surface-cardDark/50 border border-slate-700/40 hover:border-slate-600/50 transition-all duration-200">
+      <div className="flex items-center gap-3 mb-3">
+        <div className={`flex h-10 w-10 items-center justify-center rounded-2xl shadow-card ${iconBg}`}>
+          <Icon className={`h-5 w-5 ${iconColor}`} />
+        </div>
+        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{title}</span>
+      </div>
+      <p className="text-3xl font-bold text-brand-accent">{value}</p>
+    </div>
+  );
+}
+
+function renderDashboard() {
+  return (
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 tablet:grid-cols-4 gap-4">
+        <BentoCard title="Total de Pacientes" value="—" icon={Users} iconBg="bg-medical-teal" iconColor="text-teal-700" />
+        <BentoCard title="Novos Leads" value="—" icon={TrendingUp} iconBg="bg-brand-accent" iconColor="text-slate-900" />
+        <BentoCard title="Interações" value="—" icon={MessageSquare} iconBg="bg-medical-purple" iconColor="text-slate-700" />
+        <BentoCard title="Taxa de Conversão" value="—" icon={Activity} iconBg="bg-emerald-100" iconColor="text-emerald-700" />
+      </div>
+    </div>
+  );
+}
+
+function LeadsTable({ leads, router }: { leads: Lead[]; router: any }) {
+  const [search, setSearch] = useState('');
+  const [sourceFilter, setSourceFilter] = useState<'all' | 'contact' | 'questionnaire' | 'whatsapp' | 'referral' | 'social'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'contacted' | 'qualified' | 'appointment' | 'converted' | 'lost'>('all');
+
+  const filtered = leads.filter((l) => {
+    const matchSearch = l.name.toLowerCase().includes(search.toLowerCase()) || l.id.toLowerCase().includes(search.toLowerCase());
+    const matchSource = sourceFilter === 'all' || l.source === sourceFilter;
+    const matchStatus = statusFilter === 'all' || l.status === statusFilter;
+    return matchSearch && matchSource && matchStatus;
+  });
+
+  return (
+    <div className="space-y-5">
+      <div className="admin-glass p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Search className="h-4 w-4 text-brand-accent" />
+          <span className="text-sm font-semibold text-white">Filtros</span>
+        </div>
+        <div className="grid grid-cols-1 tablet:grid-cols-4 gap-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+            <input
+              type="text"
+              placeholder="Buscar nome ou ID..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="glass-input pl-10 w-full text-sm"
+            />
+          </div>
+          <select
+            value={sourceFilter}
+            onChange={(e) => setSourceFilter(e.target.value as any)}
+            className="glass-input text-sm py-2"
+          >
+            {SOURCES.map((s) => <option key={s} value={s}>{SOURCE_LABELS[s]}</option>)}
+          </select>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as any)}
+            className="glass-input text-sm py-2"
+          >
+            {STATUS_FILTERS.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
+          </select>
+          <div className="flex gap-2">
+            <input type="date" className="glass-input text-sm py-2 flex-1" />
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-hidden admin-glass">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-slate-700/50">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Paciente</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Fonte</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Score</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Criado</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase">Ações</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-800/40">
+            {filtered.map((lead) => (
+              <tr key={lead.id} className="hover:bg-slate-800/20 transition-colors">
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-accent/15 text-brand-accent text-xs font-bold">
+                      {lead.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-medium text-white">{lead.name}</p>
+                      <p className="text-[11px] text-slate-500">{lead.id}</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3">
+                  <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium border ${STATUS_COLORS[lead.status] || STATUS_COLORS.new}`}>
+                    {STATUS_LABELS[lead.status] || lead.status}
+                  </span>
+                </td>
+                <td className="px-4 py-3 text-slate-400">{SOURCE_LABELS[lead.source] || lead.source}</td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="h-1.5 w-12 rounded-full bg-slate-800 overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${lead.score}%`,
+                          background: lead.score >= 70 ? '#E6FF57' : lead.score >= 40 ? '#F59E0B' : '#EF4444',
+                        }}
+                      />
+                    </div>
+                    <span className="text-xs text-slate-400">{lead.score}</span>
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-slate-500">{lead.created_at?.slice(0, 10)}</td>
+                <td className="px-4 py-3 text-right">
+                  <Button variant="ghost" size="sm" onClick={() => router.push(`/admin/crm/${lead.id}`)}>
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {filtered.length === 0 && <div className="px-4 py-8 text-center text-slate-500">Nenhum lead encontrado.</div>}
+      </div>
+
+      <p className="text-xs text-slate-500">{filtered.length} de {leads.length} leads</p>
+    </div>
+  );
+}
+
+function BlogPostTable({ posts, fetchAll, router }: { posts: BlogPost[]; fetchAll: () => void; router: any }) {
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'approval' | 'published' | 'archived'>('all');
+  const [actionMsg, setActionMsg] = useState<string | null>(null);
+
+  const filtered = posts.filter((p) => {
+    const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) || p.slug.toLowerCase().includes(search.toLowerCase());
+    const matchStatus = statusFilter === 'all' || p.status === statusFilter;
+    return matchSearch && matchStatus;
+  });
+
+  const handleDelete = async (slug: string) => {
+    if (!confirm(`Excluir "${slug}" permanentemente?`)) return;
+    try {
+      await api.delete(`/api/blog/${slug}`);
+      setActionMsg(`"${slug}" excluído!`);
+      fetchAll();
+    } catch (e: any) {
+      alert(`Erro: ${e.message}`);
+    }
+  };
+
+  const handlePublish = async (slug: string) => {
+    if (!confirm(`Publicar "${slug}"?`)) return;
+    try {
+      await api.put(slug, { status: 'published' });
+      setActionMsg(`"${slug}" publicado!`);
+      fetchAll();
+    } catch (e: any) {
+      alert(`Erro: ${e.message}`);
+    }
+  };
+
+  return (
+    <div className="space-y-5">
+      <div className="flex flex-col gap-3 tablet:flex-row tablet:items-center tablet:justify-between">
+        <div className="relative max-w-sm">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-medium" />
+          <input
+            type="text"
+            placeholder="Buscar artigo..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="glass-input pl-10 w-full text-sm"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as any)}
+            className="glass-input text-sm py-2"
+          >
+            <option value="all">Todos os status</option>
+            <option value="published">Publicado</option>
+            <option value="approval">Aprovação</option>
+            <option value="draft">Rascunho</option>
+            <option value="archived">Arquivado</option>
+          </select>
+          <Button variant="primary" size="sm" onClick={() => router.push('/admin/blog')}>
+            <PlusCircle className="mr-1.5 h-4 w-4" /> Novo Artigo
+          </Button>
+          <Button variant="ghost" size="sm" onClick={fetchAll}>
+            <Clock className="mr-1.5 h-4 w-4" /> Atualizar
+          </Button>
+        </div>
+      </div>
+
+      {actionMsg && (
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-400">
+          {actionMsg}
+        </div>
+      )}
+
+      {filtered.length === 0 ? (
+        <div className="py-8 text-center text-slate-500">Nenhum artigo encontrado.</div>
+      ) : (
+        <div className="overflow-hidden admin-glass">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-700/50">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Título</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Categoria</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Data</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Leitura</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase">Ações</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/40">
+              {filtered.map((post) => (
+                <tr key={post.slug} className="hover:bg-slate-800/20 transition-colors">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-medical-blue/15 text-medical-blue">
+                        <FileText className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-white text-sm">{post.title}</p>
+                        <p className="text-[11px] text-slate-500">{post.slug}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-slate-300">{post.category}</td>
+                  <td className="px-4 py-3">
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium border ${STATUS_COLORS[post.status]}`}>
+                      {post.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-slate-500">{post.date?.slice(0, 10)}</td>
+                  <td className="px-4 py-3 text-slate-400">{post.readingTime}</td>
+                  <td className="px-4 py-3 text-right">
+                    <div className="flex items-center justify-end gap-1">
+                      <Button variant="ghost" size="sm" title="Preview">
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" title="Editar" className="text-blue-400 border-blue-500/30">
+                        <Edit3 className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" title="Excluir" className="text-red-400 hover:bg-red-500/10" onClick={() => handleDelete(post.slug)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AnalyticsView({ funnel, cohorts, procedures }: {
+  funnel: Funnel[]; cohorts: Cohort[]; procedures: ProcedureEngagement[];
+}) {
+  return (
+    <div className="space-y-5">
+      {/* Conversion Funnel */}
+      <div className="admin-glass p-5">
+        <h3 className="text-heading-3 font-heading font-semibold text-white mb-4 flex items-center gap-2">
+          <BarChart3 className="h-4 w-4 text-brand-accent" /> Funil de Conversão
+        </h3>
+        <div className="space-y-3">
+          {funnel.map((stage, i) => {
+            const Icon = [Users, TrendingUp, FileText, Clock, CheckCircle2][i] || Activity;
+            const width = Math.max(10, stage.rate);
+            return (
+              <div key={stage.stage} className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-medical-teal">
+                      <Icon className="h-4 w-4 text-slate-700" />
+                    </div>
+                    <span className="text-sm text-white">{stage.stage}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold text-brand-accent">{stage.count}</span>
+                    <span className="text-xs text-slate-500 w-12 text-right">{stage.rate}%</span>
+                  </div>
+                </div>
+                <div className="h-2.5 rounded-full bg-slate-800 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-surgical-teal transition-all duration-500"
+                    style={{ width: `${width}%` }}
+                  />
+                </div>
+                {i < funnel.length - 1 && (
+                  <div className="flex justify-center">
+                    <ChevronRight className="h-3 w-3 text-slate-600 rotate-90" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Cohort Analysis */}
+      <div className="admin-glass p-5">
+        <h3 className="text-heading-3 font-heading font-semibold text-white mb-4 flex items-center gap-2">
+          <Activity className="h-4 w-4 text-brand-accent" /> Análise de Coortes (Semanal)
+        </h3>
+        {cohorts.length === 0 ? (
+          <p className="text-sm text-slate-400">Sem dados de coorte.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-slate-700/50">
+                  <th className="px-3 py-2 text-left text-xs font-semibold text-slate-500 uppercase">Semana</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Leads</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Convertidos</th>
+                  <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500 uppercase">Taxa</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/40">
+                {cohorts.map((c) => (
+                  <tr key={c.week} className="hover:bg-slate-800/20 transition-colors">
+                    <td className="px-3 py-2 text-white">{c.week}</td>
+                    <td className="px-3 py-2 text-right text-slate-300">{c.total}</td>
+                    <td className="px-3 py-2 text-right text-emerald-400">{c.converted}</td>
+                    <td className="px-3 py-2 text-right">
+                      <span className={
+                        c.conversionRate >= 20
+                          ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+                          : c.conversionRate >= 10
+                          ? 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30'
+                          : 'bg-red-500/15 text-red-400 border-red-500/30'
+                      }>
+                        {c.conversionRate}%
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Per-Procedure Engagement */}
+      <div className="admin-glass p-5">
+        <h3 className="text-heading-3 font-heading font-semibold text-white mb-4 flex items-center gap-2">
+          <Activity className="h-4 w-4 text-brand-accent" /> Engajamento por Procedimento
+        </h3>
+        {procedures.length === 0 ? (
+          <p className="text-sm text-slate-400">Sem dados de procedimento.</p>
+        ) : (
+          <div className="space-y-3">
+            {procedures.map((p) => (
+              <div key={p.name} className="flex items-center gap-3">
+                <span className="w-28 text-xs text-slate-400 capitalize truncate">{p.name}</span>
+                <div className="flex-1">
+                  <div className="h-2.5 rounded-full bg-slate-800 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-surgical-teal transition-all duration-500"
+                      style={{ width: `${procedures[0]?.clicks > 0 ? Math.round((p.clicks / procedures[0].clicks) * 100) : 0}%` }}
+                    />
+                  </div>
+                </div>
+                <span className="text-xs text-white w-20 text-right">{p.clicks} clicks</span>
+                <span className="text-xs text-slate-500 w-20 text-right">{p.leads} leads</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

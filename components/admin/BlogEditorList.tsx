@@ -76,7 +76,7 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
   const handleSave = async (data: BlogEditorFormData) => {
     try {
       if (editingPost) {
-        await api.put(editingPost, data);
+        await api.put(`/api/blog/${editingPost}`, data);
       } else {
         await api.post('/api/blog', data);
       }
@@ -91,7 +91,7 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
   const handleDelete = async (slug: string) => {
     if (!confirm(`Excluir "${slug}"?`)) return;
     try {
-      await api.delete(slug);
+      await api.delete(`/api/blog/${slug}`);
       fetchPosts();
     } catch (e: any) {
       alert(`Erro ao excluir: ${e.message}`);
