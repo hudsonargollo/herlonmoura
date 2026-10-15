@@ -38,4 +38,10 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+*.pem
+
+# Build artifacts
 tsconfig.tsbuildinfo
+
+# Wrangler local state (D1 DB, cache)
+.wrangler/
