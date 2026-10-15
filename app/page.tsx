@@ -254,47 +254,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Real doctor photos — multiple distinct portraits */}
-      <section data-analytics-section="fotos-medico" className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <Eyebrow>Nosso Professor</Eyebrow>
-            <h2 className="mt-3 text-display-md" style={headingStyle}>Atendimento humano e de prática clínica sólida</h2>
-            <p className="mt-3 max-w-2xl text-body-lg" style={mutedStyle}>
-              Múltiplas capturas do Dr. Herlon em ambientes reais de consultório e clínica.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {[
-              { src: '/images/fotos/photo-09.webp', alt: 'Dr. Herlon realizando exame de ultrassom a paciente', caption: 'Foto 09 — ultrassom' },
-              { src: '/images/fotos/photo-13.webp', alt: 'Dr. Herlon com equipamento de diagnóstico', caption: 'Foto 13 — diagnóstico' },
-              { src: '/images/fotos/photo-17.webp', alt: 'Dr. Herlon em consulta', caption: 'Foto 17 — consulta' },
-              { src: '/images/fotos/photo-20.webp', alt: 'Dr. Herlon em atendimento', caption: 'Foto 20 — atendimento' },
-              { src: '/images/fotos/photo-01.webp', alt: 'Dr. Herlon em consultório', caption: 'Foto 01 — consultório' },
-            ].map((photo, idx) => (
-              <div key={photo.src} className="group relative overflow-hidden rounded-xl border transition-transform duration-500 hover:scale-105" style={{ borderColor: TOKEN.cardBorder }}>
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={320}
-                  height={240}
-                  className="w-full h-32 sm:h-40 object-cover transition-transform duration-500 group-hover:scale-105"
-                  priority={idx === 0}
-                />
-                <div className="absolute inset-0 bg-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex items-end justify-between p-3">
-                  <span className="text-xs font-medium text-white drop-shadow-md">{photo.caption}</span>
-                  <svg className="h-4 w-4 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h2.5a2 2 0 011.6.8l.8 2.4a2 2 0 01-.8 1.6H17.5a2 2 0 01-1.6.8l-.8-2.4a2 2 0 01-.8-1.6H5.5a2 2 0 01-2-2V9z" />
-                    <circle cx="12" cy="13" r="3" />
-                  </svg>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust & Credibility Ticker Bar */}
+{/* Trust & Credibility — thin band, no photo gallery */}
       <section data-analytics-section="trust-ticker" className="border-y py-6" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4 sm:gap-6">
