@@ -11,26 +11,40 @@ import {
   BarChart3,
 } from 'lucide-react';
 import { useAuth } from '@/lib/admin/auth';
-import { CalendarSvg, ClipboardSvg, HeartPulseSvg } from '@/components/ui/MedicalIcons';
+import { ClipboardSvg, HeartPulseSvg } from '@/components/ui/MedicalIcons';
 
 interface SidebarProps {
-  activeSection: string;
-  onNavigate: (section: 'crm' | 'appointments' | 'leads' | 'blog' | 'analytics') => void;
+  onNavigate: (section: 'dashboard' | 'crm' | 'leads' | 'blog' | 'analytics') => void;
 }
 
 const NAV_ITEMS = [
+  { id: 'dashboard', label: 'Dashboard', icon: Users },
   { id: 'crm', label: 'CRM', icon: Users },
-  { id: 'appointments', label: 'Agendamentos', icon: CalendarSvg },
   { id: 'leads', label: 'Leads', icon: ClipboardSvg },
   { id: 'blog', label: 'Blog', icon: FileText },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
 ];
 
-export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
+export function Sidebar({ onNavigate }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { logout } = useAuth();
   const [collapsed, setCollapsed] = React.useState(false);
+
+  // Compute the active section from the current route.
+  const activeRoute = (): 'dashboard' | 'crm' | 'leads' | 'blog' | 'analytics' => {
+    const parts = pathname.split('/').filter(Boolean);
+    const last = parts[parts.length - 1];
+    if (last === 'approval') return 'blog';
+    if (last === 'email') return 'crm';
+    if (last === '[id]') return 'crm';
+    return last as 'dashboard' | 'crm' | 'leads' | 'blog' | 'analytics';
+  };
+
+  // Initial active section from the URL at mount time.
+  React.useEffect(() => {
+    onNavigate(activeRoute());
+  }, [pathname, onNavigate]);
 
   const handleLogout = () => {
     logout();
@@ -41,7 +55,7 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
     <aside
       className={`flex flex-col bg-surface-dark transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-60'
-      } min-h-screen`}
+      }`}
     >
       {/* Brand */}
       <div className={`flex items-center gap-3 px-4 py-5 border-b border-slate-800/60 ${collapsed ? 'justify-center px-2' : ''}`}>
@@ -69,11 +83,11 @@ export function Sidebar({ activeSection, onNavigate }: SidebarProps) {
       <nav className="mt-4 flex-1 space-y-1.5 px-2" aria-label="Admin navigation">
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
-          const isActive = activeSection === item.id || pathname.startsWith(item.id === 'crm' ? '/admin/crm' : `/admin/${item.id}`);
+          const isActive = activeRoute() === item.id;
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id as 'crm' | 'appointments' | 'leads' | 'blog' | 'analytics')}
+              onClick={() => onNavigate(item.id as 'dashboard' | 'crm' | 'leads' | 'blog' | 'analytics')}
               className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                 isActive
                   ? 'bg-brand-accent/10 text-white border-l-2 border-brand-accent'
