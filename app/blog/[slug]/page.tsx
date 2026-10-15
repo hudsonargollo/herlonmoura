@@ -13,6 +13,7 @@ type BlogPost = {
   slug: string;
   title: string;
   excerpt: string;
+  bodyHtml: string;
   date: string;
   readingTime: string;
   category: string;
@@ -147,13 +148,12 @@ export default async function BlogPostPage({
           </div>
 
           {/* Article body */}
-          <div className="mt-8 space-y-4 text-secondary">
-            <p className="text-base leading-relaxed">{post.excerpt}</p>
-            <p className="text-sm italic text-tertiary">
-              * O artigo é only informativo e não substitui avaliação médica. Agende uma
-              consulta com o Dr. Herlon para avaliar seu caso.
-            </p>
-          </div>
+          <div
+            className="mt-8 prose prose-sm sm:prose prose-slate max-w-none"
+            // Content is server-rendered from the MD files (no dangerouslySetInnerHTML)
+            // The data module is plain JSON; content is injected at generation time.
+            dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
+          />
 
           {/* Share */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs text-tertiary">
