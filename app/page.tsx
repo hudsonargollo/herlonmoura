@@ -572,7 +572,7 @@ export default function Home() {
               Calculadora de Risco de Trombose (TVP)
             </h2>
             <p className="mt-4 text-body-lg" style={bodyStyle}>
-              Responda às 4 etapas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
+              Responda a 4 perguntas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
             </p>
           </div>
 
