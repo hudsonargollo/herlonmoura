@@ -60,7 +60,7 @@ export function DVTRiskCalculator({
     name: '',
   });
 
-  const TOTAL_STEPS = 5; // Step 0 (Intro), 1 (Age), 2 (Mobility), 3 (Surgery), 4 (Factors), 5 (Contact), 6 (Result)
+  const TOTAL_STEPS = 6; // Step 0 (Intro), 1 (Age), 2 (Mobility), 3 (Surgery), 4 (Factors), 5 (Contact), 6 (Result)
   const CONTACT_STEP = 5; // New step for email/name
   const AUTO_ADVANCE_STEPS = [1, 2, 3]; // Single-choice steps advance on tap
 
