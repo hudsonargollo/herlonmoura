@@ -156,7 +156,7 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Captura de leads e CRM',
     before: 'Apenas botões de WhatsApp. Nenhum formulário, nenhum CRM, nenhum registro de pacientes. Leads invisíveis até o paciente enviar mensagem.',
-    after: 'Captura multi-canal com formulário de contato, calculadora TVP, avaliação de varizes e triagem de trombose. Painel CRM com pipeline de 6 status, score e histórico. [Atualizado]',
+    after: 'Captura multi-canal com formulário de contato, calculadora TVP, avaliação de varizes e triagem de trombose. Painel CRM com pipeline de 6 status, score e histórico. Painel admin com acesso multiplo (admin/editor/viewer), JWT e relatórios operacionais — em produção.',
     status: 'done',
   },
   {
@@ -171,15 +171,9 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
 
 const PROXIMOS_PASSOS: SectionItem[] = [
   {
-    area: 'Escalabilidade do sistema',
-    before: 'O sistema atual é estático e não permite múltiplos usuários administrativos.',
-    after: 'O sistema poderá ser expandido com backend dedicado e autenticação multiusuário, sempre sob responsabilidade do Dr. Herlon.',
-    status: 'pending',
-  },
-  {
-    area: 'Relatórios e analytics',
-    before: 'Não há relatórios detalhados sobre o comportamento dos visitantes.',
-    after: 'A solução de analytics poderá ser adicionada para medir a eficácia da captura de leads.',
+    area: 'Painel admin: gestão de usuários no cliente',
+    before: 'Os endpoints /api/admin/users existem, mas sem interface no cliente para criar, editar ou desativar usuários.',
+    after: 'Painel de gestão de usuários (`admin`/`editor`/`viewer`) com CRUD — backend pronto, view do cliente em andamento.',
     status: 'pending',
   },
 ];
