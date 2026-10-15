@@ -7,7 +7,14 @@ import type { BlogPost } from '@/lib/blog';
 import { BLOG_POSTS } from '@/lib/blog-data.generated';
 import { blogPostingSchema } from '@/lib/structured-data';
 
-const CATEGORIES = ['Todas', 'Varizes', 'Trombose', 'Diagnóstico', 'Prevenção', 'Procedimentos', 'Tratamentos'];
+// Derive unique categories from the data (sorted by post count desc, then name).
+const CATEGORY_MAP = new Map<string, number>();
+BLOG_POSTS.forEach((p) => {
+  CATEGORY_MAP.set(p.category, (CATEGORY_MAP.get(p.category) ?? 0) + 1);
+});
+const CATEGORIES = Array.from(CATEGORY_MAP.entries())
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([name]) => name);
 
 export default function BlogPage() {
   const [category, setCategory] = useState('Todas');
@@ -29,52 +36,78 @@ export default function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema()) }}
       />
       <section className="py-16 sm:py-24 bg-gradient-to-b from-bg-tertiary via-surface to-surface">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-block rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-3 py-1 text-xs font-semibold text-surgical-teal mb-3">
-            Blog
-          </span>
-          <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl lg:text-5xl text-primary">
-            Saúde Vascular em Dia
-          </h1>
-          <p className="mt-4 text-base text-secondary max-w-2xl mx-auto">
-            Artigos, dicas e orientações do Dr. Herlon Moura sobre angiologia, cirurgia vascular e prevenção de doenças circulatórias.
-          </p>
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-block rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-3 py-1 text-xs font-semibold text-surgical-teal mb-3">
+              Blog
+            </span>
+            <h1 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-primary">
+              Saúde Vascular em Dia
+            </h1>
+            <p className="mt-3 text-base text-secondary">
+              Artigos, dicas e orientações do Dr. Herlon Moura sobre angiologia, cirurgia vascular
+              e prevenção de doenças circulatórias.
+            </p>
+          </div>
 
-          {/* Category filters */}
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {CATEGORIES.map((cat) => (
+          {/* Filters + search */}
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center">
+            <div className="flex flex-wrap justify-center gap-1.5">
               <button
-                key={cat}
+                key="all"
                 type="button"
-                onClick={() => setCategory(cat)}
-                className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                  category === cat
+                onClick={() => setCategory('Todas')}
+                className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                  category === 'Todas'
                     ? 'border-surgical-teal/40 bg-surgical-teal/15 text-surgical-teal'
                     : 'border-default bg-surface-raised text-secondary hover:border-surgical-teal/30'
                 }`}
               >
-                {cat}
+                Todas ({BLOG_POSTS.length})
               </button>
-            ))}
-          </div>
-
-          {/* Search */}
-          <div className="mt-5">
-            <form onSubmit={(e) => e.preventDefault()} className="flex justify-center">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setCategory(cat)}
+                  className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                    category === cat
+                      ? 'border-surgical-teal/40 bg-surgical-teal/15 text-surgical-teal'
+                      : 'border-default bg-surface-raised text-secondary hover:border-surgical-teal/30'
+                  }`}
+                >
+                  {cat} ({CATEGORY_MAP.get(cat)})
+                </button>
+              ))}
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setQuery('');
+                setCategory('Todas');
+              }}
+              className="ml-auto flex w-full justify-end gap-2 sm:w-auto sm:flex-none"
+            >
               <input
                 name="q"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Pesquisar artigos…"
-                className="w-full max-w-md rounded-xl border border-default bg-surface-raised px-4 py-2.5 text-sm text-primary placeholder:text-tertiary focus:border-surgical-teal/50 focus:outline-none"
+                placeholder="Pesquisar…"
+                className="rounded-full border border-default bg-surface-raised px-4 py-1.5 text-sm text-primary placeholder:text-tertiary focus:border-surgical-teal/50 focus:outline-none md:w-56"
               />
+              <button
+                type="submit"
+                className="rounded-full bg-surgical-teal/15 px-3.5 py-1.5 text-xs font-semibold text-surgical-teal transition-colors hover:bg-surgical-teal/25"
+              >
+                Buscar
+              </button>
             </form>
           </div>
         </div>
       </section>
 
       <section className="py-12 sm:py-16 bg-surface">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           {filtered.length === 0 ? (
             <p className="text-center text-secondary">Nenhum artigo encontrado.</p>
           ) : (
