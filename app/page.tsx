@@ -521,57 +521,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Banner — ultrasound-patient-scan */}
-      <section data-analytics-section="cta-ultrassom" className="relative overflow-hidden py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-3xl border" style={{ borderColor: TOKEN.cardBorder, ...cardStyle }}>
-            <div className="grid lg:grid-cols-2">
-              <div className="flex flex-col justify-center p-8 sm:p-12">
-                <Eyebrow>Diagnóstico Preciso</Eyebrow>
-                <h2 className="mt-3 text-heading-1" style={headingStyle}>
-                  Eco-Doppler Vascular no Consultório
-                </h2>
-                <p className="mt-4 text-body-regular leading-relaxed" style={bodyStyle}>
-                  Exame de ultrassom que avalia o fluxo sanguíneo em artérias e veias, identificando estreitamentos, obstruções, refluxo venoso e trombos — tudo na mesma sessão, com resultado explicado em linguagem clara.
-                </p>
-                <div className="mt-6">
-                  <EdgeButton
-                    variant="primary"
-                    onClick={() => {
-                      trackCtaClick('cta-ultrassom', 'Agendar Exame de Eco-Doppler');
-                      openContact('cta-ultrassom', undefined, 'Agendar exame de Eco-Doppler', 'Agendar Exame');
-                    }}
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    <span>Agendar Exame de Eco-Doppler</span>
-                  </EdgeButton>
-                </div>
-              </div>
-              <div className="relative min-h-[300px] lg:min-h-[400px]">
-                <Image
-                  src="/images/support/ultrasound-patient-scan.webp"
-                  alt="Dr. Herlon Moura realizando exame de ultrassom vascular em paciente"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mid-page banner: real consultório / ultrasound photo (BR variant) */}
-      {/*
-        banner-meiohome.jpg is 2560×1706 (3:2) with Dr. Herlon's head/face in
-        the TOP-RIGHT of the frame (~10–20% from the top). A short, very wide
-        section makes object-cover crop the vertical middle — which cut the face
-        off, leaving only torso/hands. Fix: taller section (keeps the crop band
-        high enough to include head + upper body) and object-top positioning so
-        the visible band always includes the top of the frame.
-      */}
       <section data-analytics-section="eco-doppler-banner" className="relative h-[400px] overflow-hidden sm:h-[520px] lg:h-[640px]">
-        <Image
+          <Image
           src="/images/brand/banner-meiohome.jpg"
           alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
           fill
@@ -594,6 +545,18 @@ export default function Home() {
             <p className="mt-3 text-body-small sm:text-body-regular" style={{ color: 'var(--s-color-content-inverse)' }}>
               Tecnologia de imagem para avaliar artérias e veias com precisão, sem filas e com explicação clara de cada resultado.
             </p>
+            <div className="mt-6">
+              <EdgeButton
+                variant="primary"
+                onClick={() => {
+                  trackCtaClick('eco-doppler-banner', 'Agendar Exame de Eco-Doppler');
+                  openContact('eco-doppler-banner', undefined, 'Agendar exame de Eco-Doppler', 'Agendar Exame');
+                }}
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>Agendar Exame de Eco-Doppler</span>
+              </EdgeButton>
+            </div>
           </div>
         </div>
       </section>
