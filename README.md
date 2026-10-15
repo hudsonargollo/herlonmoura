@@ -143,12 +143,10 @@ The development server will start at `http://localhost:3000`.
 
 ## Deployment
 
-The project is optimized for deployment on **Cloudflare Pages** (static export):
+Deployed on **Cloudflare Pages** (static export to `out/`). No Vercel/AWS targets — this site only ships on Cloudflare Pages.
 
 - **Cloudflare Pages** (recommended — static export to `out/`)
-- **Vercel** (Next.js serverless)
-- **AWS Amplify**
-- **AWS EC2 with Docker**
+- Custom domain: `herlonmoura.com.br` (pending cert)
 
 ## License
 
