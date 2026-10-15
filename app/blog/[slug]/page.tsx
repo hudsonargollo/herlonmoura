@@ -21,8 +21,8 @@ type BlogPost = {
   author: string;
 };
 
-const publicDir = process.cwd();
-
+// Static export: the built `out` directory is served from the root relative
+// path `/images/blog/<slug>.png` → this module only uses relative image paths.
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
 }
@@ -39,6 +39,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
+  // Build a full absolute URL for OpenGraph from the relative public path.
+  const imageUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://herlonmoura.clubemkt.digital'}${post.image}`;
   return {
     title: `${post.title} | Dr. Herlon Moura`,
     description: post.excerpt.slice(0, 160),
@@ -48,13 +50,13 @@ export async function generateMetadata({
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
-      images: [publicDir + post.image],
+      images: [imageUrl],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt.slice(0, 160),
-      images: [publicDir + post.image],
+      images: [imageUrl],
     },
   };
 }
@@ -82,7 +84,7 @@ export default async function BlogPostPage({
               description: post.excerpt.slice(0, 160),
               author: { '@type': 'Person', name: post.author },
               datePublished: post.date,
-              image: publicDir + post.image,
+              image: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://herlonmoura.clubemkt.digital'}${post.image}`,
             },
             null,
             2
@@ -109,7 +111,7 @@ export default async function BlogPostPage({
           {/* Hero image */}
           <div className="relative h-64 sm:h-80 overflow-hidden rounded-2xl">
             <Image
-              src={publicDir + post.image}
+              src={post.image}
               alt={post.title}
               fill
               className="object-cover"
@@ -150,8 +152,6 @@ export default async function BlogPostPage({
           {/* Article body */}
           <div
             className="mt-8 prose prose-sm sm:prose prose-slate max-w-none"
-            // Content is server-rendered from the MD files (no dangerouslySetInnerHTML)
-            // The data module is plain JSON; content is injected at generation time.
             dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
           />
 
@@ -167,7 +167,7 @@ export default async function BlogPostPage({
               WhatsApp
             </a>
             <Link
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${publicDir}/${post.image}`)}`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://herlonmoura.clubemkt.digital${post.image}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-4 py-1.5 font-medium text-surgical-teal transition-colors hover:bg-surgical-teal/20"

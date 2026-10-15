@@ -14,6 +14,10 @@ export interface BlogPost {
   category: string;
   image: string;
   author: string;
+  metaTitle: string;
+  metaDescription: string;
+  targetKeyword: string;
+  secondaryKeywords: string[];
 }
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'blog');
@@ -72,6 +76,11 @@ function toPost(file: string, meta: Record<string, string>, content: string): Bl
     category: meta.category ?? 'Geral',
     image: meta.image ?? `/images/blog/${base}.png`,
     author: meta.author ?? 'Dr. Herlon Moura',
+    metaTitle: meta.meta_title ?? meta.title ?? base.replace(/-/g, ' '),
+    metaDescription:
+      meta.meta_description ?? meta.excerpt ?? content.slice(0, 160),
+    targetKeyword: meta.target_keyword ?? meta.title ?? base.replace(/-/g, ' '),
+    secondaryKeywords: [],
   };
 }
 

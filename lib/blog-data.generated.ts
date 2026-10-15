@@ -12,7 +12,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Arteriais",
     "image": "/images/blog/doenca-oclusiva-periferica-claudicacao.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doença Oclusiva Periférica: Claudicação e Exercício | Dr. Herlon Moura",
+    "metaDescription": "Doença Oclusiva Periférica. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doença oclusiva periférica: claudicação e exercício angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "terapia-endovascular-procedimentos-minimamente-invasivos",
@@ -23,7 +27,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/terapia-endovascular-procedimentos-minimamente-invasivos.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Terapia Endovascular: Procedimentos Minimamente Invasivos | Dr. Herlon Moura",
+    "metaDescription": "Terapia Endovascular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "terapia endovascular: procedimentos minimamente invasivos angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "embolia-pulmonar-diagnostico-tratamento",
@@ -34,7 +42,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/embolia-pulmonar-diagnostico-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Embolia Pulmonar: Diagnóstico e Tratamento de Emergência | Dr. Herlon Moura",
+    "metaDescription": "Embolia Pulmonar. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "embolia pulmonar: diagnóstico e tratamento de emergência angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "varizes-reticulares-telangiectasias-tratamento",
@@ -45,7 +57,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Varizes",
     "image": "/images/blog/varizes-reticulares-telangiectasias-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Varizes Reticulares e Telangiectasias: Tratamento Estético | Dr. Herlon Moura",
+    "metaDescription": "Varizes Reticulares e Telangiectasias. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "varizes reticulares e telangiectasias: tratamento estético angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "anticoagulacao-warfarina-heparina-novos",
@@ -56,7 +72,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/anticoagulacao-warfarina-heparina-novos.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Anticoagulação: Warfarina, Heparina e Novos Anticoagulantes | Dr. Herlon Moura",
+    "metaDescription": "Anticoagulação. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "anticoagulação: warfarina, heparina e novos anticoagulantes angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "ultrassom-vascular-diagnostico-primeira-linha",
@@ -67,7 +87,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doppler Vascular",
     "image": "/images/blog/ultrassom-vascular-diagnostico-primeira-linha.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Ultrassom Vascular: Primeira Linha no Diagnóstico | Dr. Herlon Moura",
+    "metaDescription": "Ultrassom Vascular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "ultrassom vascular: primeira linha no diagnóstico angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "microcirurgia-vascular-reconstrucao-vasos",
@@ -78,7 +102,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/microcirurgia-vascular-reconstrucao-vasos.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Microcirurgia Vascular: Reconstrução de Vasos Minúsculos | Dr. Herlon Moura",
+    "metaDescription": "Microcirurgia Vascular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "microcirurgia vascular: reconstrução de vasos minúsculos angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "varizes-infertilidade-conexao-venosa",
@@ -89,7 +117,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Varizes",
     "image": "/images/blog/varizes-infertilidade-conexao-venosa.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Varizes e Infertilidade: A Conexão Venosa | Dr. Herlon Moura",
+    "metaDescription": "Varizes e Infertilidade. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "varizes e infertilidade: a conexão venosa angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "angiografia-mapeamento-vascular",
@@ -100,7 +132,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/angiografia-mapeamento-vascular.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Angiografia: Mapeamento Completo do Sistema Vascular | Dr. Herlon Moura",
+    "metaDescription": "Angiografia. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "angiografia: mapeamento completo do sistema vascular angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "flebografia-quando-doppler-nao-basta",
@@ -111,7 +147,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doppler Vascular",
     "image": "/images/blog/flebografia-quando-doppler-nao-basta.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Flebografia: Quando o Doppler Não Basta | Dr. Herlon Moura",
+    "metaDescription": "Flebografia. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "flebografia: quando o doppler não basta angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "vasculite-sistemica-tipos-tratamento",
@@ -122,7 +162,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/vasculite-sistemica-tipos-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Vasculite Sistêmica: Inflamação dos Vasos Sanguíneos | Dr. Herlon Moura",
+    "metaDescription": "Vasculite Sistêmica. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "vasculite sistêmica: inflamação dos vasos sanguíneos angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "isquemia-membro-superior-causas",
@@ -133,7 +177,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Arteriais",
     "image": "/images/blog/isquemia-membro-superior-causas.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Isquemia de Membro Superior: Causas e Tratamento | Dr. Herlon Moura",
+    "metaDescription": "Isquemia de Membro Superior. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "isquemia de membro superior: causas e tratamento angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "sindrome-pos-trombotica-sequelas-tvp",
@@ -144,7 +192,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/sindrome-pos-trombotica-sequelas-tvp.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Síndrome Pós-Trombótica: Sequelas de TVP | Dr. Herlon Moura",
+    "metaDescription": "Síndrome Pós-Trombótica. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "síndrome pós-trombótica: sequelas de tvp angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "paget-schroetter-trombose-subclavia",
@@ -155,7 +207,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/paget-schroetter-trombose-subclavia.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doença de Paget-Schroetter: Trombose de Subclávia | Dr. Herlon Moura",
+    "metaDescription": "Doença de Paget-Schroetter. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doença de paget-schroetter: trombose de subclávia angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "pos-operatorio-cirurgia-vascular-guia",
@@ -166,7 +222,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/pos-operatorio-cirurgia-vascular-guia.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Pós-operatório de Cirurgia Vascular: O Guia Completo | Dr. Herlon Moura",
+    "metaDescription": "Pós-operatório de Cirurgia Vascular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "pós-operatório de cirurgia vascular: o guia completo angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "livedo-reticular-causas-significado",
@@ -177,7 +237,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/livedo-reticular-causas-significado.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Livedo Reticular: Manchas Violeta na Pele | Dr. Herlon Moura",
+    "metaDescription": "Livedo Reticular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "livedo reticular: manchas violeta na pele angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "doenca-carotidea-avc-estenose",
@@ -188,7 +252,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/doenca-carotidea-avc-estenose.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doença Carotídea: AVC e Estenose Carotídea | Dr. Herlon Moura",
+    "metaDescription": "Doença Carotídea. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doença carotídea: avc e estenose carotídea angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "edema-membros-inferiores-causas",
@@ -199,7 +267,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Prevenção",
     "image": "/images/blog/edema-membros-inferiores-causas.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Edema nos Membros Inferiores: Causas Vasculares e Não Vasculares | Dr. Herlon Moura",
+    "metaDescription": "Edema nos Membros Inferiores. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "edema nos membros inferiores: causas vasculares e não vasculares angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "doppler-duplo-avaliacao-artrias-veias",
@@ -210,7 +282,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doppler Vascular",
     "image": "/images/blog/doppler-duplo-avaliacao-artrias-veias.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doppler Duplo: Como Avaliar Artérias e Veias Simultaneamente | Dr. Herlon Moura",
+    "metaDescription": "Doppler Duplo. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doppler duplo: como avaliar artérias e veias simultaneamente angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "terapia-compressao-meias-bandagens",
@@ -221,7 +297,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Prevenção",
     "image": "/images/blog/terapia-compressao-meias-bandagens.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Terapia de Compressão: Meias e Bandagens que Funcionam | Dr. Herlon Moura",
+    "metaDescription": "Terapia de Compressão. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "terapia de compressão: meias e bandagens que funcionam angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "hipertensao-portal-causas-manejo",
@@ -232,7 +312,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/hipertensao-portal-causas-manejo.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Hipertensão Portal: Causas e Manejo Vascular | Dr. Herlon Moura",
+    "metaDescription": "Hipertensão Portal. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "hipertensão portal: causas e manejo vascular angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "varizes-esofagicas-causas-tratamento",
@@ -243,7 +327,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/varizes-esofagicas-causas-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Varizes Esofágicas: Causas, Diagnóstico e Tratamento | Dr. Herlon Moura",
+    "metaDescription": "Varizes Esofágicas. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "varizes esofágicas: causas, diagnóstico e tratamento angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "glomerulonefrite-hipertensao-conexao-vascular",
@@ -254,7 +342,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/glomerulonefrite-hipertensao-conexao-vascular.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Glomerulonefrite e Hipertensão: A Conexão Vascular | Dr. Herlon Moura",
+    "metaDescription": "Glomerulonefrite e Hipertensão. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "glomerulonefrite e hipertensão: a conexão vascular angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "escleroterapia-varizes-vasos-cosmeticos",
@@ -265,7 +357,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Varizes",
     "image": "/images/blog/escleroterapia-varizes-vasos-cosmeticos.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Escleroterapia: Técnica para Varizes e Vasos Cosméticos | Dr. Herlon Moura",
+    "metaDescription": "Escleroterapia. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "escleroterapia: técnica para varizes e vasos cosméticos angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "flebectomia-ambulatorial-varizes-procedimento",
@@ -276,7 +372,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/flebectomia-ambulatorial-varizes-procedimento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Flebectomia Ambulatorial: Procedimento para Varizes | Dr. Herlon Moura",
+    "metaDescription": "Flebectomia Ambulatorial. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "flebectomia ambulatorial: procedimento para varizes angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "doenca-buerger-tabagismo-vascular",
@@ -287,7 +387,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/doenca-buerger-tabagismo-vascular.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doença de Buerger: Tabagismo e Inflamação Vascular | Dr. Herlon Moura",
+    "metaDescription": "Doença de Buerger. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doença de buerger: tabagismo e inflamação vascular angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "malformacoes-vascuais-tipos-tratamento",
@@ -298,7 +402,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/malformacoes-vascuais-tipos-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Malformações Vasculares: Tipos e Tratamento | Dr. Herlon Moura",
+    "metaDescription": "Malformações Vasculares. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "malformações vasculares: tipos e tratamento angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "tromboflebite-superficial-tratamento",
@@ -309,7 +417,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/tromboflebite-superficial-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Tromboflebite Superficial: O Que Fazer e Quando se Preocupar | Dr. Herlon Moura",
+    "metaDescription": "Tromboflebite Superficial. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "tromboflebite superficial: o que fazer e quando se preocupar angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "doenca-raynaud-dedos-frios-violeta",
@@ -320,7 +432,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Vasculares",
     "image": "/images/blog/doenca-raynaud-dedos-frios-violeta.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doença de Raynaud: Dedos Frios e Violeta | Dr. Herlon Moura",
+    "metaDescription": "Doença de Raynaud. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doença de raynaud: dedos frios e violeta angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "aneurisma-aorta-abdominal-deteccao-tratamento",
@@ -331,7 +447,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/aneurisma-aorta-abdominal-deteccao-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Aneurisma de Aorta Abdominal: Detecção Precoce e Tratamento | Dr. Herlon Moura",
+    "metaDescription": "Aneurisma de Aorta Abdominal. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "aneurisma de aorta abdominal: detecção precoce e tratamento angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "insuficiencia-venosa-cronica-estagios-tratamento",
@@ -342,18 +462,41 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Varizes",
     "image": "/images/blog/insuficiencia-venosa-cronica-estagios-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Insuficiência Venosa Crônica: Estágios e Tratamento | Dr. Herlon Moura",
+    "metaDescription": "Insuficiência Venosa Crônica. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "insuficiência venosa crônica: estágios e tratamento angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "varizes-gravidez-causas-prevencao",
     "title": "Varizes na Gravidez: Causas, Prevenção e Tratamento Seguro",
-    "excerpt": "Causas, Prevenção e Tratamento Seguro é um tema importante na angiologia. Neste artigo, abordamos as causas, sintomas, diagnóstico e opções de tratamento disponíveis.\n\n\n\n- Predisposição genética e familiar\n- Sedentarismo",
-    "bodyHtml": "<p>Causas, Prevenção e Tratamento Seguro é um tema importante na angiologia. Neste artigo, abordamos as causas, sintomas, diagnóstico e opções de tratamento disponíveis.</p>\n<h2>Causas e Fatores de Risco</h2>\n<ul>\n<li>Predisposição genética e familiar</li>\n<li>Sedentarismo e obesidade</li>\n<li>Tabagismo e consumo de álcool</li>\n<li>Hipertensão e diabetes mellitus</li>\n<li>Idade avançada e histórico pessoal</li>\n</ul>\n<h2>Diagnóstico</h2>\n<p>O diagnóstico vascular adequado inclui avaliação clínica completa, Doppler vascular e exames complementares quando necessário. A identificação precoce permite tratamento mais eficaz e menos invasivo.</p>\n<h2>Tratamento</h2>\n<p>As opções variam conforme a condição e gravidade:</p>\n<ul>\n<li>Compressão graduada e meias terapêuticas</li>\n<li>Escleroterapia e laser vascular</li>\n<li>Tratamento medicamentoso</li>\n<li>Procedimentos cirúrgicos minimamente invasivos</li>\n</ul>\n<h2>Prevenção</h2>\n<ul>\n<li>Exercício físico regular</li>\n<li>Controle de peso e pressão arterial</li>\n<li>Hidratação adequada</li>\n<li>Consultas periódicas com angiologista</li>\n</ul>\n<blockquote>\n<p>⚠️ Em caso de sintomas, procure atendimento médico imediato.</p>\n</blockquote>\n<p>👉 <strong>Agende sua avaliação</strong>: WhatsApp (71) 99915-9975</p>\n",
+    "excerpt": "A gravidez é um dos momentos mais bonitos — e também os mais transformadores — da vida de uma mulher. Mas, ao lado dos bastidores esperanciosos, muitas gestantes notam mudanças no corpo que não são só \"coisa da gravidez\"",
+    "bodyHtml": "<h1>Varizes na Gravidez: Causas, Prevenção e Tratamento Seguro</h1>\n<p>A gravidez é um dos momentos mais bonitos — e também os mais transformadores — da vida de uma mulher. Mas, ao lado dos bastidores esperanciosos, muitas gestantes notam mudanças no corpo que não são só \"coisa da gravidez\". Saíram varizes, cansamento nas pernas, inchaço e uma sensação estranha que a própria mulher sabe que <strong>não é normal</strong> só porque está esperando.</p>\n<p>As varizes na gravidez são um dos sinais vasculares mais freqüentes dessa fase. O bom news: na maioria dos casos elas são <strong>funcionais, não ameaçam a gestação e podem ser tratadas com segurança</strong> — sim, até durante a gestação, com condutas que a angiologista conhece e o obstetra pode indicar junto com o seu acompanhamento.</p>\n<p>Este artigo explica, com linguagem clara e sem tecnicismos, por que aparecem as varizes na gestação, o que fazer para evitar que pioressem, como o médico identifica se são só \"varices\" ou se há um problema de circulação mais sério, e quais opções de tratamento são seguras para você e para o bebê.</p>\n<blockquote>\n<p>⚠️ <strong>Importante:</strong> este conteúdo é apenas informativo. Se você percebeu inchaço, dor ou pele arroxeada nas pernas, consulte imediatamente um médico. Varizes podem ter quadros parecidos com <strong>trombose venosa profunda (TVP)</strong>, que é uma emergência.</p>\n</blockquote>\n<hr>\n<h2>Por que as varizes aparecem na gravidez?</h2>\n<p>Para entender as varizes na gestação, precisamos entender um pouco da anatomia e da fisiologia. As veias das pernas tem válvulas que funcionam como \"portas unidirecionais\": elas garantem que o sangue vá sempre em direção ao coração, não regressando para as pernas. O músculo da panturrilha age como uma \"bomba\" que ajuda a empurrar esse sangue para cima, compressão das pernas ajuda, e parece que o coração ajuda, mas o sistema funciona com esse <strong>trabalho em equipe</strong>.</p>\n<p>Durante a gravidez, três coisas acontecem ao mesmo tempo:</p>\n<ol>\n<li>\n<p><strong>Aumento do volume sanguíneo e das hormônios</strong>\nO corpo produz mais progesterona, um hormônio que relaxa o tecido conjuntivo — o que ajuda o útero a crescer, mas também relaxa as paredes das veias. Essas veias ficam mais \"flácidas\" e menos resilientes, o que diminui a eficiência das válvulas.</p>\n</li>\n<li>\n<p><strong>Compressão do útero no terceiro trimestre</strong>\nÀ medida que o bebê cresce, o útero comprime a <strong>veia cava inferior</strong> (a grande veia que vai do corpo inferior para o coração). Isso aumenta a pressão nas veias das pernas, favorecendo a dilatação e o acúmulo de sangue.</p>\n</li>\n<li>\n<p><strong>Histórico genético e o tipo de \"porta\" que você herdou</strong>\nSe você tem família com varizes, suas válvulas podem já começar com uma certa fraqueza. A gravidez \"acelera\" esse processo em quem tem predisposição.</p>\n</li>\n</ol>\n<p>Resultado: o sangue fica mais lento, as veias dilatam e as válvulas passam a \"fechar mal\" — das chamadas <strong>varizes de superfície</strong>.</p>\n<hr>\n<h2>Como reconhecer as varizes na gravidez</h2>\n<p>O quadro mais clássico é:</p>\n<ul>\n<li>Veias azuladas ou verdes mais salientes, especialmente no interior das panturrilhas ou na parte de trás das pernas;</li>\n<li>Inchaço que piora ao fim do dia e melhora com elevação das pernas;</li>\n<li>Sensação de peso, queimação, formigamento ou cansaço nas pernas ao caminhar;</li>\n<li>Cãibras noturnas (torsas nas pernas);</li>\n<li>Pele mais fina, escura ou \"pegajosa\" em alguns locais, quando há mais tempo.</li>\n</ul>\n<p><strong>Mas atenção:</strong> não todo inchaço e nem toda veia saliente é variz. O inchaço das pernas é comum na gravidez por causa do líquido que \"se acumula\". O que aangiologista está atento a é o quadro que <strong>não melhora sozinho</strong> e vem acompanhado de:</p>\n<ul>\n<li>Dor intensa, calafrio ou vermelhidão localizada;</li>\n<li>Pele quente ao toque;</li>\n<li>Veia muito tensa e dolorida;</li>\n<li>Sangramento que não para sozinho;</li>\n<li>Pé ou tornozelo com respiração difícil, falta de ar ou dor no peito.</li>\n</ul>\n<p><strong>Entre essas duas situações está a TVP</strong> — um coágulo na veia profunda. É a complicação mais grave que o obstetra e a angiologista precisam descartar. Se você tem qualquer um desses sinais, procure atendimento de emergência.</p>\n<hr>\n<h2>O que não é apanhar \"de boa\" (e o que é seguro)</h2>\n<p>Muita gente acha que varizes na gravidez são \"coisa demais\" e que o corpo só \"aguentar\". Elas não são. E não é apenas uma questão de estética. Varizes mal tratadas podem levar a:</p>\n<ul>\n<li><strong>Varizes ulceradas</strong> (feridas que não cicatrizam);</li>\n<li><strong>Trombose superficial</strong> (inflamação de uma veia com coagulo no local);</li>\n<li><strong>Eccema crônico</strong> e pele morena;</li>\n<li><strong>Úlceras venosos</strong> recorrentes;</li>\n<li><strong>Síndrome pós-flebética</strong> (contratura e dor crônica das pernas após uma trombose).</li>\n</ul>\n<p>Felizmente, a maioria das gestantes encontra alívio com condutas simples, que são <strong>seguros para o bebê e para o feto</strong>:</p>\n<h3>1. Elas não vão passar sozinhas, mas podem melhorar com o tempo</h3>\n<p>Com o nascimento, a compressão do útero desaparece e o volume sanguíneo volta à normalidade. Muitas varizes melhoram em 3 a 6 meses após o parto. Porém, não são \"sozinhas\" de certo modo: se não houver acompanhamento, elas tendem a piorar ao longo dos anos.</p>\n<h3>2. O colete de compressão não é um \"açoite\", é um suporte</h3>\n<p>Meias de compressão médica sob medida, de alta qualidade, compensam a pressão das pernas e ajudam a válvulas a \"fechar melhor\". O ideal são <strong>meias de compressão de 20 a 30 mmHg</strong>, de grau médio, que a angiologista ajusta ao seu perímetro. O uso diário, nas mãos forte, reduz inchaço, cansaço e o risco de piora das varizes.</p>\n<h3>3. Movimento é o \"trabalho\" das veias</h3>\n<p>Os músculos da panturrilha agem como bomba. Caminhar 20 a 30 minutos por dia, fazer exercícios de ântero e evitar ficar imóvel por muito tempo ajudam muito.</p>\n<h3>4. Você pode usar calçados adequados</h3>\n<p>Tênis com bom apoio arqueado e solado acabado, que não \"caia\" o tornozelo, é o indicado. O salto alto e o salto prolongado podem piorar o descolamento das válvulas.</p>\n<h3>5. Higiene e pele</h3>\n<p>Lavar com água morna, usar sabonete neutro e hidratar a pele evita ressecamento e equanto. Se a pele já está mais escura ou fina, <strong>não arranque</strong>.</p>\n<h3>6. O tratamento \"cirúrgico\" não tem por que nem ser</h3>\n<p>A maioria dos quadros de varizes na gravidez não precisa de intervenção invasiva. O tratamento é <strong>clínico e fisioterápico</strong>. A escleroterapia (injeção de soro para reduzir a veia) e a ligadura/eliminação cirúrgica só são seguras e indicadas <strong>depois do parto</strong>, quando a veia está mais estável e a gestação já terminada.</p>\n<hr>\n<h2>O momento do \"olhe, mas não toque\": consulta com a angiologista</h2>\n<p>Não adianta aguardar a dor não melhorar pra procurar. Se você notou varizes na gestação ou qualquer outro sintoma, uma <strong>consulta de angiologia</strong> é o passo mais importante que você pode dar. Na consulta, o médico vai:</p>\n<ul>\n<li>Pesquisar antecedentes familiares, condições prévias e uso de hormônios;</li>\n<li>Avaliar se o inchaço é apenas \"gravídico\" ou se há <strong>insuficiência venosa</strong> mais extensa;</li>\n<li>Examinar as pernas em pé, com o paciente em pé, em posição decúbito, e coletar a <strong>medida dos pulsos</strong> e a <strong>pressão arterial</strong>;</li>\n<li>Observar a posição das pernas, a capacidade de flexão, e procurar sinais de <strong>rupura de válvulas</strong> (sopros venosos);</li>\n<li>Se necessário, solicitar <strong>ultrassom com Doppler (ecodoppler)</strong>, que é seguro na gravidez e mostra a velocidade do fluxo sanguíneo e se há trombo.</li>\n</ul>\n<p>O exame de <strong>duplex Doppler</strong> é o \"padrão-ouro\" para confirmar se o que você tem são só varices de superfície ou se há trombose nos vasos profundos — que exige tratamento imediato e cuidado especial.</p>\n<hr>\n<h2>Jeito de vida: o que mudar na rotina</h2>\n<ol>\n<li><strong>Caminhe</strong> 20–30 min/dia. Não precisa de treino, só movimento constante.</li>\n<li><strong>Mova os tornozelos</strong> enquanto sentada ou deitada (flexão e extensão).</li>\n<li><strong>Leve as pernas a elevar</strong> por 10–15 min, 2–3x/dia, com os pés acima do nível do coração.</li>\n<li><strong>Use meias de compressão</strong> conforme orientação médica. O peso não é o problema, é o <strong>equilíbrio da pressão</strong>.</li>\n<li><strong>Evite fadiga e calor extenuantes</strong> (sauna, tabuleiro, banho muito quente).</li>\n<li><strong>Não \"fique\" muito tempo</strong> em pé ou sentada; faça pausas para andar.</li>\n<li><strong>Cuidar com o peso</strong> — não é culpa sua, mas o excesso de líquido e de peso aumenta a pressão venosa.</li>\n</ol>\n<hr>\n<h2>Quando o parto ajuda e quando não</h2>\n<p>O parto libera a compressão do útero e o corpo volta a redistribuir o sangue. Em muitos casos, as varizes <strong>melhoram ou ficam menores</strong> nos primeiros meses. Mas isso não significa que o problema saiu \"pro enquanto\":</p>\n<ul>\n<li>Se você já tem <strong>várias varizes</strong> ou <strong>ferida prévia</strong>, o risco de piora é maior;</li>\n<li>Se a pele já está <strong>morena, fina ou com equanto</strong>, o risco de úlcera crônica aumenta;</li>\n<li>Se o inchaço <strong>não melhora</strong> com descansa, elevação e compressão, pode haver um problema mais profundo (TVP, insuficiência venosa avançada, ou até alguma doença arterial associada).</li>\n</ul>\n<p>Se após 6 meses o pós-parto as varizes continua, ou se você está em um <strong>terceiro trimestre</strong> com sofrimento grave, a <strong>escleroterapia</strong> (injeção de agente esclerosante) ou <strong>ligadura e retirada</strong> (flebectomia) podem ser seguras e eficazes — sempre que possível, após a lactação e com a veia mais estável.</p>\n<hr>\n<h2>Cuidado com o que você lê na internet</h2>\n<p>Muitas fontes recomendam \"exercícios\", \"massagem\", \"açúcar\", \"hierba\" e até remédios promissores sem fundamento científico. <strong>Evite</strong> tudo isso na gravidez, a menos que um médico o autorize. A medicina segura na gestação é:</p>\n<ul>\n<li>Avaliação clínica por <strong>angióloga/venologista</strong> + <strong>obstetra</strong> em conjunto;</li>\n<li>Como acima;</li>\n<li><strong>Doppler</strong> quando indicado;</li>\n<li>Compressão, movimento e cuidados específicos;</li>\n<li>Intervenção apenas quando indicada e com a gestação concluída.</li>\n</ul>\n<hr>\n<h2>Resumo: o que fazer hoje</h2>\n<ul>\n<li>✅ <strong>Observe</strong> se o inchaço e a dor vão melhorando sozinhos ao descansar.</li>\n<li>✅ <strong>Leve as pernas a elevar</strong> 2–3x/dia e fique em atividade leve.</li>\n<li>✅ <strong>Procure uma angiologista</strong> para avaliação clínica e, se indicada, Doppler.</li>\n<li>✅ <strong>Use meias de compressão</strong> se orientado.</li>\n<li>❌ <strong>Não se automedique</strong> e não faça massagem com pressão forte nas veias dilatadas.</li>\n<li>❌ <strong>Não ignore</strong> dor súbita, vermelhidão, calor local ou mal-estar com falta de ar.</li>\n</ul>\n<hr>\n<p><strong>Agende sua consulta com Dr. Herlon Moura</strong> para uma avaliação completa de circulação venosa, se necessário, Doppler e um plano de tratamento seguro para você e para o bebê.</p>\n<p>📞 <strong>(71) 99915-9975</strong> | Whatsapp / WhatsApp Business | 📍 Graça, Salvador — BA</p>\n<hr>\n<p><em>Prevenção e tratamento em angiologia. Este artigo tem caráter meramente educativo e não substitui consulta médica. Cada gestação é única; um planejamento individualizado é essencial.</em></p>\n",
     "date": "2026-05-09",
-    "readingTime": "2 min",
+    "readingTime": "10 min",
     "category": "Varizes",
     "image": "/images/blog/varizes-gravidez-causas-prevencao.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Varizes na Gravidez: Causas, Prevenção e Tratamento Seguro | Dr. Herlon Moura",
+    "metaDescription": "Varizes na gravidez são comuns, mas existem formas seguras de tratar e prevenir. Saiba tudo o que a angiologista recomenda em cada trimestre.",
+    "targetKeyword": "varizes na gravidez: causas, prevenção e tratamento seguro angiologista",
+    "secondaryKeywords": []
+  },
+  {
+    "slug": "varizes-em-graca",
+    "title": "Varizes em Graça: O que é, O Que Causa e Como Tratar Sem Cirurgia Nos Primeiros Passos",
+    "excerpt": "Varizes em graça é o apelido popular para uma condição médica bem conhecida: as **varizes de superfície**, as veias dilatadas e tortas que aparecem sob a pele, geralmente nas panturrilhas. Embora quase ninguém fale mal d",
+    "bodyHtml": "<h1>Varizes em Graça: O que é, O Que Causa e Como Tratar Sem Cirurgia Nos Primeiros Passos</h1>\n<p>Varizes em graça é o apelido popular para uma condição médica bem conhecida: as <strong>varizes de superfície</strong>, as veias dilatadas e tortas que aparecem sob a pele, geralmente nas panturrilhas. Embora quase ninguém fale mal de \"varizes em graça\" com o médico, elas são o quadro mais frequente de <strong>doença venosa crônica</strong> no Brasil e no mundo — e muitas vezes o primeiro sinal de que o sistema venoso precisa de atenção.</p>\n<p>A boa notícia é que, no início, o tratamento raramente exige cirurgia. O diagnóstico certinho com <strong>Doppler</strong> e um plano de posicionamento podem controlar os sintomas, evitar que pioram e manter as pernas saudáveis por anos.</p>\n<hr>\n<h2>O que são as varizes?</h2>\n<p>As veias levam o sangue dos órgãos e membros de volta ao coração. Nas pernas, esse fluxo vai contra a gravidade, e o corpo conta com válvulas unidirecionais que garantem o sentido. Quando essas válvulas ficam \"freddinhas\" ou rompem, o sangue volta a descer e se acumula na veia superficial perto da pele. A veia dilata, dobrada e azulada, formando uma variz.</p>\n<p><strong>Varizes</strong> ocorrem quando a veia dilatou mais de 3 mm. Elas podem ser:</p>\n<ul>\n<li><strong>Varizes de superfície</strong>: visíveis, dobigiadas, comum no interior da panturrilha e coxa;</li>\n<li><strong>Telangiectasias</strong> (varicas): \"varicunas\", vasos vermelhos ou azulados finos, main no rosto ou nas coxas;</li>\n<li><strong>Varizes reticular</strong>as: veias retas, mais reforadas, com 1 a 3 mm de diâmetro, que passam pela pele;</li>\n<li><strong>Varizes escondidas</strong> (ocultas): não visíveis, mas com refluxo e sintomas.</li>\n</ul>\n<hr>\n<h2>O que causa?</h2>\n<p>São múltiplos fatores:</p>\n<ul>\n<li><strong>Genética</strong> — a hereditariedade é o fator mais importante;</li>\n<li><strong>Idade</strong> — o envelhecimento desgasta as válvulas;</li>\n<li><strong>Sexo</strong> — mulheres são mais afetadas por efeito de estrogênio, gravidez e hormonal;</li>\n<li><strong>Gravidez</strong> — aumento do volume sanguíneo, relaxamento hormonal e compressão uterina;</li>\n<li><strong>Obesidade</strong> — aumenta a pressão dentro da cavidade abdominal;</li>\n<li><strong>Estância prolongada em pé ou sentada</strong>;</li>\n<li><strong>Histórico de trombose venosa profunda</strong> (TVP) que pode causar insuficiência venosa crônica;</li>\n<li><strong>Fumo</strong> e má alimentação.</li>\n</ul>\n<hr>\n<h2>Sintomas</h2>\n<p>Nem toda variz dói. Mas os sintomas mais frequentes são:</p>\n<ul>\n<li><strong>Cansaço e peso nas pernas</strong> ao fim do dia;</li>\n<li><strong>Inchaço</strong> maior nas pernas e tornozelos, principalmente à noite;</li>\n<li><strong>Cobardi</strong>çar, formigar ou ardor;</li>\n<li><strong>Cãibras</strong> noturnas;</li>\n<li><strong>Pesadelo</strong> e desconforto ao levantar;</li>\n</ul>\n<p>Com o tempo, se não tratadas, podem surgir:</p>\n<ul>\n<li><strong>Siná</strong>tomo pela pele (faz da pele hay, ecloica);</li>\n<li><strong>Varizes ulceradas</strong> (ferida aberta);</li>\n<li><strong>Ulceração</strong> por lesão;</li>\n<li><strong>Varizes tromb</strong>osas (vermelhinha ou inchada);</li>\n</ul>\n<hr>\n<h2>Como é feito o diagnóstico?</h2>\n<p>O <strong>Duplex Doppler</strong> é o exame padrão. Ele mostra:</p>\n<ul>\n<li>O <strong>diâmetro</strong> da veia;</li>\n<li>Se há <strong>refluxo</strong> (sangue voltando para baixo);</li>\n<li>Se há <strong>trombose</strong> (coágulo);</li>\n<li>A <strong>estrutura</strong> da veia e sua anatomia;</li>\n</ul>\n<p>A consulta clínica é fundamental: a posição do corpo, a compressão da veia (manobra de <strong>Bielschowsky</strong>), e a presença de sinais de insuficiência venosa crônica.</p>\n<hr>\n<h2>O que fazer hoje no caso</h2>\n<p>A maioria dos pacientes tem formas não graves e pode ser resolvida com:</p>\n<ol>\n<li><strong>Compressão</strong> de meias ou coletes de alta pressão;</li>\n<li><strong>Fisioterapia</strong> e exercícios de resistência;</li>\n<li><strong>Mudanças de hábitos</strong> — caminhar, elevar as pernas, evitar fadiga;</li>\n<li><strong>Técnicas minimamente invasivas</strong> (escleroterapia, endoscoulus, laser), se indicadas.</li>\n</ol>\n<hr>\n<h2>Varizes em graça: o que a ciência diz</h2>\n<p>A <strong>SBCV (Sociedade Brasileira de Angiologia e Cirurgia Vascular)</strong> recomenda que o diagnóstico e o tratamento sejam feitos por médico especialista. O tratamento conservador (como descrito acima) é seguro e eficaz nas fases iniciais, e reduz o risco de complicações graves.</p>\n<hr>\n<h2>Quando o doutor precisa ser acionado?</h2>\n<p>Procure atendimento <strong>imediato</strong> se você notar:</p>\n<ul>\n<li>Vermelhidão, calor e dor súbita numa veia;</li>\n<li>Inchaço que não passa com repouso;</li>\n<li>Sangramento não controlado;</li>\n<li>Erupção, pele amarelada ou de textura fimna;</li>\n<li>Falta de ar, falta de ar ou dor no peito — pode ser um sinal de trombo.</li>\n</ul>\n<hr>\n<h2>Resumo</h2>\n<p>Varizes em graça são comuns e tratáveis. O diagnóstico com Doppler é seguro e indolor, e o tratamento inicial é <strong>conservador</strong>: compressão, atividade e acompanhamento. Cirurgia só é necessária em casos mais avançados.</p>\n<p>Se você tem sintomas, agende uma consulta.</p>\n<hr>\n<p>📞 <strong>(71) 99915-9975</strong> | 💻 Dr. Herlon Moura — Angiologista, Salvador/BA</p>\n<hr>\n<p><em>Conteúdo educativo de angiologia. Este material não substitui avaliação médica. Causas e tratamento variam conforme o caso. Consulte um médico para diagnóstico e tratamento.</em></p>\n",
+    "date": "2026-04-20",
+    "readingTime": "5 min",
+    "category": "Varizes",
+    "image": "/images/blog/varizes-em-graca.png",
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Varizes em Graça: O que é, O Que Causa e Como Tratar Sem Cirurgia Nos Primeiros Passos | Dr. Herlon Moura",
+    "metaDescription": "Varizes em graça são a forma mais comum de doença venosa. Saiba causas, sintomas, como o Doppler identifica e opções de tratamento que não exigem cirurgia.",
+    "targetKeyword": "varizes em graça: o que é, causas, tratamento sem cirurgia angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "prevencao-doencas-vascular-idoso-50",
@@ -364,7 +507,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "3 min",
     "category": "Prevenção",
     "image": "/images/blog/prevencao-doencas-vascular-idoso-50.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Prevenção Vascular após 50 Anos | Dr. Herlon Moura",
+    "metaDescription": "A partir dos 50 anos, a saúde vascular exige atenção redobrada. Conheça os 50 passos essenciais para prevenir doenças arteriais e venosas.",
+    "targetKeyword": "prevenção doenças vasculares idoso 50 anos",
+    "secondaryKeywords": []
   },
   {
     "slug": "doppler-vascular-o-que-e-como-funciona",
@@ -375,7 +522,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doppler Vascular",
     "image": "/images/blog/doppler-vascular-o-que-e-como-funciona.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doppler Vascular: Exame Diagnóstico | Dr. Herlon Moura",
+    "metaDescription": "Entenda como funciona o Doppler vascular colorido, exame indispensável para diagnosticar insuficiência venosa, aneurismas e doenças arteriais.",
+    "targetKeyword": "doppler vascular colorido exame diagnóstico",
+    "secondaryKeywords": []
   },
   {
     "slug": "entendendo-varizes-tratamentos-modernos",
@@ -386,7 +537,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Varizes",
     "image": "/images/blog/entendendo-varizes-tratamentos-modernos.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Varizes: Tratamentos Modernos e Minimamente Invasivos | Dr. Herlon Moura",
+    "metaDescription": "Conheça as opções atuais para o tratamento de varizes: desde escleroterapia com espuma densa até laser endovenoso. Diagnóstico precoce e atendimento personalizado em Salvador.",
+    "targetKeyword": "tratamento varizes Salvador angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "linfedema-causas-estagios-tratamento",
@@ -397,7 +552,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Linfedema",
     "image": "/images/blog/linfedema-causas-estagios-tratamento.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Linfedema: Causas, Estágios e Tratamento Completo | Dr. Herlon Moura",
+    "metaDescription": "Linfedema. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "linfedema: causas, estágios e tratamento completo angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "doencas-arteriais-perifericas-sintomas",
@@ -408,7 +567,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Doenças Arteriais",
     "image": "/images/blog/doencas-arteriais-perifericas-sintomas.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Doenças Arteriais Periféricas: Sintomas e Tratamento | Dr. Herlon Moura",
+    "metaDescription": "Doenças Arteriais Periféricas. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "doenças arteriais periféricas: sintomas e tratamento angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "ulcera-venosa-causas-tratamento-cicatrizacao",
@@ -419,7 +582,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Úlcera Venosa",
     "image": "/images/blog/ulcera-venosa-causas-tratamento-cicatrizacao.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Úlcera Venosa: Causas, Tratamento e Cicatrização | Dr. Herlon Moura",
+    "metaDescription": "Úlcera Venosa. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "úlcera venosa: causas, tratamento e cicatrização angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "laser-vascular-tratamento-varizes",
@@ -430,7 +597,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Laser Vascular",
     "image": "/images/blog/laser-vascular-tratamento-varizes.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Laser Vascular: Tratamento a Laser para Varizes e Vasos Faciais | Dr. Herlon Moura",
+    "metaDescription": "Laser Vascular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "laser vascular: tratamento a laser para varizes e vasos faciais angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "cirurgia-vascular-procedimentos-recuperacao",
@@ -441,7 +612,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Cirurgia Vascular",
     "image": "/images/blog/cirurgia-vascular-procedimentos-recuperacao.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Cirurgia Vascular: Procedimentos, Recuperação e Cuidados Pós-Operatórios | Dr. Herlon Moura",
+    "metaDescription": "Cirurgia Vascular. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "cirurgia vascular: procedimentos, recuperação e cuidados pós-operatórios angiologista",
+    "secondaryKeywords": []
   },
   {
     "slug": "trombose-venosa-profunda-sintomas-risco",
@@ -452,7 +627,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/trombose-venosa-profunda-sintomas-risco.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "TVP: Sintomas, Riscos e Prevenção | Dr. Herlon Moura",
+    "metaDescription": "A trombose venosa profunda é uma emergência silenciosa. Conheça os fatores de risco, sintomas e como a calculadora de risco TVP pode ajudar.",
+    "targetKeyword": "trombose venosa profunda sintomas",
+    "secondaryKeywords": []
   },
   {
     "slug": "trombose-venosa-profunda-sintomas-riscos",
@@ -463,7 +642,11 @@ export const BLOG_POSTS: BlogPost[] = [
     "readingTime": "2 min",
     "category": "Trombose",
     "image": "/images/blog/trombose-venosa-profunda-sintomas-riscos.png",
-    "author": "Dr. Herlon Moura"
+    "author": "Dr. Herlon Moura",
+    "metaTitle": "Trombose Venosa Profunda: Sintomas, Riscos e Prevenção | Dr. Herlon Moura",
+    "metaDescription": "Trombose Venosa Profunda. Conheça causas, diagnóstico e tratamentos disponíveis.",
+    "targetKeyword": "trombose venosa profunda: sintomas, riscos e prevenção angiologista",
+    "secondaryKeywords": []
   }
 ];
 

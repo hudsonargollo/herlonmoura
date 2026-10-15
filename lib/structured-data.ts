@@ -1,3 +1,5 @@
+import { BLOG_POSTS } from '@/lib/blog-data.generated';
+
 // JSON-LD structured data generators for SEO rich results.
 // Each function returns a schema.org-compatible object to be serialized
 // into an inline <script type="application/ld+json"> tag.
@@ -111,36 +113,57 @@ export function physicianSchema() {
   };
 }
 
-// ─── BlogPosting (Blog index) ─────────────────────────────────────────────
+// ─── BlogPosting (Blog posts) ─────────────────────────────────────────────
 
+/** Build JSON-LD for a SINGLE blog post by slug. */
+export function blogPostingSchemaItem(slug: string) {
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  if (!post) return null;
+  const firstSection = post.bodyHtml.split('<h1>')[1]?.split('</h1>')[0] ?? post.title;
+  const cleanTitle = typeof firstSection === 'string' ? firstSection.slice(0, 100) : post.title;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.metaDescription,
+    '@id': `${SITE_URL}/blog/${post.slug}`,
+    url: `${SITE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
+    image: `${SITE_URL}${post.image}`,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@type': 'Person', name: DOCTOR_NAME },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Dr. Herlon Moura — Angiologia e Cirurgia Vascular',
+      url: `${SITE_URL}`,
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/images/brand/dr-photoroom.png` },
+    },
+    articleSection: cleanTitle,
+    keywords: [post.targetKeyword, ...post.secondaryKeywords],
+    about: {
+      '@type': 'MedicalCondition',
+      name: post.title,
+      medicalSpecialty: ['Vascular', 'Angiology', 'Dermatology'],
+    },
+    articleBody: post.bodyHtml.slice(0, 12000),
+  };
+}
+
+/** Build JSON-LD for the BLOG index page (dynamic list). */
 export function blogPostingSchema() {
-  const posts = [
-    {
-      slug: 'doenca-oclusiva-periferica-claudicacao',
-      title: 'Doença Oclusiva Periférica: Claudicação e Exercício',
-      date: '2026-08-12',
-    },
-    {
-      slug: 'terapia-endovascular-procedimentos-minimamente-invasivos',
-      title: 'Terapia Endovascular: Procedimentos Minimamente Invasivos',
-      date: '2026-08-11',
-    },
-    {
-      slug: 'embolia-pulmonar-diagnostico-tratamento',
-      title: 'Embolia Pulmonar: Diagnóstico e Tratamento de Emergência',
-      date: '2026-08-10',
-    },
-    {
-      slug: 'varizes-reticulares-telangiectasias-tratamento',
-      title: 'Varizes Reticulares e Telangiectasias: Tratamento Estético',
-      date: '2026-08-09',
-    },
-    {
-      slug: 'anticoagulacao-warfarina-heparina-novos',
-      title: 'Anticoagulação: Warfarina, Heparina e Novos Anticoagulantes',
-      date: '2026-08-08',
-    },
-  ];
+  const items = BLOG_POSTS.slice(0, 8).map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.title,
+    description: p.metaDescription,
+    '@id': `${SITE_URL}/blog/${p.slug}`,
+    url: `${SITE_URL}/blog/${p.slug}`,
+    image: `${SITE_URL}${p.image}`,
+    datePublished: p.date,
+    dateModified: p.date,
+    author: { '@type': 'Person', name: DOCTOR_NAME },
+    mainEntityOfPage: `${SITE_URL}/blog/${p.slug}`,
+  }));
 
   return {
     '@context': 'https://schema.org',
@@ -164,16 +187,7 @@ export function blogPostingSchema() {
         url: `${SITE_URL}/images/brand/dr-photoroom.png`,
       },
     },
-    blogPost: posts.map((p) => ({
-      '@type': 'BlogPosting',
-      headline: p.title,
-      datePublished: p.date,
-      dateModified: p.date,
-      author: { '@type': 'Person', name: DOCTOR_NAME },
-      url: `${SITE_URL}/blog/${p.slug}`,
-      image: `${SITE_URL}/images/blog/${p.slug}.png`,
-      mainEntityOfPage: `${SITE_URL}/blog/${p.slug}`,
-    })),
+    blogPost: items,
   };
 }
 
