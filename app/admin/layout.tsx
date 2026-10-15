@@ -1,10 +1,15 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/lib/admin/auth';
 import { LoginForm } from '@/components/admin/LoginForm';
-function AdminRoot() {
+
+function AdminRoot({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
@@ -14,22 +19,25 @@ function AdminRoot() {
     }
   }, [isAuthenticated, router]);
 
-  if (isAuthenticated) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-surface-dark">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-accent border-t-transparent" />
-      </div>
-    );
+  // When authenticated, render the children (the actual page content).
+  // The redirect below runs asynchronously, so we don't show the LoginForm
+  // again — that would cause a redirect loop.
+  if (!isAuthenticated) {
+    return <LoginForm />;
   }
 
-  return <LoginForm />;
+  return children;
 }
 
-export default function AdminPage() {
+export default function AdminPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="admin-scroll" data-theme="dark">
       <AuthProvider>
-        <AdminRoot />
+        <AdminRoot>{children}</AdminRoot>
       </AuthProvider>
     </div>
   );

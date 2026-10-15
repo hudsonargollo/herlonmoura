@@ -40,6 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await res.json();
       localStorage.setItem('admin_token', data.token);
       localStorage.setItem('admin_user', JSON.stringify(data.user));
+      // Update synchronously so ProtectedRoute / AdminRoot can read the new state
+      // immediately (React batches, but useAuth context reads from the state setter).
       setUser(data.user);
       return true;
     } catch {
