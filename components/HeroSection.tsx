@@ -25,7 +25,7 @@ const primaryButtonStyle: React.CSSProperties = {
 
 export function HeroSection({
   headline,
-  subheadline = 'Exame de ultrassom que avalia o fluxo sanguíneo em artérias e veias, com resultado explicado em linguagem clara.',
+  subheadline = '',
   primaryCTA = {
     label: 'Agendar Consulta',
     href: '#',
@@ -121,11 +121,6 @@ export function HeroSection({
               </h1>
 
               {logoSvg && <div className="mt-3 flex">{logoSvg}</div>}
-
-              {/* Subtitle */}
-              <p className="mt-4 max-w-lg text-base leading-relaxed sm:text-lg" style={{ color: 'var(--s-color-content-body)' }}>
-                {subheadline}
-              </p>
 
               {/* Key Pillars */}
               <div className="mt-5 grid grid-cols-1 gap-2.5 text-sm sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>

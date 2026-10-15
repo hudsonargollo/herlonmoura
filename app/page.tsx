@@ -196,7 +196,7 @@ export default function Home() {
       {/* Hero Section with Doctor Photo & Real Branding */}
       <HeroSection
         headline="Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador"
-        subheadline="Exame de ultrassom que avalia o fluxo sanguíneo em artérias e veias, com resultado explicado em linguagem clara."
+
         onOpenCalculator={() => {
           trackCtaClick('hero', 'Calculadora de Risco de TVP');
           trackModalOpen('hero', 'Calculadora de Risco de TVP');
@@ -574,19 +574,6 @@ export default function Home() {
             <p className="mt-4 text-body-lg" style={bodyStyle}>
               Responda às 4 etapas e receba instantaneamente a pontuação do seu risco tromboembólico, com orientações clínicas do Dr. Herlon Moura.
             </p>
-            <div className="mt-4">
-              <EdgeButton
-                variant="outline"
-                onClick={() => {
-                  trackCtaClick('calculadora-tvp', 'Abrir em Modo Janela Flutuante');
-                  trackModalOpen('calculadora-tvp', 'Calculadora TVP');
-                  setIsCalculatorModalOpen(true);
-                }}
-              >
-                <HeartPulse className="h-4 w-4" />
-                <span>Abrir em Modo Janela Flutuante</span>
-              </EdgeButton>
-            </div>
           </div>
 
           {/* Animated DVT Calculator Component */}
