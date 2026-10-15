@@ -196,7 +196,7 @@ export default function Home() {
       {/* Hero Section with Doctor Photo & Real Branding */}
       <HeroSection
         headline="Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador"
-        subheadline="Angiologista é um médico especialista em diagnosticar e tratar doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua no sistema circulatório de braços, pernas, tronco e pescoço."
+        subheadline="Exame de ultrassom que avalia o fluxo sanguíneo em artérias e veias, com resultado explicado em linguagem clara."
         onOpenCalculator={() => {
           trackCtaClick('hero', 'Calculadora de Risco de TVP');
           trackModalOpen('hero', 'Calculadora de Risco de TVP');
@@ -540,7 +540,7 @@ export default function Home() {
           <div className="max-w-md" style={{ color: 'var(--s-color-content-inverse)' }}>
             <Badge>Diagnóstico de Precisão</Badge>
             <h2 className="mt-3 text-heading-1" style={{ ...headingStyle, color: 'var(--s-color-content-inverse)' }}>
-              Eco-Doppler colorido no próprio consultório
+              Eco-Doppler Vascular no próprio consultório
             </h2>
             <p className="mt-3 text-body-small sm:text-body-regular" style={{ color: 'var(--s-color-content-inverse)' }}>
               Tecnologia de imagem para avaliar artérias e veias com precisão, sem filas e com explicação clara de cada resultado.
@@ -627,7 +627,7 @@ export default function Home() {
                 Com graduação médica pela conceituada <strong>Universidade Federal da Bahia (UFBA)</strong> e especializações em Cirurgia Vascular e Endovascular, ofereço um atendimento acolhedor, ético e personalizado em Salvador.
               </p>
               <p className="text-body-small leading-relaxed sm:text-body-regular" style={bodyStyle}>
-                Combinamos a mais alta tecnologia de imagem diagnóstica (Eco-Doppler colorido) e procedimentos minimamente invasivos a laser com a escuta clínica atenta, cuidando do paciente de forma integral.
+                Combinamos a mais alta tecnologia de imagem diagnóstica (Eco-Doppler Vascular) e procedimentos minimamente invasivos a laser com a escuta clínica atenta, cuidando do paciente de forma integral.
               </p>
 
               <div className="grid grid-cols-1 gap-4 border-t pt-4 sm:grid-cols-2" style={{ borderColor: TOKEN.border }}>

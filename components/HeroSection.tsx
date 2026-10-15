@@ -25,7 +25,7 @@ const primaryButtonStyle: React.CSSProperties = {
 
 export function HeroSection({
   headline,
-  subheadline = 'Angiologista é um médico especialista em diagnosticar e tratar doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua no sistema circulatório de braços, pernas, tronco e pescoço.',
+  subheadline = 'Exame de ultrassom que avalia o fluxo sanguíneo em artérias e veias, com resultado explicado em linguagem clara.',
   primaryCTA = {
     label: 'Agendar Consulta',
     href: '#',
