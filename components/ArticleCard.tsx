@@ -14,13 +14,17 @@ interface ArticleCardProps {
     readingTime: string;
     category: string;
     image: string;
+    author: string;
   };
 }
 
 export function ArticleCard({ post }: ArticleCardProps) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-default bg-bg-card transition-all duration-300 hover:border-surgical-teal/40 hover:bg-bg-card-hover">
-      {/* Image */}
+    <Link
+      href={`/blog/${post.slug}`}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-default bg-bg-card transition-all duration-300 hover:border-surgical-teal/40 hover:bg-bg-card-hover hover:shadow-lg hover:shadow-surgical-teal/5"
+    >
+      {/* Image — clickable, leads to article */}
       <div className="relative h-48 overflow-hidden">
         <Image
           src={post.image}
@@ -33,9 +37,10 @@ export function ArticleCard({ post }: ArticleCardProps) {
         <span className="absolute top-3 left-3 rounded-full bg-surgical-teal/90 px-2.5 py-0.5 text-[11px] font-semibold text-slate-950">
           {post.category}
         </span>
+        <span className="absolute inset-0 cursor-zoom-in" />
       </div>
 
-      {/* Content */}
+      {/* Content — entire card is clickable */}
       <div className="flex flex-1 flex-col p-5">
         <h3 className="text-base font-bold text-primary leading-snug group-hover:text-surgical-teal transition-colors line-clamp-2">
           {post.title}
@@ -54,17 +59,18 @@ export function ArticleCard({ post }: ArticleCardProps) {
             <Clock className="h-3 w-3" />
             {post.readingTime}
           </span>
+          <span className="flex items-center gap-1">
+            <Tag className="h-3 w-3" />
+            {post.author}
+          </span>
         </div>
 
         {/* CTA */}
-        <Link
-          href={`/blog/${post.slug}`}
-          className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-surgical-teal hover:text-teal-300 transition-colors"
-        >
-          Ler artigo
+        <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-surgical-teal hover:text-teal-300 transition-colors">
+          <span>Ler artigo</span>
           <ArrowRight className="h-3 w-3" />
-        </Link>
+        </div>
       </div>
-    </article>
+    </Link>
   );
 }
