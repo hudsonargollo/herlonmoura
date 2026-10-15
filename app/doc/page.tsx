@@ -6,12 +6,13 @@ import {
   MessageCircle, Wrench, Users, ShieldCheck, Search,
   Globe, UserPlus, TrendingUp, Check, Minus, X,
   ArrowRight, Rocket, Sparkles, Palette, Code, Eye, Settings,
-  Cloud, Mail, Phone, MapPin, Award, Clock, GitBranch
+  Cloud, Mail, Phone, MapPin, Award, Clock, GitBranch,
+  Droplets, ShieldAlert, Activity, Layers, Palette as PaletteIcon
 } from 'lucide-react';
 
 /* ============================================
    /doc — Plataforma Digital do Dr. Herlon Moura
-   Visão geral da plataforma + quem a fez
+   Holmes: quem fez o que / design tokens / antes e depois
 
    Hudson Argollo — web wizard · front-end
    Dr. Herlon Moura dos Santos — angiologista (cousin)
@@ -46,7 +47,7 @@ const mutedStyle: React.CSSProperties = {
 /* ── Métricas do /doc ───────────────────────── */
 
 const METRICS = [
-  { label: 'Design tokens', value: '48', icon: Palette },
+  { label: 'Design tokens', value: '48', icon: PaletteIcon },
   { label: 'CSS custom props', value: '60', icon: Code },
   { label: 'Visual components', value: '12', icon: Eye },
   { label: 'Pages', value: '21', icon: Globe },
@@ -59,37 +60,43 @@ const METRICS = [
 const DESIGN_SYSTEM = [
   {
     name: 'Navy profundo',
-    tokens: 'var(--g-color-base-primary)',
-    desc: '#0A2540 — base do brand. Fundo e cabeçalhos.',
+    hex: '#0A2540',
+    token: '--g-color-base-primary',
+    desc: 'Base do brand. Fundo, cabeçalhos e elementos de destaque.',
     value: 'Navy',
   },
   {
     name: 'Vascular Blue',
-    tokens: 'var(--g-color-base-secondary)',
-    desc: '#206095 — azul vascular. Ações primárias e links.',
+    hex: '#206095',
+    token: '--g-color-base-secondary',
+    desc: 'Azul vascular. Ações primárias, links e ênfase.',
     value: 'Blue',
   },
   {
     name: 'Champagne Gold',
-    tokens: 'var(--g-color-accent)',
-    desc: '#C5A880 — dourado cirúrgico. Acentos e destaques.',
+    hex: '#C5A880',
+    token: '--g-color-accent',
+    desc: 'Dourado cirúrgico. Acentos, ícones e destaques finos.',
     value: 'Gold',
   },
   {
     name: 'Dark Slate',
-    tokens: 'var(--g-color-text-main)',
-    desc: '#1A2B3C — texto principal. Alta legibilidade.',
+    hex: '#1A2B3C',
+    token: '--g-color-text-main',
+    desc: 'Texto principal. Alta legibilidade em todos os backgrounds.',
     value: 'Slate',
   },
   {
     name: 'Glassmorphism',
-    tokens: 'var(--glass-bg) / var(--glass-border) / var(--glass-shadow)',
+    hex: 'rgba(255,255,255,0.42)',
+    token: '--glass-bg / --glass-border / --glass-shadow',
     desc: 'Painéis com blur, borda refratária e destaque físico.',
     value: 'Glass',
   },
   {
     name: 'Typography',
-    tokens: 'var(--font-montserrat) / var(--font-inter)',
+    hex: 'Montserrat / Inter',
+    token: '--font-montserrat / --font-inter',
     desc: 'Headings Montserrat, corpo Inter. Hierarquia clara.',
     value: 'Typo',
   },
@@ -101,14 +108,15 @@ const PERSONAL = [
   {
     name: 'Hudson Argollo',
     role: 'Web wizard · front-end',
-    bio: 'Desenvolvi a plataforma inteira de front-end: o design system, os componentes glassmorphism, as animações, a calculadora, o painel admin e o blog.',
+    bio: 'Escrevi e desenvolvi a plataforma inteira de front-end. O design system, os componentes glassmorphism, as animações, a calculadora, o painel admin e o blog são de minha autoria. Trabalho em parceria com o Dr. Herlon Moura, não sobre ele, mas para ele.',
     avatar: 'H',
   },
   {
     name: 'Dr. Herlon Moura dos Santos',
-    role: 'Angiologista · mentor',
-    bio: 'Especialista em cirurgia vascular e endovascular (CRM/BA 23904). O conteúdo, a voz e a visão clínica da plataforma são seus.',
-    avatar: 'HM',
+    role: 'Angiologista · responsável pela medicina',
+    bio: 'Especialista em cirurgia vascular e endovascular (CRM/BA 23904). O conteúdo, a voz e a visão clínica da plataforma são seus. A tecnologia existe para ampliar o atendimento da medicina.',
+
+  avatar: 'HM',
   },
 ];
 
@@ -123,7 +131,7 @@ const TEAM_SKILLS = [
   { name: 'Vitest', icon: Check },
 ];
 
-/* ── Comparação: antes vs depois ────────────── */
+/* ── O que foi feito (done, not planned) ──── */
 
 interface SectionItem {
   area: string;
@@ -132,46 +140,46 @@ interface SectionItem {
   status: 'done' | 'partial' | 'pending';
 }
 
-const COMPARACOES: SectionItem[] = [
+const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Design e identidade visual',
     before: 'Visual genérico do tema WordPress, sem padrão de cores, tipografia ou identidade definida. Sem modo escuro, sem animações, sem glassmorphism.',
-    after: 'Sistema de design completo com tokens de cor, tipografia Montserrat/Inter, glassmorphism, animações e modo escuro. Identidade visual profissional e consistente.',
+    after: 'Sistema de design completo com tokens de cor, tipografia Montserrat/Inter, glassmorphism, animações e modo escuro. Identidade visual profissional e consistente. [Atualizado]',
     status: 'done',
   },
   {
     area: 'Conteúdo e blog',
     before: 'Não havia blog. Conteúdo apenas em páginas estáticas do WordPress. Sem artigos educativos para pacientes.',
-    after: 'Blog com 42 artigos educativos sobre saúde vascular, com editor no painel admin e fluxo de aprovação.',
+    after: 'Blog com 42 artigos educativos sobre saúde vascular, com editor no painel admin e fluxo de aprovação. [Atualizado]',
     status: 'done',
   },
   {
     area: 'Captura de leads e CRM',
     before: 'Apenas botões de WhatsApp. Nenhum formulário, nenhum CRM, nenhum registro de pacientes. Leads invisíveis até o paciente enviar mensagem.',
-    after: 'Captura multi-canal com formulário de contato, calculadora TVP, avaliação de varizes e triagem de trombose. Painel CRM com pipeline de 6 status, score e histórico.',
+    after: 'Captura multi-canal com formulário de contato, calculadora TVP, avaliação de varizes e triagem de trombose. Painel CRM com pipeline de 6 status, score e histórico. [Atualizado]',
     status: 'done',
   },
   {
     area: 'Ferramentas interativas',
     before: 'Nenhuma ferramenta interativa. Sem calculadora de risco, sem avaliação de sintomas, sem freebies.',
-    after: 'Calculadora de Risco de TVP, Avaliação de Varizes, Triagem de Trombose e Freebies com captura de contato.',
+    after: 'Calculadora de Risco de TVP, Avaliação de Varizes, Triagem de Trombose e Freebies com captura de contato. [Atualizado]',
     status: 'done',
   },
 ];
 
-/* ── Próximos passos ────────────────────────── */
+/* ── Próximos passos (realistic, individual, not "equipe") ── */
 
 const PROXIMOS_PASSOS: SectionItem[] = [
   {
-    area: 'Acesso multiusuário',
-    before: 'Permitir que diferentes membros da equipe acessem o painel administrativo com permissões específicas.',
-    after: 'Cada pessoa da equipe poderá ter um acesso adequado à sua função.',
+    area: 'Escalabilidade do sistema',
+    before: 'O sistema atual é estático e não permite múltiplos usuários administrativos.',
+    after: 'O sistema poderá ser expandido com backend dedicado e autenticação multiusuário, sempre sob responsabilidade do Dr. Herlon.',
     status: 'pending',
   },
   {
-    area: 'Relatórios detalhados',
-    before: 'Relatórios completos sobre o comportamento dos visitantes e as conversões do site.',
-    after: 'A equipe poderá entender melhor como os pacientes utilizam o site e onde melhorar.',
+    area: 'Relatórios e analytics',
+    before: 'Não há relatórios detalhados sobre o comportamento dos visitantes.',
+    after: 'A solução de analytics poderá ser adicionada para medir a eficácia da captura de leads.',
     status: 'pending',
   },
 ];
@@ -196,7 +204,7 @@ function StatusBadge({ status }: { status: 'done' | 'partial' | 'pending' }) {
   );
 }
 
-function SectionBlock({ title, icon: IconComponent, items }: { title: string; icon: React.ElementType; items: typeof COMPARACOES }) {
+function SectionBlock({ title, icon: IconComponent, items }: { title: string; icon: React.ElementType; items: typeof O_QUE_FOI_FEITO }) {
   const Icon = IconComponent as React.FC<{ className?: string; style?: React.CSSProperties }>;
   return (
     <section className="mb-16">
@@ -223,13 +231,13 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.muted }}>
-                  O que será feito
+                  O que era
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: TOKEN.muted }}>{item.before}</p>
               </div>
               <div>
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.action }}>
-                  Benefício para pacientes e equipe
+                  Agora
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: TOKEN.body }}>{item.after}</p>
               </div>
@@ -316,7 +324,7 @@ export default function DocPage() {
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
-              <Palette className="h-4 w-4" />
+              <PaletteIcon className="h-4 w-4" />
               <span>Design System v2.0</span>
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>
@@ -338,7 +346,7 @@ export default function DocPage() {
                   {item.value}
                 </p>
                 <h3 className="mt-1 text-sm font-bold" style={{ color: TOKEN.heading }}>{item.name}</h3>
-                <p className="mt-1 text-xs" style={{ color: TOKEN.muted }}>{item.tokens}</p>
+                <p className="mt-1 text-xs font-mono" style={{ color: TOKEN.muted }}>{item.token}</p>
                 <p className="mt-2 text-xs leading-relaxed" style={{ color: TOKEN.body }}>{item.desc}</p>
               </div>
             ))}
@@ -412,7 +420,7 @@ export default function DocPage() {
         </div>
       </section>
 
-      {/* Personalização: quem faz isso */}
+      {/* Personalização: Hudson → Herlon */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
@@ -420,7 +428,7 @@ export default function DocPage() {
               <Users className="h-4 w-4" />
               <span>Equipe</span>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Quem faz isso</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Quem fez isso</h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
               Do cliente ao fazedor: a visão clínica de Herlon, construída por minha equipa.
             </p>
@@ -476,20 +484,22 @@ export default function DocPage() {
         </div>
       </section>
 
-      {/* Comparação: antes vs depois */}
+      {/* O que foi feito (done) */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(16, 185, 129, 0.3)', color: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.08)' }}>
-              <ArrowRight className="h-4 w-4" />
-              <span>Antes e depois</span>
+              <Check className="h-4 w-4" />
+              <span>O que foi feito</span>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que mudou para melhor</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>
+              Do WordPress à plataforma atual
+            </h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              A plataforma foi totalmente reformulada para melhorar a experiência dos pacientes e facilitar o trabalho da equipe.
+              O site foi totalmente reformulado. Aqui está o que mudou e o que está em production.
             </p>
           </div>
-          <SectionBlock title="Comparação: antes e depois" icon={Check} items={COMPARACOES} />
+          <SectionBlock title="Comparação: antes e depois" icon={Check} items={O_QUE_FOI_FEITO} />
         </div>
       </section>
 
