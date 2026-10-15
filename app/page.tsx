@@ -418,35 +418,6 @@ export default function Home() {
                 Se você tem algum dos sintomas abaixo, podemos te ajudar.
               </p>
 
-              {/* Small vascular illustration — legs */}
-              <div className="rounded-2xl border p-4 sm:p-5" style={{ borderColor: TOKEN.cardBorder, backgroundColor: TOKEN.cardBg }}>
-                <svg
-                  viewBox="0 0 200 120" className="h-24 w-full sm:h-28"
-                  style={{ color: 'var(--s-color-action-primary)' }}
-                  fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"
-                >
-                  {/* body / torso */}
-                  <ellipse cx="100" cy="40" rx="48" ry="18" />
-                  {/* legs (femoral) */}
-                  <path d="M58 40 L34 96" />
-                  <path d="M142 40 L166 96" />
-                  <path d="M66 40 L44 96" />
-                  <path d="M134 40 L156 96" />
-                  {/* veins (blue) */}
-                  <path d="M66 42 C 50 60, 46 80, 44 96" stroke="#68A9F2" strokeWidth={1.6} opacity={0.8} />
-                  <path d="M134 42 C 150 60, 154 80, 156 96" stroke="#68A9F2" strokeWidth={1.6} opacity={0.8} />
-                  {/* artery (red) */}
-                  <path d="M58 44 C 44 62, 42 82, 42 96" stroke="#F56565" strokeWidth={1.4} opacity={0.7} />
-                  <path d="M142 44 C 156 62, 158 82, 158 96" stroke="#F56565" strokeWidth={1.4} opacity={0.7} />
-                  {/* labels */}
-                  <text x="42" y="108" fontSize="9" fill="currentColor" opacity={0.7} fontFamily="monospace">perna</text>
-                  <text x="158" y="108" fontSize="9" fill="currentColor" opacity={0.7} fontFamily="monospace">perna</text>
-                </svg>
-                <p className="mt-3 text-center text-caption" style={{ color: TOKEN.muted }}>
-                  Rede vascular dos membros inferiores — refluo venoso e risco tromboembólico
-                </p>
-              </div>
-
               <ul className="space-y-3">
                 {LEG_SYMPTOMS.map((symp) => (
                   <li key={symp} className="flex items-start gap-3 text-body-small" style={bodyStyle}>
