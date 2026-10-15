@@ -19,3 +19,4 @@ export { SymptomNavigator } from './SymptomNavigator';
 export { ArticleCard } from './ArticleCard';
 export { CliniqIcon, CLINIQ_GLYPHS, type CliniqIconName, type CliniqFont } from './CliniqIcon';
 export { EdgeButton, type EdgeButtonVariant } from './EdgeButton';
+export { ProceduresSlider } from './ProceduresSlider';

@@ -11,24 +11,11 @@ interface HeroSectionProps {
   primaryCTA?: { label: string; href: string };
   secondaryCTA?: { label: string; href?: string };
   onOpenCalculator?: () => void;
-  /** When provided, the primary CTA opens the lead-capture flow instead of a raw link. */
   onBook?: () => void;
   logoSvg?: React.ReactNode;
 }
 
-/* ============================================
-   Design System v2.0 — HealthNet × Dr. Herlon Moura
-   Hero. Headings use Montserrat, body copy uses Inter (both via the
-   v2.0 token stack). The h1 below is the element the typography fix
-   targets — it must resolve to Montserrat, never the UA serif.
-
-   Layout: two-column. Copy on the left, the doctor's portrait as the
-   prominent visual anchor on the right, sitting over a faded full-bleed
-   consultório banner so the medical context is still present.
-   ============================================ */
-
 const HEADING_STACK = 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif';
-
 const primaryButtonStyle: React.CSSProperties = {
   backgroundColor: 'var(--c-button-primary-bg)',
   color: 'var(--c-button-primary-text)',
@@ -53,65 +40,73 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden">
-      {/* Full-bleed consultório banner — heavily faded, provides medical context only.
-          The doctor's portrait in the right column is the prominent visual. */}
-      <Image
-        src="/images/brand/banner-meiohome.jpg"
-        alt=""
-        fill
-        priority
-        aria-hidden
-        sizes="100vw"
-        className="object-cover object-[50%_20%] sm:object-[50%_35%]"
-        style={{ opacity: 0.35 }}
-      />
+    {/* Video background - animated vascular flow, health context */}
+    <video
+      src="/videos/cardio.webm"
+      autoPlay
+      muted
+      loop
+      playsInline
+      aria-hidden
+      className="absolute inset-0 h-full w-full object-cover"
+      style={{ opacity: 0.28 }}
+    />
+    {/* Subtle anatomical background overlay - clinical context without overwhelming copy */}
+    <Image
+      src="/images/fotos/photo-08.webp"
+      alt=""
+      fill
+      priority
+      aria-hidden
+      sizes="100vw"
+      className="object-cover object-[80%_50%] sm:object-[75%_50%]"
+      style={{ opacity: 0.28 }}
+    />
+    <div
+      className="pointer-events-none absolute inset-0"
+      style={{
+        background:
+          'linear-gradient(to right, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0.96) 40%, rgba(248,249,250,0.88) 70%, rgba(248,249,250,0.75) 100%)',
+      }}
+    />
+    <div
+      className="pointer-events-none absolute inset-0"
+      style={{
+        background:
+          'linear-gradient(to bottom, rgba(248,249,250,0.6) 0%, rgba(248,249,250,0) 30%, rgba(248,249,250,0) 70%, var(--s-color-bg-canvas) 100%)',
+      }}
+    />
 
-      {/* Soft wash so the faded banner never competes with the copy or the portrait */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0.94) 45%, rgba(248,249,250,0.72) 75%, rgba(248,249,250,0.55) 100%)',
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to top, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0) 45%, rgba(248,249,250,0.35) 100%)',
-        }}
-      />
-
-      <div className="relative mx-auto w-full max-w-container px-4 py-10 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
+    <div className="relative mx-auto w-full max-w-container px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-6">
           {/* ---------- Copy column ---------- */}
           <div className="lg:col-span-7">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
             >
               {/* Medical Credentials Pill */}
               <div
-                className="mb-6 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold"
+                className="mb-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold"
                 style={{
                   borderColor: 'var(--c-card-border)',
                   backgroundColor: 'var(--s-color-bg-surface)',
                   color: 'var(--s-color-action-primary)',
                 }}
               >
-                <ShieldCheck className="h-4 w-4" />
-                <span>CRM/BA 23904 • RQE 19791 / 22436 • Formado pela UFBA</span>
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>CRM/BA 23904 • RQE 19791 / 22436 • UFBA</span>
               </div>
 
-              {/* Headline — Montserrat, v2.0 display scale */}
+              {/* Headline */}
               <h1
-                className="text-4xl sm:text-5xl lg:text-[3.4rem]"
+                className="text-3xl sm:text-4xl lg:text-[2.8rem] xl:text-[3.2rem]"
                 style={{
                   fontFamily: HEADING_STACK,
                   color: 'var(--s-color-content-heading)',
                   fontWeight: 700,
-                  lineHeight: 1.1,
+                  lineHeight: 1.12,
                   letterSpacing: '-0.02em',
                 }}
               >
@@ -125,31 +120,30 @@ export function HeroSection({
                 )}
               </h1>
 
-              {logoSvg && <div className="mt-4 flex">{logoSvg}</div>}
+              {logoSvg && <div className="mt-3 flex">{logoSvg}</div>}
 
-              {/* Subtitle — Inter */}
-              <p className="mt-5 max-w-xl text-lg leading-relaxed sm:text-xl" style={{ color: 'var(--s-color-content-body)' }}>
+              {/* Subtitle */}
+              <p className="mt-4 max-w-lg text-base leading-relaxed sm:text-lg" style={{ color: 'var(--s-color-content-body)' }}>
                 {subheadline}
               </p>
 
-              {/* Key Pillars — each pillar mirrors the source site's Health glyph,
-                  recreated with a distinct v2-token lucide icon */}
-              <div className="mt-6 grid grid-cols-1 gap-3 text-body-small sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
+              {/* Key Pillars */}
+              <div className="mt-5 grid grid-cols-1 gap-2.5 text-sm sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
                 {[
                   { icon: ShieldCheck, label: 'Tratamentos minimamente invasivos' },
                   { icon: Activity, label: 'Recuperação rápida sem internação' },
                   { icon: Waves, label: 'Eco-Doppler Vascular no consultório' },
                   { icon: Zap, label: 'Laser e espuma densa ecoguiada' },
                 ].map((pillar) => (
-                  <div key={pillar.label} className="flex items-center gap-2.5">
+                  <div key={pillar.label} className="flex items-center gap-2">
                     <span
-                      className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
+                      className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
                       style={{
                         backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 20%, transparent)',
                         color: 'var(--s-color-action-gold)',
                       }}
                     >
-                      <pillar.icon className="h-4 w-4" />
+                      <pillar.icon className="h-3.5 w-3.5" />
                     </span>
                     <span>{pillar.label}</span>
                   </div>
@@ -157,12 +151,12 @@ export function HeroSection({
               </div>
 
               {/* CTAs */}
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                 {onBook ? (
                   <button
                     type="button"
                     onClick={onBook}
-                    className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
+                    className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base"
                     style={primaryButtonStyle}
                   >
                     <MessageCircle className="h-5 w-5" />
@@ -173,7 +167,7 @@ export function HeroSection({
                     href={primaryCTA.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-3 px-7 py-4 text-body-regular"
+                    className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base"
                     style={primaryButtonStyle}
                   >
                     <MessageCircle className="h-5 w-5" />
@@ -185,7 +179,7 @@ export function HeroSection({
                   <button
                     type="button"
                     onClick={onOpenCalculator}
-                    className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
+                    className="inline-flex items-center justify-center gap-2 border px-5 py-3.5 text-base"
                     style={{
                       ...primaryButtonStyle,
                       backgroundColor: 'transparent',
@@ -200,7 +194,7 @@ export function HeroSection({
                 ) : (
                   <a
                     href={secondaryCTA.href || '#calculadora-tvp'}
-                    className="inline-flex items-center justify-center gap-2.5 border px-6 py-4 text-body-regular"
+                    className="inline-flex items-center justify-center gap-2 border px-5 py-3.5 text-base"
                     style={{
                       ...primaryButtonStyle,
                       backgroundColor: 'transparent',
@@ -216,14 +210,14 @@ export function HeroSection({
               </div>
 
               {/* Quick Contact Micro-Proof */}
-              <div className="mt-8 flex items-center gap-6 border-t pt-6 text-caption" style={{ borderColor: 'var(--c-card-border)', color: 'var(--s-color-content-muted)' }}>
+              <div className="mt-6 flex items-center gap-5 border-t pt-4 text-xs" style={{ borderColor: 'var(--c-card-border)', color: 'var(--s-color-content-muted)' }}>
                 <div>
                   <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
                     Consultório em Salvador
                   </span>
                   <span>R. Eng. Célso Tôrres, 654 - Graça</span>
                 </div>
-                <div className="h-8 w-px" style={{ backgroundColor: 'var(--c-card-border)' }} />
+                <div className="h-6 w-px" style={{ backgroundColor: 'var(--c-card-border)' }} />
                 <div>
                   <span className="block font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>
                     Agendamento Ágil
@@ -234,61 +228,57 @@ export function HeroSection({
             </motion.div>
           </div>
 
-          {/* ---------- Prominent portrait column ---------- */}
+          {/* ---------- Portrait column — real clinical photo ---------- */}
           <div className="lg:col-span-5">
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
-              className="relative mx-auto w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[420px] xl:max-w-none"
+              transition={{ duration: 0.7, delay: 0.12, ease: 'easeOut' }}
+              className="relative mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[360px] xl:max-w-none"
             >
-              {/* Gold ambient glow behind the portrait */}
+              {/* Gold ambient glow */}
               <div
-                className="pointer-events-none absolute -inset-6 rounded-[2.5rem] blur-3xl"
-                style={{ backgroundColor: 'var(--s-color-action-gold)', opacity: 0.22 }}
+                className="pointer-events-none absolute -inset-5 rounded-[2.5rem] blur-3xl"
+                style={{ backgroundColor: 'var(--s-color-action-gold)', opacity: 0.18 }}
               />
               <div
-                className="pointer-events-none absolute -inset-3 rounded-[2rem] blur-2xl"
-                style={{ backgroundColor: 'var(--s-color-action-primary)', opacity: 0.12 }}
+                className="pointer-events-none absolute -inset-2 rounded-[2rem] blur-2xl"
+                style={{ backgroundColor: 'var(--s-color-action-primary)', opacity: 0.1 }}
               />
 
-              {/* Portrait card */}
+              {/* Portrait card — real photo */}
               <div
-                className="relative z-10 overflow-hidden rounded-[2rem] border"
+                className="relative z-10 overflow-hidden rounded-[1.75rem] border"
                 style={{
-                  borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 35%, transparent)',
-                  backgroundColor: 'color-mix(in srgb, var(--s-color-bg-surface) 70%, transparent)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
+                  borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 30%, transparent)',
                   boxShadow:
-                    'inset 0 1px 0 rgba(255,255,255,0.35), 0 24px 48px -16px rgba(10,37,64,0.28), 0 8px 20px -10px rgba(10,37,64,0.14)',
+                    '0 20px 40px -12px rgba(10,37,64,0.25), 0 8px 16px -8px rgba(10,37,64,0.12)',
                 }}
               >
                 <Image
-                  src="/images/brand/dr-photoroom.png"
+                  src="/images/fotos/photo-04.webp"
                   alt="Dr. Herlon Moura dos Santos — Angiologista e Cirurgião Vascular"
-                  width={853}
-                  height={1280}
+                  width={1067}
+                  height={1600}
                   priority
-                  sizes="(max-width: 1024px) 420px, 40vw"
-                  className="h-auto w-full object-contain object-bottom"
+                  sizes="(max-width: 1024px) 360px, 40vw"
+                  className="h-auto w-full object-cover"
                 />
-
-                {/* Name plate pinned to the bottom of the portrait */}
+                {/* Name plate */}
                 <div
-                  className="absolute inset-x-0 bottom-0 px-5 py-4"
+                  className="absolute inset-x-0 bottom-0 px-4 py-3.5"
                   style={{
                     background:
-                      'linear-gradient(to top, rgba(10,37,64,0.92) 0%, rgba(10,37,64,0.70) 55%, rgba(10,37,64,0) 100%)',
+                      'linear-gradient(to top, rgba(10,37,64,0.92) 0%, rgba(10,37,64,0.65) 55%, rgba(10,37,64,0) 100%)',
                   }}
                 >
                   <p
-                    className="text-base font-bold leading-tight"
+                    className="text-sm font-bold leading-tight"
                     style={{ fontFamily: HEADING_STACK, color: '#FFFFFF' }}
                   >
                     Dr. Herlon Moura dos Santos
                   </p>
-                  <p className="mt-0.5 text-xs font-medium" style={{ color: 'rgba(255,255,255,0.82)' }}>
+                  <p className="mt-0.5 text-[11px] font-medium" style={{ color: 'rgba(255,255,255,0.82)' }}>
                     Angiologista e Cirurgião Vascular
                   </p>
                 </div>
@@ -296,7 +286,7 @@ export function HeroSection({
 
               {/* Floating credibility chip */}
               <div
-                className="pointer-events-none absolute -bottom-3 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-[11px] font-semibold shadow-lg sm:flex"
+                className="pointer-events-none absolute -bottom-2.5 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-[11px] font-semibold shadow-lg sm:flex"
                 style={{
                   borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 40%, transparent)',
                   backgroundColor: 'var(--s-color-bg-surface)',

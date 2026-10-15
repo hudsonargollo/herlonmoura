@@ -12,6 +12,7 @@ import {
   ContactModal,
   CliniqIcon,
   EdgeButton,
+  ProceduresSlider,
 } from '@/components';
 import { SCHEDULER_URL } from '@/lib/contact';
 import { PROCEDURES } from '@/lib/procedures';
@@ -373,65 +374,7 @@ export default function Home() {
             </EdgeButton>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {PROCEDURES.map((proc) => (
-              <article key={proc.slug} className="card-edge group flex flex-col p-6">
-                <div className="mb-4 flex items-start justify-between gap-3">
-                  <span
-                    className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-sm"
-                    style={{
-                      backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 10%, transparent)',
-                      color: 'var(--s-color-action-primary)',
-                    }}
-                  >
-                    <CliniqIcon
-                      name={proc.icon}
-                      size={38}
-                      className="relative z-10"
-                      color="var(--s-color-action-primary)"
-                    />
-                  </span>
-                  <span
-                    className="rounded-sm border px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider"
-                    style={{ borderColor: TOKEN.cardBorder, color: TOKEN.muted }}
-                  >
-                    {proc.tag}
-                  </span>
-                </div>
-
-                <h3 className="text-heading-3" style={headingStyle}>
-                  {proc.title}
-                </h3>
-                <div className="mt-1 text-caption font-medium" style={{ color: TOKEN.actionPrimary }}>
-                  {proc.subtitle}
-                </div>
-                <p className="mt-3 flex-1 text-body-small leading-relaxed" style={bodyStyle}>
-                  {proc.description}
-                </p>
-
-                <div className="mt-6">
-                  <EdgeButton
-                    variant="outline"
-                    size="sm"
-                    block
-                    onClick={() => {
-                      trackCtaClick(`procedure:${proc.slug}`, proc.title);
-                      openContact(
-                        `procedure:${proc.slug}`,
-                        proc.title,
-                        `Interesse em: ${proc.title}`,
-                        'Consultar Disponibilidade'
-                      );
-                    }}
-                    aria-label={`Consultar disponibilidade de ${proc.title}`}
-                  >
-                    <span>Consultar disponibilidade</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </EdgeButton>
-                </div>
-              </article>
-            ))}
-          </div>
+          <ProceduresSlider onCtaClick={(sectionId, interest) => openContact(sectionId, interest, `Interesse em: ${interest}`, 'Consultar Disponibilidade')} />
         </div>
       </section>
 

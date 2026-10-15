@@ -526,13 +526,12 @@ export function DVTRiskCalculator({
                       key={item.id}
                       onClick={() => toggleFactor(item.id)}
                       className={`glass-tile flex items-center justify-between rounded-xl border px-3 py-2 text-left text-xs font-semibold transition-all active:scale-98 ${
-                        isSelected
-                          ? item.id === 'none'
-                            ? '!border-emerald-400 !bg-emerald-500/20 !text-emerald-200'
-                            : '!border-surgical-teal !bg-surgical-teal/20 !text-teal-100'
-                          : 'text-secondary hover:text-primary'
-                      }`}
-                    >
+                                              isSelected
+                                                ? item.id === 'none'
+                                                  ? '!border-emerald-400 !bg-emerald-500/20 !text-emerald-200'
+                                                  : '!border-surgical-teal !bg-surgical-teal/20 !text-primary'
+                                                : 'text-secondary hover:text-primary'}`}
+                      >
                       <span>{item.label}</span>
                       <span
                         className={`h-4 w-4 rounded flex items-center justify-center border ${

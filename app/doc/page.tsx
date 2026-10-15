@@ -5,14 +5,16 @@ import {
   HeartPulse, FileText, Calculator, Stethoscope, Calendar,
   MessageCircle, Wrench, Users, ShieldCheck, Search,
   Globe, UserPlus, TrendingUp, Check, Minus, X,
-  ArrowRight, Rocket, Sparkles
+  ArrowRight, Rocket, Sparkles, Palette, Code, Eye, Settings,
+  Cloud, Mail, Phone, MapPin, Award, Clock, GitBranch
 } from 'lucide-react';
 
 /* ============================================
    /doc — Plataforma Digital do Dr. Herlon Moura
+   Visão geral da plataforma + quem a fez
 
-   Página de overview em português (pt-BR), voltada
-   para pacientes e equipe — sem jargões técnicos.
+   Hudson Argollo — web wizard · front-end
+   Dr. Herlon Moura dos Santos — angiologista (cousin)
    ============================================ */
 
 const TOKEN = {
@@ -24,9 +26,6 @@ const TOKEN = {
   action: 'var(--s-color-action-primary)',
   gold: 'var(--s-color-action-gold)',
   border: 'var(--border-subtle)',
-  success: '#10B981',
-  error: '#EF4444',
-  warning: '#F59E0B',
 } as const;
 
 const headingStyle: React.CSSProperties = {
@@ -44,7 +43,87 @@ const mutedStyle: React.CSSProperties = {
   color: TOKEN.muted,
 };
 
-/* ── Tipos reutilizados ─────────────────────── */
+/* ── Métricas do /doc ───────────────────────── */
+
+const METRICS = [
+  { label: 'Design tokens', value: '48', icon: Palette },
+  { label: 'CSS custom props', value: '60', icon: Code },
+  { label: 'Visual components', value: '12', icon: Eye },
+  { label: 'Pages', value: '21', icon: Globe },
+  { label: 'Blog artigos', value: '42', icon: FileText },
+  { label: 'Ferramentas', value: '3', icon: Calculator },
+];
+
+/* ── Design system preview: tokens em destaque ── */
+
+const DESIGN_SYSTEM = [
+  {
+    name: 'Navy profundo',
+    tokens: 'var(--g-color-base-primary)',
+    desc: '#0A2540 — base do brand. Fundo e cabeçalhos.',
+    value: 'Navy',
+  },
+  {
+    name: 'Vascular Blue',
+    tokens: 'var(--g-color-base-secondary)',
+    desc: '#206095 — azul vascular. Ações primárias e links.',
+    value: 'Blue',
+  },
+  {
+    name: 'Champagne Gold',
+    tokens: 'var(--g-color-accent)',
+    desc: '#C5A880 — dourado cirúrgico. Acentos e destaques.',
+    value: 'Gold',
+  },
+  {
+    name: 'Dark Slate',
+    tokens: 'var(--g-color-text-main)',
+    desc: '#1A2B3C — texto principal. Alta legibilidade.',
+    value: 'Slate',
+  },
+  {
+    name: 'Glassmorphism',
+    tokens: 'var(--glass-bg) / var(--glass-border) / var(--glass-shadow)',
+    desc: 'Painéis com blur, borda refratária e destaque físico.',
+    value: 'Glass',
+  },
+  {
+    name: 'Typography',
+    tokens: 'var(--font-montserrat) / var(--font-inter)',
+    desc: 'Headings Montserrat, corpo Inter. Hierarquia clara.',
+    value: 'Typo',
+  },
+];
+
+/* ── Personalização: quem fez ──────────────── */
+
+const PERSONAL = [
+  {
+    name: 'Hudson Argollo',
+    role: 'Web wizard · front-end',
+    bio: 'Desenvolvi a plataforma inteira de front-end: o design system, os componentes glassmorphism, as animações, a calculadora, o painel admin e o blog.',
+    avatar: 'H',
+  },
+  {
+    name: 'Dr. Herlon Moura dos Santos',
+    role: 'Angiologista · mentor',
+    bio: 'Especialista em cirurgia vascular e endovascular (CRM/BA 23904). O conteúdo, a voz e a visão clínica da plataforma são seus.',
+    avatar: 'HM',
+  },
+];
+
+const TEAM_SKILLS = [
+  { name: 'Next.js 15', icon: Code },
+  { name: 'React 19', icon: Rocket },
+  { name: 'Tailwind CSS 3', icon: Settings },
+  { name: 'Framer Motion', icon: Rocket },
+  { name: 'Cloudflare Pages', icon: Cloud },
+  { name: 'Resend', icon: Mail },
+  { name: 'Cal.com', icon: Calendar },
+  { name: 'Vitest', icon: Check },
+];
+
+/* ── Comparação: antes vs depois ────────────── */
 
 interface SectionItem {
   area: string;
@@ -52,47 +131,6 @@ interface SectionItem {
   after: string;
   status: 'done' | 'partial' | 'pending';
 }
-
-/* ── Métricas do site ──────────────────────── */
-
-const METRICS = [
-  { label: 'Artigos no blog', value: '42', icon: FileText },
-  { label: 'Ferramentas interativas', value: '3', icon: Calculator },
-  { label: 'Canais de contato', value: '6', icon: Users },
-  { label: 'Páginas do site', value: '21', icon: Globe },
-  { label: 'Painéis administrativos', value: '7', icon: ShieldCheck },
-];
-
-/* ── Seção de próximos passos ──────────────── */
-
-const PROXIMOS_PASSOS: SectionItem[] = [
-  {
-    area: 'Dados estruturados para busca',
-    before: 'Implementar marcações especiais que ajudem o Google a entender melhor o conteúdo do site',
-    after: 'O site poderá aparecer em resultados de pesquisa com informações ricas, como avaliações e horários',
-    status: 'pending',
-  },
-  {
-    area: 'Mapa do site (sitemap)',
-    before: 'Criar um arquivo que liste todas as páginas para facilitar a indexação pelos mecanismos de busca',
-    after: 'O Google poderá encontrar e indexar todas as páginas do site de forma mais eficiente',
-    status: 'pending',
-  },
-  {
-    area: 'Acesso multiusuário',
-    before: 'Permitir que diferentes membros da equipe acessem o painel administrativo com permissões específicas',
-    after: 'Cada pessoa da equipe poderá ter um acesso adequado à sua função',
-    status: 'pending',
-  },
-  {
-    area: 'Relatórios detalhados',
-    before: 'Relatórios completos sobre o comportamento dos visitantes e as conversões do site',
-    after: 'A equipe poderá entender melhor como os pacientes utilizam o site e onde melhorar',
-    status: 'pending',
-  },
-];
-
-/* ── Comparação: antes vs depois ────────────── */
 
 const COMPARACOES: SectionItem[] = [
   {
@@ -119,40 +157,28 @@ const COMPARACOES: SectionItem[] = [
     after: 'Calculadora de Risco de TVP, Avaliação de Varizes, Triagem de Trombose e Freebies com captura de contato.',
     status: 'done',
   },
-  {
-    area: 'Painel administrativo',
-    before: 'Login do WordPress com credenciais compartilhadas. Dashboard lento e cheio de plugins. Sem gestão de pacientes ou blog.',
-    after: 'Painel customizado com autenticação JWT, gestão de pacientes, editor de blog, estatísticas e relatórios de funil.',
-    status: 'done',
-  },
-  {
-    area: 'Identidade e presença digital',
-    before: 'Site estático em hospedagem compartilhada, sem presença digital organizada. Sem dados estruturados para mecanismos de busca.',
-    after: 'Plataforma completa com dados estruturados (JSON-LD), sitemap, robots.txt, 21 páginas e 42 artigos otimizados para SEO.',
-    status: 'done',
-  },
 ];
 
-/* ── Ferramentas e tecnologias ──────────────── */
+/* ── Próximos passos ────────────────────────── */
 
-const STACK = [
-  { name: 'Next.js 15', desc: 'App Router, static export' },
-  { name: 'React 19', desc: 'Server + client components' },
-  { name: 'Tailwind CSS 3', desc: 'Token-driven utility classes' },
-  { name: 'Framer Motion', desc: 'Scroll animations, micro-interactions' },
-  { name: 'Three.js / R3F', desc: '3D vascular hero scene' },
-  { name: 'shadcn/ui', desc: 'Accessible component primitives' },
-  { name: 'Cloudflare Pages', desc: 'Edge CDN + serverless functions' },
-  { name: 'Cloudflare D1', desc: 'SQLite at the edge for CRM data' },
-  { name: 'Resend', desc: 'Transactional email delivery' },
-  { name: 'Cal.com', desc: 'Self-hosted appointment scheduling' },
-  { name: 'Vitest + fast-check', desc: 'Unit + property-based testing' },
-  { name: 'GitHub Actions', desc: 'CI/CD pipeline' },
+const PROXIMOS_PASSOS: SectionItem[] = [
+  {
+    area: 'Acesso multiusuário',
+    before: 'Permitir que diferentes membros da equipe acessem o painel administrativo com permissões específicas.',
+    after: 'Cada pessoa da equipe poderá ter um acesso adequado à sua função.',
+    status: 'pending',
+  },
+  {
+    area: 'Relatórios detalhados',
+    before: 'Relatórios completos sobre o comportamento dos visitantes e as conversões do site.',
+    after: 'A equipe poderá entender melhor como os pacientes utilizam o site e onde melhorar.',
+    status: 'pending',
+  },
 ];
 
 /* ── Componentes reutilizados ───────────────── */
 
-function StatusBadge({ status }: { status: SectionItem['status'] }) {
+function StatusBadge({ status }: { status: 'done' | 'partial' | 'pending' }) {
   const map = {
     done: { icon: Check, label: 'Concluído', bg: 'rgba(16, 185, 129, 0.12)', color: '#10B981', border: 'rgba(16, 185, 129, 0.3)' },
     partial: { icon: Minus, label: 'Em andamento', bg: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', border: 'rgba(245, 158, 11, 0.3)' },
@@ -170,7 +196,7 @@ function StatusBadge({ status }: { status: SectionItem['status'] }) {
   );
 }
 
-function SectionBlock({ title, icon: IconComponent, items }: { title: string; icon: React.ElementType; items: SectionItem[] }) {
+function SectionBlock({ title, icon: IconComponent, items }: { title: string; icon: React.ElementType; items: typeof COMPARACOES }) {
   const Icon = IconComponent as React.FC<{ className?: string; style?: React.CSSProperties }>;
   return (
     <section className="mb-16">
@@ -183,7 +209,6 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
         </div>
         <h2 className="text-2xl font-bold sm:text-3xl" style={headingStyle}>{title}</h2>
       </div>
-
       <div className="space-y-4">
         {items.map((item) => (
           <div
@@ -195,7 +220,6 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
               <h3 className="text-lg font-semibold" style={{ color: TOKEN.heading }}>{item.area}</h3>
               <StatusBadge status={item.status} />
             </div>
-
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.muted }}>
@@ -231,8 +255,7 @@ export default function DocPage() {
             '@context': 'https://schema.org',
             '@type': 'MedicalBusiness',
             name: 'Dr. Herlon Moura — Angiologista',
-            description:
-              'Plataforma digital do Dr. Herlon Moura, angiologista em Salvador, BA. Conteúdos educativos sobre saúde vascular, calculadora de risco de TVP e agendamento online.',
+            description: 'Plataforma digital do Dr. Herlon Moura, angiologista em Salvador, BA. Conteúdos educativos sobre saúde vascular, calculadora de risco de TVP e agendamento online.',
             url: 'https://herlonmoura.clubemkt.digital',
             medicalSpecialty: 'Vascular',
             address: {
@@ -288,6 +311,41 @@ export default function DocPage() {
         </div>
       </section>
 
+      {/* Design System — tokens em ação */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
+              <Palette className="h-4 w-4" />
+              <span>Design System v2.0</span>
+            </div>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>
+              Tokens, cores e visuais
+            </h2>
+            <p className="mt-4 max-w-2xl text-base" style={mutedStyle}>
+              Um sistema coherente: navy profundo, azul vascular, dourado cirúrgico e glassmorphism
+              em toda a interface. Cada cor, cada sombra e cada espaçamento seguem os tokens CSS.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {DESIGN_SYSTEM.map((item) => (
+              <div
+                key={item.name}
+                className="rounded-xl border p-4"
+                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.muted }}>
+                  {item.value}
+                </p>
+                <h3 className="mt-1 text-sm font-bold" style={{ color: TOKEN.heading }}>{item.name}</h3>
+                <p className="mt-1 text-xs" style={{ color: TOKEN.muted }}>{item.tokens}</p>
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: TOKEN.body }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* O que o site oferece */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
@@ -298,7 +356,6 @@ export default function DocPage() {
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que o site oferece</h2>
           </div>
-
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { icon: FileText, title: 'Blog com 42 artigos', desc: 'Conteúdos educativos sobre saúde vascular, escritos de forma clara e acessível para pacientes.' },
@@ -332,7 +389,6 @@ export default function DocPage() {
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Como funciona</h2>
           </div>
-
           <div className="grid gap-8 sm:grid-cols-3">
             {[
               { icon: FileText, step: '1', title: 'Explore os conteúdos', desc: 'Navegue pelo blog e aprenda sobre saúde vascular com artigos escritos para pacientes.' },
@@ -356,32 +412,64 @@ export default function DocPage() {
         </div>
       </section>
 
-      {/* Para a equipe */}
+      {/* Personalização: quem faz isso */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
               <Users className="h-4 w-4" />
-              <span>Recursos internos</span>
+              <span>Equipe</span>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Para a equipe</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Quem faz isso</h2>
+            <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
+              Do cliente ao fazedor: a visão clínica de Herlon, construída por minha equipa.
+            </p>
           </div>
-
           <div className="grid gap-6 sm:grid-cols-2">
-            {[
-              { icon: ShieldCheck, title: 'Painel administrativo', desc: 'Acompanhe pacientes, gerencie o blog e visualize estatísticas do site em um só lugar.' },
-              { icon: Users, title: 'Gestão de pacientes', desc: 'Veja o histórico de contatos, organize cuide dos cadastros e mantenha tudo atualizado.' },
-              { icon: FileText, title: 'Gerenciamento do blog', desc: 'Crie e publique novos artigos com facilidade, sem precisar de conhecimentos técnicos.' },
-              { icon: TrendingUp, title: 'Estatísticas e relatórios', desc: 'Entenda como os pacientes utilizam o site e identifique oportunidades de melhoria.' },
-            ].map(({ icon: EIcon, title, desc }) => (
+            {PERSONAL.map(({ name, role, bio, avatar }) => (
               <div
-                key={title}
+                key={name}
                 className="rounded-xl border p-6"
                 style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
               >
-                <EIcon className="mb-3 h-6 w-6" style={{ color: TOKEN.action }} />
-                <h3 className="mb-2 text-lg font-semibold" style={{ color: TOKEN.heading }}>{title}</h3>
-                <p className="text-sm leading-relaxed" style={mutedStyle}>{desc}</p>
+                <div className="flex items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 20%, transparent)', color: TOKEN.action }}>
+                    <span className="text-lg font-bold" style={{ color: TOKEN.action }}>{avatar}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold" style={{ color: TOKEN.heading }}>{name}</h3>
+                    <p className="text-sm" style={{ color: TOKEN.muted }}>{role}</p>
+                  </div>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: TOKEN.body }}>{bio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tecnologias */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
+              <Settings className="h-4 w-4" />
+              <span>Tecnologias</span>
+            </div>
+            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Ferramentas do sistema</h2>
+            <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
+              Pilha estável, performática e pronta para crescimento. Static export em Cloudflare Pages.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {TEAM_SKILLS.map(({ name, icon: TIcon }) => (
+              <div
+                key={name}
+                className="flex items-center gap-3 rounded-xl border p-4"
+                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+              >
+                <TIcon className="h-5 w-5" style={{ color: TOKEN.action }} />
+                <span className="text-sm font-semibold" style={{ color: TOKEN.heading }}>{name}</span>
               </div>
             ))}
           </div>
@@ -418,33 +506,7 @@ export default function DocPage() {
               Melhorias planejadas para tornar o site ainda mais útil para pacientes e equipe.
             </p>
           </div>
-
           <SectionBlock title="Planejado para as próximas atualizações" icon={ArrowRight} items={PROXIMOS_PASSOS} />
-        </div>
-      </section>
-
-      {/* Ferramentas e tecnologias */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
-              <Sparkles className="h-4 w-4" />
-              <span>Tecnologias utilizadas</span>
-            </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Ferramentas que fazem o site funcionar</h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {STACK.map(({ name, desc }) => (
-              <div
-                key={name}
-                className="rounded-xl border p-4"
-                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
-              >
-                <h3 className="text-sm font-bold" style={{ color: TOKEN.heading }}>{name}</h3>
-                <p className="mt-1 text-xs" style={mutedStyle}>{desc}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
