@@ -15,7 +15,9 @@ function AdminRoot({
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace('/admin/crm');
+      // Stay on the admin landing page (the "just admin" panel) instead of
+      // redirecting to the CRM dashboard.
+      router.replace('/admin');
     }
   }, [isAuthenticated, router]);
 
