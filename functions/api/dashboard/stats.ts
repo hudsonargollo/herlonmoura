@@ -85,6 +85,12 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
     const conversionRate = total > 0 ? Math.round((converted / total) * 100) : 0;
 
+    // Count blog posts (pending approval vs published) for the dashboard
+    const [pendingPosts, publishedPosts] = await Promise.all([
+      one("SELECT COUNT(*) as c FROM blog_posts WHERE status = 'approval'"),
+      one("SELECT COUNT(*) as c FROM blog_posts WHERE status = 'published'"),
+    ]);
+
     return json(200, {
       leads: {
         total,
@@ -93,6 +99,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
         conversionRate,
       },
       interactions,
+      posts: { pending: pendingPosts, published: publishedPosts },
       visitors: { total: totalVisitors, unique: uniqueEmails },
       sources,
     });
