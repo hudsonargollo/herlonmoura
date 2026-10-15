@@ -22,6 +22,7 @@
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "framer-motion": "^11.0.0",
+    "impeccable": "github:pbakaus/impeccable",
     "lucide-react": "^0.408.0",
     "next": "^15.0.0",
     "react": "^19.0.0",
