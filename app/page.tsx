@@ -254,6 +254,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Real doctor photos — multiple distinct portraits */}
+      <section data-analytics-section="fotos-medico" className="py-16 sm:py-24" style={{ backgroundColor: TOKEN.canvas }}>
+        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <Eyebrow>Nosso Professor</Eyebrow>
+            <h2 className="mt-3 text-display-md" style={headingStyle}>Atendimento humano e de prática clínica sólida</h2>
+            <p className="mt-3 max-w-2xl text-body-lg" style={mutedStyle}>
+              Múltiplas capturas do Dr. Herlon em ambientes reais de consultório e clínica.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {[
+              { src: '/images/fotos/photo-09.webp', alt: 'Dr. Herlon realizando exame de ultrassom a paciente', caption: 'Foto 09 — ultrassom' },
+              { src: '/images/fotos/photo-13.webp', alt: 'Dr. Herlon com equipamento de diagnóstico', caption: 'Foto 13 — diagnóstico' },
+              { src: '/images/fotos/photo-17.webp', alt: 'Dr. Herlon em consulta', caption: 'Foto 17 — consulta' },
+              { src: '/images/fotos/photo-20.webp', alt: 'Dr. Herlon em atendimento', caption: 'Foto 20 — atendimento' },
+              { src: '/images/fotos/photo-01.webp', alt: 'Dr. Herlon em consultório', caption: 'Foto 01 — consultório' },
+            ].map((photo, idx) => (
+              <div key={photo.src} className="group relative overflow-hidden rounded-xl border transition-transform duration-500 hover:scale-105" style={{ borderColor: TOKEN.cardBorder }}>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={320}
+                  height={240}
+                  className="w-full h-32 sm:h-40 object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={idx === 0}
+                />
+                <div className="absolute inset-0 bg-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex items-end justify-between p-3">
+                  <span className="text-xs font-medium text-white drop-shadow-md">{photo.caption}</span>
+                  <svg className="h-4 w-4 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h2.5a2 2 0 011.6.8l.8 2.4a2 2 0 01-.8 1.6H17.5a2 2 0 01-1.6.8l-.8-2.4a2 2 0 01-.8-1.6H5.5a2 2 0 01-2-2V9z" />
+                    <circle cx="12" cy="13" r="3" />
+                  </svg>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Trust & Credibility Ticker Bar */}
       <section data-analytics-section="trust-ticker" className="border-y py-6" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
@@ -417,6 +457,35 @@ export default function Home() {
               <p className="mb-4 text-body-small font-semibold" style={{ color: TOKEN.actionPrimary }}>
                 Se você tem algum dos sintomas abaixo, podemos te ajudar.
               </p>
+
+              {/* Small vascular illustration — legs */}
+              <div className="rounded-2xl border p-4 sm:p-5" style={{ borderColor: TOKEN.cardBorder, backgroundColor: TOKEN.cardBg }}>
+                <svg
+                  viewBox="0 0 200 120" className="h-24 w-full sm:h-28"
+                  style={{ color: 'var(--s-color-action-primary)' }}
+                  fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"
+                >
+                  {/* body / torso */}
+                  <ellipse cx="100" cy="40" rx="48" ry="18" />
+                  {/* legs (femoral) */}
+                  <path d="M58 40 L34 96" />
+                  <path d="M142 40 L166 96" />
+                  <path d="M66 40 L44 96" />
+                  <path d="M134 40 L156 96" />
+                  {/* veins (blue) */}
+                  <path d="M66 42 C 50 60, 46 80, 44 96" stroke="#68A9F2" strokeWidth={1.6} opacity={0.8} />
+                  <path d="M134 42 C 150 60, 154 80, 156 96" stroke="#68A9F2" strokeWidth={1.6} opacity={0.8} />
+                  {/* artery (red) */}
+                  <path d="M58 44 C 44 62, 42 82, 42 96" stroke="#F56565" strokeWidth={1.4} opacity={0.7} />
+                  <path d="M142 44 C 156 62, 158 82, 158 96" stroke="#F56565" strokeWidth={1.4} opacity={0.7} />
+                  {/* labels */}
+                  <text x="42" y="108" fontSize="9" fill="currentColor" opacity={0.7} fontFamily="monospace">perna</text>
+                  <text x="158" y="108" fontSize="9" fill="currentColor" opacity={0.7} fontFamily="monospace">perna</text>
+                </svg>
+                <p className="mt-3 text-center text-caption" style={{ color: TOKEN.muted }}>
+                  Rede vascular dos membros inferiores — refluo venoso e risco tromboembólico
+                </p>
+              </div>
 
               <ul className="space-y-3">
                 {LEG_SYMPTOMS.map((symp) => (

@@ -252,6 +252,51 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* Real doctor photos — clinical practice */}
+      <section className="py-16 md:py-24">
+        <Container>
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-primary md:text-4xl">Prática Clínica</h2>
+            <p className="mt-3 text-gray-400">
+              Capturas reais do Dr. Herlon em consultório, com equipamentos de diagnóstico.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid gap-6 md:grid-cols-3"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              { src: '/images/fotos/photo-04.webp', alt: 'Dr. Herlon Moura em consultório', caption: 'Foto 04 — consultório' },
+              { src: '/images/fotos/photo-08.webp', alt: 'Dr. Herlon sorrindo', caption: 'Foto 08 — atendimento' },
+              { src: '/images/fotos/photo-09.webp', alt: 'Dr. Herlon realizando ultrassom', caption: 'Foto 09 — ultrassom' },
+            ].map((photo, index) => (
+              <div key={photo.src} className="rounded-2xl border p-3" style={{ borderColor: 'var(--c-card-border)' }}>
+                <div className="overflow-hidden rounded-xl">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={360}
+                    height={280}
+                    className="w-full h-36 object-cover"
+                  />
+                </div>
+                <p className="mt-2 text-center text-caption" style={{ color: 'var(--s-color-content-muted)' }}>{photo.caption}</p>
+              </div>
+            ))}
+          </motion.div>
+        </Container>
+      </section>
+
       {/* Practice Philosophy Section */}
       <section className="bg-bg-secondary py-16 md:py-24">
         <Container>
