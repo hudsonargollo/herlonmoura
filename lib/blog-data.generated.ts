@@ -191,7 +191,7 @@ export const BLOG_POSTS: BlogPost[] = [
     "date": "2026-07-04",
     "readingTime": "2 min",
     "category": "Trombose",
-    "image": "/images/blog/sindrome-pos-trombotica-sequelas-tvp.png",
+    "image": "/images/blog/sindrome-pos-trombotic-sequelas-tvp.png",
     "author": "Dr. Herlon Moura",
     "metaTitle": "Síndrome Pós-Trombótica: Sequelas de TVP | Dr. Herlon Moura",
     "metaDescription": "Síndrome Pós-Trombótica. Conheça causas, diagnóstico e tratamentos disponíveis.",

@@ -14,7 +14,7 @@ category: "Trombose"
 date: "2026-07-04"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/sindrome-pos-trombotica-sequelas-tvp.png"
+image: /images/blog/sindrome-pos-trombotic-sequelas-tvp.png
 word_count: 1000
 ---
 

@@ -241,9 +241,9 @@ export function DVTRiskCalculator({
 
   return (
     <div
-      className={`relative mx-auto w-full max-w-2xl ${
+      className={`relative mx-auto w-full max-w-2xl ${(
         inModal ? 'bg-transparent p-1' : 'glass glass-strong rounded-lg p-5 sm:p-7'
-      } ${className}`}
+      )} ${className}`}
     >
       {/* Step Header & Progress (Steps 1 to 4) */}
       {state.currentStep > 0 && state.currentStep <= TOTAL_STEPS && (
@@ -262,13 +262,13 @@ export function DVTRiskCalculator({
             {[1, 2, 3, 4].map((step) => (
               <div
                 key={step}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 ${(
                   step === state.currentStep
                     ? 'w-6 bg-surgical-teal'
                     : step < state.currentStep
                     ? 'w-3 bg-emerald-400'
                     : 'w-2 bg-slate-700'
-                }`}
+                )}`}
               />
             ))}
           </div>
@@ -363,20 +363,20 @@ export function DVTRiskCalculator({
                     <button
                       key={item.id}
                       onClick={() => selectAge(item.id)}
-                      className={`flex flex-col items-start rounded-2xl border p-3 text-left transition-all active:scale-98 ${
+                      className={`flex flex-col items-start rounded-2xl border p-3 text-left transition-all active:scale-98 ${(
                         isSelected
                           ? 'border-surgical-teal bg-surgical-teal/20 shadow-md shadow-surgical-teal/10'
                           : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
-                      }`}
+                      )}`}
                     >
                       <div className="flex w-full items-center justify-between">
                         <span className={`text-sm font-bold ${isSelected ? 'text-surgical-teal' : 'text-primary'}`}>
                           {item.label}
                         </span>
                         <span
-                          className={`h-4 w-4 rounded-full border flex items-center justify-center ${
+                          className={`h-4 w-4 rounded-full border flex items-center justify-center ${(
                             isSelected ? 'border-surgical-teal bg-surgical-teal text-text-inverse' : 'border-default'
-                          }`}
+                          )}`}
                         >
                           {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-text-inverse" />}
                         </span>
@@ -419,20 +419,20 @@ export function DVTRiskCalculator({
                     <button
                       key={item.id}
                       onClick={() => selectMobility(item.id)}
-                      className={`flex flex-col items-start rounded-2xl border p-2.5 sm:p-3 text-left transition-all active:scale-98 ${
+                      className={`flex flex-col items-start rounded-2xl border p-2.5 sm:p-3 text-left transition-all active:scale-98 ${(
                         isSelected
                           ? 'border-surgical-teal bg-surgical-teal/20 shadow-md shadow-surgical-teal/10'
                           : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
-                      }`}
+                      )}`}
                     >
                       <div className="flex w-full items-center justify-between">
                         <span className={`text-xs sm:text-sm font-bold ${isSelected ? 'text-surgical-teal' : 'text-primary'}`}>
                           {item.label}
                         </span>
                         <span
-                          className={`h-3.5 w-3.5 rounded-full border flex items-center justify-center flex-shrink-0 ml-1 ${
+                          className={`h-3.5 w-3.5 rounded-full border flex items-center justify-center flex-shrink-0 ml-1 ${(
                             isSelected ? 'border-surgical-teal bg-surgical-teal text-text-inverse' : 'border-default'
-                          }`}
+                          )}`}
                         >
                           {isSelected && <span className="h-1 w-1 rounded-full bg-text-inverse" />}
                         </span>
@@ -466,11 +466,11 @@ export function DVTRiskCalculator({
               <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
                 <button
                   onClick={() => selectSurgery(true)}
-                  className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-98 ${
+                  className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-98 ${(
                     state.responses.recentSurgery === true
                       ? 'border-surgical-teal bg-surgical-teal/25 shadow-lg shadow-surgical-teal/10'
                       : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
-                  }`}
+                  )}`}
                 >
                   <Scissors className={`h-6 w-6 mb-1.5 ${state.responses.recentSurgery === true ? 'text-surgical-teal' : 'text-tertiary'}`} />
                   <span className="text-sm font-bold text-primary">Sim</span>
@@ -479,11 +479,11 @@ export function DVTRiskCalculator({
 
                 <button
                   onClick={() => selectSurgery(false)}
-                  className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-98 ${
+                  className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-98 ${(
                     state.responses.recentSurgery === false
                       ? 'border-emerald-400 bg-emerald-500/25 shadow-lg shadow-emerald-500/10'
                       : 'border-default bg-bg-tertiary/60 hover:border-strong hover:bg-bg-tertiary'
-                  }`}
+                  )}`}
                 >
                   <CheckCircle2 className={`h-6 w-6 mb-1.5 ${state.responses.recentSurgery === false ? 'text-emerald-400' : 'text-tertiary'}`} />
                   <span className="text-sm font-bold text-primary">Não</span>
@@ -525,18 +525,19 @@ export function DVTRiskCalculator({
                     <button
                       key={item.id}
                       onClick={() => toggleFactor(item.id)}
-                      className={`glass-tile flex items-center justify-between rounded-xl border px-3 py-2 text-left text-xs font-semibold transition-all active:scale-98 ${
-                                              isSelected
-                                                ? item.id === 'none'
-                                                  ? '!border-emerald-400 !bg-emerald-500/20 !text-emerald-200'
-                                                  : '!border-surgical-teal !bg-surgical-teal/20 !text-primary'
-                                                : 'text-secondary hover:text-primary'}`}
-                      >
+                      className={`glass-tile flex items-center justify-between rounded-xl border px-3 py-2 text-left text-xs font-semibold transition-all active:scale-98 ${(
+                        isSelected
+                          ? item.id === 'none'
+                            ? '!border-emerald-400 !bg-emerald-500/20 !text-emerald-200'
+                            : '!border-surgical-teal !bg-surgical-teal/20 !text-primary'
+                          : 'text-secondary hover:text-primary'
+                      )}`}
+                    >
                       <span>{item.label}</span>
                       <span
-                        className={`h-4 w-4 rounded flex items-center justify-center border ${
+                        className={`h-4 w-4 rounded flex items-center justify-center border ${(
                           isSelected ? 'border-surgical-teal bg-surgical-teal text-text-inverse' : 'border-default'
-                        }`}
+                        )}`}
                       >
                         {isSelected && <span className="text-[10px] font-black">✓</span>}
                       </span>
@@ -691,8 +692,8 @@ export function DVTRiskCalculator({
         </AnimatePresence>
       </div>
 
-      {/* Navigation Footer (Steps 1 to 6) */}
-      {state.currentStep > 0 && state.currentStep <= TOTAL_STEPS && (
+      {/* Navigation Footer (Steps 1 to 5) - hidden on result step (step 6) */}
+      {state.currentStep > 0 && state.currentStep < TOTAL_STEPS && (
         <div className="relative z-10 mt-4 flex items-center justify-between border-t pt-3" style={{ borderColor: 'var(--glass-border)' }}>
           <button
             onClick={handleBack}
@@ -713,7 +714,7 @@ export function DVTRiskCalculator({
               disabled={!isStepValid()}
               className="btn-edge btn-edge-primary btn-edge-sm"
             >
-              <span>{state.currentStep === TOTAL_STEPS ? 'Ver Resultado' : state.currentStep === CONTACT_STEP ? 'Avançar' : 'Próxima'}</span>
+              <span>{state.currentStep === CONTACT_STEP ? 'Avançar' : 'Próxima'}</span>
               <ChevronRight className="h-4 w-4" />
             </button>
           )}

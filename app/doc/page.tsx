@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import {
   HeartPulse, FileText, Calculator, Stethoscope, Calendar,
-  MessageCircle, Wrench, Users, ShieldCheck, Search,
+  MessageCircle, Wrench, ShieldCheck, Search,
   Globe, UserPlus, TrendingUp, Check, Minus, X,
   ArrowRight, Rocket, Sparkles, Palette, Code, Eye, Settings,
   Cloud, Mail, Phone, MapPin, Award, Clock, GitBranch,
@@ -15,7 +16,6 @@ import {
    Holmes: quem fez o que / design tokens / antes e depois
 
    Hudson Argollo — web wizard · front-end
-   Dr. Herlon Moura dos Santos — angiologista (cousin)
    ============================================ */
 
 const TOKEN = {
@@ -102,24 +102,6 @@ const DESIGN_SYSTEM = [
   },
 ];
 
-/* ── Personalização: quem fez ──────────────── */
-
-const PERSONAL = [
-  {
-    name: 'Hudson Argollo',
-    role: 'Web wizard · front-end',
-    bio: 'Escrevi e desenvolvi a plataforma inteira de front-end. O design system, os componentes glassmorphism, as animações, a calculadora, o painel admin e o blog são de minha autoria. Trabalho em parceria com o Dr. Herlon Moura, não sobre ele, mas para ele.',
-    avatar: 'H',
-  },
-  {
-    name: 'Dr. Herlon Moura dos Santos',
-    role: 'Angiologista · responsável pela medicina',
-    bio: 'Especialista em cirurgia vascular e endovascular (CRM/BA 23904). O conteúdo, a voz e a visão clínica da plataforma são seus. A tecnologia existe para ampliar o atendimento da medicina.',
-
-  avatar: 'HM',
-  },
-];
-
 const TEAM_SKILLS = [
   { name: 'Next.js 15', icon: Code },
   { name: 'React 19', icon: Rocket },
@@ -156,7 +138,7 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Captura de leads e CRM',
     before: 'Apenas botões de WhatsApp. Nenhum formulário, nenhum CRM, nenhum registro de pacientes. Leads invisíveis até o paciente enviar mensagem.',
-    after: 'Captura multi-canal com formulário de contato, calculadora TVP, avaliação de varizes e triagem de trombose. Painel CRM com pipeline de 6 status, score e histórico. Painel admin com acesso multiplo (admin/editor/viewer), JWT e relatórios operacionais — em produção.',
+    after: 'Captura multi-canal (contato, calculadora TVP, avaliação de varizes, triagem de trombose) integrada a um CRM com pipeline de 6 status, score de lead e histórico completo. SEO estruturado para ranquear no Google, máquina de criar conteúdo automatizada gerando artigos e pages otimizados em escala, e fluxo de nutrição que leva cada lead até o agendamento. Painel admin com acesso múltiplo (admin/editor/viewer), JWT e relatórios operacionais — em produção.',
     status: 'done',
   },
   {
@@ -271,28 +253,45 @@ export default function DocPage() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: TOKEN.surface }}>
-        <div
-          className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full blur-[120px]"
-          style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}
-        />
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
-            <Rocket className="h-4 w-4" />
-            <span>Visão geral da plataforma</span>
-          </div>
-          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style={headingStyle}>
-            Plataforma Digital do{' '}
-            <span className="bg-gradient-to-r from-vascular-blue to-champagne-gold bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #206095 0%, #C5A880 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Dr. Herlon Moura
-            </span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={mutedStyle}>
-            Um site moderno e completo para pacientes e equipe: conteúdos educativos, ferramentas
-            interativas e agendamento online — tudo em um só lugar.
-          </p>
-        </div>
-      </section>
+          <section className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: TOKEN.surface }}>
+            <div
+              className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full blur-[120px]"
+              style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}
+            />
+            <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
+              <div className="grid items-center gap-12 lg:grid-cols-2">
+                <div>
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
+                    <Rocket className="h-4 w-4" />
+                    <span>Visão geral da plataforma</span>
+                  </div>
+                  <h1 className="max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style={headingStyle}>
+                    Plataforma Digital do{' '}
+                    <span className="bg-gradient-to-r from-vascular-blue to-champagne-gold bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #206095 0%, #C5A880 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                      Dr. Herlon Moura
+                    </span>
+                  </h1>
+                  <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={bodyStyle}>
+                    Migramos o site do Dr. Herlon de um tema genérico de WordPress para uma plataforma
+                    moderna e completa — pensada em quem pega o celular com dor na perna à noite e
+                    precisa entender se é trombose. Aqui conto, de forma direta, o que foi feito:
+                    desde a arquitetura SEO que agora posiciona o site no primeiro rank do Google,
+                    passando pela máquina de criar conteúdo automatizado e pelo CRM que transforma
+                    cada visita em um lead qualificado.
+                  </p>
+                </div>
+                <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: TOKEN.border, boxShadow: 'var(--c-card-shadow)' }}>
+                  <Image
+                    src="/images/support/consultorio-recepcao.webp"
+                    alt="Recepção do consultório do Dr. Herlon Moura em Salvador, BA"
+                    width={600}
+                    height={400}
+                    className="h-auto w-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
 
       {/* Métricas */}
       <section className="py-16 sm:py-20">
@@ -414,42 +413,6 @@ export default function DocPage() {
         </div>
       </section>
 
-      {/* Personalização: Hudson → Herlon */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
-        <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action }}>
-              <Users className="h-4 w-4" />
-              <span>Equipe</span>
-            </div>
-            <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Quem fez isso</h2>
-            <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Do cliente ao fazedor: a visão clínica de Herlon, construída por minha equipa.
-            </p>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {PERSONAL.map(({ name, role, bio, avatar }) => (
-              <div
-                key={name}
-                className="rounded-xl border p-6"
-                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 20%, transparent)', color: TOKEN.action }}>
-                    <span className="text-lg font-bold" style={{ color: TOKEN.action }}>{avatar}</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold" style={{ color: TOKEN.heading }}>{name}</h3>
-                    <p className="text-sm" style={{ color: TOKEN.muted }}>{role}</p>
-                  </div>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed" style={{ color: TOKEN.body }}>{bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Tecnologias */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
@@ -490,7 +453,10 @@ export default function DocPage() {
               Do WordPress à plataforma atual
             </h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              O site foi totalmente reformulado. Aqui está o que mudou e o que está em production.
+              O site foi totalmente reformulado. A arquitetura SEO agora posiciona o conteúdo
+              vascular no primeiro rank do Google, a máquina de criar conteúdo automatizada gera
+              artigos e pages otimizados em escala, e o CRM captura, pontua e nutre cada lead
+              até o agendamento. Abaixo, o que mudou:
             </p>
           </div>
           <SectionBlock title="Comparação: antes e depois" icon={Check} items={O_QUE_FOI_FEITO} />
