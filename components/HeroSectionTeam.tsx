@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MessageCircle, Activity, ShieldCheck, ArrowRight, Waves, Zap, Users } from 'lucide-react';
@@ -38,34 +38,68 @@ export function HeroSectionTeam({
   onBook,
   logoSvg,
 }: HeroSectionTeamProps) {
-  return (
-    <section className="relative overflow-hidden">
-      {/* Anatomical circulatory-system background — illustration of the
-          specialty (vascular network), tinted to the brand tokens. */}
-      <Image
-        src="/images/brand/hero-vascular-bg.webp"
-        alt=""
-        fill
-        priority
-        aria-hidden
-        sizes="100vw"
-        className="object-cover object-[70%_45%] sm:object-[62%_42%]"
-        style={{ opacity: 0.35 }}
-      />
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-      {/* Gradient overlays for depth */}
+  // Pause the loop for users who ask for reduced motion, and make sure the
+  // video is genuinely silent even if a source ever regains an audio track.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.volume = 0;
+
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = () => {
+      if (mq.matches) {
+        video.pause();
+      } else {
+        void video.play().catch(() => {
+          /* autoplay blocked — the poster frame remains */
+        });
+      }
+    };
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, []);
+
+  return (
+    <section className="relative overflow-hidden" style={{ backgroundColor: 'var(--s-color-bg-canvas)' }}>
+      {/* Muted looping hero video — abstract vascular/anatomical motion graphics.
+          The audio track is stripped from both sources; `muted` + `playsInline`
+          are what let browsers autoplay it. WebM first (smaller), MP4 fallback. */}
+      <video
+        ref={videoRef}
+        data-hero-video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/images/videos/herlonmoura-hero-poster.jpg"
+        aria-hidden
+        tabIndex={-1}
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      >
+        <source src="/images/videos/herlonmoura-hero-muted.webm" type="video/webm" />
+        <source src="/images/videos/herlonmoura-hero-muted.mp4" type="video/mp4" />
+      </video>
+
+      {/* Gradient overlays — carry the text contrast. Weighted to the left
+          (where the copy column sits) and released on the right so the video
+          stays visible instead of being washed out. */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0.96) 40%, rgba(248,249,250,0.88) 70%, rgba(248,249,250,0.75) 100%)',
+            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0.94) 38%, rgba(248,249,250,0.82) 62%, rgba(248,249,250,0.60) 100%)',
         }}
       />
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(248,249,250,0.6) 0%, rgba(248,249,250,0) 30%, rgba(248,249,250,0) 70%, var(--s-color-bg-canvas) 100%)',
+            'linear-gradient(to bottom, rgba(248,249,250,0.55) 0%, rgba(248,249,250,0) 28%, rgba(248,249,250,0) 72%, var(--s-color-bg-canvas) 100%)',
         }}
       />
 
