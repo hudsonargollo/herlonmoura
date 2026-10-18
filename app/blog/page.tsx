@@ -38,78 +38,59 @@ export default function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema()) }}
       />
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-bg-tertiary via-surface to-surface">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-block rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-3 py-1 text-xs font-semibold text-surgical-teal mb-3">
+      <section className="relative overflow-hidden bg-surface">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ backgroundImage: 'url(/images/blog/entendendo-varizes-tratamentos-modernos.png)', backgroundSize: 'cover', backgroundPosition: 'center 40%' }}
+        >
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+        <div className="relative mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+          <div className="mx-auto max-w-2xl text-center text-white">
+            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">
               Blog
             </span>
-            <h1 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-primary">
+            <h1 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl" style={{ color: 'var(--s-color-content-heading)' }}>
               Saúde Vascular em Dia
             </h1>
-            <p className="mt-3 text-base text-secondary">
+            <p className="mt-3 text-base leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>
               Artigos, dicas e orientações do Dr. Herlon Moura sobre angiologia, cirurgia vascular
               e prevenção de doenças circulatórias.
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Filters + search */}
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center">
-            <div className="flex flex-wrap justify-center gap-1.5">
+            {/* Topics / Tags section */}
+      <section className="py-10 sm:py-14 bg-surface">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-heading-2 font-bold" style={{ color: 'var(--s-color-content-heading)' }}>
+              Explore por tema
+            </h2>
+            <p className="text-sm" style={{ color: 'var(--s-color-content-muted)' }}>
+              Clique em uma categoria para filtrar os artigos
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2">
+            {CATEGORIES.map((cat) => (
               <button
-                key="all"
-                type="button"
-                onClick={() => setCategory('Todas')}
-                className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-                  category === 'Todas'
-                    ? 'border-surgical-teal/40 bg-surgical-teal/15 text-surgical-teal'
-                    : 'border-default bg-surface-raised text-secondary hover:border-surgical-teal/30'
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-200 hover:scale-105 ${
+                  category === cat
+                    ? 'border-surgical-teal/40 bg-surgical-teal/15 text-surgical-teal shadow-sm'
+                    : 'border-default bg-white/5 text-secondary hover:border-surgical-teal/40 hover:text-primary'
                 }`}
               >
-                Todas ({BLOG_POSTS.length})
+                {cat} ({CATEGORY_MAP.get(cat)})
               </button>
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setCategory(cat)}
-                  className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-                    category === cat
-                      ? 'border-surgical-teal/40 bg-surgical-teal/15 text-surgical-teal'
-                      : 'border-default bg-surface-raised text-secondary hover:border-surgical-teal/30'
-                  }`}
-                >
-                  {cat} ({CATEGORY_MAP.get(cat)})
-                </button>
-              ))}
-            </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setQuery('');
-                setCategory('Todas');
-              }}
-              className="ml-auto flex w-full justify-end gap-2 sm:w-auto sm:flex-none"
-            >
-              <input
-                name="q"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Pesquisar…"
-                className="rounded-full border border-default bg-surface-raised px-4 py-1.5 text-sm text-primary placeholder:text-tertiary focus:border-surgical-teal/50 focus:outline-none md:w-56"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-surgical-teal/15 px-3.5 py-1.5 text-xs font-semibold text-surgical-teal transition-colors hover:bg-surgical-teal/25"
-              >
-                Buscar
-              </button>
-            </form>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 bg-surface">
+<section className="py-12 sm:py-16 bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           {filtered.length === 0 ? (
             <p className="text-center text-secondary">Nenhum artigo encontrado.</p>
