@@ -214,60 +214,61 @@ export default function Home() {
         }}
       />
 
-      {/* O que é um Angiologista? — educational section. The looping vascular
-          video is the background; the copy sits on a translucent panel above it
-          so it stays readable over every frame of the loop. */}
+      {/* O que é um Angiologista? — educational section. Two-column layout:
+          text on the left, looping vascular video on the right. */}
       <section
         data-analytics-section="o-que-e-angiologista"
         className="relative overflow-hidden py-16 sm:py-24"
         style={{ backgroundColor: TOKEN.surface }}
       >
-        <VideoBackground
-          webmSrc={VASCULAR_VIDEO.webmSrc}
-          mp4Src={VASCULAR_VIDEO.mp4Src}
-          posterSrc={VASCULAR_VIDEO.posterSrc}
-          objectPosition="center"
-        />
-
-        {/* Scrim — keeps the video visible but holds contrast under the panel. */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(248,249,250,0.88) 0%, rgba(248,249,250,0.72) 38%, rgba(248,249,250,0.42) 68%, rgba(248,249,250,0.24) 100%)',
-          }}
-        />
-
         <div className="relative mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div
-            className="mx-auto max-w-3xl rounded-3xl border p-6 backdrop-blur-md sm:p-10"
-            style={{
-              borderColor: 'var(--glass-border)',
-              backgroundColor: 'var(--glass-bg-strong)',
-              boxShadow: 'var(--glass-shadow)',
-            }}
-          >
-            <Eyebrow>Entenda a Especialidade</Eyebrow>
-            <h2 className="mt-3 text-display-md" style={headingStyle}>
-              O que é um Angiologista?
-            </h2>
-            <p className="mt-4 text-body-lg leading-relaxed" style={bodyStyle}>
-              O Angiologista é o médico especialista no diagnóstico e tratamento das doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua em todo o sistema circulatório, incluindo braços, pernas, tronco e pescoço.
-            </p>
-            <p className="mt-4 text-body-lg leading-relaxed" style={bodyStyle}>
-              Doenças como varizes, tromboses, obstruções arteriais e fazem parte do escopo de atuação deste especialista, que utiliza desde exames de imagem minimamente invasivos até cirurgias vasculares e endovasculares.
-            </p>
-            <div className="mt-6">
-              <EdgeButton
-                variant="primary"
-                onClick={() => {
-                  trackCtaClick('o-que-e-angiologista', 'Saiba mais sobre Angiologia');
-                  openContact('o-que-e-angiologista', undefined, 'Dúvidas sobre angiologia', 'Saiba Mais');
-                }}
-              >
-                <MessageCircle className="h-4 w-4" />
-                <span>Tirar Dúvidas</span>
-              </EdgeButton>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 items-center">
+            {/* Left column — copy in a glass panel */}
+            <div
+              className="rounded-3xl border p-6 backdrop-blur-md sm:p-10"
+              style={{
+                borderColor: 'var(--glass-border)',
+                backgroundColor: 'var(--glass-bg-strong)',
+                boxShadow: 'var(--glass-shadow)',
+              }}
+            >
+              <Eyebrow>Entenda a Especialidade</Eyebrow>
+              <h2 className="mt-3 text-display-md" style={headingStyle}>
+                O que é um Angiologista?
+              </h2>
+              <p className="mt-4 text-body-lg leading-relaxed" style={bodyStyle}>
+                O Angiologista é o médico especialista no diagnóstico e tratamento das doenças que afetam os vasos sanguíneos e o sistema linfático. Ele atua em todo o sistema circulatório, incluindo braços, pernas, tronco e pescoço.
+              </p>
+              <p className="mt-4 text-body-lg leading-relaxed" style={bodyStyle}>
+                Doenças como varizes, tromboses, obstruções arteriais e fazem parte do escopo de atuação deste especialista, que utiliza desde exames de imagem minimamente invasivos até cirurgias vasculares e endovasculares.
+              </p>
+              <div className="mt-6">
+                <EdgeButton
+                  variant="primary"
+                  onClick={() => {
+                    trackCtaClick('o-que-e-angiologista', 'Saiba mais sobre Angiologia');
+                    openContact('o-que-e-angiologista', undefined, 'Dúvidas sobre angiologia', 'Saiba Mais');
+                  }}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  <span>Tirar Dúvidas</span>
+                </EdgeButton>
+              </div>
+            </div>
+
+            {/* Right column — looping vascular video */}
+            <div className="relative overflow-hidden rounded-3xl border aspect-video lg:aspect-[4/3] xl:aspect-[16/10]"
+              style={{
+                borderColor: 'var(--glass-border)',
+                boxShadow: 'var(--glass-shadow)',
+              }}
+            >
+              <VideoBackground
+                webmSrc={VASCULAR_VIDEO.webmSrc}
+                mp4Src={VASCULAR_VIDEO.mp4Src}
+                posterSrc={VASCULAR_VIDEO.posterSrc}
+                objectPosition="center"
+              />
             </div>
           </div>
         </div>
