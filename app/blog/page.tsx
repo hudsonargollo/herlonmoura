@@ -40,14 +40,7 @@ export default function BlogPage() {
       />
       <section className="relative overflow-hidden bg-surface">
         <div className="relative flex items-center gap-6 sm:gap-12 py-14 sm:py-20 lg:py-24">
-          {/* Left: hero image (cropped to fill) */}
-          <div
-            className="relative w-full min-h-[55vh] min-w-[400px] border border-white/10"
-            style={{ backgroundImage: 'url(/images/dr-herlon-moura.png)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10" />
-          </div>
-          {/* Right: blog text overlay */}
+          {/* Left: blog text overlay */}
           <div className="flex-1 sm:flex-[1_1_50%] min-w-0">
             <div className="mx-auto max-w-lg text-center sm:text-left">
               <span className="inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">
@@ -61,6 +54,13 @@ export default function BlogPage() {
                 e prevenção de doenças circulatórias.
               </p>
             </div>
+          </div>
+          {/* Right: hero image (cropped to fill) */}
+          <div
+            className="relative w-full min-h-[55vh] min-w-[400px] border border-white/10"
+            style={{ backgroundImage: 'url(/images/dr-herlon-moura.png)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10" />
           </div>
         </div>
       </section>
