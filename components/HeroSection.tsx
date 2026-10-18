@@ -122,6 +122,14 @@ export function HeroSection({
 
               {logoSvg && <div className="mt-3 flex">{logoSvg}</div>}
 
+              {/* Subtitle — rendered only when a subheadline is provided, so
+                  callers that omit it (e.g. the live home hero) get no empty node. */}
+              {subheadline && (
+                <p className="mt-4 max-w-lg text-base leading-relaxed sm:text-lg" style={{ color: 'var(--s-color-content-body)' }}>
+                  {subheadline}
+                </p>
+              )}
+
               {/* Key Pillars */}
               <div className="mt-5 grid grid-cols-1 gap-2.5 text-sm sm:grid-cols-2" style={{ color: 'var(--s-color-content-body)' }}>
                 {[
