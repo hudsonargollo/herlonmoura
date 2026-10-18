@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { Header } from '@/components/Header';
 import { ArticleCard } from '@/components/ArticleCard';
 import type { BlogPost } from '@/lib/blog';
 import { BLOG_POSTS } from '@/lib/blog-data.generated';
@@ -30,7 +31,9 @@ export default function BlogPage() {
   });
 
   return (
-    <main className="min-h-screen bg-surface text-primary">
+    <>
+      <Header />
+      <main className="min-h-screen bg-surface text-primary">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema()) }}
@@ -119,6 +122,7 @@ export default function BlogPage() {
           )}
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
