@@ -40,20 +40,6 @@ export function HeroSectionTeam({
 }: HeroSectionTeamProps) {
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: 'var(--s-color-bg-canvas)' }}>
-      {/* Anatomical circulatory-system illustration — the hero keeps a static
-          background so the copy stays calm; the looping video now lives in the
-          "O que é um Angiologista?" section below. */}
-      <Image
-        src="/images/brand/hero-vascular-bg.webp"
-        alt=""
-        fill
-        priority
-        aria-hidden
-        sizes="100vw"
-        className="object-cover object-[70%_45%] sm:object-[62%_42%]"
-        style={{ opacity: 0.35 }}
-      />
-
       {/* Gradient scrims — light, weighted to the left where the copy sits. */}
       <div
         className="pointer-events-none absolute inset-0"

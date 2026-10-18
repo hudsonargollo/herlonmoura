@@ -222,7 +222,7 @@ export default function Home() {
         style={{ backgroundColor: TOKEN.surface }}
       >
         <div className="relative mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 items-start">
             {/* Left column — copy in a glass panel */}
             <div
               className="rounded-3xl border p-6 backdrop-blur-md sm:p-10"
