@@ -1272,6 +1272,8 @@ img {
   background-color: transparent;
   color: var(--s-color-action-primary);
   border-color: var(--s-color-action-primary);
+  clip-path: none;
+  border-radius: 2px;
 }
 .btn-edge-outline::before {
   background-color: var(--s-color-action-primary);
