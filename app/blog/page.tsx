@@ -39,24 +39,28 @@ export default function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema()) }}
       />
       <section className="relative overflow-hidden bg-surface">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ backgroundImage: 'url(/images/dr-herlon-moura.png)', backgroundSize: 'cover', backgroundPosition: 'center 35%' }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
-        </div>
-        <div className="relative mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <div className="mx-auto max-w-2xl text-center text-white">
-            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">
-              Blog
-            </span>
-            <h1 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl" style={{ color: 'var(--s-color-content-heading)' }}>
-              Saúde Vascular em Dia
-            </h1>
-            <p className="mt-3 text-base leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>
-              Artigos, dicas e orientações do Dr. Herlon Moura sobre angiologia, cirurgia vascular
-              e prevenção de doenças circulatórias.
-            </p>
+        <div className="relative flex items-center gap-6 sm:gap-12 py-14 sm:py-20 lg:py-24">
+          {/* Left: hero image (cropped to fill) */}
+          <div
+            className="relative flex-[0_0_45%] sm:flex-[0_0_50%]"
+            style={{ backgroundImage: 'url(/images/dr-herlon-moura.png)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10" />
+          </div>
+          {/* Right: blog text overlay */}
+          <div className="flex-[0_0_55%] sm:flex-[0_0_50%] sm:pl-6">
+            <div className="mx-auto max-w-lg text-center sm:text-left">
+              <span className="inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">
+                Blog
+              </span>
+              <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl lg:text-5xl" style={{ color: 'var(--s-color-content-heading)' }}>
+                Saúde Vascular em Dia
+              </h1>
+              <p className="mt-3 text-base leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>
+                Artigos, dicas e orientações do Dr. Herlon Moura sobre angiologia, cirurgia vascular
+                e prevenção de doenças circulatórias.
+              </p>
+            </div>
           </div>
         </div>
       </section>
