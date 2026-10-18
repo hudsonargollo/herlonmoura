@@ -222,7 +222,7 @@ function PipelineLeadCard({
           disabled={isMoving || status === 'lost'}
           className="text-[10px] text-left px-2 py-1 rounded text-red-400 hover:bg-red-500/10 disabled:opacity-50"
         >
-          → Marcar como Perdido
+          → {LEAD_STATUS_LABELS.lost}
         </button>
       </div>
 
