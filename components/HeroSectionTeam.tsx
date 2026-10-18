@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MessageCircle, Activity, ShieldCheck, ArrowRight, Waves, Zap, Users } from 'lucide-react';
@@ -38,56 +38,23 @@ export function HeroSectionTeam({
   onBook,
   logoSvg,
 }: HeroSectionTeamProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  // Pause the loop for users who ask for reduced motion, and make sure the
-  // video is genuinely silent even if a source ever regains an audio track.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    video.volume = 0;
-
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const apply = () => {
-      if (mq.matches) {
-        video.pause();
-      } else {
-        void video.play().catch(() => {
-          /* autoplay blocked — the poster frame remains */
-        });
-      }
-    };
-    apply();
-    mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
-  }, []);
-
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: 'var(--s-color-bg-canvas)' }}>
-      {/* Muted looping hero video — abstract vascular/anatomical motion graphics.
-          The audio track is stripped from both sources; `muted` + `playsInline`
-          are what let browsers autoplay it. WebM first (smaller), MP4 fallback. */}
-      <video
-        ref={videoRef}
-        data-hero-video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/images/videos/herlonmoura-hero-poster.jpg"
+      {/* Anatomical circulatory-system illustration — the hero keeps a static
+          background so the copy stays calm; the looping video now lives in the
+          "O que é um Angiologista?" section below. */}
+      <Image
+        src="/images/brand/hero-vascular-bg.webp"
+        alt=""
+        fill
+        priority
         aria-hidden
-        tabIndex={-1}
-        className="absolute inset-0 h-full w-full object-cover object-center"
-      >
-        <source src="/images/videos/herlonmoura-hero-muted.webm" type="video/webm" />
-        <source src="/images/videos/herlonmoura-hero-muted.mp4" type="video/mp4" />
-      </video>
+        sizes="100vw"
+        className="object-cover object-[70%_45%] sm:object-[62%_42%]"
+        style={{ opacity: 0.35 }}
+      />
 
-      {/* Gradient scrims — deliberately light so the video reads as the hero.
-          Weighted to the left, where the copy column sits, and released to
-          almost nothing across the right half. */}
+      {/* Gradient scrims — light, weighted to the left where the copy sits. */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
