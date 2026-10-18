@@ -40,9 +40,24 @@ jobs:
             exit 1
           fi
 
+      - name: Check Cloudflare credentials
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CF_TOKEN" ]; then echo "::error title=Missing secret::CLOUDFLARE_API_TOKEN is not set (or empty) in this repo's Actions secrets."; fi
+          if [ -z "$CF_ACCOUNT" ]; then echo "::error title=Missing secret::CLOUDFLARE_ACCOUNT_ID is not set (or empty) in this repo's Actions secrets."; fi
+          [ -n "$CF_TOKEN" ] && echo "CLOUDFLARE_API_TOKEN present (len ${#CF_TOKEN})"
+          [ -n "$CF_ACCOUNT" ] && echo "CLOUDFLARE_ACCOUNT_ID present (len ${#CF_ACCOUNT})"
+
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy out --project-name=herlon-moura-website
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -o pipefail
+          if ! npx --yes wrangler@4 pages deploy out --project-name=herlon-moura-website 2>&1 | tee /tmp/deploy.log; then
+            echo "::error title=Deploy log tail::$(tail -n 30 /tmp/deploy.log | tr '\n' '~')"
+            grep -iE "error|failed|unauthor|authentication|not found|10000|permission" /tmp/deploy.log | tail -20 | while IFS= read -r l; do echo "::error::$l"; done
+            exit 1
+          fi
