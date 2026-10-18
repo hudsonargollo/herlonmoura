@@ -40,28 +40,17 @@ export function HeroSectionTeam({
 }: HeroSectionTeamProps) {
   return (
     <section className="relative overflow-hidden">
-      {/* Video background - animated vascular flow, health context */}
-      <video
-        src="/videos/cardio.webm"
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{ opacity: 0.28 }}
-      />
-
-      {/* Subtle anatomical background overlay - clinical context without overwhelming copy */}
+      {/* Anatomical circulatory-system background — illustration of the
+          specialty (vascular network), tinted to the brand tokens. */}
       <Image
-        src="/images/fotos/photo-08.webp"
+        src="/images/brand/hero-vascular-bg.webp"
         alt=""
         fill
         priority
         aria-hidden
         sizes="100vw"
-        className="object-cover object-[80%_50%] sm:object-[75%_50%]"
-        style={{ opacity: 0.28 }}
+        className="object-cover object-[70%_45%] sm:object-[62%_42%]"
+        style={{ opacity: 0.35 }}
       />
 
       {/* Gradient overlays for depth */}
@@ -224,7 +213,7 @@ export function HeroSectionTeam({
             </motion.div>
           </div>
 
-          {/* ---------- Team Photo column - with surface animation ---------- */}
+          {/* ---------- Portrait column — real clinical photo ---------- */}
           <div className="lg:col-span-5">
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -258,10 +247,10 @@ export function HeroSectionTeam({
                   className="relative"
                 >
                   <Image
-                    src="/images/team/team-clinic.webp"
-                    alt="Equipe do Dr. Herlon Moura - Angiologista com seu atendimento profissional"
-                    width={1440}
-                    height={900}
+                    src="/images/brand/hero-doctor.webp"
+                    alt="Dr. Herlon Moura dos Santos — Angiologista e Cirurgião Vascular"
+                    width={1067}
+                    height={1334}
                     priority
                     sizes="(max-width: 1024px) 360px, 40vw"
                     className="h-auto w-full object-cover"
@@ -276,7 +265,7 @@ export function HeroSectionTeam({
                   />
                 </motion.div>
 
-                {/* Team name plate */}
+                {/* Name plate */}
                 <div
                   className="absolute inset-x-0 bottom-0 px-4 py-3.5"
                   style={{
@@ -288,13 +277,13 @@ export function HeroSectionTeam({
                     className="text-sm font-bold leading-tight"
                     style={{ fontFamily: HEADING_STACK, color: '#FFFFFF' }}
                   >
-                    Equipe Dr. Herlon Moura
+                    Dr. Herlon Moura dos Santos
                   </p>
                   <p
                     className="mt-0.5 text-[11px] font-medium"
                     style={{ color: 'rgba(255,255,255,0.82)' }}
                   >
-                    Angiologia • Cirurgia Vascular • Atendimento Humanizado
+                    Angiologista e Cirurgião Vascular
                   </p>
                 </div>
               </div>
@@ -312,7 +301,7 @@ export function HeroSectionTeam({
                   className="inline-block h-2 w-2 rounded-full"
                   style={{ backgroundColor: 'var(--g-color-success)' }}
                 />
-                <span>Equipe profissional experiente</span>
+                <span>15+ anos de prática clínica</span>
               </div>
             </motion.div>
           </div>
