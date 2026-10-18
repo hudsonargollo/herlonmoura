@@ -199,7 +199,7 @@ export default function Home() {
 
       {/* Hero Section with Doctor Photo & Real Branding */}
       <HeroSectionTeam
-        headline="Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador"
+        headline="Angiologista e Cirurgião Vascular em Salvador"
 
         onOpenCalculator={() => {
           trackCtaClick('hero', 'Calculadora de Risco de TVP');

@@ -36,6 +36,11 @@ yarn-error.log*
 # Raw photo masters at repo root (unoptimized exports; processed copies live in public/images/fotos)
 /fotos/
 
+# Raw video masters at repo root (large, with audio; the muted web derivatives
+# live in public/images/videos). Keep the source out of git and out of the
+# static export so every deploy doesn't ship dead weight.
+/video-masters/
+
 # OS
 Thumbs.db
 *.pem

@@ -85,21 +85,21 @@ export function HeroSectionTeam({
         <source src="/images/videos/herlonmoura-hero-muted.mp4" type="video/mp4" />
       </video>
 
-      {/* Gradient overlays — carry the text contrast. Weighted to the left
-          (where the copy column sits) and released on the right so the video
-          stays visible instead of being washed out. */}
+      {/* Gradient scrims — deliberately light so the video reads as the hero.
+          Weighted to the left, where the copy column sits, and released to
+          almost nothing across the right half. */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to right, var(--s-color-bg-canvas) 0%, rgba(248,249,250,0.94) 38%, rgba(248,249,250,0.82) 62%, rgba(248,249,250,0.60) 100%)',
+            'linear-gradient(to right, rgba(248,249,250,0.78) 0%, rgba(248,249,250,0.56) 22%, rgba(248,249,250,0.18) 44%, rgba(248,249,250,0.02) 68%, rgba(248,249,250,0) 100%)',
         }}
       />
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(248,249,250,0.55) 0%, rgba(248,249,250,0) 28%, rgba(248,249,250,0) 72%, var(--s-color-bg-canvas) 100%)',
+            'linear-gradient(to bottom, rgba(248,249,250,0.20) 0%, rgba(248,249,250,0) 18%, rgba(248,249,250,0) 80%, var(--s-color-bg-canvas) 100%)',
         }}
       />
 
