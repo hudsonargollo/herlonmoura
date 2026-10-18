@@ -6,6 +6,7 @@ import { Menu, X, MessageCircle, Phone, HeartPulse } from 'lucide-react';
 import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
 import { ContactModal } from './ContactModal';
+import { EdgeButton } from './EdgeButton';
 
 interface HeaderProps {
   logo?: React.ReactNode;
@@ -188,23 +189,17 @@ export function Header({
               );
             })}
             <div className="border-t pt-4" style={{ borderColor: 'var(--c-card-border)' }}>
-              <button
-                type="button"
+              <EdgeButton
+                variant="primary"
+                block
                 onClick={() => {
                   setIsMenuOpen(false);
                   setContactOpen(true);
                 }}
-                className="flex w-full items-center justify-center gap-2 px-5 py-3 text-center text-body-small"
-                style={{
-                  backgroundColor: 'var(--c-button-primary-bg)',
-                  color: 'var(--c-button-primary-text)',
-                  borderRadius: 'var(--c-button-radius)',
-                  fontWeight: 600,
-                }}
               >
                 <MessageCircle className="h-4 w-4" />
-                {ctaButton.label}
-              </button>
+                <span>{ctaButton.label}</span>
+              </EdgeButton>
               <div className="mt-4 flex justify-center">
                 <ThemeToggle />
               </div>

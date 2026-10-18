@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MessageCircle, Activity, ShieldCheck, ArrowRight, Waves, Zap, Users } from 'lucide-react';
+import { EdgeButton } from '@/components';
 
 interface HeroSectionTeamProps {
   headline?: string;
@@ -16,12 +17,6 @@ interface HeroSectionTeamProps {
 }
 
 const HEADING_STACK = 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif';
-const primaryButtonStyle: React.CSSProperties = {
-  backgroundColor: 'var(--c-button-primary-bg)',
-  color: 'var(--c-button-primary-text)',
-  borderRadius: 'var(--c-button-radius)',
-  fontWeight: 600,
-};
 
 export function HeroSectionTeam({
   headline,
@@ -125,59 +120,29 @@ export function HeroSectionTeam({
               {/* CTAs */}
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                 {onBook ? (
-                  <button
-                    type="button"
-                    onClick={onBook}
-                    className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base"
-                    style={primaryButtonStyle}
-                  >
-                    <MessageCircle className="h-5 w-5" />
+                  <EdgeButton variant="primary" onClick={onBook}>
+                    <MessageCircle className="h-4 w-4" />
                     <span>{primaryCTA.label}</span>
-                  </button>
+                  </EdgeButton>
                 ) : (
-                  <a
-                    href={primaryCTA.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base"
-                    style={primaryButtonStyle}
-                  >
-                    <MessageCircle className="h-5 w-5" />
+                  <EdgeButton variant="primary" href={primaryCTA.href} external>
+                    <MessageCircle className="h-4 w-4" />
                     <span>{primaryCTA.label}</span>
-                  </a>
+                  </EdgeButton>
                 )}
 
                 {onOpenCalculator ? (
-                  <button
-                    type="button"
-                    onClick={onOpenCalculator}
-                    className="inline-flex items-center justify-center gap-2 border px-5 py-3.5 text-base"
-                    style={{
-                      ...primaryButtonStyle,
-                      backgroundColor: 'transparent',
-                      color: 'var(--s-color-action-primary)',
-                      borderColor: 'var(--s-color-action-primary)',
-                    }}
-                  >
-                    <Activity className="h-5 w-5" />
+                  <EdgeButton variant="outline" onClick={onOpenCalculator}>
+                    <Activity className="h-4 w-4" />
                     <span>{secondaryCTA.label}</span>
                     <ArrowRight className="h-4 w-4" />
-                  </button>
+                  </EdgeButton>
                 ) : (
-                  <a
-                    href={secondaryCTA.href || '#calculadora-tvp'}
-                    className="inline-flex items-center justify-center gap-2 border px-5 py-3.5 text-base"
-                    style={{
-                      ...primaryButtonStyle,
-                      backgroundColor: 'transparent',
-                      color: 'var(--s-color-action-primary)',
-                      borderColor: 'var(--s-color-action-primary)',
-                    }}
-                  >
-                    <Activity className="h-5 w-5" />
+                  <EdgeButton variant="outline" href={secondaryCTA.href || '#calculadora-tvp'}>
+                    <Activity className="h-4 w-4" />
                     <span>{secondaryCTA.label}</span>
                     <ArrowRight className="h-4 w-4" />
-                  </a>
+                  </EdgeButton>
                 )}
               </div>
 

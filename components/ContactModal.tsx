@@ -11,6 +11,7 @@ import {
 } from '@/lib/contact';
 import { trackModalSubmit, trackWhatsappClick, getVisitorId } from '@/lib/analytics';
 import { getInterestCopy } from '@/lib/modal-copy';
+import { EdgeButton } from '@/components';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -363,21 +364,17 @@ export function ContactModal({ isOpen, onClose, context, title, interest, sectio
                   </motion.p>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-[var(--c-button-radius)] bg-[var(--c-button-primary-bg)] px-6 py-3.5 text-base font-semibold text-[var(--c-button-primary-text)] shadow-md transition-all duration-200 hover:bg-[var(--s-color-action-hover)] hover:shadow-lg active:scale-[0.985] disabled:opacity-60"
-                >
+                <EdgeButton variant="primary" block type="submit" disabled={submitting}>
                   {submitting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Enviando...
                     </>
                   ) : (
                     <>
-                      <MessageCircle className="h-5 w-5" aria-hidden="true" /> Continuar no WhatsApp
+                      <MessageCircle className="h-4 w-4" aria-hidden="true" /> Continuar no WhatsApp
                     </>
                   )}
-                </button>
+                </EdgeButton>
 
                 {/* Privacy note — short, one line. */}
                 <p className="flex items-center justify-center gap-2 text-caption text-[var(--s-color-content-muted)]">
@@ -408,14 +405,9 @@ export function ContactModal({ isOpen, onClose, context, title, interest, sectio
                 <p className="mx-auto mt-2 max-w-xs text-body-small leading-snug text-[var(--s-color-content-body)]">
                   Sua conversa no WhatsApp já abriu com os seus dados.
                 </p>
-                <a
-                  href={waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-[var(--c-button-radius)] bg-[var(--c-button-primary-bg)] px-6 py-3.5 text-base font-semibold text-[var(--c-button-primary-text)] shadow-md transition-all duration-200 hover:bg-[var(--s-color-action-hover)] hover:shadow-lg"
-                >
-                  <MessageCircle className="h-5 w-5" aria-hidden="true" /> Abrir WhatsApp
-                </a>
+                <EdgeButton variant="whatsapp" block external href={waLink} className="mt-5">
+                  <MessageCircle className="h-4 w-4" aria-hidden="true" /> Abrir WhatsApp
+                </EdgeButton>
                 <div className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--g-color-border-subtle)] pt-4">
                   <a
                     href={SCHEDULER_URL}

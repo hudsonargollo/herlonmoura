@@ -19,6 +19,7 @@ import {
   Mail,
   User,
 } from 'lucide-react';
+import { EdgeButton } from '@/components';
 
 export interface DVTCalculatorState {
   currentStep: number;
@@ -322,13 +323,10 @@ export function DVTRiskCalculator({
               </div>
 
               <div className="mt-6">
-                <button
-                  onClick={handleNext}
-                  className="inline-flex items-center justify-center gap-2.5 rounded-[var(--c-button-radius)] bg-[var(--c-button-primary-bg)] px-6 py-3.5 text-base font-semibold text-white shadow-md transition-all hover:bg-[var(--s-color-action-hover)] hover:shadow-lg active:scale-[0.985]"
-                >
+                <EdgeButton variant="primary" onClick={handleNext}>
                   <span>Iniciar Avaliação</span>
-                  <ArrowRight className="h-5 w-5" />
-                </button>
+                  <ArrowRight className="h-4 w-4" />
+                </EdgeButton>
               </div>
             </motion.div>
           )}
@@ -591,14 +589,10 @@ export function DVTRiskCalculator({
                 </div>
               </div>
               <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-                <button
-                  onClick={handleContactSubmit}
-                  disabled={!isStepValid()}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-surgical-teal px-5 py-2.5 text-xs font-bold text-slate-950 transition-all hover:bg-surgical-teal-dark disabled:opacity-40 disabled:cursor-not-allowed"
-                >
+                <EdgeButton variant="primary" onClick={handleContactSubmit} disabled={!isStepValid()}>
                   <ArrowRight className="h-4 w-4" />
                   <span>Ver Resultado</span>
-                </button>
+                </EdgeButton>
               </div>
             </motion.div>
           )}
@@ -661,7 +655,9 @@ export function DVTRiskCalculator({
 
               {/* Action Buttons */}
               <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-                <a
+                <EdgeButton
+                  variant="whatsapp"
+                  external
                   href={`https://wa.me/5571999159975?text=${encodeURIComponent(
                     `Olá Dr. Herlon Moura, realizei a Calculadora de TVP no site e meu resultado foi ${
                       state.riskCategory === 'low'
@@ -671,21 +667,15 @@ export function DVTRiskCalculator({
                         : 'Alto Risco'
                     } (${state.riskScore} pts). Gostaria de agendar uma consulta vascular.`
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-emerald-950/50 transition-all hover:bg-emerald-500 active:scale-95"
                 >
                   <MessageCircle className="h-4 w-4" />
                   <span>Agendar no WhatsApp com Dr. Herlon</span>
-                </a>
+                </EdgeButton>
 
-                <button
-                  onClick={handleReset}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl border border-default bg-surface-raised px-4 py-2.5 text-xs font-semibold text-secondary hover:bg-bg-tertiary hover:text-primary"
-                >
+                <EdgeButton variant="ghost" onClick={handleReset}>
                   <RotateCcw className="h-3.5 w-3.5" />
                   <span>Refazer Teste</span>
-                </button>
+                </EdgeButton>
               </div>
             </motion.div>
           )}
