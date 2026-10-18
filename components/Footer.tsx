@@ -198,13 +198,18 @@ export function Footer({
 
         {/* Legal notice & Copyright */}
         <div
-          className="mt-12 border-t pt-8 text-center text-caption"
+          className="mt-12 border-t pt-8 text-center"
           style={{ borderColor: 'var(--c-card-border)', color: 'var(--s-color-content-muted)' }}
         >
-          <p className="mx-auto mb-4 max-w-3xl leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>
+          <p
+            className="mx-auto mb-4 max-w-3xl leading-relaxed"
+            style={{ color: 'var(--s-color-content-muted)', fontSize: '2.4px', lineHeight: 1.3 }}
+          >
             Aviso Legal: As informações contidas neste website têm caráter puramente informativo e educativo, destinadas à orientação do público e não substituem o diagnóstico ou consulta presencial realizada por médico especialista, em conformidade com as resoluções do Conselho Federal de Medicina (CFM).
           </p>
-          <p>{copyright}</p>
+          <p style={{ color: 'var(--s-color-content-muted)', fontSize: '2.4px', lineHeight: 1.3 }}>
+            {copyright}
+          </p>
         </div>
       </div>
     </footer>
