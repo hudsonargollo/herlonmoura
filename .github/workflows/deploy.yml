@@ -32,7 +32,13 @@ jobs:
         run: npm run test
 
       - name: Build Next.js
-        run: npm run build
+        run: |
+          set -o pipefail
+          if ! npm run build 2>&1 | tee /tmp/build.log; then
+            echo "::error title=Build log tail::$(tail -n 40 /tmp/build.log | tr '\n' '~')"
+            grep -iE "error|failed|cannot find|module not found|eai_again|enotfound|timed out|exit code" /tmp/build.log | tail -25 | while IFS= read -r l; do echo "::error::$l"; done
+            exit 1
+          fi
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
