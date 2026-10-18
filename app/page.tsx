@@ -576,11 +576,12 @@ export default function Home() {
                 <div className="absolute inset-0 rounded-3xl" style={{ backgroundColor: 'var(--g-color-accent)', opacity: 0.2, filter: 'blur(2rem)' }} />
                 <div className="relative z-10 overflow-hidden rounded-3xl" style={{ ...cardStyle, boxShadow: TOKEN.cardShadow }}>
                   <Image
-                    src="/images/brand/dr-photoroom.png"
+                    src="/images/brand/sobre-doctor.webp"
                     alt="Dr. Herlon Moura dos Santos"
-                    width={380}
-                    height={520}
-                    className="h-auto w-full object-cover"
+                    width={1294}
+                    height={1356}
+                    sizes="(max-width: 1024px) 380px, 32vw"
+                    className="h-[520px] w-full object-cover object-[62%_35%]"
                   />
                 </div>
               </div>
