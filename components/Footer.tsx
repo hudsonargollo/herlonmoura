@@ -203,11 +203,11 @@ export function Footer({
         >
           <p
             className="mx-auto mb-4 max-w-3xl leading-relaxed"
-            style={{ color: 'var(--s-color-content-muted)', fontSize: '4.8px', lineHeight: 1.3 }}
+            style={{ color: 'var(--s-color-content-muted)', fontSize: '9.6px', lineHeight: 1.3 }}
           >
             Aviso Legal: As informações contidas neste website têm caráter puramente informativo e educativo, destinadas à orientação do público e não substituem o diagnóstico ou consulta presencial realizada por médico especialista, em conformidade com as resoluções do Conselho Federal de Medicina (CFM).
           </p>
-          <p style={{ color: 'var(--s-color-content-muted)', fontSize: '4.8px', lineHeight: 1.3 }}>
+          <p style={{ color: 'var(--s-color-content-muted)', fontSize: '9.6px', lineHeight: 1.3 }}>
             {copyright}
           </p>
         </div>
