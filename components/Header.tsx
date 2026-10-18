@@ -82,19 +82,10 @@ export function Header({
           {navItems.map((item) => {
             if (item.isCalculator && onOpenCalculator) {
               return (
-                <button
-                  key={item.href}
-                  onClick={onOpenCalculator}
-                  className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-body-small font-semibold"
-                  style={{
-                    borderColor: 'var(--s-color-action-primary)',
-                    backgroundColor: 'var(--s-color-bg-accent)',
-                    color: 'var(--g-color-base-primary)',
-                  }}
-                >
+                <EdgeButton key={item.href} variant="outline" size="sm" onClick={onOpenCalculator}>
                   <HeartPulse className="h-3.5 w-3.5" />
                   <span>{item.label}</span>
-                </button>
+                </EdgeButton>
               );
             }
             return (
@@ -113,20 +104,10 @@ export function Header({
         {/* Theme Toggle + CTA Button */}
         <div className="hidden items-center gap-3 sm:flex">
           <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setContactOpen(true)}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-body-small"
-            style={{
-              backgroundColor: 'var(--c-button-primary-bg)',
-              color: 'var(--c-button-primary-text)',
-              borderRadius: 'var(--c-button-radius)',
-              fontWeight: 600,
-            }}
-          >
+          <EdgeButton variant="primary" onClick={() => setContactOpen(true)}>
             <MessageCircle className="h-4 w-4" />
             <span>{ctaButton.label}</span>
-          </button>
+          </EdgeButton>
         </div>
 
         {/* Mobile Menu Button */}
