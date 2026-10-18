@@ -41,9 +41,9 @@ export default function BlogPage() {
       <section className="relative overflow-hidden bg-surface">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ backgroundImage: 'url(/images/blog/entendendo-varizes-tratamentos-modernos.png)', backgroundSize: 'cover', backgroundPosition: 'center 40%' }}
+          style={{ backgroundImage: 'url(/images/dr-herlon-moura.png)', backgroundSize: 'cover', backgroundPosition: 'center 35%' }}
         >
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
         </div>
         <div className="relative mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="mx-auto max-w-2xl text-center text-white">
