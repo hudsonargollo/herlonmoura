@@ -6,6 +6,7 @@ import { Sidebar } from '@/components/admin/Sidebar';
 import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 import { api } from '@/lib/admin/api';
 import { Button } from '@/components/Button';
+import { HeartPulseSvg } from '@/components/ui/MedicalIcons';
 import {
   Users, TrendingUp, FileText, Clock, MessageSquare, Activity,
   Plus, Eye, Stethoscope, BarChart3, ChevronRight, PlusCircle, Edit3,
@@ -149,7 +150,7 @@ function AdminLanding() {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':
-        return renderDashboard();
+        return renderDashboard(stats);
       case 'crm':
         return (
           <div className="space-y-5">
@@ -272,14 +273,83 @@ function BentoCard({ title, value, icon: Icon, iconBg, iconColor }: {
   );
 }
 
-function renderDashboard() {
+function renderDashboard(stats: DashboardStats | null) {
+  if (!stats) {
+    return (
+      <div className="space-y-5">
+        <div className="grid grid-cols-2 tablet:grid-cols-4 gap-4">
+          <BentoCard title="Total de Pacientes" value="--" icon={Users} iconBg="bg-medical-teal" iconColor="text-teal-700" />
+          <BentoCard title="Novos Leads" value="--" icon={TrendingUp} iconBg="bg-brand-accent" iconColor="text-slate-900" />
+          <BentoCard title="Interações" value="--" icon={MessageSquare} iconBg="bg-medical-purple" iconColor="text-slate-700" />
+          <BentoCard title="Taxa de Conversão" value="--" icon={Activity} iconBg="bg-success-green" iconColor="text-emerald-700" />
+        </div>
+      </div>
+    );
+  }
+
+  const byStatus = stats.leads?.byStatus || {};
+  const newCount = byStatus.new ?? 0;
+  const qualifiedCount = byStatus.qualified ?? 0;
+  const convertedCount = byStatus.converted ?? 0;
+  const appointmentCount = byStatus.appointment ?? 0;
+
   return (
     <div className="space-y-5">
+      {/* KPI Cards */}
       <div className="grid grid-cols-2 tablet:grid-cols-4 gap-4">
-        <BentoCard title="Total de Pacientes" value="—" icon={Users} iconBg="bg-medical-teal" iconColor="text-teal-700" />
-        <BentoCard title="Novos Leads" value="—" icon={TrendingUp} iconBg="bg-brand-accent" iconColor="text-slate-900" />
-        <BentoCard title="Interações" value="—" icon={MessageSquare} iconBg="bg-medical-purple" iconColor="text-slate-700" />
-        <BentoCard title="Taxa de Conversão" value="—" icon={Activity} iconBg="bg-emerald-100" iconColor="text-emerald-700" />
+        <BentoCard title="Total Leads" value={String(stats.leads?.total ?? 0)} icon={Users} iconBg="bg-medical-teal" iconColor="text-teal-700" />
+        <BentoCard title="Novos" value={String(newCount)} icon={Plus} iconBg="bg-slate-500" iconColor="text-slate-300" />
+        <BentoCard title="Em andamento" value={String(qualifiedCount + appointmentCount)} icon={Activity} iconBg="bg-medical-yellow" iconColor="text-yellow-700" />
+        <BentoCard title="Convertidos" value={String(convertedCount)} icon={CheckCircle2} iconBg="bg-emerald-100" iconColor="text-emerald-700" />
+      </div>
+
+      {/* Lead Sources */}
+      <div className="admin-glass p-5">
+        <h3 className="text-heading-3 font-heading font-semibold text-white mb-4 flex items-center gap-2">
+          <HeartPulseSvg className="h-4 w-4 text-brand-accent" /> Fontes de Leads
+        </h3>
+        {Object.keys(stats.sources || {}).length === 0 ? (
+          <p className="text-sm text-slate-400">Sem dados de fontes ainda.</p>
+        ) : (
+          <div className="space-y-3">
+            {Object.entries(stats.sources).map(([source, count]) => (
+              <div key={source} className="flex items-center gap-3">
+                <span className="w-24 text-xs text-slate-400 capitalize">{source || '—'}</span>
+                <div className="flex-1 h-2.5 rounded-full bg-slate-800 overflow-hidden">
+                  <div className="h-full rounded-full bg-surgical-teal" style={{ width: `${(Number(count) / (stats.leads?.total ?? 1)) * 100}%` }} />
+                </div>
+                <span className="text-xs text-slate-300 w-8 text-right">{count}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Status breakdown */}
+      <div className="admin-glass p-5">
+        <h3 className="text-heading-3 font-heading font-semibold text-white mb-4">Status dos Leads</h3>
+        <div className="grid grid-cols-2 tablet:grid-cols-6 gap-3">
+          {(['new', 'contacted', 'qualified', 'appointment', 'converted', 'lost'] as const).map((s) => (
+            <div key={s} className="rounded-xl bg-slate-800/40 border border-slate-700/30 p-3 text-center">
+              <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium border ${STATUS_COLORS[s] || STATUS_COLORS.new}`}>
+                {STATUS_LABELS[s]}
+              </span>
+              <p className="mt-2 text-xl font-bold text-white">{byStatus[s] ?? 0}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Recent activity */}
+      <div className="admin-glass p-5">
+        <h3 className="text-heading-3 font-heading font-semibold text-white mb-4 flex items-center gap-2">
+          <Activity className="h-4 w-4 text-brand-accent" /> Atividade Recente
+        </h3>
+        <div className="space-y-3 text-sm">
+          <p className="text-xs text-slate-500">
+            {stats.interactions ?? 0} interações registradas · {stats.posts?.pending ?? 0} posts aguardando aprovação · {stats.posts?.published ?? 0} posts publicados
+          </p>
+        </div>
       </div>
     </div>
   );

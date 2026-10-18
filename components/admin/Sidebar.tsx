@@ -20,6 +20,7 @@ interface SidebarProps {
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: Users },
   { id: 'crm', label: 'CRM', icon: Users },
+  { id: 'pipeline', label: 'Pipeline', icon: ClipboardSvg },
   { id: 'leads', label: 'Leads', icon: ClipboardSvg },
   { id: 'blog', label: 'Blog', icon: FileText },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },

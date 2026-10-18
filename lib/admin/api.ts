@@ -79,6 +79,14 @@ export function updateLead(id: string, body: object) {
   return api.put<any>(`/api/crm/leads/${id}`, body);
 }
 
+export function addInteraction(body: object) {
+  return api.post<any>('/api/crm/interactions', body);
+}
+
+export function listInteractions(leadId: string) {
+  return api.get<{ interactions: any[] }>(`/api/crm/interactions?lead_id=${leadId}`);
+}
+
 export interface BlogPost {
   slug: string;
   title: string;

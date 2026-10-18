@@ -5,17 +5,15 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   Header,
-  HeroSection,
+  HeroSectionTeam,
   Footer,
   DVTRiskCalculator,
   DVTModal,
   ContactModal,
-  CliniqIcon,
   EdgeButton,
   ProceduresSlider,
 } from '@/components';
 import { SCHEDULER_URL } from '@/lib/contact';
-import { PROCEDURES } from '@/lib/procedures';
 import { initSectionTracking, trackCtaClick, trackModalOpen } from '@/lib/analytics';
 import {
   Activity,
@@ -35,6 +33,7 @@ import {
   Syringe,
   GitBranch,
   Microscope,
+  Users,
 } from 'lucide-react';
 import { medicalBusinessSchema } from '@/lib/structured-data';
 /* ============================================
@@ -110,6 +109,8 @@ const goldButtonStyle: React.CSSProperties = {
   fontWeight: 600,
 };
 
+const HEADING_STACK = 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif';
+
 /** Small uppercase eyebrow label used above section headings. */
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -147,12 +148,15 @@ export default function Home() {
   const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
   // Contact modal state — carries both the section that opened it (for
   // reporting) and the specific interest (procedure) into WhatsApp + CRM.
-  const [contact, setContact] = useState<{
-    sectionId: string;
-    interest?: string;
-    context?: string;
-    title?: string;
-  } | null>(null);
+  const [contact, setContact] = useState<
+    | {
+        sectionId: string;
+        interest?: string;
+        context?: string;
+        title?: string;
+      }
+    | null
+  >(null);
 
   const openContact = (sectionId: string, interest?: string, context?: string, title?: string) =>
     setContact({ sectionId, interest, context, title });
@@ -194,7 +198,7 @@ export default function Home() {
       <Header onOpenCalculator={() => setIsCalculatorModalOpen(true)} />
 
       {/* Hero Section with Doctor Photo & Real Branding */}
-      <HeroSection
+      <HeroSectionTeam
         headline="Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador"
 
         onOpenCalculator={() => {
@@ -254,25 +258,23 @@ export default function Home() {
         </div>
       </section>
 
-{/* Trust & Credibility — thin band, no photo gallery */}
+      {/* Trust & Credibility — thin band, no photo gallery */}
       <section data-analytics-section="trust-ticker" className="border-y py-6" style={{ borderColor: TOKEN.border, backgroundColor: TOKEN.surface }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6">
           <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4 sm:gap-6">
-            {[
-              { value: '15+', label: 'Anos de Prática Clínica' },
-              { value: 'UFBA', label: 'Formação Médica de Elite' },
-              { value: 'RQE', label: 'Nº 19791 / 22436' },
-              { value: 'Graça', label: 'Consultório em Salvador' },
-            ].map((stat) => (
-              <div key={stat.label} style={{ ...cardStyle, padding: '1rem' }}>
+            {['15+', 'UFBA', 'RQE', 'Graça'].map((value, i) => (
+              <div key={value} style={{ ...cardStyle, padding: '1rem' }}>
                 <span
                   className="block text-2xl sm:text-3xl"
                   style={{ ...headingStyle, fontWeight: 700, color: TOKEN.actionPrimary }}
                 >
-                  {stat.value}
+                  {value}
                 </span>
                 <span className="mt-1 block text-xs sm:text-sm" style={mutedStyle}>
-                  {stat.label}
+                  {value === '15+' && 'Anos de Prática Clínica'}
+                  {value === 'UFBA' && 'Formação Médica de Elite'}
+                  {value === 'RQE' && 'Licença Médica Válida'}
+                  {value === 'Graça' && 'Consultório em Salvador'}
                 </span>
               </div>
             ))}
@@ -292,26 +294,10 @@ export default function Home() {
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              {
-                icon: CheckCircle2,
-                title: 'Tratamentos Minimamente Invasivos',
-                desc: 'Tratamentos minimamente invasivos com recuperação rápida',
-              },
-              {
-                icon: HeartPulse,
-                title: 'Consultas Humanizadas',
-                desc: 'Consultas humanizadas com foco no seu bem-estar',
-              },
-              {
-                icon: Waves,
-                title: 'Ambiente Confortável',
-                desc: 'Ambiente confortável e seguro em Salvador e região metropolitana',
-              },
-              {
-                icon: ShieldCheck,
-                title: 'Convênios Selecionados',
-                desc: 'Atendimento particular e convênios selecionados',
-              },
+              { icon: CheckCircle2, title: 'Tratamentos Minimamente Invasivos', desc: 'Tratamentos minimamente invasivos com recuperação rápida' },
+              { icon: HeartPulse, title: 'Consultas Humanizadas', desc: 'Consultas humanizadas com foco no seu bem-estar' },
+              { icon: Waves, title: 'Ambiente Confortável', desc: 'Ambiente confortável e seguro em Salvador e região metropolitana' },
+              { icon: ShieldCheck, title: 'Convênios Selecionados', desc: 'Atendimento particular e convênios selecionados' },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -522,7 +508,7 @@ export default function Home() {
       </section>
 
       <section data-analytics-section="eco-doppler-banner" className="relative h-[400px] overflow-hidden sm:h-[520px] lg:h-[640px]">
-          <Image
+        <Image
           src="/images/brand/banner-meiohome.jpg"
           alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
           fill
@@ -618,12 +604,7 @@ export default function Home() {
               </p>
 
               <div className="grid grid-cols-1 gap-4 border-t pt-4 sm:grid-cols-2" style={{ borderColor: TOKEN.border }}>
-                {[
-                  'Membro da SBACV',
-                  'Especialista em Cirurgia Endovascular',
-                  'Laser e Espuma Densa Ecoguiada',
-                  'Acessos para Quimioterapia e Hemodiálise',
-                ].map((item) => (
+                {['Membro da SBACV', 'Especialista em Cirurgia Endovascular', 'Laser e Espuma Densa Ecoguiada', 'Acessos para Quimioterapia e Hemodiálise'].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <CheckCircle2 className="h-5 w-5 flex-shrink-0" style={{ color: TOKEN.actionPrimary }} />
                     <span className="text-body-small" style={bodyStyle}>

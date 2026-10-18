@@ -10,6 +10,7 @@ export { Grid } from './Grid';
 export { Breadcrumb } from './Breadcrumb';
 export { PageLayout, HeroPageLayout, ContentPageLayout, GridPageLayout } from './PageLayout';
 export { HeroSection } from './HeroSection';
+export { HeroSectionTeam } from './HeroSectionTeam';
 export { Logo } from './Logo';
 export { DVTRiskCalculator } from './DVTRiskCalculator';
 export { DVTModal } from './DVTModal';

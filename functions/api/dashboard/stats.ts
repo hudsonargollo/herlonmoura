@@ -85,6 +85,23 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
     const conversionRate = total > 0 ? Math.round((converted / total) * 100) : 0;
 
+    // Average lead score
+    const avgScoreRow = (await db.prepare("SELECT AVG(score) as c FROM leads").first()) as any;
+    const avgScore = avgScoreRow?.c ? Math.round(Number(avgScoreRow.c)) : 0;
+
+    // Engagement: week-over-week and month-over-month lead growth
+    const weekAgo = (await db.prepare("SELECT COUNT(*) as c FROM leads WHERE created_at >= datetime('now', '-7 days')").first()) as any;
+    const twoWeeksAgo = (await db.prepare("SELECT COUNT(*) as c FROM leads WHERE created_at >= datetime('now', '-14 days') AND created_at < datetime('now', '-7 days')").first()) as any;
+    const weekOverWeek = (weekAgo?.c ?? 0) > 0
+      ? Math.round(((((weekAgo.c ?? 0) - (twoWeeksAgo?.c ?? 0)) / (twoWeeksAgo?.c ?? 1)) * 100))
+      : 0;
+
+    const monthAgo = (await db.prepare("SELECT COUNT(*) as c FROM leads WHERE created_at >= datetime('now', '-30 days')").first()) as any;
+    const twoMonthsAgo = (await db.prepare("SELECT COUNT(*) as c FROM leads WHERE created_at >= datetime('now', '-60 days') AND created_at < datetime('now', '-30 days')").first()) as any;
+    const monthOverMonth = (monthAgo?.c ?? 0) > 0
+      ? Math.round(((((monthAgo.c ?? 0) - (twoMonthsAgo?.c ?? 0)) / (twoMonthsAgo?.c ?? 1)) * 100))
+      : 0;
+
     // Count blog posts (pending approval vs published) for the dashboard
     const [pendingPosts, publishedPosts] = await Promise.all([
       one("SELECT COUNT(*) as c FROM blog_posts WHERE status = 'approval'"),
@@ -102,6 +119,8 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       posts: { pending: pendingPosts, published: publishedPosts },
       visitors: { total: totalVisitors, unique: uniqueEmails },
       sources,
+      avgScore,
+      engagement: { weekOverWeek, monthOverMonth },
     });
   } catch (e: any) {
     return json(500, { error: e.message });
