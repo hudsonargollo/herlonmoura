@@ -135,10 +135,21 @@ To rollback to a previous deployment:
 ### Image Assets (WebP)
 
 All content images are pre-optimized as WebP and committed in the repo:
-- **Blog posts (42)**: `public/images/blog/*.webp` — generated from blog `.png` originals, ~95% smaller
+- **Blog posts (43)**: `public/images/blog/*.webp` — generated from blog `.png` originals, ~95% smaller
 - **Site assets**: `public/images/banner-*.webp`, `public/images/brand/*.webp`, `public/images/support/*.webp`, `public/images/fotos/*.webp`, `public/images/team/*.webp`, `public/images/logo.webp`, `public/images/favicon.webp`, `public/images/videos/herlonmoura-hero-poster.webp`
-- Live code references `.webp` only (verified: 0 `.jpg` references in `app/`, `components/`, `lib/`)
-- Legacy `.jpg` files remain on disk as untouched fallbacks for reference
+- Live code references `.webp` only (verified: 0 `.jpg`/`.png` references in `app/`, `components/`, `lib/`)
+
+### Raw masters live outside `public/`
+
+`public/` is the static export root, so a raw asset there is uploaded to the CDN on
+**every** deploy. The unoptimized PNG/JPG originals have been moved to
+`raw-masters/` (repo root, gitignored — same convention as `/fotos/` and
+`/video-masters/`). Processed derivatives stay in `public/images/`.
+
+Do not re-add raw PNG/JPG to `public/`. If an original is needed for an edit,
+pull it from `raw-masters/`, produce the `.webp`, and keep the original there.
+Recovery path if a file is ever needed from history:
+`git show <sha>:public/images/<path>` (the pre-move commit is `e8939e4` and earlier).
 
 ### Pages Not Loading
 
