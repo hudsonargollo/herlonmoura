@@ -14,7 +14,7 @@ category: "Varizes"
 date: "2026-04-10"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/entendendo-varizes-tratamentos-modernos.png"
+image: "/images/blog/entendendo-varizes-tratamentos-modernos.webp"
 word_count: 1200
 ---
 

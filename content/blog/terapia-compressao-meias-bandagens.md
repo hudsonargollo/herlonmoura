@@ -14,7 +14,7 @@ category: "Prevenção"
 date: "2026-06-21"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/terapia-compressao-meias-bandagens.png"
+image: "/images/blog/terapia-compressao-meias-bandagens.webp"
 word_count: 900
 ---
 

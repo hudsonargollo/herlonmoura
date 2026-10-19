@@ -14,7 +14,7 @@ category: "Doppler Vascular"
 date: "2026-07-27"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/flebografia-quando-doppler-nao-basta.png"
+image: "/images/blog/flebografia-quando-doppler-nao-basta.webp"
 word_count: 1000
 ---
 

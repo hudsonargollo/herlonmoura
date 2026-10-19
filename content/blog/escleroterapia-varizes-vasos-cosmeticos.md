@@ -14,7 +14,7 @@ category: "Varizes"
 date: "2026-06-17"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/escleroterapia-varizes-vasos-cosmeticos.png"
+image: "/images/blog/escleroterapia-varizes-vasos-cosmeticos.webp"
 word_count: 1000
 ---
 

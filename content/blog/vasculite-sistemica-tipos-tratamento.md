@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-07-26"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/vasculite-sistemica-tipos-tratamento.png"
+image: "/images/blog/vasculite-sistemica-tipos-tratamento.webp"
 word_count: 900
 ---
 

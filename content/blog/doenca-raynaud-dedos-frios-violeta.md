@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-05-12"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doenca-raynaud-dedos-frios-violeta.png"
+image: "/images/blog/doenca-raynaud-dedos-frios-violeta.webp"
 word_count: 1000
 ---
 

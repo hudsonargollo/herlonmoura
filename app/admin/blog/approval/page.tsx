@@ -1,24 +1,31 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Clock, CheckCircle2, XCircle, Send, Eye, FileText, Filter } from 'lucide-react';
+import { Clock, CheckCircle2, XCircle, Send, Eye, FileText, Filter, Sparkles, Calendar } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { api } from '@/lib/admin/api';
 import { ProtectedRoute } from '@/components/admin/ProtectedRoute';
 
 interface BlogPost {
   slug: string; title: string; excerpt: string; date: string; category: string;
-  author: string; status: 'draft' | 'approval' | 'published' | 'archived';
+  author: string; status: 'draft' | 'approval' | 'curated' | 'published' | 'archived';
   readingTime: string; content: string; meta_title: string; meta_description: string;
   questionnaire_enabled: boolean; freebie_name: string | null;
 }
 
-const STATUS_LABELS: Record<string, string> = { draft: 'Rascunho', approval: 'Aprovação', published: 'Publicado', archived: 'Arquivado' };
+const STATUS_LABELS: Record<string, string> = {
+  draft: 'Rascunho',
+  approval: 'Aprovação',
+  curated: 'Curado',
+  published: 'Publicado',
+  archived: 'Arquivado',
+};
 const STATUS_COLORS: Record<string, string> = {
-  draft: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
-  approval: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30',
-  published: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-  archived: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
+  draft: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30',
+  approval: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30',
+  curated: 'bg-surgical-teal/15 text-surgical-teal border-surgical-teal/30',
+  published: 'bg-success-green/15 text-success-green border-success-green/30',
+  archived: 'bg-neutral-medium/15 text-neutral-medium border-neutral-medium/30',
 };
 
 export default function BlogApprovalQueue() {
@@ -59,7 +66,25 @@ function BlogApprovalQueueContent() {
   const handleApprove = async (slug: string) => {
     try {
       await api.put(`/api/blog/${slug}`, { status: 'approval' });
-      setActionMsg(`${slug} aprovado!`);
+      setActionMsg(`${slug} aprovado para curadoria!`);
+      fetchPosts();
+    } catch (e: any) { alert(`Erro: ${e.message}`); }
+  };
+
+  const handleCurate = async (slug: string) => {
+    try {
+      await api.put(`/api/blog/${slug}`, { status: 'curated' });
+      setActionMsg(`${slug} curado! Pronto para publicação na data definida.`);
+      fetchPosts();
+    } catch (e: any) { alert(`Erro: ${e.message}`); }
+  };
+
+  const handleSchedule = async (slug: string) => {
+    const date = prompt(`Data de publicação (YYYY-MM-DD) para "${slug}":`);
+    if (!date) return;
+    try {
+      await api.put(`/api/blog/${slug}`, { status: 'published', published_at: date });
+      setActionMsg(`${slug} agendado para publicar em ${date}.`);
       fetchPosts();
     } catch (e: any) { alert(`Erro: ${e.message}`); }
   };
@@ -172,6 +197,12 @@ function BlogApprovalQueueContent() {
                         </Button>
                         <Button variant="ghost" size="sm" className="text-yellow-400 border-yellow-500/30" title="Rejeitar" onClick={() => handleReject(post.slug)}>
                           <XCircle className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-curacao text-emerald-400 border-curacao/30" title="Curar" onClick={() => handleCurate(post.slug)}>
+                          <Sparkles className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-schedule text-teal-400 border-schedule/30" title="Agendar" onClick={() => handleSchedule(post.slug)}>
+                          <Calendar className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="sm" className="text-teal-400 border-teal-500/30" title="Publicar" onClick={() => handlePublish(post.slug)}>
                           <Send className="h-4 w-4" />

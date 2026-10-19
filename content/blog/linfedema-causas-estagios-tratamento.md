@@ -14,7 +14,7 @@ category: "Linfedema"
 date: "2026-04-08"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/linfedema-causas-estagios-tratamento.png"
+image: "/images/blog/linfedema-causas-estagios-tratamento.webp"
 word_count: 1100
 ---
 

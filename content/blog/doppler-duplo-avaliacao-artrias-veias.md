@@ -14,7 +14,7 @@ category: "Doppler Vascular"
 date: "2026-06-22"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doppler-duplo-avaliacao-artrias-veias.png"
+image: "/images/blog/doppler-duplo-avaliacao-artrias-veias.webp"
 word_count: 1000
 ---
 

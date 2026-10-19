@@ -14,7 +14,7 @@ category: "Trombose"
 date: "2026-08-10"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/embolia-pulmonar-diagnostico-tratamento.png"
+image: "/images/blog/embolia-pulmonar-diagnostico-tratamento.webp"
 word_count: 1100
 ---
 

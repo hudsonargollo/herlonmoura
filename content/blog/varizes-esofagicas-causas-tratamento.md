@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-06-19"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/varizes-esofagicas-causas-tratamento.png"
+image: "/images/blog/varizes-esofagicas-causas-tratamento.webp"
 word_count: 1200
 ---
 

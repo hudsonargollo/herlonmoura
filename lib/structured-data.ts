@@ -238,7 +238,7 @@ export function medicalProcedureSchema() {
       'Procedimentos vasculares realizados pelo Dr. Herlon Moura: Eco-Doppler, tratamento de varizes a laser, escleroterapia, microcirurgia e acessos vasculares.',
     procedureType: 'TherapeuticProcedure',
     bodyLocation: ['Pernas', 'Braços', 'Pescoço'],
-    image: `${SITE_URL}/images/brand/banner-segundasecao.jpg`,
+    image: `${SITE_URL}/images/brand/banner-segundasecao.webp`,
     provider: {
       '@type': 'Physician',
       name: DOCTOR_NAME,

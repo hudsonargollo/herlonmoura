@@ -525,7 +525,7 @@ export default function Home() {
 
       <section data-analytics-section="eco-doppler-banner" className="relative h-[400px] overflow-hidden sm:h-[520px] lg:h-[640px]">
         <Image
-          src="/images/brand/banner-meiohome.jpg"
+          src="/images/brand/banner-meiohome.webp"
           alt="Dr. Herlon Moura realizando exame de Eco-Doppler no consultório"
           fill
           sizes="100vw"

@@ -14,7 +14,7 @@ category: "Trombose"
 date: "2026-05-13"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/tromboflebite-superficial-tratamento.png"
+image: "/images/blog/tromboflebite-superficial-tratamento.webp"
 word_count: 1100
 ---
 

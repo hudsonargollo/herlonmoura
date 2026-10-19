@@ -14,7 +14,7 @@ category: "Prevenção"
 date: "2026-06-23"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/edema-membros-inferiores-causas.png"
+image: "/images/blog/edema-membros-inferiores-causas.webp"
 word_count: 1100
 ---
 

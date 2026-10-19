@@ -14,7 +14,7 @@ category: "Doppler Vascular"
 date: "2026-04-15"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doppler-vascular-o-que-e-como-funciona.png"
+image: "/images/blog/doppler-vascular-o-que-e-como-funciona.webp"
 word_count: 1050
 ---
 

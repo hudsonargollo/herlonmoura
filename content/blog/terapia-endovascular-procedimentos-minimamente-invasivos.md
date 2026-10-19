@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-08-11"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/terapia-endovascular-procedimentos-minimamente-invasivos.png"
+image: "/images/blog/terapia-endovascular-procedimentos-minimamente-invasivos.webp"
 word_count: 1200
 ---
 

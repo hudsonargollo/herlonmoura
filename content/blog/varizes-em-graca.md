@@ -13,7 +13,7 @@ category: "Varizes"
 date: "2026-04-20"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/varizes-em-graca.png"
+image: "/images/blog/varizes-em-graca.webp"
 word_count: 1400
 ---
 

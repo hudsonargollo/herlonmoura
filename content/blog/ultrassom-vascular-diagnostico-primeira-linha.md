@@ -14,7 +14,7 @@ category: "Doppler Vascular"
 date: "2026-08-07"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/ultrassom-vascular-diagnostico-primeira-linha.png"
+image: "/images/blog/ultrassom-vascular-diagnostico-primeira-linha.webp"
 word_count: 1300
 ---
 

@@ -14,7 +14,7 @@ category: "Trombose"
 date: "2026-08-08"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/anticoagulacao-warfarina-heparina-novos.png"
+image: "/images/blog/anticoagulacao-warfarina-heparina-novos.webp"
 word_count: 900
 ---
 

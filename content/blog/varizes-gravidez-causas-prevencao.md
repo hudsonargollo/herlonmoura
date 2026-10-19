@@ -13,7 +13,7 @@ category: "Varizes"
 date: "2026-05-09"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/varizes-gravidez-causas-prevencao.png"
+image: "/images/blog/varizes-gravidez-causas-prevencao.webp"
 word_count: 1500
 ---
 

@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-05-14"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/malformacoes-vascuais-tipos-tratamento.png"
+image: "/images/blog/malformacoes-vascuais-tipos-tratamento.webp"
 word_count: 1200
 ---
 

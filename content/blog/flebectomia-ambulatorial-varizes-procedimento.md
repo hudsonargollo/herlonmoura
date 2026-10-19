@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-05-16"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/flebectomia-ambulatorial-varizes-procedimento.png"
+image: "/images/blog/flebectomia-ambulatorial-varizes-procedimento.webp"
 word_count: 900
 ---
 

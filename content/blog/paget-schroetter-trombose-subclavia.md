@@ -14,7 +14,7 @@ category: "Trombose"
 date: "2026-07-03"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/paget-schroetter-trombose-subclavia.png"
+image: "/images/blog/paget-schroetter-trombose-subclavia.webp"
 word_count: 900
 ---
 

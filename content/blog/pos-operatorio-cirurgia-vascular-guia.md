@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-07-02"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/pos-operatorio-cirurgia-vascular-guia.png"
+image: "/images/blog/pos-operatorio-cirurgia-vascular-guia.webp"
 word_count: 1300
 ---
 

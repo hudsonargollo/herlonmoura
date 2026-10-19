@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-08-06"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/microcirurgia-vascular-reconstrucao-vasos.png"
+image: "/images/blog/microcirurgia-vascular-reconstrucao-vasos.webp"
 word_count: 1200
 ---
 

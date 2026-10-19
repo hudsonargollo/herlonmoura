@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-07-28"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/angiografia-mapeamento-vascular.png"
+image: "/images/blog/angiografia-mapeamento-vascular.webp"
 word_count: 1100
 ---
 

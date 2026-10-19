@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-04-04"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/cirurgia-vascular-procedimentos-recuperacao.png"
+image: "/images/blog/cirurgia-vascular-procedimentos-recuperacao.webp"
 word_count: 1200
 ---
 

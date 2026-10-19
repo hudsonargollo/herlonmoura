@@ -2,15 +2,14 @@
 """
 Daily Blog Post Generator Cron Job
 ===================================
-Fires daily to generate blog articles via the CRM Workers AI binding.
+Fires daily to generate blog articles via the CRM Pages Function.
 Posts are created as 'draft' status for human review/approval.
 
-This script calls /api/blog/generate which proxies to the Worker's
-AI binding endpoint. Generated posts appear in the admin panel's
-approval queue (/admin/blog with status filter 'draft').
+This script calls the Pages Function /api/blog/generate which proxies to the Worker's AI binding.
+Generated posts appear in the admin panel's approval queue (/admin/blog with status filter 'draft').
 
 Environment:
-  - CRM_API_URL: base URL for the API (e.g. https://herlonmoura.clubemkt.digital)
+  - CRM_API_URL: base URL for the Pages Function (e.g. https://herlonmoura.clubemkt.digital)
   - ADMIN_API_TOKEN: JWT token for auth (must be admin/editor role)
 """
 
@@ -22,18 +21,12 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 def main():
-    api_url = os.environ.get("CRM_API_URL", "https://herlonmoura.clubemkt.digital")
+    api_url = os.environ.get("WORKER_URL", "https://herlon-moura-crm.hudsonargollo2.workers.dev")
     token = os.environ.get("ADMIN_API_TOKEN", "")
-    worker_url = os.environ.get("WORKER_URL", "https://herlon-moura-crm.hudsonargollo2.workers.dev")
 
     if not token:
-        # For cron-run context, we note this needs the worker URL directly
-        # since the Pages Function requires auth, but the Worker endpoint
-        # (WORKER_URL) may be called directly with AI binding
-        print("ADMIN_API_TOKEN not set — attempting direct worker call")
-        auth_header = ""
-    else:
-        auth_header = f"Bearer {token}"
+        print("ERROR: ADMIN_API_TOKEN is required for cron blog generation. Please set it in the crontab or environment.")
+        sys.exit(2)
 
     # Topics are from the vascular health content plan
     topics = [
@@ -61,15 +54,18 @@ def main():
 
     print(f"[{today.isoformat()}] Cron: Generating blog post for topic: {selected_topic}")
 
-    # Call the generate endpoint directly on the Worker (has AI binding)
-    # The Worker endpoint /api/blog/generate doesn't require auth on the Worker side
-    generate_url = f"{worker_url}/api/blog/generate"
+    # Call the Worker's AI generation endpoint directly (has AI binding)
+    generate_url = f"{api_url}/api/blog/generate"
 
     try:
         req = Request(
             generate_url,
             data=json.dumps(payload).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {token}",
+                "User-Agent": "Mozilla/5.0 (compatible; HerlonMoura-DailyBlogBot/1.0)",
+            },
             method="POST",
         )
         with urlopen(req, timeout=120) as resp:

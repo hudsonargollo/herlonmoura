@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-05-15"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doenca-buerger-tabagismo-vascular.png"
+image: "/images/blog/doenca-buerger-tabagismo-vascular.webp"
 word_count: 1300
 ---
 

@@ -13,7 +13,7 @@ category: "Prevenção"
 date: "2026-04-18"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/prevencao-doencas-vascular-idoso-50.png"
+image: "/images/blog/prevencao-doencas-vascular-idoso-50.webp"
 word_count: 1300
 ---
 

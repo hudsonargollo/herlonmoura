@@ -14,7 +14,7 @@ category: "Doenças Arteriais"
 date: "2026-07-25"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/isquemia-membro-superior-causas.png"
+image: "/images/blog/isquemia-membro-superior-causas.webp"
 word_count: 1300
 ---
 

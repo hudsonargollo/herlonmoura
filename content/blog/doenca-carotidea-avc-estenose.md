@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-06-24"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doenca-carotidea-avc-estenose.png"
+image: "/images/blog/doenca-carotidea-avc-estenose.webp"
 word_count: 1200
 ---
 

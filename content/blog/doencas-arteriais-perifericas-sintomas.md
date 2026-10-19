@@ -14,7 +14,7 @@ category: "Doenças Arteriais"
 date: "2026-04-07"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doencas-arteriais-perifericas-sintomas.png"
+image: "/images/blog/doencas-arteriais-perifericas-sintomas.webp"
 word_count: 1000
 ---
 

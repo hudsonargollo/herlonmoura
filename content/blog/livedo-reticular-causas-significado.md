@@ -14,7 +14,7 @@ category: "Doenças Vasculares"
 date: "2026-07-01"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/livedo-reticular-causas-significado.png"
+image: "/images/blog/livedo-reticular-causas-significado.webp"
 word_count: 1200
 ---
 

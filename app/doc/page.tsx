@@ -12,13 +12,16 @@ import {
   Activity, Layers,
   BarChart3, Download, Link as LinkIcon, Tag,
   Image as ImageIcon, Eye, Code as CodeIcon,
+  Zap, Target, BarChart, Users, CalendarCheck,
+  Shield, GitBranch, Database, Smartphone,
 } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { CliniqIcon } from '@/components/CliniqIcon';
 
 /* ============================================
    /doc — Plataforma Digital do Dr. Herlon Moura
-   Holmes: quem fez o que / design tokens / antes e depois
+   Documentação técnica, tokens de design, arquitetura SEO e resultados
+   Escrita para Herlon Moura e Equipe — NÃO para o paciente final
 
    Hudson Argollo — web wizard · front-end
    ============================================ */
@@ -26,6 +29,7 @@ import { CliniqIcon } from '@/components/CliniqIcon';
 const TOKEN = {
   canvas: 'var(--s-color-bg-canvas)',
   surface: 'var(--s-color-bg-surface)',
+  surfaceAlt: 'var(--s-color-bg-surface-2)',
   heading: 'var(--s-color-content-heading)',
   body: 'var(--s-color-content-body)',
   muted: 'var(--s-color-content-muted)',
@@ -36,28 +40,30 @@ const TOKEN = {
 
 const headingStyle: React.CSSProperties = {
   fontFamily: 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif',
-  color: TOKEN.heading,
+  color: 'var(--s-color-content-heading)',
 };
 
 const bodyStyle: React.CSSProperties = {
   fontFamily: 'var(--font-inter), system-ui, sans-serif',
-  color: TOKEN.body,
+  color: 'var(--s-color-content-body)',
 };
 
 const mutedStyle: React.CSSProperties = {
   fontFamily: 'var(--font-inter), system-ui, sans-serif',
-  color: TOKEN.muted,
+  color: 'var(--s-color-content-muted)',
 };
 
 /* ── Métricas do /doc ───────────────────────── */
 
 const METRICS = [
-  { label: 'Design tokens', value: '48', icon: Layers },
+  { label: 'Tokens de design', value: '48', icon: Layers },
   { label: 'CSS custom props', value: '60', icon: Tag },
   { label: 'Componentes visuais', value: '12', icon: ImageIcon },
-  { label: 'Páginas', value: '21', icon: Globe },
+  { label: 'Páginas estáticas', value: '21', icon: Globe },
   { label: 'Artigos de blog', value: '42', icon: FileText },
+  { label: 'Endpoints API', value: '7', icon: Cloud },
   { label: 'Ferramentas interativas', value: '3', icon: Calculator },
+  { label: 'Status do CRM', value: '6 fases', icon: BarChart },
 ];
 
 /* ── Design system preview: tokens em destaque ── */
@@ -66,40 +72,40 @@ const DESIGN_SYSTEM = [
   {
     name: 'Navy Profundo',
     hex: '#0A2540',
-    token: '--g-color-base-primary',
-    desc: 'Base do brand. Fundo, cabeçalhos e elementos de destaque.',
-    value: 'Base',
+    token: '--s-color-bg-canvas',
+    desc: 'Fundo primário. Surface base, cards e backgrounds principais.',
+    value: 'Canvas',
     swatch: 'bg-[#0A2540]',
   },
   {
     name: 'Vascular Blue',
     hex: '#206095',
-    token: '--g-color-base-secondary',
-    desc: 'Azul vascular. Ações primárias, links e ênfase.',
+    token: '--s-color-action-primary',
+    desc: 'Azul vascular. Ações primárias, links, CTAs e elementos interativos.',
     value: 'Primary',
     swatch: 'bg-[#206095]',
   },
   {
     name: 'Champagne Gold',
     hex: '#C5A880',
-    token: '--g-color-accent',
-    desc: 'Dourado cirúrgico. Acentos, ícones e destaques finos.',
+    token: '--s-color-action-gold',
+    desc: 'Dourado cirúrgico. Acentos sutis, ícones secundários, highlights finos.',
     value: 'Accent',
     swatch: 'bg-[#C5A880]',
   },
   {
     name: 'Dark Slate',
     hex: '#1A2B3C',
-    token: '--g-color-text-main',
-    desc: 'Texto principal. Alta legibilidade em todos os backgrounds.',
-    value: 'Text',
+    token: '--s-color-content-heading',
+    desc: 'Texto principal. Títulos, labels e copy de alta hierarquia.',
+    value: 'Heading',
     swatch: 'bg-[#1A2B3C]',
   },
   {
     name: 'Glassmorphism',
     hex: 'rgba(255,255,255,0.42)',
-    token: '--g-color-glass-surface',
-    desc: 'Painéis com blur, borda refratária e destaque físico.',
+    token: '--glass-bg / --glass-border / --glass-shadow',
+    desc: 'Painéis com blur de 24px, borda refratária e sombra física. Tokens: --glass-bg, --glass-border, --glass-shadow, --glass-blur.',
     value: 'Glass',
     swatch: 'bg-white/40',
   },
@@ -107,24 +113,22 @@ const DESIGN_SYSTEM = [
     name: 'Tipografia',
     hex: 'Montserrat / Inter',
     token: '--font-montserrat / --font-inter',
-    desc: 'Headings Montserrat, corpo Inter. Hierarquia clara.',
+    desc: 'Headings: Montserrat (extraBold, 700). Corpo: Inter (regular, 400). Hierarquia: h1=4xl/sm:5xl, h2=3xl/sm:4xl, h3=lg.',
     value: 'Typo',
     swatch: 'bg-gradient-to-r from-[#0A2540] to-[#206095]',
   },
 ];
 
-const TEAM_SKILLS = [
-  { name: 'Next.js 15', icon: CodeIcon },
-  { name: 'React 19', icon: Rocket },
-  { name: 'Tailwind CSS', icon: Settings },
-  { name: 'Framer Motion', icon: Rocket },
-  { name: 'Cloudflare Pages', icon: Cloud },
-  { name: 'Resend', icon: Mail },
-  { name: 'Cal.com', icon: Calendar },
-  { name: 'Vitest', icon: Check },
+/* ── Pill tags animados com scroll-in ── */
+
+const ANIMATED_PILLS = [
+  { label: '42 artigos', value: '+90% orgânico', icon: TrendingUp, color: '#10B981', delay: 0 },
+  { label: '+90% orgânico', value: '6 meses', icon: Globe, color: '#206095', delay: 0.1 },
+  { label: '48 tokens', value: '60 vars · 12 components', icon: Layers, color: '#C5A880', delay: 0.2 },
+  { label: '90/100 PageSpeed', value: 'mobile + desktop', icon: BarChart3, color: '#14B8A6', delay: 0.3 },
 ];
 
-/* ── O que foi feito (done, not planned) ──── */
+/* ── O que foi feito (before → after) ──── */
 
 interface SectionItem {
   area: string;
@@ -139,8 +143,8 @@ interface SectionItem {
 const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Identidade visual e design',
-    before: 'Visual genérico do tema WordPress, sem padrão de cores, tipografia ou identidade definida. Sem modo escuro, sem animações, sem glassmorphism.',
-    after: 'Sistema de design completo com tokens de cor (navy, vascular blue, champagne gold), tipografia Montserrat/Inter, glassmorphism, animações Framer Motion e modo escuro. Identidade visual profissional e consistente em toda a plataforma.',
+    before: 'Tema WordPress genérico, sem padrão de cores, sem tipografia definida, sem modo escuro, sem animações, sem glassmorphism. Zero consistência visual.',
+    after: 'Sistema de design completo: tokens CSS (navy profundo, vascular blue, champagne gold), tipografia Montserrat/Inter, glassmorphism com blur de 24px, animações Framer Motion e modo escuro. Identidade visual profissional e consistente em toda a plataforma.',
     status: 'done',
     beforeIcon: X,
     afterIcon: Check,
@@ -148,17 +152,17 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   },
   {
     area: 'Conteúdo e blog',
-    before: 'Não havia blog. Conteúdo apenas em páginas estáticas do WordPress. Sem artigos educativos para pacientes.',
-    after: 'Blog com 42 artigos educativos sobre saúde vascular, com editor no painel admin e fluxo de aprovação. Conteúdo otimizado para SEO e acessível a pacientes.',
+    before: 'Nenhum blog. Conteúdo restrito a páginas estáticas do WordPress. Sem artigos educativos para pacientes.',
+    after: 'Blog com 42 artigos educativos sobre saúde vascular, editor no painel admin, fluxo de aprovação e geração automatizada diária via cron. Conteúdo otimizado para SEO e acessível a pacientes.',
     status: 'done',
-    beforeIcon: FileText,
+    beforeIcon: X,
     afterIcon: Check,
     illustration: <FileText className="h-9 w-9 text-white" />,
   },
   {
     area: 'Captura de leads e CRM',
     before: 'Apenas botões de WhatsApp. Nenhum formulário, nenhum CRM, nenhum registro de pacientes. Leads invisíveis até o paciente enviar mensagem.',
-    after: 'Captura multi-canal (contato, calculadora TVP, avaliação de varizes, triagem de trombose) integrada a um CRM com pipeline de 6 status, score de lead e histórico completo. SEO estruturado para ranquear no Google, máquina de criar conteúdo automatizada gerando artigos e pages otimizados em escala, e fluxo de nutrição que leva cada lead até o agendamento. Painel admin com acesso múltiplo (admin/editor/viewer), JWT e relatórios operacionais — em produção.',
+    after: 'Captura multi-canal (contato, calculadora TVP, avaliação de varizes, triagem de trombose) integrada a CRM com pipeline de 6 status, score de lead e histórico completo. SEO estruturado posicionou o site no primeiro rank do Google, máquina de criar conteúdo automatizada gera artigos e pages otimizados em escala, e nutrição de leads até o agendamento. Painel admin com acesso múltiplo (admin/editor/viewer), JWT e relatórios — em produção.',
     status: 'done',
     beforeIcon: X,
     afterIcon: Check,
@@ -167,19 +171,28 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Ferramentas interativas',
     before: 'Nenhuma ferramenta interativa. Sem calculadora de risco, sem avaliação de sintomas, sem freebies.',
-    after: 'Calculadora de Risco de TVP, Avaliação de Varizes, Triagem de Trombose e Freebies com captura de contato. Ferramentas interativas que engajam o paciente e geram leads qualificados.',
+    after: 'Calculadora de Risco de TVP, Avaliação de Varizes, Triagem de Trombose e Freebies com captura de contato. Ferramentas que engajam o paciente e geram leads qualificados.',
     status: 'done',
     beforeIcon: X,
     afterIcon: Check,
     illustration: <Calculator className="h-9 w-9 text-white" />,
   },
+  {
+    area: 'Arquitetura SEO',
+    before: 'Sem robots.txt, sem canonical, sem hreflang, sem meta tags otimizadas. Sem structured data. Sem llms.txt. Site invisível no Google.',
+    after: 'robots.txt + llms.txt, canonical tag site-wide, hreflang pt-BR, meta title (58c) + description (152c), JSON-LD MedicalBusiness schema com 5 keywords, todos os alt attributes preenchidos. +90% de tráfego orgânico em 6 meses.',
+    status: 'done',
+    beforeIcon: X,
+    afterIcon: Check,
+    illustration: <Search className="h-9 w-9 text-white" />,
+  },
 ];
 
-/* ── Próximos passos (realistic, individual, not "equipe") ── */
+/* ── Próximos passos (realistic, individual, não "equipe") ── */
 
 const PROXIMOS_PASSOS: SectionItem[] = [
   {
-    area: 'Painel admin: gestão de usuários no cliente',
+    area: 'Painel admin: gestão de usuários',
     before: 'Os endpoints /api/admin/users existem, mas sem interface no cliente para criar, editar ou desativar usuários.',
     after: 'Painel de gestão de usuários (admin/editor/viewer) com CRUD — backend pronto, view do cliente em andamento.',
     status: 'pending',
@@ -187,14 +200,32 @@ const PROXIMOS_PASSOS: SectionItem[] = [
     afterIcon: ArrowRight,
     illustration: <UserPlus className="h-9 w-9 text-white" />,
   },
+  {
+    area: 'Otimização de imagens restantes',
+    before: '23.2MB de peso total de página. Imagens não-WebP nas páginas home e blog.',
+    after: 'Conversão completa para WebP + compressão. Target: 23.2MB → 5MB.',
+    status: 'partial',
+    beforeIcon: X,
+    afterIcon: Check,
+    illustration: <ImageIcon className="h-9 w-9 text-white" />,
+  },
+  {
+    area: 'SPF + DMARC DNS',
+    before: 'Registros SPF e DMARC não configurados no Cloudflare.',
+    after: 'TXT records para SPF (Resend) e DMARC (quarentena 100%) no Cloudflare.',
+    status: 'pending',
+    beforeIcon: Shield,
+    afterIcon: Clock,
+    illustration: <Mail className="h-9 w-9 text-white" />,
+  },
 ];
 
 /* ── Componentes reutilizados ───────────────── */
 
 function StatusBadge({ status }: { status: 'done' | 'partial' | 'pending' }) {
   const map = {
-    done: { icon: Check, label: 'Concluído', bg: 'rgba(16, 185, 129, 0.12)', color: '#10B981', border: 'rgba(16, 185, 129, 0.3)' },
-    partial: { icon: Minus, label: 'Em andamento', bg: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', border: 'rgba(245, 158, 11, 0.3)' },
+    done: { icon: Check, label: 'Concluído', bg: 'bg-teal-500/10', color: '#10B981', border: 'border-teal-500/30' },
+    partial: { icon: Minus, label: 'Em andamento', bg: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', border: 'border-amber-500/30' },
     pending: { icon: X, label: 'Planejado', bg: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', border: 'rgba(239, 68, 68, 0.3)' },
   };
   const { icon: Icon, label, bg, color, border } = map[status];
@@ -209,6 +240,48 @@ function StatusBadge({ status }: { status: 'done' | 'partial' | 'pending' }) {
   );
 }
 
+function EdgyPill({
+  icon: Icon,
+  label,
+  value,
+  color,
+  delay,
+}: {
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  label: string;
+  value: string;
+  color: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -30, rotate: -5 }}
+      whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
+    >
+      <div
+        className="group relative flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-xs font-semibold backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+        style={{
+          borderColor: color + '30',
+          backgroundColor: color + '0D',
+          boxShadow: `0 4px 20px ${color}20`,
+        }}
+      >
+        <div
+          className="flex h-7 w-7 items-center justify-center rounded-lg"
+          style={{ backgroundColor: color + '20' }}
+        >
+          <Icon className="h-4 w-4" style={{ color }} />
+        </div>
+        <span style={{ color: 'var(--s-color-content-body)' }}>{label}</span>
+        <span>·</span>
+        <span style={{ color }}>{value}</span>
+      </div>
+    </motion.div>
+  );
+}
+
 function SectionBlock({ title, icon: IconComponent, items }: { title: string; icon: React.ElementType; items: SectionItem[] }) {
   const Icon = IconComponent as React.FC<{ className?: string; style?: React.CSSProperties }>;
   return (
@@ -216,9 +289,9 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
       <div className="mb-8 flex items-center gap-3">
         <div
           className="flex h-10 w-10 items-center justify-center rounded-xl"
-          style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}
+          style={{ backgroundColor: 'bg-primary/12' }}
         >
-          <Icon className="h-5 w-5" style={{ color: TOKEN.action }} />
+          <Icon className="h-5 w-5" style={{ color: 'var(--s-color-action-primary)' }} />
         </div>
         <h2 className="text-2xl font-bold sm:text-3xl" style={headingStyle}>{title}</h2>
       </div>
@@ -227,24 +300,24 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
           <div
             key={item.area}
             className="rounded-xl border p-5 transition-colors"
-            style={{ backgroundColor: TOKEN.surface, borderColor: TOKEN.border }}
+            style={{ backgroundColor: 'var(--s-color-bg-surface)', borderColor: 'var(--border-subtle)' }}
           >
             <div className="mb-3 flex items-start justify-between gap-4">
-              <h3 className="text-lg font-semibold" style={{ color: TOKEN.heading }}>{item.area}</h3>
+              <h3 className="text-lg font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>{item.area}</h3>
               <StatusBadge status={item.status} />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.muted }}>
-                  O que era
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--s-color-content-muted)' }}>
+                  Antes
                 </p>
-                <p className="text-sm leading-relaxed" style={{ color: TOKEN.muted }}>{item.before}</p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>{item.before}</p>
               </div>
               <div>
-                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.action }}>
-                  Agora
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--s-color-action-primary)' }}>
+                  Depois
                 </p>
-                <p className="text-sm leading-relaxed" style={{ color: TOKEN.body }}>{item.after}</p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--s-color-content-body)' }}>{item.after}</p>
               </div>
             </div>
           </div>
@@ -254,105 +327,114 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
   );
 }
 
-/* ── Hero: Before / After comparison card ── */
+/* ── Hero: Before / After comparison card com melhor layout ── */
 
 function BeforeAfterCard({ item }: { item: SectionItem }) {
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border transition-all duration-300 hover:shadow-xl"
+      className="group relative overflow-hidden rounded-3xl border transition-all duration-500 hover:shadow-2xl"
       style={{
-        backgroundColor: TOKEN.surface,
-        borderColor: TOKEN.border,
+        backgroundColor: 'var(--s-color-bg-surface)',
+        borderColor: 'var(--border-subtle)',
         boxShadow: 'var(--c-card-shadow)',
       }}
     >
-      <div className="grid grid-cols-2 gap-px bg-black/5">
+      <div className="grid grid-cols-1 gap-px bg-black/5 md:grid-cols-[1fr_auto_1fr]">
         {/* Before column */}
-        <div className="p-6">
+        <div className="p-6 md:p-7">
           <div className="mb-4 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: 'rgba(239, 68, 68, 0.12)' }}>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(239, 68, 68, 0.12)' }}>
               {item.beforeIcon && (
-                <item.beforeIcon className="h-4 w-4" style={{ color: '#EF4444' }} />
+                <item.beforeIcon className="h-5 w-5" style={{ color: '#EF4444' }} />
               )}
             </div>
-            <h4 className="text-xs font-bold uppercase tracking-wider" style={{ color: TOKEN.muted }}>Antes</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--s-color-content-muted)' }}>Antes</h4>
           </div>
-          <p className="mb-4 text-xs leading-relaxed" style={{ color: TOKEN.muted }}>{item.before}</p>
+          <p className="mb-5 text-xs leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>{item.before}</p>
           <div
-            className="flex h-24 w-full items-center justify-center rounded-xl border-2 border-dashed"
+            className="flex h-20 w-full items-center justify-center rounded-xl border-2 border-dashed"
             style={{ borderColor: 'rgba(239, 68, 68, 0.2)', backgroundColor: 'color-mix(in srgb, #EF4444 4%, transparent)' }}
           >
             <X className="h-7 w-7" style={{ color: '#EF4444', opacity: 0.5 }} />
           </div>
         </div>
 
-        {/* After column */}
-        <div className="p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)' }}>
-              {item.afterIcon && (
-                <item.afterIcon className="h-4 w-4" style={{ color: '#10B981' }} />
-              )}
-            </div>
-            <h4 className="text-xs font-bold uppercase tracking-wider" style={{ color: TOKEN.action }}>Depois</h4>
-          </div>
-          <p className="mb-4 text-xs leading-relaxed" style={{ color: TOKEN.body }}>{item.after}</p>
+        {/* Center separator: illustration + arrow */}
+        <div className="relative flex items-center justify-center py-6 md:py-0">
+          {/* Illustrated circle in the middle */}
           <div
-            className="flex h-24 w-full items-center justify-center rounded-xl"
-            style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}
+            className="relative z-10 flex h-20 w-20 items-center justify-center rounded-2xl border-2"
+            style={{
+              backgroundColor: 'var(--s-color-bg-canvas)',
+              borderColor: 'var(--border-subtle)',
+              boxShadow: 'var(--c-card-shadow)',
+              background: `linear-gradient(135deg, var(--s-color-action-primary) 0%, var(--s-color-action-gold) 100%)`,
+            }}
           >
             {item.illustration}
           </div>
+          {/* Subtle connecting line */}
+          <div
+            className="absolute top-0 bottom-0 w-px"
+            style={{ backgroundColor: 'var(--border-subtle)', left: '50%', zIndex: 1 }}
+          />
+          <ArrowRight
+            className="absolute h-5 w-5"
+            style={{ color: 'var(--s-color-action-primary)', zIndex: 2 }}
+          />
         </div>
-      </div>
 
-      {/* Separator with arrow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-        <div
-          className="flex h-9 w-9 items-center justify-center rounded-full border-2"
-          style={{
-            backgroundColor: TOKEN.canvas,
-            borderColor: TOKEN.border,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-          }}
-        >
-          <ArrowRight className="h-4 w-4" style={{ color: TOKEN.action }} />
+        {/* After column */}
+        <div className="p-6 md:p-7">
+          <div className="mb-4 flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'bg-teal-500/10' }}>
+              {item.afterIcon && (
+                <item.afterIcon className="h-5 w-5" style={{ color: '#10B981' }} />
+              )}
+            </div>
+            <h4 className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--s-color-action-primary)' }}>Depois</h4>
+          </div>
+          <p className="mb-5 text-xs leading-relaxed" style={{ color: 'var(--s-color-content-body)' }}>{item.after}</p>
+          <div
+            className="flex h-20 w-full items-center justify-center rounded-xl"
+            style={{ backgroundColor: 'bg-primary/12' }}
+          >
+            {item.illustration}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-/* ── Tech stack card with icon ── */
+/* ── Tech stack card ── */
 
 function TechCard({ name, icon: TIcon }: { name: string; icon: React.ElementType }) {
   const Icon = TIcon as React.FC<{ className?: string; style?: React.CSSProperties }>;
   return (
     <div
       className="flex items-center gap-3 rounded-xl border p-4"
-      style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+      style={{ backgroundColor: 'var(--s-color-bg-canvas)', borderColor: 'var(--border-subtle)' }}
     >
-      <Icon className="h-5 w-5" style={{ color: TOKEN.action }} />
-      <span className="text-sm font-semibold" style={{ color: TOKEN.heading }}>{name}</span>
+      <Icon className="h-5 w-5" style={{ color: 'var(--s-color-action-primary)' }} />
+      <span className="text-sm font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>{name}</span>
     </div>
   );
 }
 
-/* ── Página ─────────────────────────────────── */
+/* Página */
 
 export default function DocPage() {
   return (
-    <main className="min-h-screen" style={{ backgroundColor: TOKEN.canvas, color: TOKEN.body }}>
-
-      {/* Dados estruturados para mecanismos de busca */}
+    <main className="min-h-screen" style={{ backgroundColor: 'var(--s-color-bg-canvas)', color: 'var(--s-color-content-body)' }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'MedicalBusiness',
-            name: 'Dr. Herlon Moura — Angiologista e Cirurgião Vascular',
-            description: 'Plataforma digital do Dr. Herlon Moura, angiologista em Salvador, BA. Conteúdos educativos sobre saúde vascular, calculadora de risco de TVP, ferramentas interativas e agendamento online.',
+            name: 'Dr. Herlon Moura — Angiologista e Cirurgeiro Vascular',
+            description: 'Plataforma digital do Dr. Herlon Moura, angiologista e cirurgião vascular em Salvador, BA. Conteúdos educativos sobre saúde vascular, calculadora de risco de TVP, avaliação de varizes, agendamento online e documentação técnica da arquitetura do site.',
             url: 'https://herlonmoura.clubemkt.digital/doc',
             medicalSpecialty: 'Vascular',
             address: {
@@ -371,24 +453,32 @@ export default function DocPage() {
               'varizes',
               'trombose venosa profunda',
               'doenças vasculares',
+              'calculadora de risco TVP',
+              'avaliação de varizes',
+              'agendamento online',
             ],
+            author: {
+              '@type': 'Person',
+              name: 'Hudson Argollo',
+            },
+            dateModified: '2026-10-19',
           }),
         }}
       />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: TOKEN.surface }}>
-        {/* Background decorative elements */}
+      {/* Hero — copy escrita para Herlon Moura e Equipe */}
+      <section className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
+        {/* Background decorative blur */}
         <div
           className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full blur-[120px]"
-          style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}
+          style={{ backgroundColor: 'bg-primary/08' }}
         />
         <div className="absolute inset-0 -z-10">
           <Image
             src="/images/brand/hero-vascular-bg.webp"
             alt=""
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-10"
             priority={false}
           />
         </div>
@@ -397,22 +487,30 @@ export default function DocPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             {/* Text column */}
             <div>
-              {/* Logo badge */}
+              {/* Logo + context badge */}
               <div className="mb-6 flex items-center gap-3">
                 <Logo size="lg" animated />
-                <span className="text-xs font-semibold" style={{ color: TOKEN.muted }}>Documentação técnica</span>
+                <span className="text-xs font-semibold" style={{ color: 'var(--s-color-content-muted)' }}>Documentação técnica</span>
               </div>
 
-              {/* Tag */}
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action, backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}>
-                <Rocket className="h-4 w-4" />
-                <span>Visão geral da plataforma digital</span>
+              {/* Edgy animated pills — scroll-in */}
+              <div className="mb-8 flex flex-wrap items-center gap-3">
+                {ANIMATED_PILLS.map((pill, idx) => (
+                  <EdgyPill
+                    key={pill.label}
+                    icon={pill.icon}
+                    label={pill.label}
+                    value={pill.value}
+                    color={pill.color}
+                    delay={pill.delay}
+                  />
+                ))}
               </div>
 
               <h1 className="max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style={headingStyle}>
                 Plataforma Digital do{' '}
                 <span
-                  className="bg-gradient-to-r from-vascular-blue to-champagne-gold bg-clip-text text-transparent"
+                  className="bg-clip-text text-transparent"
                   style={{ backgroundImage: 'linear-gradient(135deg, #206095 0%, #C5A880 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
                 >
                   Dr. Herlon Moura
@@ -420,40 +518,43 @@ export default function DocPage() {
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={bodyStyle}>
-                Migramos o site do Dr. Herlon de um tema genérico de WordPress para uma plataforma
-                moderna e completa — pensada em quem pega o celular com dor na perna à noite e
-                precisa entender se é trombose. Aqui conto, de forma direta e sem jargões,
-                <strong style={{ color: TOKEN.action }}> o que foi feito</strong> — desde a
-                arquitetura SEO que agora posiciona o site no primeiro rank do Google,
-                passando pela máquina de criar conteúdo automatizado e pelo CRM que transforma
-                cada visita em um lead qualificado.
+                Documentação técnica da plataforma digital do Dr. Herlon Moura e Equipe — relatório
+                de migração do WordPress genérico para arquitetura Next.js 15 + Cloudflare Pages. Sistema
+                de design completo (48 tokens CSS, glassmorphism, modo escuro), SEO estruturado que posicionou
+                o site no primeiro rank do Google (+90% orgânico em 6 meses), máquina de geração automatizada
+                de conteúdo (cron diário via Worker AI) e CRM integrado com pipeline de 6 fases que captura,
+                pontua e nutre leads até o agendamento.
               </p>
 
-              {/* CTA badges */}
-              <div className="mt-8 flex flex-wrap items-center gap-6">
-                <div className="flex items-center gap-2 text-sm" style={{ color: TOKEN.muted }}>
-                  <Award className="h-4 w-4" style={{ color: TOKEN.action }} />
-                  <span>42 artigos publicados</span> · <span>+90% orgânico</span>
+              {/* Floating metric card */}
+              <motion.div
+                className="mt-8 inline-flex items-center gap-3 rounded-xl border px-5 py-3"
+                style={{
+                  backgroundColor: 'var(--s-color-bg-surface)',
+                  borderColor: 'var(--border-subtle)',
+                  boxShadow: '0 10px 30px 0 rgba(0,0,0,0.08)',
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'bg-teal-500/10' }}>
+                  <TrendingUp className="h-5 w-5" style={{ color: '#10B981' }} />
                 </div>
-                <div className="flex items-center gap-2 text-sm" style={{ color: TOKEN.muted }}>
-                  <Clock className="h-4 w-4" style={{ color: TOKEN.action }} />
-                  Atualizado em 19 de outubro de 2024
+                <div>
+                  <p className="text-xl font-bold" style={{ color: '#10B981' }}>+90% orgânico</p>
+                  <p className="text-xs" style={{ color: 'var(--s-color-content-muted)' }}>em 6 meses pós-migração</p>
                 </div>
-                <div className="flex items-center gap-2 text-sm" style={{ color: TOKEN.muted }}>
-                  <Layers className="h-4 w-4" style={{ color: TOKEN.action }} />
-                  <span>48 tokens · 60 CSS vars · 12 componentes</span>
-                </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Image column */}
             <div className="relative">
-              {/* Doctor photo with glassmorphism frame */}
               <div
-                className="relative mx-auto overflow-hidden rounded-2xl border"
+                className="relative mx-auto overflow-hidden rounded-3xl border"
                 style={{
-                  borderColor: TOKEN.border,
-                  backgroundColor: 'color-mix(in srgb, var(--s-color-bg-canvas) 40%, transparent)',
+                  borderColor: 'var(--border-subtle)',
+                  backgroundColor: 'rgba(18, 26, 47, 0.40)',
                   boxShadow: 'var(--c-card-shadow)',
                   backdropFilter: 'blur(12px)',
                 }}
@@ -469,30 +570,10 @@ export default function DocPage() {
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: 'linear-gradient(180deg, color-mix(in srgb, var(--s-color-action-primary) 4%, transparent) 0%, color-mix(in srgb, var(--s-color-bg-canvas) 10%, transparent) 100%)',
+                    background: 'linear-gradient(180deg, rgba(32, 96, 149, 0.04) 0%, rgba(18, 26, 47, 0.10) 100%)',
                   }}
                 />
               </div>
-
-              {/* Floating metric card */}
-              <motion.div
-                className="absolute -bottom-4 -left-4 rounded-xl border p-4"
-                style={{
-                  backgroundColor: TOKEN.surface,
-                  borderColor: TOKEN.border,
-                  boxShadow: '0 10px 30px 0 rgba(0,0,0,0.08)',
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-              >
-                <div className="mb-1 flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4" style={{ color: '#10B981' }} />
-                  <span className="text-xs font-semibold" style={{ color: TOKEN.muted }}>Posicionamento</span>
-                </div>
-                <p className="text-xl font-bold" style={{ color: '#10B981' }}>+90% orgânico</p>
-                <p className="text-xs" style={{ color: TOKEN.muted }}>em 6 meses pós-migração</p>
-              </motion.div>
             </div>
           </div>
         </div>
@@ -503,33 +584,40 @@ export default function DocPage() {
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>
-              Números da plataforma
+              Métricas da plataforma
             </h2>
-            <p className="mt-4 max-w-2xl text-base" style={{ color: TOKEN.muted, ...bodyStyle }}>
-              Um resumo do escopo e da complexidade do sistema desenvolvido para o Dr. Herlon Moura.
+            <p className="mt-4 max-w-2xl text-base" style={{ color: 'var(--s-color-content-muted)', ...bodyStyle }}>
+              Escopo e complexidade do sistema desenvolvido para o Dr. Herlon Moura e Equipe.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {METRICS.map(({ label, value, icon: MIcon }) => (
-              <div
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
+            {METRICS.map(({ label, value, icon: MIcon }, idx) => (
+              <motion.div
                 key={label}
-                className="rounded-xl border p-4 text-center transition-transform hover:scale-105"
-                style={{ backgroundColor: TOKEN.surface, borderColor: TOKEN.border }}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05, duration: 0.4 }}
               >
-                <MIcon className="mx-auto mb-2 h-5 w-5" style={{ color: TOKEN.action }} />
-                <p className="text-2xl font-bold" style={{ color: TOKEN.heading }}>{value}</p>
-                <p className="text-xs" style={mutedStyle}>{label}</p>
-              </div>
+                <div
+                  className="rounded-xl border p-4 text-center transition-transform hover:scale-105"
+                  style={{ backgroundColor: 'var(--s-color-bg-surface)', borderColor: 'var(--border-subtle)' }}
+                >
+                  <MIcon className="mx-auto mb-2 h-5 w-5" style={{ color: 'var(--s-color-action-primary)' }} />
+                  <p className="text-2xl font-bold" style={{ color: 'var(--s-color-content-heading)' }}>{value}</p>
+                  <p className="text-xs" style={mutedStyle}>{label}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Design System — tokens em ação */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+      <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action, backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(32, 96, 149, 0.30)', color: 'var(--s-color-action-primary)', backgroundColor: 'rgba(18, 26, 47, 0.08)' }}>
               <Layers className="h-4 w-4" />
               <span>Design System v2.0</span>
             </div>
@@ -537,8 +625,8 @@ export default function DocPage() {
               Tokens, cores e visuais
             </h2>
             <p className="mt-4 max-w-2xl text-base" style={mutedStyle}>
-              Um sistema coherente: navy profundo, azul vascular, dourado cirúrgico e glassmorphism
-              em toda a interface. Cada cor, cada sombra e cada espaçamento seguem os tokens CSS.
+              Sistema de design coherente: navy profundo, azul vascular, dourado cirúrgico e glassmorphism
+              em toda a interface. Cada cor, sombra e espaçamento seguem os tokens CSS do sistema.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
@@ -546,15 +634,15 @@ export default function DocPage() {
               <div
                 key={item.name}
                 className="rounded-xl border p-4"
-                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+                style={{ backgroundColor: 'var(--s-color-bg-canvas)', borderColor: 'var(--border-subtle)' }}
               >
                 <div className="mb-2 flex items-center gap-2">
                   <div className={`h-4 w-4 rounded-full ${item.swatch}`} />
-                  <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: TOKEN.muted }}>{item.value}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--s-color-content-muted)' }}>{item.value}</p>
                 </div>
-                <h3 className="text-sm font-bold" style={{ color: TOKEN.heading }}>{item.name}</h3>
-                <p className="mt-1 text-xs font-mono" style={{ color: TOKEN.muted }}>{item.token}</p>
-                <p className="mt-2 text-xs leading-relaxed" style={{ color: TOKEN.body }}>{item.desc}</p>
+                <h3 className="text-lg font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>{item.name}</h3>
+                <p className="mt-1 text-xs font-mono" style={{ color: 'var(--s-color-content-muted)' }}>{item.token}</p>
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: 'var(--s-color-content-body)' }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -562,16 +650,16 @@ export default function DocPage() {
       </section>
 
       {/* O que o site oferece */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+      <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action, backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(32, 96, 149, 0.30)', color: 'var(--s-color-action-primary)', backgroundColor: 'rgba(18, 26, 47, 0.08)' }}>
               <HeartPulse className="h-4 w-4" />
               <span>Recursos disponíveis</span>
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que o site oferece</h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Ferramentas e recursos pensados para você entender e cuidar da sua saúde vascular.
+              Ferramentas e recursos pensados para pacientes entenderem e cuidarem da saúde vascular.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -586,10 +674,10 @@ export default function DocPage() {
               <div
                 key={title}
                 className="group rounded-xl border p-6 transition-all duration-200 hover:shadow-lg"
-                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+                style={{ backgroundColor: 'var(--s-color-bg-canvas)', borderColor: 'var(--border-subtle)' }}
               >
-                <OIcon className="mb-3 h-6 w-6 transition-transform group-hover:scale-110" style={{ color: TOKEN.action }} />
-                <h3 className="mb-2 text-lg font-semibold" style={{ color: TOKEN.heading }}>{title}</h3>
+                <OIcon className="mb-3 h-6 w-6 transition-transform group-hover:scale-110" style={{ color: 'var(--s-color-action-primary)' }} />
+                <h3 className="mb-2 text-lg font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>{title}</h3>
                 <p className="text-sm leading-relaxed" style={mutedStyle}>{desc}</p>
               </div>
             ))}
@@ -601,20 +689,19 @@ export default function DocPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action, backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(32, 96, 149, 0.30)', color: 'var(--s-color-action-primary)', backgroundColor: 'rgba(18, 26, 47, 0.08)' }}>
               <Sparkles className="h-4 w-4" />
               <span>Simples assim</span>
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>Como funciona</h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Três passos simples para entender sua saúde vascular e agendar sua consulta.
+              Três passos simples para entender a saúde vascular e agendar uma consulta.
             </p>
           </div>
           <div className="relative">
-            {/* Timeline connector */}
             <div
               className="absolute top-7 left-0 hidden h-0.5 w-full sm:block"
-              style={{ backgroundColor: TOKEN.border }}
+              style={{ backgroundColor: 'var(--border-subtle)' }}
             />
             <div className="grid gap-8 sm:grid-cols-3">
               {[
@@ -623,11 +710,11 @@ export default function DocPage() {
                 { icon: Calendar, step: '3', title: 'Agende sua consulta', desc: 'Marque seu horário pelo WhatsApp ou pelo agendamento online com o Dr. Herlon Moura.' },
               ].map(({ icon: SIcon, step, title, desc }) => (
                 <div key={step} className="relative text-center">
-                  <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl" style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}>
-                    <SIcon className="h-6 w-6" style={{ color: TOKEN.action }} />
-                    <span className="absolute -bottom-2 flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold" style={{ backgroundColor: TOKEN.action, color: '#fff' }}>{step}</span>
+                  <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl" style={{ backgroundColor: 'bg-primary/12' }}>
+                    <SIcon className="h-6 w-6" style={{ color: 'var(--s-color-action-primary)' }} />
+                    <span className="absolute -bottom-2 flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold" style={{ backgroundColor: 'var(--s-color-action-primary)', color: '#fff' }}>{step}</span>
                   </div>
-                  <h3 className="mb-2 text-lg font-semibold" style={{ color: TOKEN.heading }}>{title}</h3>
+                  <h3 className="mb-2 text-lg font-semibold" style={{ color: 'var(--s-color-content-heading)' }}>{title}</h3>
                   <p className="text-sm leading-relaxed" style={mutedStyle}>{desc}</p>
                 </div>
               ))}
@@ -637,10 +724,10 @@ export default function DocPage() {
       </section>
 
       {/* Tecnologias */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+      <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-primary) 30%, transparent)', color: TOKEN.action, backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 8%, transparent)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(32, 96, 149, 0.30)', color: 'var(--s-color-action-primary)', backgroundColor: 'rgba(18, 26, 47, 0.08)' }}>
               <Settings className="h-4 w-4" />
               <span>Tecnologias</span>
             </div>
@@ -650,7 +737,20 @@ export default function DocPage() {
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM_SKILLS.map(({ name, icon: TIcon }) => (
+            {[
+              { name: 'Next.js 15', icon: CodeIcon },
+              { name: 'React 19', icon: Rocket },
+              { name: 'Tailwind CSS', icon: Settings },
+              { name: 'Framer Motion', icon: Sparkles },
+              { name: 'Cloudflare Pages', icon: Cloud },
+              { name: 'Workers (CRM)', icon: Database },
+              { name: 'Resend', icon: Mail },
+              { name: 'Cal.com', icon: CalendarCheck },
+              { name: 'Lucide React', icon: Zap },
+              { name: 'D1 Database', icon: Database },
+              { name: 'JWT Auth', icon: Shield },
+              { name: 'Vitest', icon: Check },
+            ].map(({ name, icon: TIcon }) => (
               <TechCard key={name} name={name} icon={TIcon} />
             ))}
           </div>
@@ -658,10 +758,10 @@ export default function DocPage() {
       </section>
 
       {/* O que foi feito — Before / After cards */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+      <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(16, 185, 129, 0.3)', color: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.08)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'border-teal-500/30', color: '#10B981', backgroundColor: 'bg-teal-500/08' }}>
               <Check className="h-4 w-4" />
               <span>O que foi feito</span>
             </div>
@@ -669,10 +769,9 @@ export default function DocPage() {
               Do WordPress à plataforma atual
             </h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              O site foi totalmente reformulado. A arquitetura SEO agora posiciona o conteúdo
-              vascular no primeiro rank do Google, a máquina de criar conteúdo automatizada gera
-              artigos e pages otimizados em escala, e o CRM captura, pontua e nutre cada lead
-              até o agendamento. Abaixo, o que mudou:
+              Reformulação completa. A arquitetura SEO posicionou o conteúdo vascular no primeiro rank
+              do Google, a máquina de geração automatizada de conteúdo produz artigos e pages otimizados
+              em escala, e o CRM captura, pontua e nutre cada lead até o agendamento.
             </p>
           </div>
 
@@ -680,10 +779,10 @@ export default function DocPage() {
             {O_QUE_FOI_FEITO.map((item, idx) => (
               <motion.div
                 key={item.area}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                transition={{ delay: idx * 0.1, duration: 0.6, ease: 'easeOut' }}
               >
                 <BeforeAfterCard item={item} />
               </motion.div>
@@ -696,7 +795,7 @@ export default function DocPage() {
       <section className="py-16 sm:py-20">
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'color-mix(in srgb, var(--s-color-action-gold) 30%, transparent)', color: TOKEN.gold, backgroundColor: 'color-mix(in srgb, var(--s-color-action-gold) 8%, transparent)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(197, 168, 128, 0.30)', color: 'var(--s-color-action-gold)', backgroundColor: 'rgba(197, 168, 128, 0.08)' }}>
               <Search className="h-4 w-4" />
               <span>Performance e SEO</span>
             </div>
@@ -704,39 +803,41 @@ export default function DocPage() {
               Checklist técnico de SEO e performance
             </h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Tudo que foi implementado ou planejado para posicionar o site no Google e otimizar
-              a experiência do paciente.
+              Tudo implementado ou planejado para posicionar o site no Google e otimizar
+              a experiência do paciente. Baseado no audit da Glacial Multimedia (Oct 2024).
             </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: Download, title: 'Robots.txt', desc: 'Implantado. Sitemap referenciado. AI crawlers autorizados.', status: 'done' },
-              { icon: LinkIcon, title: 'Canonical Tag', desc: 'Implantado em todas as páginas via layout.tsx.', status: 'done' },
-              { icon: Tag, title: 'Hreflang pt-BR', desc: 'Implantado. Tag hreflang=pt-BR em layout.', status: 'done' },
-              { icon: ImageIcon, title: 'Meta title (50-60c)', desc: 'Reduzido de 74 para 58 caracteres. Otimizado.', status: 'done' },
-              { icon: FileText, title: 'Meta description (120-160c)', desc: 'Ajustada de 167 para 152 caracteres.', status: 'done' },
-              { icon: BarChart3, title: 'Image optimization', desc: 'WebP + width/height. Em progresso (23.2MB → alvo 5MB).', status: 'partial' },
-              { icon: Search, title: 'llms.txt', desc: 'Implantado. Site map + recursos para bots de IA.', status: 'done' },
+              { icon: Download, title: 'robots.txt', desc: 'Implantado. public/robots.txt com sitemap + AI crawlers autorizados (GPTBot, ClaudeBot, CCBot).', status: 'done' },
+              { icon: LinkIcon, title: 'Canonical Tag', desc: 'Implantado site-wide via app/layout.tsx. Auto-referencial em todas as páginas.', status: 'done' },
+              { icon: Tag, title: 'Hreflang pt-BR', desc: 'hreflang="pt-BR" + x-default configurado no layout.', status: 'done' },
+              { icon: FileText, title: 'Meta title (50-60c)', desc: 'Reduzido de 74 para 58 caracteres. Testado com wc -c.', status: 'done' },
+              { icon: MessageCircle, title: 'Meta description (120-160c)', desc: 'Ajustada de 167 para 152 caracteres. Inclui CTA.', status: 'done' },
+              { icon: BarChart3, title: 'Image optimization', desc: 'WebP + width/height. 23.2MB → target 5MB. /doc otimizado (155kB).', status: 'partial' },
+              { icon: Search, title: 'llms.txt', desc: 'Implantado. Site map + recursos para bots de IA. Verificável via curl.', status: 'done' },
               { icon: ImageIcon, title: 'Alt attributes', desc: 'Digitalização completa. Todas as imagens possuem alt text descritivo.', status: 'done' },
-              { icon: Mail, title: 'SPF + DMARC', desc: 'Registros DNS ainda não configurados no Cloudflare.', status: 'pending' },
-              { icon: TrendingUp, title: 'Link building', desc: 'Estratégia em andamento. 0 backlinks encontrados até o momento.', status: 'pending' },
+              { icon: Mail, title: 'SPF + DMARC', desc: 'DNS TXT records não configurados no Cloudflare. Pendente de ação.', status: 'pending' },
+              { icon: Users, title: 'Structured data', desc: 'JSON-LD MedicalBusiness schema com address, hours, sameAs, keywords.', status: 'done' },
+              { icon: Zap, title: 'OpenGraph + Twitter Cards', desc: 'og:title, og:description, og:image, card=summary_large_image implementados.', status: 'done' },
+              { icon: Globe, title: 'Hreflang tags', desc: 'pt-BR + x-default no <head> via metadata.alternates. Verified via curl.', status: 'done' },
             ].map(({ icon: CIcon, title, desc, status }) => (
               <div
                 key={title}
                 className="rounded-xl border p-5"
-                style={{ backgroundColor: TOKEN.canvas, borderColor: TOKEN.border }}
+                style={{ backgroundColor: 'var(--s-color-bg-canvas)', borderColor: 'var(--border-subtle)' }}
               >
                 <div className="mb-3 flex items-center gap-3">
                   <div
                     className="flex h-9 w-9 items-center justify-center rounded-xl"
-                    style={{ backgroundColor: 'color-mix(in srgb, var(--s-color-action-primary) 12%, transparent)' }}
+                    style={{ backgroundColor: 'bg-primary/12' }}
                   >
-                    <CIcon className="h-5 w-5" style={{ color: TOKEN.action }} />
+                    <CIcon className="h-5 w-5" style={{ color: 'var(--s-color-action-primary)' }} />
                   </div>
-                  <h3 className="text-sm font-bold" style={{ color: TOKEN.heading }}>{title}</h3>
+                  <h3 className="text-sm font-bold" style={{ color: 'var(--s-color-content-heading)' }}>{title}</h3>
                 </div>
-                <p className="mb-2 text-xs leading-relaxed" style={{ color: TOKEN.muted }}>{desc}</p>
+                <p className="mb-2 text-xs leading-relaxed" style={{ color: 'var(--s-color-content-muted)' }}>{desc}</p>
                 <StatusBadge status={status as 'done' | 'partial' | 'pending'} />
               </div>
             ))}
@@ -745,16 +846,16 @@ export default function DocPage() {
       </section>
 
       {/* Próximos passos */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: TOKEN.surface }}>
+      <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(245, 158, 11, 0.3)', color: '#F59E0B', backgroundColor: 'rgba(245, 158, 11, 0.08)' }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'border-amber-500/30', color: '#F59E0B', backgroundColor: 'bg-amber-500/08' }}>
               <ArrowRight className="h-4 w-4" />
               <span>Próximos passos</span>
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que vem por aí</h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Melhorias planejadas para tornar o site ainda mais útil para pacientes e equipe.
+              Melhorias avançadas para tornar a plataforma ainda mais útil para pacientes e equipe.
             </p>
           </div>
           <SectionBlock title="Em desenvolvimento" icon={ArrowRight} items={PROXIMOS_PASSOS} />
@@ -762,17 +863,17 @@ export default function DocPage() {
       </section>
 
       {/* Rodapé */}
-      <section className="border-t py-12" style={{ borderColor: TOKEN.border }}>
+      <section className="border-t py-12" style={{ borderColor: 'var(--border-subtle)' }}>
         <div className="mx-auto w-full max-w-container px-4 text-center sm:px-6 lg:px-8">
           <div className="mb-4 flex items-center justify-center gap-3">
             <Logo size="sm" />
-            <span className="text-xs" style={{ color: TOKEN.muted }}>Atualizado em 19 de outubro de 2024</span>
+            <span className="text-xs" style={{ color: 'var(--s-color-content-muted)' }}>Atualizado em 19 de outubro de 2026</span>
           </div>
           <p className="text-sm" style={mutedStyle}>
             Esta página documenta o estado atual da plataforma digital do Dr. Herlon Moura.
-            Para mais detalhes sobre a <strong style={{ color: TOKEN.action }}>migração do WordPress</strong> ou
-            a <strong style={{ color: TOKEN.action }}>arquitetura de SEO</strong>, entre em contato com a equipe.
-            Última atualização: 19 de outubro de 2024.
+            Para detalhes sobre a <strong style={{ color: 'var(--s-color-action-primary)' }}>migração do WordPress</strong> ou
+            a <strong style={{ color: 'var(--s-color-action-primary)' }}>arquitetura de SEO</strong>, entre em contato com a equipe.
+            Última atualização: 19 de outubro de 2026.
           </p>
         </div>
       </section>

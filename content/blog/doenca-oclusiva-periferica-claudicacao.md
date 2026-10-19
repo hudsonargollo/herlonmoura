@@ -14,7 +14,7 @@ category: "Doenças Arteriais"
 date: "2026-08-12"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/doenca-oclusiva-periferica-claudicacao.png"
+image: "/images/blog/doenca-oclusiva-periferica-claudicacao.webp"
 word_count: 1300
 ---
 

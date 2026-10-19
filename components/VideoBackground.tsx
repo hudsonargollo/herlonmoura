@@ -82,5 +82,5 @@ export function VideoBackground({
 export const VASCULAR_VIDEO = {
   webmSrc: '/images/videos/herlonmoura-hero-muted.webm',
   mp4Src: '/images/videos/herlonmoura-hero-muted.mp4',
-  posterSrc: '/images/videos/herlonmoura-hero-poster.jpg',
+  posterSrc: '/images/videos/herlonmoura-hero-poster.webp',
 } as const;

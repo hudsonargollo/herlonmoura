@@ -14,7 +14,7 @@ category: "Varizes"
 date: "2026-08-05"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/varizes-infertilidade-conexao-venosa.png"
+image: "/images/blog/varizes-infertilidade-conexao-venosa.webp"
 word_count: 1100
 ---
 

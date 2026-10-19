@@ -14,7 +14,7 @@ category: "Úlcera Venosa"
 date: "2026-04-06"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/ulcera-venosa-causas-tratamento-cicatrizacao.png"
+image: "/images/blog/ulcera-venosa-causas-tratamento-cicatrizacao.webp"
 word_count: 900
 ---
 

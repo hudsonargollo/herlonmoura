@@ -14,7 +14,7 @@ category: "Laser Vascular"
 date: "2026-04-05"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/laser-vascular-tratamento-varizes.png"
+image: "/images/blog/laser-vascular-tratamento-varizes.webp"
 word_count: 1300
 ---
 

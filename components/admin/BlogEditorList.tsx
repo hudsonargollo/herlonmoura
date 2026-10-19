@@ -133,6 +133,7 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
             <option value="all">Todos os status</option>
             <option value="published">Publicado</option>
             <option value="approval">Aprovação</option>
+            <option value="curated">Curado</option>
             <option value="draft">Rascunho</option>
           </select>
           <Button variant="primary" size="sm" onClick={() => setShowNew(true)}><Plus className="mr-1.5 h-4 w-4" /> Novo Artigo</Button>

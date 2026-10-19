@@ -52,7 +52,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
     const db = env.CRM_DB;
     const result = await db
-      .prepare("SELECT * FROM blog_posts WHERE status IN ('draft', 'approval') ORDER BY created_at DESC")
+      .prepare("SELECT * FROM blog_posts WHERE status IN ('draft', 'approval', 'curated') ORDER BY created_at DESC")
       .all();
 
     return json(200, { posts: result.results ?? [] });

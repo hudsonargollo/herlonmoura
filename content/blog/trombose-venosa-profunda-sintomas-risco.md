@@ -14,7 +14,7 @@ category: "Trombose"
 date: "2026-04-03"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/trombose-venosa-profunda-sintomas-risco.png"
+image: "/images/blog/trombose-venosa-profunda-sintomas-risco.webp"
 word_count: 1100
 ---
 

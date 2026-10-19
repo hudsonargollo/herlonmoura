@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-05-11"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/aneurisma-aorta-abdominal-deteccao-tratamento.png"
+image: "/images/blog/aneurisma-aorta-abdominal-deteccao-tratamento.webp"
 word_count: 900
 ---
 

@@ -14,7 +14,7 @@ category: "Varizes"
 date: "2026-05-10"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/insuficiencia-venosa-cronica-estagios-tratamento.png"
+image: "/images/blog/insuficiencia-venosa-cronica-estagios-tratamento.webp"
 word_count: 1300
 ---
 

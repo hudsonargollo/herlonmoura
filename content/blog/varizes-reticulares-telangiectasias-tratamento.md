@@ -14,7 +14,7 @@ category: "Varizes"
 date: "2026-08-09"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/varizes-reticulares-telangiectasias-tratamento.png"
+image: "/images/blog/varizes-reticulares-telangiectasias-tratamento.webp"
 word_count: 1000
 ---
 

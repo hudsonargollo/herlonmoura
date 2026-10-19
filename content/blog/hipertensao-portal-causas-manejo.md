@@ -14,7 +14,7 @@ category: "Cirurgia Vascular"
 date: "2026-06-20"
 status: "published"
 language: "pt-BR"
-image: "/images/blog/hipertensao-portal-causas-manejo.png"
+image: "/images/blog/hipertensao-portal-causas-manejo.webp"
 word_count: 1300
 ---
 
