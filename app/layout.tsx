@@ -55,6 +55,23 @@ export const metadata: Metadata = {
     description:
       "Angiologista e cirurgião vascular em Salvador, BA. Tratamento de varizes, trombose e doenças vasculares.",
     type: "website",
+    url: "https://herlonmoura.clubemkt.digital",
+    siteName: "Dr. Herlon Moura — Angiologia e Cirurgia Vascular",
+    images: [
+      {
+        url: "https://herlonmoura.clubemkt.digital/images/brand/hero-doctor.webp",
+        width: 1067,
+        height: 1334,
+        alt: "Dr. Herlon Moura — Angiologista e Cirurgião Vascular em Salvador",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dr. Herlon Moura - Angiologia e Cirurgia Vascular em Salvador",
+    description:
+      "Angiologista e cirurgião vascular em Salvador, BA. Tratamento de varizes, trombose e doenças vasculares.",
+    images: ["https://herlonmoura.clubemkt.digital/images/brand/hero-doctor.webp"],
   },
 };
 

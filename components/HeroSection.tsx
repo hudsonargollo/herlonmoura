@@ -40,9 +40,12 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden">
-    {/* Video background - animated vascular flow, health context */}
+    {/* Video background - animated vascular flow, health context.
+        Path is /images/videos/ (the asset lives there) — the previous
+        /videos/cardio.webm pointed at a directory that does not exist, so this
+        element was a silent 404. */}
     <video
-      src="/videos/cardio.webm"
+      src="/images/videos/cardio.webm"
       autoPlay
       muted
       loop

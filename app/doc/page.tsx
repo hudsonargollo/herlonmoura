@@ -5,15 +5,15 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   HeartPulse, FileText, Calculator, Calendar,
-  MessageCircle, Wrench, ShieldCheck, Search,
-  Globe, UserPlus, TrendingUp, Check, Minus, X,
+  MessageCircle, Wrench, Shield, Search,
+  Globe, TrendingUp, Check, Minus, X,
   ArrowRight, Rocket, Sparkles, Settings,
   Cloud, Mail, Award, Clock,
   Activity, Layers,
   BarChart3, Download, Link as LinkIcon, Tag,
   Image as ImageIcon, Eye, Code as CodeIcon,
   Zap, Target, BarChart, Users, CalendarCheck,
-  Shield, GitBranch, Database, Smartphone,
+  GitBranch, Database, Smartphone,
 } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { CliniqIcon } from '@/components/CliniqIcon';
@@ -21,7 +21,7 @@ import { CliniqIcon } from '@/components/CliniqIcon';
 /* ============================================
    /doc — Plataforma Digital do Dr. Herlon Moura
    Documentação técnica, tokens de design, arquitetura SEO e resultados
-   Escrita para Herlon Moura e Equipe — NÃO para o paciente final
+   Escrita para Herlon Moura — NÃO para o paciente final
 
    Hudson Argollo — web wizard · front-end
    ============================================ */
@@ -55,13 +55,13 @@ const mutedStyle: React.CSSProperties = {
 /* ── Métricas do /doc ───────────────────────── */
 
 const METRICS = [
-  { label: 'Tokens de design', value: '48', icon: Layers },
-  { label: 'CSS custom props', value: '60', icon: Tag },
-  { label: 'Componentes visuais', value: '12', icon: ImageIcon },
-  { label: 'Páginas estáticas', value: '21', icon: Globe },
-  { label: 'Artigos de blog', value: '42', icon: FileText },
-  { label: 'Endpoints API', value: '7', icon: Cloud },
-  { label: 'Ferramentas interativas', value: '3', icon: Calculator },
+  { label: 'Tokens de design', value: '287', icon: Layers },
+  { label: 'CSS custom props', value: '287', icon: Tag },
+  { label: 'Componentes React', value: '34', icon: ImageIcon },
+  { label: 'Rotas de página', value: '24', icon: Globe },
+  { label: 'Artigos de blog', value: '43', icon: FileText },
+  { label: 'Endpoints API', value: '17', icon: Cloud },
+  { label: 'Ferramentas interativas', value: '4', icon: Calculator },
   { label: 'Status do CRM', value: '6 fases', icon: BarChart },
 ];
 
@@ -121,10 +121,10 @@ const DESIGN_SYSTEM = [
 /* ── Pill tags animados com scroll-in ── */
 
 const ANIMATED_PILLS = [
-  { label: '42 artigos', value: '+90% orgânico', icon: TrendingUp, color: '#10B981', delay: 0 },
-  { label: '+90% orgânico', value: '6 meses', icon: Globe, color: '#206095', delay: 0.1 },
-  { label: '48 tokens', value: '60 vars · 12 components', icon: Layers, color: '#C5A880', delay: 0.2 },
-  { label: '90/100 PageSpeed', value: 'mobile + desktop', icon: BarChart3, color: '#14B8A6', delay: 0.3 },
+  { label: '43 artigos', value: 'SEO + GEO', icon: TrendingUp, color: '#10B981', delay: 0 },
+  { label: '24 rotas', value: 'static export', icon: Globe, color: '#206095', delay: 0.1 },
+  { label: '287 tokens', value: 'CSS custom props', icon: Layers, color: '#C5A880', delay: 0.2 },
+  { label: '242 testes', value: '14 arquivos', icon: BarChart3, color: '#14B8A6', delay: 0.3 },
 ];
 
 /* ── O que foi feito (before → after) ──── */
@@ -152,7 +152,7 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Conteúdo e blog',
     before: 'Nenhum blog. Conteúdo restrito a páginas estáticas do WordPress. Sem artigos educativos para pacientes.',
-    after: 'Blog com 42 artigos educativos sobre saúde vascular, editor no painel admin, fluxo de aprovação e geração automatizada diária via cron. Conteúdo otimizado para SEO e acessível a pacientes.',
+    after: 'Blog com 43 artigos educativos sobre saúde vascular, editor no painel admin e fluxo de aprovação. Conteúdo otimizado para SEO e acessível a pacientes. Geração automatizada via cron: ver "Próximos passos" — o pipeline ainda não foi concluído.',
     status: 'done',
     beforeIcon: X,
     afterIcon: Check,
@@ -179,7 +179,7 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Arquitetura SEO',
     before: 'Sem robots.txt, sem canonical, sem hreflang, sem meta tags otimizadas. Sem structured data. Sem llms.txt. Site invisível no Google.',
-    after: 'robots.txt + llms.txt, canonical tag site-wide, hreflang pt-BR, meta title (58c) + description (152c), JSON-LD MedicalBusiness schema com 5 keywords, todos os alt attributes preenchidos. +90% de tráfego orgânico em 6 meses.',
+    after: 'robots.txt + llms.txt, canonical tag site-wide, hreflang pt-BR + x-default (via metadata.alternates), meta title (60c) + description (144c), JSON-LD MedicalBusiness schema, og:image + twitter:card=summary_large_image, todos os alt attributes preenchidos. Sitemap com 10 rotas estáticas + 43 artigos.',
     status: 'done',
     beforeIcon: X,
     afterIcon: Check,
@@ -191,31 +191,40 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
 
 const PROXIMOS_PASSOS: SectionItem[] = [
   {
-    area: 'Painel admin: gestão de usuários',
-    before: 'Os endpoints /api/admin/users existem, mas sem interface no cliente para criar, editar ou desativar usuários.',
-    after: 'Painel de gestão de usuários (admin/editor/viewer) com CRUD — backend pronto, view do cliente em andamento.',
+    area: 'Gerador diário de blog (cron) — quebrado',
+    before: 'O cron roda todo dia às 06:00 mas sai com "ERROR: ADMIN_API_TOKEN is required". Nenhum artigo já foi gerado: a tabela blog_posts está com 0 linhas e o blog público serve os 43 artigos de content/blog/*.md.',
+    after: 'Prover ADMIN_API_TOKEN (JWT de admin/editor) no crontab, popular blog_posts via /api/blog/generate, e fazer o /api/blog servir as linhas do D1 em vez de sempre retornar {"posts":[]}.',
     status: 'pending',
-    beforeIcon: ShieldCheck,
-    afterIcon: ArrowRight,
-    illustration: <UserPlus className="h-9 w-9 text-white" />,
-  },
-  {
-    area: 'Otimização de imagens restantes',
-    before: '23.2MB de peso total de página. Imagens não-WebP nas páginas home e blog.',
-    after: 'Conversão completa para WebP + compressão. Target: 23.2MB → 5MB.',
-    status: 'partial',
     beforeIcon: X,
-    afterIcon: Check,
-    illustration: <ImageIcon className="h-9 w-9 text-white" />,
+    afterIcon: Clock,
+    illustration: <FileText className="h-9 w-9 text-white" />,
   },
   {
     area: 'SPF + DMARC DNS',
-    before: 'Registros SPF e DMARC não configurados no Cloudflare.',
-    after: 'TXT records para SPF (Resend) e DMARC (quarentena 100%) no Cloudflare.',
+    before: 'Sem registro TXT em herlonmoura.clubemkt.digital: "has no TXT record" e _dmarc dá NXDOMAIN. O e-mail sai de onboarding@resend.dev por falta de EMAIL_FROM configurado.',
+    after: 'TXT com v=spf1 include:resend.com ~all e _dmarc com v=DMARC1; p=quarantine; rua=mailto:contato@herlonmoura.com.br. Definir EMAIL_FROM no projeto Pages.',
     status: 'pending',
     beforeIcon: Shield,
     afterIcon: Clock,
     illustration: <Mail className="h-9 w-9 text-white" />,
+  },
+  {
+    area: 'Inline styles (334 blocos)',
+    before: '334 blocos style={{ }} em app/** e components/**, a maioria var(--s-color-*) repetidos em cada página.',
+    after: 'Migrar para classes Tailwind/utilitários. Risco de alterar renderização em 6 arquivos — fazer página a página com verificação visual.',
+    status: 'pending',
+    beforeIcon: X,
+    afterIcon: ArrowRight,
+    illustration: <CodeIcon className="h-9 w-9 text-white" />,
+  },
+  {
+    area: 'Backlinks (0) e perfis sociais',
+    before: '0 backlinks. Só o Instagram está linkado; Facebook, X, LinkedIn e YouTube ausentes do site e do structured data sameAs.',
+    after: 'Cadastrar os perfis, linkar no rodapé e no sameAs do JSON-LD, e começar submissões em diretórios médicos.',
+    status: 'pending',
+    beforeIcon: X,
+    afterIcon: Globe,
+    illustration: <LinkIcon className="h-9 w-9 text-white" />,
   },
 ];
 
@@ -517,12 +526,11 @@ export default function DocPage() {
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={bodyStyle}>
-                Documentação técnica da plataforma digital do Dr. Herlon Moura e Equipe — relatório
+                Documentação técnica da plataforma digital do Dr. Herlon Moura — relatório
                 de migração do WordPress genérico para arquitetura Next.js 15 + Cloudflare Pages. Sistema
-                de design completo (48 tokens CSS, glassmorphism, modo escuro), SEO estruturado que posicionou
-                o site no primeiro rank do Google (+90% orgânico em 6 meses), máquina de geração automatizada
-                de conteúdo (cron diário via Worker AI) e CRM integrado com pipeline de 6 fases que captura,
-                pontua e nutre leads até o agendamento.
+                de design completo (287 tokens CSS, glassmorphism, modo escuro), SEO estruturado
+                (sitemap com 53 URLs válidas, JSON-LD MedicalBusiness, hreflang pt-BR) e CRM integrado
+                com pipeline de 6 fases que captura, pontua e nutre leads até o agendamento.
               </p>
 
               {/* Floating metric card */}
@@ -541,8 +549,8 @@ export default function DocPage() {
                   <TrendingUp className="h-5 w-5" style={{ color: '#10B981' }} />
                 </div>
                 <div>
-                  <p className="text-xl font-bold" style={{ color: '#10B981' }}>+90% orgânico</p>
-                  <p className="text-xs" style={{ color: 'var(--s-color-content-muted)' }}>em 6 meses pós-migração</p>
+                  <p className="text-xl font-bold" style={{ color: '#10B981' }}>53 URLs</p>
+                  <p className="text-xs" style={{ color: 'var(--s-color-content-muted)' }}>indexáveis no sitemap</p>
                 </div>
               </motion.div>
             </div>
@@ -586,7 +594,7 @@ export default function DocPage() {
               Métricas da plataforma
             </h2>
             <p className="mt-4 max-w-2xl text-base" style={{ color: 'var(--s-color-content-muted)', ...bodyStyle }}>
-              Escopo e complexidade do sistema desenvolvido para o Dr. Herlon Moura e Equipe.
+              Escopo e complexidade do sistema desenvolvido para o Dr. Herlon Moura.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
@@ -663,7 +671,7 @@ export default function DocPage() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: FileText, title: 'Blog com 42 artigos', desc: 'Conteúdos educativos sobre saúde vascular, escritos de forma clara e acessível para pacientes.' },
+              { icon: FileText, title: 'Blog com 43 artigos', desc: 'Conteúdos educativos sobre saúde vascular, escritos de forma clara e acessível para pacientes.' },
               { icon: Calculator, title: 'Calculadora de risco de TVP', desc: 'Avalie seu risco de trombose venosa profunda com perguntas simples e receba uma orientação inicial.' },
               { icon: Activity, title: 'Avaliação de varizes', desc: 'Responda algumas perguntas sobre seus sintomas e receba orientações sobre suas varizes.' },
               { icon: Calendar, title: 'Agendamento online', desc: 'Agende sua consulta diretamente pelo site, sem precisar ligar ou mandar mensagem.' },
@@ -811,16 +819,16 @@ export default function DocPage() {
             {[
               { icon: Download, title: 'robots.txt', desc: 'Implantado. public/robots.txt com sitemap + AI crawlers autorizados (GPTBot, ClaudeBot, CCBot).', status: 'done' },
               { icon: LinkIcon, title: 'Canonical Tag', desc: 'Implantado site-wide via app/layout.tsx. Auto-referencial em todas as páginas.', status: 'done' },
-              { icon: Tag, title: 'Hreflang pt-BR', desc: 'hreflang="pt-BR" + x-default configurado no layout.', status: 'done' },
-              { icon: FileText, title: 'Meta title (50-60c)', desc: 'Reduzido de 74 para 58 caracteres. Testado com wc -c.', status: 'done' },
-              { icon: MessageCircle, title: 'Meta description (120-160c)', desc: 'Ajustada de 167 para 152 caracteres. Inclui CTA.', status: 'done' },
-              { icon: BarChart3, title: 'Image optimization', desc: 'WebP + width/height. 23.2MB → target 5MB. /doc otimizado (155kB).', status: 'partial' },
+              { icon: Tag, title: 'Hreflang pt-BR', desc: 'hrefLang="pt-BR" + x-default via metadata.alternates. Verificado no HTML vivo (2 ocorrências).', status: 'done' },
+              { icon: FileText, title: 'Meta title (50-60c)', desc: '60 caracteres: "Dr. Herlon Moura - Angiologia e Cirurgia Vascular - Salvador".', status: 'done' },
+              { icon: MessageCircle, title: 'Meta description (120-160c)', desc: '144 caracteres. Dentro da faixa recomendada, com CTA.', status: 'done' },
+              { icon: BarChart3, title: 'Sitemap XML', desc: 'CORRIGIDO: antes emitia /{slug} (404 em todas as 43 URLs). Agora /blog/{slug} + 10 rotas estáticas = 53 URLs válidas.', status: 'done' },
               { icon: Search, title: 'llms.txt', desc: 'Implantado. Site map + recursos para bots de IA. Verificável via curl.', status: 'done' },
-              { icon: ImageIcon, title: 'Alt attributes', desc: 'Digitalização completa. Todas as imagens possuem alt text descritivo.', status: 'done' },
-              { icon: Mail, title: 'SPF + DMARC', desc: 'DNS TXT records não configurados no Cloudflare. Pendente de ação.', status: 'pending' },
-              { icon: Users, title: 'Structured data', desc: 'JSON-LD MedicalBusiness schema com address, hours, sameAs, keywords.', status: 'done' },
-              { icon: Zap, title: 'OpenGraph + Twitter Cards', desc: 'og:title, og:description, og:image, card=summary_large_image implementados.', status: 'done' },
-              { icon: Globe, title: 'Hreflang tags', desc: 'pt-BR + x-default no <head> via metadata.alternates. Verified via curl.', status: 'done' },
+              { icon: ImageIcon, title: 'Alt attributes', desc: '39 imagens verificadas nas 15 páginas estáticas. 0 sem alt.', status: 'done' },
+              { icon: Mail, title: 'SPF + DMARC', desc: 'PENDENTE e confirmado por DNS: o domínio não tem registro TXT e _dmarc retorna NXDOMAIN. E-mail sai de onboarding@resend.dev.', status: 'pending' },
+              { icon: Users, title: 'Structured data', desc: 'JSON-LD MedicalBusiness com address, hours, geo, availableService. Falta sameAs dos perfis sociais.', status: 'partial' },
+              { icon: Zap, title: 'OpenGraph + Twitter Cards', desc: 'CORRIGIDO: og:image e og:url estavam ausentes. Agora og:image + twitter:card=summary_large_image.', status: 'done' },
+              { icon: Database, title: 'Peso de página', desc: '23.3MB → 2.25MB: cardio.webm recomprimido (90% menor). HTML 106KB, CSS 127KB, imagens 164KB no home.', status: 'done' },
             ].map(({ icon: CIcon, title, desc, status }) => (
               <div
                 key={title}
@@ -854,7 +862,7 @@ export default function DocPage() {
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl" style={headingStyle}>O que vem por aí</h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Melhorias avançadas para tornar a plataforma ainda mais útil para pacientes e equipe.
+              Melhorias avançadas para tornar a plataforma ainda mais útil para pacientes.
             </p>
           </div>
           <SectionBlock title="Em desenvolvimento" icon={ArrowRight} items={PROXIMOS_PASSOS} />
@@ -871,7 +879,7 @@ export default function DocPage() {
           <p className="text-sm" style={mutedStyle}>
             Esta página documenta o estado atual da plataforma digital do Dr. Herlon Moura.
             Para detalhes sobre a <strong style={{ color: 'var(--s-color-action-primary)' }}>migração do WordPress</strong> ou
-            a <strong style={{ color: 'var(--s-color-action-primary)' }}>arquitetura de SEO</strong>, entre em contato com a equipe.
+            a <strong style={{ color: 'var(--s-color-action-primary)' }}>arquitetura de SEO</strong>, entre em contato.
             Última atualização: 19 de outubro de 2026.
           </p>
         </div>

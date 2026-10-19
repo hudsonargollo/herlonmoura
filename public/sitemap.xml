@@ -1,7 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doenca-oclusiva-periferica-claudicacao</loc>
+    <loc>https://herlonmoura.clubemkt.digital/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/sobre</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/consultas-e-procedimentos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/contato</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/calculadora-dvt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/calculadora-de-risco-de-tvp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/varizes/assessment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/trombose/screening</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/questionario</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doenca-oclusiva-periferica-claudicacao</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -13,7 +63,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/terapia-endovascular-procedimentos-minimamente-invasivos</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/terapia-endovascular-procedimentos-minimamente-invasivos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -25,7 +75,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/embolia-pulmonar-diagnostico-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/embolia-pulmonar-diagnostico-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -37,7 +87,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/varizes-reticulares-telangiectasias-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/varizes-reticulares-telangiectasias-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -49,7 +99,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/anticoagulacao-warfarina-heparina-novos</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/anticoagulacao-warfarina-heparina-novos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -61,7 +111,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/ultrassom-vascular-diagnostico-primeira-linha</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/ultrassom-vascular-diagnostico-primeira-linha</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -73,7 +123,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/microcirurgia-vascular-reconstrucao-vasos</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/microcirurgia-vascular-reconstrucao-vasos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -85,7 +135,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/varizes-infertilidade-conexao-venosa</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/varizes-infertilidade-conexao-venosa</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -97,7 +147,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/angiografia-mapeamento-vascular</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/angiografia-mapeamento-vascular</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -109,7 +159,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/flebografia-quando-doppler-nao-basta</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/flebografia-quando-doppler-nao-basta</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -121,7 +171,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/vasculite-sistemica-tipos-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/vasculite-sistemica-tipos-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -133,7 +183,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/isquemia-membro-superior-causas</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/isquemia-membro-superior-causas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -145,7 +195,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/sindrome-pos-trombotica-sequelas-tvp</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/sindrome-pos-trombotica-sequelas-tvp</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -157,7 +207,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/paget-schroetter-trombose-subclavia</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/paget-schroetter-trombose-subclavia</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -169,7 +219,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/pos-operatorio-cirurgia-vascular-guia</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/pos-operatorio-cirurgia-vascular-guia</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -181,7 +231,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/livedo-reticular-causas-significado</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/livedo-reticular-causas-significado</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -193,7 +243,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doenca-carotidea-avc-estenose</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doenca-carotidea-avc-estenose</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -205,7 +255,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/edema-membros-inferiores-causas</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/edema-membros-inferiores-causas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -217,7 +267,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doppler-duplo-avaliacao-artrias-veias</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doppler-duplo-avaliacao-artrias-veias</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -229,7 +279,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/terapia-compressao-meias-bandagens</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/terapia-compressao-meias-bandagens</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -241,7 +291,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/hipertensao-portal-causas-manejo</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/hipertensao-portal-causas-manejo</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -253,7 +303,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/varizes-esofagicas-causas-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/varizes-esofagicas-causas-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -265,7 +315,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/glomerulonefrite-hipertensao-conexao-vascular</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/glomerulonefrite-hipertensao-conexao-vascular</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -277,7 +327,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/escleroterapia-varizes-vasos-cosmeticos</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/escleroterapia-varizes-vasos-cosmeticos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -289,7 +339,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/flebectomia-ambulatorial-varizes-procedimento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/flebectomia-ambulatorial-varizes-procedimento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -301,7 +351,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doenca-buerger-tabagismo-vascular</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doenca-buerger-tabagismo-vascular</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -313,7 +363,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/malformacoes-vascuais-tipos-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/malformacoes-vascuais-tipos-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -325,7 +375,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/tromboflebite-superficial-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/tromboflebite-superficial-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -337,7 +387,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doenca-raynaud-dedos-frios-violeta</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doenca-raynaud-dedos-frios-violeta</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -349,7 +399,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/aneurisma-aorta-abdominal-deteccao-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/aneurisma-aorta-abdominal-deteccao-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -361,7 +411,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/insuficiencia-venosa-cronica-estagios-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/insuficiencia-venosa-cronica-estagios-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -373,7 +423,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/varizes-gravidez-causas-prevencao</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/varizes-gravidez-causas-prevencao</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -385,7 +435,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/varizes-em-graca</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/varizes-em-graca</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -397,7 +447,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/prevencao-doencas-vascular-idoso-50</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/prevencao-doencas-vascular-idoso-50</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -409,7 +459,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doppler-vascular-o-que-e-como-funciona</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doppler-vascular-o-que-e-como-funciona</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -421,7 +471,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/entendendo-varizes-tratamentos-modernos</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/entendendo-varizes-tratamentos-modernos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -433,7 +483,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/linfedema-causas-estagios-tratamento</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/linfedema-causas-estagios-tratamento</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -445,7 +495,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/doencas-arteriais-perifericas-sintomas</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/doencas-arteriais-perifericas-sintomas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -457,7 +507,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/ulcera-venosa-causas-tratamento-cicatrizacao</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/ulcera-venosa-causas-tratamento-cicatrizacao</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -469,7 +519,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/laser-vascular-tratamento-varizes</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/laser-vascular-tratamento-varizes</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -481,7 +531,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/cirurgia-vascular-procedimentos-recuperacao</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/cirurgia-vascular-procedimentos-recuperacao</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -493,7 +543,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/trombose-venosa-profunda-sintomas-risco</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/trombose-venosa-profunda-sintomas-risco</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>
@@ -505,7 +555,7 @@
     </news:news>
   </url>
   <url>
-    <loc>https://herlonmoura.clubemkt.digital/trombose-venosa-profunda-sintomas-riscos</loc>
+    <loc>https://herlonmoura.clubemkt.digital/blog/trombose-venosa-profunda-sintomas-riscos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <news:news>

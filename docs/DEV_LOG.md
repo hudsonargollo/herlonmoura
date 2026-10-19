@@ -212,3 +212,164 @@ Implemented a daily cron job that calls the AI generation endpoint at 6:00 AM, c
 - Verify the Worker's `/api/blog/generate` endpoint accepts and uses the `generated` field when inserting posts into `blog_posts`
 - Test a manual fire of the cron script to confirm end-to-end flow
 - The cron job output goes to `/var/log/cron-blog-generator.log` (local-only, no live delivery channel)
+
+---
+
+# Session — 19 October 2026 (afternoon)
+
+Production work: API fixes, SEO audit remediation, `/doc` accuracy pass.
+Live site: https://herlonmoura.clubemkt.digital (Production SHA `10a7be55` at time of writing)
+
+## 1. API fixes
+
+### 1.1 `/api/admin/*` returned HTTP 500 "error code: 1101"
+
+The Cloudflare Pages runtime invokes a handler as `handler(context)` — **one context object**,
+not positional arguments. All 11 handlers under `functions/api/admin/**` were declared as
+`async (request, env) => ...`, so the context object bound to `request` and `env` was
+`undefined`. The first `env.CRM_DB` read threw, which the runtime surfaces as HTTP 500 with
+Worker error 1101.
+
+Diagnosed with a probe file containing both conventions in the same module:
+
+| Handler signature | Result |
+|---|---|
+| `async ({ request, env }) => ...` | `leadCount: 13` |
+| `async (request, env) => ...` | `no binding (env keys: null)` |
+
+Converted all 11 to the destructured form. Internal helpers (`verifyAuth` / `requireEditor` /
+`requireAdmin`) keep `(request, env)` — they are plain functions, not handlers.
+
+### 1.2 `/api/admin/reports/leads` still 500 after 1.1
+
+Its COUNT query reused the main query's `params` array, which carries the trailing
+`LIMIT`/`OFFSET` values. The code then wrapped those *numbers* as `'%50%'`/`'%0%'` LIKE
+patterns and bound them into a statement with zero placeholders → D1 "Wrong number of
+parameter". Rebuilt `countParams` independently from the same filter values.
+
+### 1.3 `/api/crm/email-sequences` did not exist
+
+`app/admin/crm/email/page.tsx` POSTs to `/api/crm/email-sequences` — no such Pages Function
+existed (405). The UI also ignored the response status, so a failed save still showed
+"Sequência salva!". Added the function (GET / POST / DELETE) implementing the contract the UI
+sends (`{ name, steps: [{delayDays, subject, body, trigger}] }`) and made the UI check `res.ok`.
+
+### 1.4 Dead rewrite + middleware (documented, not removed)
+
+`next.config.ts` rewrote `/api/crm/:path*` to `herlonmoura-crm.workers.dev`, which no longer
+resolves. Rewrites are inert under `output: 'export'` anyway — removed, with a comment.
+`middleware.ts` is likewise never copied into `out/`. Both are documented in §4.
+
+## 2. SEO audit remediation (Glacial Multimedia, Oct 2024 — 22 recommendations)
+
+Every recommendation was re-verified against the live site rather than trusting the fix plan.
+
+### Fixed this session
+
+| # | Item | Was | Now |
+|---|---|---|---|
+| — | **Sitemap** | Emitted `/{slug}` for all 43 articles → **every URL 404'd**. Blog articles live at `/blog/{slug}`. | `/blog/{slug}` + 10 static routes = **53 URLs, all returning 200** |
+| — | **og:image / og:url** | Missing (audit's "already in place" list was wrong) | Present, `og:image` = hero-doctor.webp, `twitter:card=summary_large_image` |
+| 9 | **cardio.webm** | 23.3 MB VP9, 2176×1270@60fps, 18 Mbps | 2.25 MB, 1280×748 (−90%). Same duration (10.284s) and frame count (616). Visually verified — no artifacts |
+| — | **HeroSection.tsx video** | `src="/videos/cardio.webm"` → 404 (no `public/videos/` dir) | `/images/videos/cardio.webm` (200) |
+
+### Verified already correct (no action)
+
+- robots.txt (200) · llms.txt (200) · canonical (present) · hreflang pt-BR + x-default
+  (2 occurrences in live HTML) · title 60 chars · meta description 144 chars
+- Alt attributes: **39 images across 15 static pages, 0 missing**
+- Keywords distributed in H1/body · JSON-LD MedicalBusiness · HTTPS · viewport · favicon
+- Page weight: HTML 106 KB, CSS 127 KB, images 164 KB, video 2.25 MB
+
+### Genuinely still open (confirmed, not assumed)
+
+| # | Item | Evidence |
+|---|---|---|
+| 13/14 | **SPF + DMARC** | `host -t TXT herlonmoura.clubemkt.digital` → "has no TXT record"; `_dmarc` → NXDOMAIN. No MX either. Mail falls back to `onboarding@resend.dev` |
+| 6 | **Link building** | 0 backlinks |
+| 16–21 | **Social profiles** | Only Instagram linked. Facebook, X, LinkedIn, YouTube absent from the site and from JSON-LD `sameAs`. No Facebook Pixel |
+| 22 | **Inline styles** | 334 blocks — real, but mechanical refactor with render risk; left as planned work |
+| 12 | **Inline styles** | Same as above |
+
+### Correction to the audit's "already in place" list
+
+The plan marked several items done that were not: the sitemap was entirely broken, `og:image`
+and `og:url` were absent, and the `/doc` page's own claims were inaccurate. The audit's
+**original** findings (no robots.txt, no canonical, no hreflang) were accurate for Oct 2024 —
+those were genuinely fixed. The *fix plan* overstated what was done.
+
+## 3. `/doc` page — accuracy pass
+
+The page is a one-person guide, not an attribution list. Removed "e Equipe" / "equipe"
+references throughout (per project convention).
+
+Corrected figures to measured values:
+
+| Claim | Was | Now |
+|---|---|---|
+| Tokens de design | 48 | **287** (counted in `app/globals.css`) |
+| CSS custom props | 60 | **287** |
+| Componentes | 12 | **34** React components |
+| Páginas | 21 | **24** routes |
+| Artigos de blog | 42 | **43** |
+| Endpoints API | 7 | **17** |
+| Ferramentas interativas | 3 | **4** |
+| "+90% orgânico em 6 meses" | asserted | **removed** — unverifiable claim, replaced with "53 URLs indexáveis" |
+| "90/100 PageSpeed" | asserted | **removed** — unmeasured |
+| "geração automatizada diária via cron" | asserted as working | **corrected** — the cron has never produced a post (§4) |
+| hreflang | "configurado no layout" | now states it is via `metadata.alternates`, verified in live HTML |
+
+New "Próximos passos" items reflecting real state: broken blog cron, SPF/DMARC (with the exact
+records to add), inline styles, backlinks/social.
+
+## 4. Known-broken: the daily blog generator
+
+`scripts/cron/generate-blog-daily.py` is installed and runs daily at 06:00, but has **never
+succeeded**:
+
+```
+$ cat /var/log/cron-blog-generator.log
+ERROR: ADMIN_API_TOKEN is required for cron blog generation. Please set it in the crontab or environment.
+```
+
+The script requires `ADMIN_API_TOKEN` (a JWT with admin/editor role). The crontab exports
+`CRM_API_URL` and `WORKER_URL` but **not** `ADMIN_API_TOKEN`, so it exits 2 every run.
+
+Consequences:
+- `blog_posts` table has **0 rows**.
+- `GET /api/blog` returns `{"posts":[]}` — it reads from D1, not markdown.
+- The public blog works only because `app/blog/**` renders from
+  `lib/blog-data.generated.ts` (43 markdown files), not from the API.
+- The admin blog approval queue is therefore always empty.
+
+Fix path: mint an admin JWT, export `ADMIN_API_TOKEN` in the crontab, then backfill
+`blog_posts` from the 43 markdown files (or switch `/api/blog` to read markdown as a
+fallback). Documented in `/doc` → "Próximos passos".
+
+## 5. Files changed this session
+
+| File | Change |
+|---|---|
+| `functions/api/admin/reports.ts` | 4 handlers → destructured context |
+| `functions/api/admin/reports/leads.ts` | handler + COUNT query params |
+| `functions/api/admin/reports/visitors.ts` | handler |
+| `functions/api/admin/reports/procedures.ts` | handler |
+| `functions/api/admin/users.ts` | 4 handlers |
+| `functions/api/crm/email-sequences.ts` | **new** — GET/POST/DELETE |
+| `app/admin/crm/email/page.tsx` | check `res.ok`, surface real error |
+| `scripts/generate-sitemap.ts` | `/blog/{slug}` + static routes; XML-escape titles |
+| `app/layout.tsx` | `og:image`, `og:url`, `og:siteName`, `twitter.card/images` |
+| `components/HeroSection.tsx` | dead `/videos/` → `/images/videos/` |
+| `app/doc/page.tsx` | metric corrections, false-claim removal, audit checklist rewrite |
+| `next.config.ts` | removed dead rewrite (documented) |
+| `public/images/videos/cardio.webm` | 23.3 MB → 2.25 MB |
+| `video-masters/cardio-original-23mb.webm` | original archived (gitignored) |
+
+## 6. Verification
+
+- `npx tsc --noEmit` — exit 0
+- `npx vitest --run` — **242 passed (14 files)**
+- `npm run build` — sitemap 53 URLs
+- Live: all 53 sitemap URLs return 200 · `og:image` 200 (104 KB) · `/doc` updated ·
+  `cardio.webm` `content-length: 2253098`
+- Authenticated admin smoke test: 10/10 endpoints 200
