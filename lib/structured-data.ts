@@ -137,7 +137,7 @@ export function blogPostingSchemaItem(slug: string) {
       '@type': 'Organization',
       name: 'Dr. Herlon Moura — Angiologia e Cirurgia Vascular',
       url: `${SITE_URL}`,
-      logo: { '@type': 'ImageObject', url: `${SITE_URL}/images/brand/dr-photoroom.png` },
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/images/brand/dr-photoroom.webp` },
     },
     articleSection: cleanTitle,
     keywords: [post.targetKeyword, ...post.secondaryKeywords],
@@ -184,7 +184,7 @@ export function blogPostingSchema() {
       url: `${SITE_URL}`,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/images/brand/dr-photoroom.png`,
+        url: `${SITE_URL}/images/brand/dr-photoroom.webp`,
       },
     },
     blogPost: items,

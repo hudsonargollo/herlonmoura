@@ -109,7 +109,7 @@ export default function LoginPage() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/brand/logo.png"
+                src="/images/brand/logo.webp"
                 alt="Dr. Herlon Moura"
                 className="h-12 w-auto object-contain"
               />
@@ -127,7 +127,7 @@ export default function LoginPage() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/brand/dr-photoroom.png"
+                src="/images/brand/dr-photoroom.webp"
                 alt="Dr. Herlon Moura"
                 className="h-full w-full object-cover object-top"
               />

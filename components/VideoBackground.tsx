@@ -7,7 +7,7 @@ interface VideoBackgroundProps {
   webmSrc: string;
   /** MP4 fallback source. */
   mp4Src: string;
-  /** Poster frame shown before the video buffers. */
+  /** Poster frame shown before the video buffers (WebP, ~8KB). */
   posterSrc: string;
   /** object-position for the video, e.g. 'center' or '60% 40%'. */
   objectPosition?: string;

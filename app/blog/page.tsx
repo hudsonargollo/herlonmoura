@@ -58,7 +58,7 @@ export default function BlogPage() {
           {/* Right: hero image (cropped to fill) */}
           <div
             className="relative w-full min-h-[55vh] min-w-[400px] border border-white/10"
-            style={{ backgroundImage: 'url(/images/dr-herlon-moura.png)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }}
+            style={{ backgroundImage: 'url(/images/dr-herlon-moura.webp)', backgroundSize: 'cover', backgroundPosition: 'center 30%' }}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10" />
           </div>

@@ -30,7 +30,7 @@ export function Logo({
     const imgContent = (
       <div className={`relative inline-flex items-center ${className}`}>
         <Image
-          src="/images/logo.png"
+          src="/images/logo.webp"
           alt="Dr. Herlon Moura - Angiologista e Cirurgião Vascular"
           width={width}
           height={height}

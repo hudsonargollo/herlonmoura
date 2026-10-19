@@ -129,7 +129,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 rounded-3xl bg-surgical-teal/20 blur-2xl" />
               <div className="relative z-10 overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/brand/dr-photoroom.png"
+                  src="/images/brand/dr-photoroom.webp"
                   alt="Dr. Herlon Moura dos Santos"
                   width={360}
                   height={520}
