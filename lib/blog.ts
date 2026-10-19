@@ -74,7 +74,7 @@ function toPost(file: string, meta: Record<string, string>, content: string): Bl
     date: meta.date ?? '',
     readingTime: `${readTime} min`,
     category: meta.category ?? 'Geral',
-    image: meta.image ?? `/images/blog/${base}.png`,
+    image: meta.image ?? `/images/blog/${base}.webp`,
     author: meta.author ?? 'Dr. Herlon Moura',
     metaTitle: meta.meta_title ?? meta.title ?? base.replace(/-/g, ' '),
     metaDescription:

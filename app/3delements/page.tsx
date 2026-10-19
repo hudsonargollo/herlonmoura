@@ -479,7 +479,7 @@ export default function ThreeDElementsPage() {
 npx --yes img2threejs@latest install
 
 // Gerar um modelo a partir de uma imagem:
-/img2threejs Rebuild the object in ./public/images/support/body-vascular-network.png 
+/img2threejs Rebuild the object in ./raw-masters/images/support/body-vascular-network.png 
   as a procedural Three.js model.
   Keep its proportions, silhouette and colours.`}
               </pre>

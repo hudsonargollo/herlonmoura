@@ -41,6 +41,12 @@ yarn-error.log*
 # static export so every deploy doesn't ship dead weight.
 /video-masters/
 
+# Raw raster masters (unoptimized PNG/JPG exports) at repo root. public/ is the
+# static export root, so a raw asset there is uploaded to the CDN on every
+# deploy. Processed .webp derivatives live in public/images/. Keep the source
+# out of git and out of the export.
+/raw-masters/
+
 # OS
 Thumbs.db
 *.pem

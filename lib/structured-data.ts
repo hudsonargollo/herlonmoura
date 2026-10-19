@@ -47,7 +47,7 @@ export function medicalBusinessSchema() {
     email: EMAIL,
     address: practiceAddress,
     geo: geoCoordinates,
-    image: `${SITE_URL}/images/brand/dr-photoroom.png`,
+    image: `${SITE_URL}/images/brand/dr-photoroom.webp`,
     priceRange: '$$',
     medicalSpecialty: ['Vascular', 'Angiology'],
     availableService: [
@@ -79,7 +79,7 @@ export function physicianSchema() {
     givenName: 'Herlon',
     familyName: 'Moura dos Santos',
     url: `${SITE_URL}/sobre`,
-    image: `${SITE_URL}/images/brand/dr-photoroom.png`,
+    image: `${SITE_URL}/images/brand/dr-photoroom.webp`,
     telephone: PHONE_TEL,
     email: EMAIL,
     address: practiceAddress,
