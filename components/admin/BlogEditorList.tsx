@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { FileText, Hash, Calendar, Clock, Tag, Search, Plus, MoreHorizontal, Edit3, Trash2, Eye } from 'lucide-react';
+import { FileText, Hash, Calendar, Clock, Tag, Search, Plus, MoreHorizontal, Edit3, Trash2, Eye, Sparkles, Bot } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { BlogEditor, type BlogEditorFormData } from './BlogEditor';
 import { api } from '@/lib/admin/api';
@@ -20,6 +20,7 @@ interface BlogPost {
   meta_description: string;
   questionnaire_enabled: boolean;
   freebie_name: string | null;
+  generated?: boolean;
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -165,7 +166,9 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
                 <tr key={post.slug} className="transition-colors hover:bg-surgical-teal/5">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surgical-teal/15 text-surgical-teal flex-shrink-0"><FileText className="h-4 w-4" /></div>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surgical-teal/15 text-surgical-teal flex-shrink-0">
+                        {post.generated ? <Bot className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                      </div>
                       <div>
                         <p className="font-medium text-neutral-light text-sm">{post.title}</p>
                         <p className="text-[11px] text-neutral-medium">{post.slug}</p>
@@ -173,7 +176,16 @@ export function BlogEditorList({ onSelectPost, selectedPost }: BlogEditorListPro
                     </div>
                   </td>
                   <td className="px-4 py-3 text-neutral-light">{post.category}</td>
-                  <td className="px-4 py-3"><span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${STATUS_COLORS[post.status]}`}>{STATUS_LABELS[post.status] || post.status}</span></td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-1.5">
+                      <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${STATUS_COLORS[post.status]}`}>{STATUS_LABELS[post.status] || post.status}</span>
+                      {post.generated && (
+                        <span className="inline-flex items-center rounded-full border border-surgical-teal/30 bg-surgical-teal/10 px-2 py-0.5 text-[10px] font-medium text-surgical-teal">
+                          <Sparkles className="mr-0.5 h-3 w-3" />Gerado
+                        </span>
+                      )}
+                    </div>
+                  </td>
                   <td className="px-4 py-3 text-neutral-medium">{post.date?.slice(0, 10)}</td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1">

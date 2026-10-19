@@ -1,0 +1,34 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login
+Disallow: /calculadora-de-risco-de-tvp/*?*
+Disallow: /freebies/*?*
+
+Sitemap: https://herlonmoura.clubemkt.digital/sitemap.xml
+
+# AI crawlers — allow all AI training crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT
+Allow: /
+
+User-agent: BingBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /

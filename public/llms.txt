@@ -1,0 +1,45 @@
+# https://llmstxt.org
+
+Purpose: This file describes the Dr. Herlon Moura website's resources to help AI bots
+navigate and understand the site's content.
+
+## Resources
+
+### Site Map
+- https://herlonmoura.clubemkt.digital/ — Home page
+- https://herlonmoura.clubemkt.digital/doc — Platform documentation
+- https://herlonmoura.clubemkt.digital/sobre — About Dr. Herlon Moura
+- https://herlonmoura.clubemkt.digital/contato — Contact page
+- https://herlonmoura.clubemkt.digital/blog — Blog (42 articles on vascular health)
+- https://herlonmoura.clubemkt.digital/calculadora-de-risco-de-tvp — DVT Risk Calculator
+- https://herlonmoura.clubemkt.digital/varizes/assessment — Varicose Vein Assessment
+- https://herlonmoura.clubemkt.digital/procedimentos — Procedures and treatments
+
+### Key Resources for AI Bots
+- https://herlonmoura.clubemkt.digital/sitemap.xml — Full XML sitemap
+- https://herlonmoura.clubemkt.digital/robots.txt — Crawling rules
+- https://herlonmoura.clubemkt.digital/doc — Platform documentation, design system, and changelog
+
+## About the Site
+
+Dr. Herlon Moura is an angiologist and vascular surgeon based in Salvador, Bahia, Brazil.
+This site provides educational content about vascular health, varicose veins, blood clots (DVT),
+and offers interactive tools for risk assessment.
+
+## Contact Information
+
+- Phone: +55 71 99915-9975
+- Address: R. Eng. Célso Tôrres, 654 - Graça, Salvador BA, 40150-000, Brasil
+- Email: contato@herlonmoura.com.br
+
+## Key Topics
+
+- Angiology and vascular surgery
+- Varicose vein treatment (laser, sclerotherapy, microsurgery)
+- Deep vein thrombosis (DVT) risk assessment
+- Vascular disease prevention
+- Doppler ultrasound
+- Minimally invasive vascular procedures
+- Patient education and health literacy
+
+> For full content, see https://herlonmoura.clubemkt.digital/llms-full.txt

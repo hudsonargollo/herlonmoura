@@ -1,0 +1,46 @@
+# https://llmstxt.org
+
+Purpose: Full resource content for AI bots crawling the Dr. Herlon Moura website.
+This is the extended version of llms.txt with full page content summaries.
+
+## Resource: Home Page
+URL: https://herlonmoura.clubemkt.digital/
+Content: Landing page for Dr. Herlon Moura, angiologist and vascular surgeon in Salvador, BA. Features: patient education content, interactive risk assessment tools (DVT calculator, varicose vein assessment), online appointment scheduling, and contact form.
+
+## Resource: Blog
+URL: https://herlonmoura.clubemkt.digital/blog
+Content: 42 educational articles about vascular health written in Portuguese for Brazilian patients. Topics include varicose veins, blood clots, vascular disease prevention, Doppler ultrasound, and minimally invasive treatments.
+
+## Resource: DVT Risk Calculator
+URL: https://herlonmoura.clubemkt.digital/calculadora-de-risco-de-tvp
+Content: Interactive tool that assesses a patient's risk of Deep Vein Thrombosis (TVP) based on answers to clinical risk factor questions.
+
+## Resource: Varicose Vein Assessment
+URL: https://herlonmoura.clubemkt.digital/varizes/assessment
+Content: Interactive questionnaire to assess varicose vein symptoms and provide initial guidance.
+
+## Resource: About
+URL: https://herlonmoura.clubemkt.digital/sobre
+Content: Dr. Herlon Moura dos Santos biography, medical training, specialties, and clinic location in Salvador, BA.
+
+## Resource: Contact
+URL: https://herlonmoura.clubemkt.digital/contato
+Content: Contact form, clinic address (R. Eng. Célso Tôrres, 654 - Graça, Salvador BA, 40150-000), phone number (+55 71 99915-9975), and appointment scheduling.
+
+## Resource: Procedures
+URL: https://herlonmoura.clubemkt.digital/procedimentos-e-procedimentos
+Content: List of vascular procedures performed by Dr. Herlon Moura: Doppler Vascular, Laser Varicose Vein Treatment, Sclerotherapy, Microsurgery, Port-o-Cath, Permcath, Arteriovenous Fistula, Thrombosis Treatment (venous and arterial), Chronic Arterial Occlusion, Lower Extremity Angioplasty, Carotid Artery Treatment, Endovascular Aneurysm Repair (EVAR), Aortic Dissection, Visceral Aneurysms.
+
+## Resource: Doc (Platform Documentation)
+URL: https://herlonmoura.clubemkt.digital/doc
+Content: Technical documentation of the website platform — design system, architecture, what was built, and what's planned. Includes design tokens, tech stack (Next.js 15, React 19, Tailwind CSS, Framer Motion, Cloudflare Pages), and before/after comparison of the WordPress-to-modern-platform migration.
+
+## Contact
+
+- Phone: +55 71 99915-9975
+- Address: R. Eng. Célso Tôrres, 654 - Graça, Salvador BA, 40150-000, Brasil
+- Email: contato@herlonmoura.com.br
+
+## Medical Disclaimer
+
+The information provided on this website is for educational purposes only and should not be considered medical advice. Always consult a qualified healthcare professional for diagnosis and treatment.

@@ -70,8 +70,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     if (!user) return json(401, { error: "Unauthorized" });
     if (user.role === "viewer") return json(403, { error: "Viewers cannot generate posts" });
 
-    const body = (await request.json()) as { topics?: string[]; count?: number; category?: string };
-    const { topics, count = 1, category } = body;
+    const body = (await request.json()) as { topics?: string[]; count?: number; category?: string; generated?: boolean };
+    const { topics, count = 1, category, generated = false } = body;
 
     if (!topics || !Array.isArray(topics) || topics.length === 0) {
       return json(400, { error: "Topics array is required" });
@@ -84,7 +84,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ topics, count, category }),
+      body: JSON.stringify({ topics, count, category, generated }),
     });
 
     const workerData = (await workerRes.json()) as any;

@@ -33,9 +33,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
+  title: "Dr. Herlon Moura - Angiologia e Cirurgia Vascular - Salvador",
   description:
-    "Consulte com Dr. Herlon Moura, especialista em angiologia e cirurgia vascular em Salvador, Bahia. Tratamento de varizes, trombose venosa profunda e doenças vasculares.",
+    "Angiologista e cirurgião vascular em Salvador, BA. Tratamento de varizes, trombose venosa profunda e doenças vasculares com tecnologia de ponta.",
   keywords: [
     "angiologista Salvador",
     "cirurgia vascular",
@@ -43,10 +43,17 @@ export const metadata: Metadata = {
     "trombose venosa profunda",
     "especialista vascular",
   ],
+  alternates: {
+    canonical: "https://herlonmoura.clubemkt.digital",
+    languages: {
+      "pt-BR": "https://herlonmoura.clubemkt.digital",
+      "x-default": "https://herlonmoura.clubemkt.digital",
+    },
+  },
   openGraph: {
-    title: "Dr. Herlon Moura - Especialista em Angiologia e Cirurgia Vascular",
+    title: "Dr. Herlon Moura - Angiologia e Cirurgia Vascular em Salvador",
     description:
-      "Consulte com Dr. Herlon Moura, especialista em angiologia e cirurgia vascular em Salvador, Bahia.",
+      "Angiologista e cirurgião vascular em Salvador, BA. Tratamento de varizes, trombose e doenças vasculares.",
     type: "website",
   },
 };

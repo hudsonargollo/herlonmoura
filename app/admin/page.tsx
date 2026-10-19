@@ -10,7 +10,7 @@ import { HeartPulseSvg } from '@/components/ui/MedicalIcons';
 import {
   Users, TrendingUp, FileText, Clock, MessageSquare, Activity,
   Plus, Eye, Stethoscope, BarChart3, ChevronRight, PlusCircle, Edit3,
-  Trash2, CheckCircle2, XCircle, Send, Search, ChevronDown
+  Trash2, CheckCircle2, XCircle, Send, Search, ChevronDown, Bot
 } from 'lucide-react';
 
 type Section = 'dashboard' | 'crm' | 'leads' | 'blog' | 'analytics';
@@ -54,6 +54,7 @@ interface BlogPost {
   meta_description: string;
   questionnaire_enabled: boolean;
   freebie_name: string | null;
+  generated?: boolean;
 }
 
 interface Funnel {
@@ -472,12 +473,14 @@ function LeadsTable({ leads, router }: { leads: Lead[]; router: any }) {
 function BlogPostTable({ posts, fetchAll, router }: { posts: BlogPost[]; fetchAll: () => void; router: any }) {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'approval' | 'published' | 'archived'>('all');
+  const [generatedOnly, setGeneratedOnly] = useState(false);
   const [actionMsg, setActionMsg] = useState<string | null>(null);
 
   const filtered = posts.filter((p) => {
     const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) || p.slug.toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === 'all' || p.status === statusFilter;
-    return matchSearch && matchStatus;
+    const matchGenerated = !generatedOnly || p.generated === true;
+    return matchSearch && matchStatus && matchGenerated;
   });
 
   const handleDelete = async (slug: string) => {
@@ -533,6 +536,16 @@ function BlogPostTable({ posts, fetchAll, router }: { posts: BlogPost[]; fetchAl
           <Button variant="ghost" size="sm" onClick={fetchAll}>
             <Clock className="mr-1.5 h-4 w-4" /> Atualizar
           </Button>
+          <button
+            onClick={() => setGeneratedOnly(!generatedOnly)}
+            className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+              generatedOnly
+                ? 'border-surgical-teal/30 bg-surgical-teal/10 text-surgical-teal'
+                : 'border-neutral-dark bg-transparent text-neutral-medium hover:bg-neutral-medium/10'
+            }`}
+          >
+            <Bot className="h-3 w-3" /> Apenas gerados
+          </button>
         </div>
       </div>
 
