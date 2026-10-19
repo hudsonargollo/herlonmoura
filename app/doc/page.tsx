@@ -29,7 +29,6 @@ import { CliniqIcon } from '@/components/CliniqIcon';
 const TOKEN = {
   canvas: 'var(--s-color-bg-canvas)',
   surface: 'var(--s-color-bg-surface)',
-  surfaceAlt: 'var(--s-color-bg-surface-2)',
   heading: 'var(--s-color-content-heading)',
   body: 'var(--s-color-content-body)',
   muted: 'var(--s-color-content-muted)',
