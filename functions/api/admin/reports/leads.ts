@@ -77,10 +77,18 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     params.push(limit, offset);
 
     const rows = await db.prepare(sql).bind(...params).all();
+
+    // Build the COUNT query with its own params array. Reusing `params` here is
+    // a bug: it carries the trailing LIMIT/OFFSET values (numbers) into the
+    // count query, which has no placeholders for them, and the old code then
+    // wrapped those numbers as '%50%'/'%0%' LIKE patterns. Result: D1 throws
+    // "Wrong number of parameter" and the route 500s.
     const countSql = `SELECT COUNT(*) as c FROM leads WHERE 1=1` + (search ? ` AND (name LIKE ? OR whatsapp LIKE ? OR email LIKE ?)` : '') + (status ? ` AND status = ?` : '') + (source ? ` AND source = ?` : '');
-    const countParams = params.slice(0, params.length - 2);
-    const likeParams = params.slice(params.length - 2).map((v: string) => `%${v}%`);
-    const totalRows = await db.prepare(countSql).bind(...countParams, ...likeParams).first() as any;
+    const countParams: any[] = [];
+    if (search) countParams.push(`%${search}%`, `%${search}%`, `%${search}%`);
+    if (status) countParams.push(status);
+    if (source) countParams.push(source);
+    const totalRows = await db.prepare(countSql).bind(...countParams).first() as any;
 
     return json(200, {
       leads: (rows?.results ?? []).map((r: any) => ({
