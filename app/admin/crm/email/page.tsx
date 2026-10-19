@@ -66,10 +66,22 @@ function EmailSequenceDesignerContent() {
   const handleSave = async () => {
     setSaving(true); setSaveMsg(null);
     try {
-      await fetch('/api/crm/email-sequences', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, steps }) });
-      setSaveMsg('Sequência salva!');
-    } catch (e: any) { setSaveMsg(`Erro: ${e.message}`); }
-    finally { setSaving(false); }
+      const res = await fetch('/api/crm/email-sequences', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, steps }),
+      });
+      // Check the status: this endpoint used to 405 (no such route) and the UI
+      // still showed "Sequência salva!" because it never looked at the response.
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setSaveMsg(`Erro: ${data.error || `HTTP ${res.status}`}`);
+        return;
+      }
+      setSaveMsg(`Sequência salva! ${data.count ?? steps.length} passo(s).`);
+    } catch (e: any) {
+      setSaveMsg(`Erro: ${e.message}`);
+    } finally { setSaving(false); }
   };
 
   return (
