@@ -132,6 +132,14 @@ To rollback to a previous deployment:
 - Verify `npm run build` works locally
 - Ensure all dependencies are in `package.json`
 
+### Image Assets (WebP)
+
+All content images are pre-optimized as WebP and committed in the repo:
+- **Blog posts (42)**: `public/images/blog/*.webp` — generated from blog `.png` originals, ~95% smaller
+- **Site assets**: `public/images/banner-*.webp`, `public/images/brand/*.webp`, `public/images/support/*.webp`, `public/images/fotos/*.webp`, `public/images/team/*.webp`, `public/images/logo.webp`, `public/images/favicon.webp`, `public/images/videos/herlonmoura-hero-poster.webp`
+- Live code references `.webp` only (verified: 0 `.jpg` references in `app/`, `components/`, `lib/`)
+- Legacy `.jpg` files remain on disk as untouched fallbacks for reference
+
 ### Pages Not Loading
 
 - Check DNS configuration
