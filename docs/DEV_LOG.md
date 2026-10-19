@@ -152,10 +152,61 @@ Cross-referenced the on-page SEO checklist against `docs/SEO_AUDIT_FIX_PLAN.md` 
 | Task | Why | Estimated Effort |
 |------|-----|-----------------|
 | Inline style removal across all pages | 189 inline style blocks remain in pages outside `/doc` — TOKEN.* pattern migration to Tailwind classes | 4-6 hours |
-| Image optimization remaining pages | Site totals 23.2MB page weight — `/doc` is fully optimized at 155kB, but home and blog pages need WebP + compression | 2-3 hours |
-| Render-blocking CSS deferral | Next.js CSS chunks (16.78KB, 3.01KB, 4.11KB) — needs `next/script` priority optimization | Medium |
-| SPF/DMARC DNS records | Cloudflare DNS TXT records for Resend SPF and DMARC | 15 min |
-| Link building | 0 backlinks — patient review syndication, medical directory listings, guest posts | Long |
-| Google Business Profile | External — register clinic | Long |
-| Social profiles (Facebook, X, LinkedIn, YouTube) | External — create + link | Long |
-| Mobile PageSpeed LCP | Currently 2.7s after image optimization — needs render-blocking CSS fix for full improvement | Medium |
+|| Image optimization remaining pages | Site totals 23.2MB page weight — `/doc` is fully optimized at 155kB, but home and blog pages need WebP + compression | 2-3 hours |
+|| Render-blocking CSS deferral | Next.js CSS chunks (16.78KB, 3.01KB, 4.11KB) — needs `next/script` priority optimization | Medium |
+|| SPF/DMARC DNS records | Cloudflare DNS TXT records for Resend SPF and DMARC | 15 min |
+|| Link building | 0 backlinks — patient review syndication, medical directory listings, guest posts | Long |
+|| Google Business Profile | External — register clinic | Long |
+|| Social profiles (Facebook, X, LinkedIn, YouTube) | External — create + link | Long |
+|| Mobile PageSpeed LCP | Currently 2.7s after image optimization — needs render-blocking CSS fix for full improvement | Medium |
+
+---
+
+## 11. Phase 2: Daily Blog Post Generator
+
+### Problem
+The content strategy requires consistent, fresh blog posts targeting long-tail vascular health keywords (e.g. "sintomas de trombose venosa profunda"). Manual authoring is slow; the AI Worker binding can auto-generate posts but there was no orchestration layer to call it daily and feed results into the approval queue.
+
+### Solution
+Implemented a daily cron job that calls the AI generation endpoint at 6:00 AM, creating one new draft post per day from a rotating topic list. Posts are created as `draft` status with `generated = 1` for human review.
+
+### Files Created
+| File | Purpose |
+|------|---------|
+| `scripts/cron/generate-blog-daily.py` | Python script that calls `/api/blog/generate` on the Worker URL with a rotating topic from an 8-topic vascular health content plan |
+| `wrangler/d1/migrations/005_blog_generated.sql` | D1 migration adding `generated BOOLEAN DEFAULT 0` column to `blog_posts` table + index |
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `functions/api/blog/generate.ts` | Added `generated?: boolean` to request body, passed through to Worker API call |
+| `app/admin/page.tsx` | Added `generated?: boolean` to BlogPost interface; added "Apenas gerados" filter toggle (Bot icon) in BlogPostTable; added `Bot` to lucide imports |
+| `components/admin/BlogEditorList.tsx` | Added `generated?: boolean` to BlogPost interface; Bot icon replaces FileText for generated posts; added "Gerado" badge with Sparkles icon next to status |
+
+### Cron Job
+- Schedule: `0 6 * * *` (daily at 6:00 AM UTC)
+- Command: `cd /root/ClubeMkt/herlonmoura && CRM_API_URL=https://herlonmoura.clubemkt.digital WORKER_URL=https://herlon-moura-crm.hudsonargollo2.workers.dev /usr/bin/python3 scripts/cron/generate-blog-daily.py >> /var/log/cron-blog-generator.log 2>&1`
+- Rotating topic list (8 topics, cycled by day-of-year):
+  1. sintomas de trombose venosa profunda
+  2. diferenca entre varizes e veias spider
+  3. como prevenir doencas vasculares
+  4. quando procurar um angiologista
+  5. tratamento de varizes com espuma
+  6. riscos da trombose durante a viagem
+  7. como identificar linfedema precocemente
+  8. cirurgia ambulatorial de varizes
+
+### Admin UI
+- Blog editor list shows "Gerado" badge (Sparkles icon, teal) next to the status for AI-generated drafts
+- Bot icon (instead of FileText) indicates generated posts at a glance
+- "Apenas gerados" toggle filter in the dashboard's BlogPostTable isolates generated drafts for review
+
+### Verification
+- Build: `npm run build` passes. All 71 static pages prerender.
+- Cron: scheduled via `crontab -e`, confirmed with `crontab -l`
+- Migration: SQL file created, ready to run via `npx wrangler d1 execute`
+
+### What's Left
+- Run the D1 migration on the remote database to add the `generated` column
+- Verify the Worker's `/api/blog/generate` endpoint accepts and uses the `generated` field when inserting posts
+- Test a manual fire of the cron script to confirm the end-to-end flow
