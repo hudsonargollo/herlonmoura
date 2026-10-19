@@ -202,11 +202,13 @@ Implemented a daily cron job that calls the AI generation endpoint at 6:00 AM, c
 - "Apenas gerados" toggle filter in the dashboard's BlogPostTable isolates generated drafts for review
 
 ### Verification
-- Build: `npm run build` passes. All 71 static pages prerender.
-- Cron: scheduled via `crontab -e`, confirmed with `crontab -l`
-- Migration: SQL file created, ready to run via `npx wrangler d1 execute`
+- Build: `npm run build` passes. All 71 static pages prerender, `/doc` at 11.9 kB.
+- Cron: scheduled via `crontab -l` — `0 6 * * * cd /root/ClubeMkt/herlonmoura && CRM_API_URL=... WORKER_URL=... python3 scripts/cron/generate-blog-daily.py >> /var/log/cron-blog-generator.log 2>&1`
+- Migration: SQL file created at `wrangler/d1/migrations/005_blog_generated.sql`
+- Code: TypeScript passes, no errors on build
 
 ### What's Left
-- Run the D1 migration on the remote database to add the `generated` column
-- Verify the Worker's `/api/blog/generate` endpoint accepts and uses the `generated` field when inserting posts
-- Test a manual fire of the cron script to confirm the end-to-end flow
+- Run the D1 migration on the remote database: `npx wrangler d1 execute herlonmoura_crm --remote --file=wrangler/d1/migrations/005_blog_generated.sql`
+- Verify the Worker's `/api/blog/generate` endpoint accepts and uses the `generated` field when inserting posts into `blog_posts`
+- Test a manual fire of the cron script to confirm end-to-end flow
+- The cron job output goes to `/var/log/cron-blog-generator.log` (local-only, no live delivery channel)
