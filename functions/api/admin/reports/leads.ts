@@ -52,7 +52,7 @@ async function requireEditor(request: Request, env: Env): Promise<{ sub: string;
   return user;
 }
 
-export const onRequestGet: PagesFunction<Env> = async (request, env) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireEditor(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {

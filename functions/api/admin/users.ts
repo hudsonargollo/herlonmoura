@@ -68,7 +68,7 @@ async function requireAdmin(request: Request, env: Env): Promise<{ sub: string; 
 
 // ── Users CRUD ───────────────────────────────────────────────────────
 
-export const onRequestGet: PagesFunction<Env> = async (request, env) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireAdmin(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
@@ -80,7 +80,7 @@ export const onRequestGet: PagesFunction<Env> = async (request, env) => {
   }
 };
 
-export const onRequestPost: PagesFunction<Env> = async (request, env) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireAdmin(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
@@ -114,7 +114,7 @@ export const onRequestPost: PagesFunction<Env> = async (request, env) => {
   }
 };
 
-export const onRequestPatch: PagesFunction<Env> = async (request, env) => {
+export const onRequestPatch: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireAdmin(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
@@ -141,7 +141,7 @@ export const onRequestPatch: PagesFunction<Env> = async (request, env) => {
   }
 };
 
-export const onRequestDelete: PagesFunction<Env> = async (request, env) => {
+export const onRequestDelete: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireAdmin(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {

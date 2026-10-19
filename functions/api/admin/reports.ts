@@ -62,7 +62,7 @@ async function requireEditor(request: Request, env: Env): Promise<{ sub: string;
 
 // ── GET /api/admin/reports ───────────────────────────────────────────
 
-export const onRequestGet: PagesFunction<Env> = async (request, env) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireEditor(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
@@ -171,7 +171,7 @@ export const onRequestGet: PagesFunction<Env> = async (request, env) => {
 
 // ── GET /api/admin/reports/leads ─────────────────────────────────────
 
-export const onRequestGetLeads: PagesFunction<Env> = async (request, env) => {
+export const onRequestGetLeads: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireEditor(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
@@ -218,7 +218,7 @@ export const onRequestGetLeads: PagesFunction<Env> = async (request, env) => {
 
 // ── GET /api/admin/reports/visitors ──────────────────────────────────
 
-export const onRequestGetVisitors: PagesFunction<Env> = async (request, env) => {
+export const onRequestGetVisitors: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireEditor(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
@@ -253,7 +253,7 @@ export const onRequestGetVisitors: PagesFunction<Env> = async (request, env) => 
 
 // ── GET /api/admin/reports/procedures ────────────────────────────────
 
-export const onRequestGetProcedures: PagesFunction<Env> = async (request, env) => {
+export const onRequestGetProcedures: PagesFunction<Env> = async ({ request, env }) => {
   const user = await requireEditor(request, env);
   if (!user) return json(401, { error: 'Unauthorized' });
   try {
