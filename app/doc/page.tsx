@@ -294,10 +294,10 @@ function SectionBlock({ title, icon: IconComponent, items }: { title: string; ic
   const Icon = IconComponent as React.FC<{ className?: string; style?: React.CSSProperties }>;
   return (
     <section className="mb-16">
-      <div className="mb-8 flex items-center gap-3">
+      <div className="mb-8 flex flex-col items-start gap-3 sm:items-center sm:flex-row">
         <div
           className="flex h-10 w-10 items-center justify-center rounded-xl"
-          style={{ backgroundColor: 'bg-primary/12' }}
+          style={{ backgroundColor: 'rgba(32, 96, 149, 0.12)' }}
         >
           <Icon className="h-5 w-5" style={{ color: 'var(--s-color-action-primary)' }} />
         </div>
@@ -395,7 +395,7 @@ function BeforeAfterCard({ item }: { item: SectionItem }) {
         {/* After column */}
         <div className="p-6 md:p-7">
           <div className="mb-4 flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'bg-teal-500/10' }}>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)' }}>
               {item.afterIcon && (
                 <item.afterIcon className="h-5 w-5" style={{ color: '#10B981' }} />
               )}
@@ -405,7 +405,7 @@ function BeforeAfterCard({ item }: { item: SectionItem }) {
           <p className="mb-5 text-xs leading-relaxed" style={{ color: 'var(--s-color-content-body)' }}>{item.after}</p>
           <div
             className="flex h-20 w-full items-center justify-center rounded-xl"
-            style={{ backgroundColor: 'bg-primary/12' }}
+            style={{ backgroundColor: 'rgba(32, 96, 149, 0.12)' }}
           >
             {item.illustration}
           </div>
@@ -626,7 +626,7 @@ export default function DocPage() {
       {/* Design System — tokens em ação */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
+          <div className="mb-12 text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(32, 96, 149, 0.30)', color: 'var(--s-color-action-primary)', backgroundColor: 'rgba(18, 26, 47, 0.08)' }}>
               <Layers className="h-4 w-4" />
               <span>Design System v2.0</span>
@@ -720,7 +720,7 @@ export default function DocPage() {
                 { icon: Calendar, step: '3', title: 'Agende sua consulta', desc: 'Marque seu horário pelo WhatsApp ou pelo agendamento online com o Dr. Herlon Moura.' },
               ].map(({ icon: SIcon, step, title, desc }) => (
                 <div key={step} className="relative text-center">
-                  <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl" style={{ backgroundColor: 'bg-primary/12' }}>
+                  <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl" style={{ backgroundColor: 'rgba(32, 96, 149, 0.12)' }}>
                     <SIcon className="h-6 w-6" style={{ color: 'var(--s-color-action-primary)' }} />
                     <span className="absolute -bottom-2 flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold" style={{ backgroundColor: 'var(--s-color-action-primary)', color: '#fff' }}>{step}</span>
                   </div>
@@ -770,8 +770,8 @@ export default function DocPage() {
       {/* O que foi feito — Before / After cards */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'border-teal-500/30', color: '#10B981', backgroundColor: 'bg-teal-500/08' }}>
+          <div className="mb-12 text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(16, 185, 129, 0.30)', color: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.08)' }}>
               <Check className="h-4 w-4" />
               <span>O que foi feito</span>
             </div>
@@ -841,7 +841,7 @@ export default function DocPage() {
                 <div className="mb-3 flex items-center gap-3">
                   <div
                     className="flex h-9 w-9 items-center justify-center rounded-xl"
-                    style={{ backgroundColor: 'bg-primary/12' }}
+                    style={{ backgroundColor: 'rgba(32, 96, 149, 0.12)' }}
                   >
                     <CIcon className="h-5 w-5" style={{ color: 'var(--s-color-action-primary)' }} />
                   </div>
@@ -858,8 +858,8 @@ export default function DocPage() {
       {/* Próximos passos */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'border-amber-500/30', color: '#F59E0B', backgroundColor: 'bg-amber-500/08' }}>
+          <div className="mb-12 text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold" style={{ borderColor: 'rgba(245, 158, 11, 0.30)', color: '#F59E0B', backgroundColor: 'rgba(245, 158, 11, 0.08)' }}>
               <ArrowRight className="h-4 w-4" />
               <span>Próximos passos</span>
             </div>
