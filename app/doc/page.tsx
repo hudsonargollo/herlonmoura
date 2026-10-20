@@ -161,7 +161,7 @@ const O_QUE_FOI_FEITO: SectionItem[] = [
   {
     area: 'Captura de leads e CRM',
     before: 'Apenas botões de WhatsApp. Nenhum formulário, nenhum CRM, nenhum registro de pacientes. Leads invisíveis até o paciente enviar mensagem.',
-    after: 'Captura multi-canal (contato, calculadora TVP, avaliação de varizes, triagem de trombose) integrada a CRM com pipeline de 6 status, score de lead e histórico completo. SEO estruturado posicionou o site no primeiro rank do Google, máquina de criar conteúdo automatizada gera artigos e pages otimizados em escala, e nutrição de leads até o agendamento. Painel admin com acesso múltiplo (admin/editor/viewer), JWT e relatórios — em produção.',
+    after: 'Captura multi-canal (contato, calculadora TVP, avaliação de varizes, triagem de trombose) integrada a CRM com pipeline de 6 status, score de lead e histórico completo. SEO estruturado posicionou o site nas primeiras posições do Google, máquina de criar conteúdo automatizada gera artigos e pages otimizados em escala, e nutrição de leads até o agendamento. Painel admin com acesso múltiplo (admin/editor/viewer), JWT e relatórios — em produção.',
     status: 'done',
     beforeIcon: X,
     afterIcon: Check,
@@ -475,26 +475,26 @@ export default function DocPage() {
       />
 
       {/* Hero — copy escrita para Herlon Moura e Equipe */}
-      <section className="relative overflow-hidden py-20 sm:py-28" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
+      <section className="relative overflow-hidden py-24 sm:py-32" style={{ backgroundColor: 'var(--s-color-bg-surface)' }}>
         {/* Background decorative blur */}
         <div
-          className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full blur-[120px]"
-          style={{ backgroundColor: 'bg-primary/08' }}
+          className="pointer-events-none absolute -top-48 left-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 rounded-full blur-[140px]"
+          style={{ backgroundColor: 'rgba(32, 96, 149, 0.15)' }}
         />
         <div className="absolute inset-0 -z-10">
           <Image
             src="/images/brand/hero-vascular-bg.webp"
             alt=""
             fill
-            className="object-cover opacity-10"
+            className="object-cover opacity-8"
             priority={false}
           />
         </div>
 
         <div className="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
             {/* Text column */}
-            <div>
+            <div className="flex flex-col">
               {/* Logo + context badge */}
               <div className="mb-6 flex items-center gap-3">
                 <Logo size="lg" animated />
@@ -515,27 +515,30 @@ export default function DocPage() {
                 ))}
               </div>
 
-              <h1 className="max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style={headingStyle}>
-                Plataforma Digital do{' '}
+              <h1 className="max-w-xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl" style={headingStyle}>
+                Do WordPress genérico que me deixava invisível —{' '}
                 <span
                   className="bg-clip-text text-transparent"
                   style={{ backgroundImage: 'linear-gradient(135deg, #206095 0%, #C5A880 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
                 >
-                  Dr. Herlon Moura
+                  para uma plataforma que atrai, educa e converte
                 </span>
               </h1>
 
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={bodyStyle}>
-                Documentação técnica da plataforma digital do Dr. Herlon Moura — relatório
-                de migração do WordPress genérico para arquitetura Next.js 15 + Cloudflare Pages. Sistema
-                de design completo (287 tokens CSS, glassmorphism, modo escuro), SEO estruturado
-                (sitemap com 53 URLs válidas, JSON-LD MedicalBusiness, hreflang pt-BR) e CRM integrado
-                com pipeline de 6 fases que captura, pontua e nutre leads até o agendamento.
+              <p className="mt-6 max-w-xl text-lg leading-relaxed" style={bodyStyle}>
+                O site antigo do meu consultório era técnico, mas não resolvia os maiores
+                vazamentos: pacientes que entravavam no Google e iam embora, nenhum formulário
+                para captar quem realmente precisava de mim, e zero visibilidade sobre quem
+                visitava e onde desistia. Esta plataforma resolve isso na raiz: um lead magnet
+                completo que transforma visitantes em pacientes qualificados, SEO estruturado que
+                posiciona nossos conteúdos no topo das buscas do Google, e analytics instrumentados
+                que mostram, ponto a ponto, onde cada pessoa avança ou abandona — para eu focar
+                em atender, não em adivinhar.
               </p>
 
               {/* Floating metric card */}
               <motion.div
-                className="mt-8 inline-flex items-center gap-3 rounded-xl border px-5 py-3"
+                className="mt-10 inline-flex items-center gap-3 rounded-xl border px-5 py-3 w-max"
                 style={{
                   backgroundColor: 'var(--s-color-bg-surface)',
                   borderColor: 'var(--border-subtle)',
@@ -545,7 +548,7 @@ export default function DocPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'bg-teal-500/10' }}>
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)' }}>
                   <TrendingUp className="h-5 w-5" style={{ color: '#10B981' }} />
                 </div>
                 <div>
@@ -776,8 +779,8 @@ export default function DocPage() {
               Do WordPress à plataforma atual
             </h2>
             <p className="mt-3 max-w-2xl text-base" style={mutedStyle}>
-              Reformulação completa. A arquitetura SEO posicionou o conteúdo vascular no primeiro rank
-              do Google, a máquina de geração automatizada de conteúdo produz artigos e pages otimizados
+              Reformulação completa. A arquitetura SEO posicionou o conteúdo vascular nas primeiras posições
+              das buscas do Google, a máquina de geração automatizada de conteúdo produz artigos e pages otimizados
               em escala, e o CRM captura, pontua e nutre cada lead até o agendamento.
             </p>
           </div>
