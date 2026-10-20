@@ -526,13 +526,13 @@ export default function DocPage() {
               </h1>
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed" style={bodyStyle}>
-                O site antigo do meu consultório era técnico, mas não resolvia os maiores
+                O site antigo do seu consultório era técnico, mas não resolvia os maiores
                 vazamentos: pacientes que entravavam no Google e iam embora, nenhum formulário
-                para captar quem realmente precisava de mim, e zero visibilidade sobre quem
+                para captar quem realmente precisava de você, e zero visibilidade sobre quem
                 visitava e onde desistia. Esta plataforma resolve isso na raiz: um lead magnet
                 completo que transforma visitantes em pacientes qualificados, SEO estruturado que
-                posiciona nossos conteúdos no topo das buscas do Google, e analytics instrumentados
-                que mostram, ponto a ponto, onde cada pessoa avança ou abandona — para eu focar
+                posiciona os conteúdos no topo das buscas do Google, e analytics instrumentados
+                que mostram, ponto a ponto, onde cada pessoa avança ou abandona — para você focar
                 em atender, não em adivinhar.
               </p>
 
